@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -8,24 +8,24 @@ import PicksOfTheDay from "./PicksOfTheDay";
 import Leaderboard from "./Leaderboard";
 import KofiWidget from "./KofiWidget";
 
-const affiliates = [
-  {
-    message: "Parlay Play: Get $100 match for your first deposit",
-    color: "#eac100",
-    url: "https://parlayplay.io/account/signup?coupon=joeddomitor",
-  },
-  {
-    message: "Underdog: Get first deposit matched in bonus cash up to $250",
-    color: "#1b1b1b",
-    url: "https://play.underdogfantasy.com/magnusdomitor",
-  },
-  {
-    message: "Prize Picks: First deposit match up to $100!",
-    color: "#8000ff",
-    url: "https://app.prizepicks.com/sign-up?invite_code=PR-SUWVT13",
-  },
-  // Add more affiliates here
-];
+// const affiliates = [
+//   {
+//     message: "Parlay Play: Get $100 match for your first deposit",
+//     color: "#eac100",
+//     url: "https://parlayplay.io/account/signup?coupon=joeddomitor",
+//   },
+//   {
+//     message: "Underdog: Get first deposit matched in bonus cash up to $250",
+//     color: "#1b1b1b",
+//     url: "https://play.underdogfantasy.com/magnusdomitor",
+//   },
+//   {
+//     message: "Prize Picks: First deposit match up to $100!",
+//     color: "#8000ff",
+//     url: "https://app.prizepicks.com/sign-up?invite_code=PR-SUWVT13",
+//   },
+//   // Add more affiliates here
+// ];
 
 const Home = () => {
   const a11yProps = (index) => ({
@@ -38,17 +38,17 @@ const Home = () => {
   };
 
   const [value, setValue] = React.useState(0);
-  const [currentAffiliateIndex, setCurrentAffiliateIndex] = useState(0);
+  // const [currentAffiliateIndex, setCurrentAffiliateIndex] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentAffiliateIndex(
-        (prevIndex) => (prevIndex + 1) % affiliates.length
-      );
-    }, 3000); // Change slide every 3 seconds
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentAffiliateIndex(
+  //       (prevIndex) => (prevIndex + 1) % affiliates.length
+  //     );
+  //   }, 3000); // Change slide every 3 seconds
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <>
