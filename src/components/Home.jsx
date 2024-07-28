@@ -85,7 +85,7 @@ const Home = () => {
             }}
           >
             Track your bets, climb the leaderboard, and see who's at the top of
-            their game!!
+            their game!
           </Typography>
           <div>
             <iframe
