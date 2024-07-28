@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
@@ -38,6 +38,9 @@ const Home = () => {
   };
 
   const [value, setValue] = React.useState(0);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   // const [currentAffiliateIndex, setCurrentAffiliateIndex] = useState(0);
 
   // useEffect(() => {
@@ -133,7 +136,7 @@ const Home = () => {
               {...a11yProps(0)}
               sx={{
                 color: "#4F46E5",
-                fontSize: "10px",
+                fontSize: isMobile ? "8px" : "10px",
               }}
             />
             <Tab
@@ -141,7 +144,7 @@ const Home = () => {
               {...a11yProps(1)}
               sx={{
                 color: "#4F46E5",
-                fontSize: "10px",
+                fontSize: isMobile ? "8px" : "10px",
               }}
             />
             <Tab

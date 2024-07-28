@@ -13,6 +13,8 @@ import {
   Button,
   Box,
   Avatar,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import axios from "axios";
@@ -22,6 +24,19 @@ const Leaderboard = () => {
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
   const [filter, setFilter] = useState("all");
+  // const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsMobile(window.innerWidth <= 600);
+  //   };
+
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -123,8 +138,9 @@ const Leaderboard = () => {
               variant={filter === f ? "contained" : "outlined"}
               onClick={() => setFilter(f)}
               sx={{
-                minWidth: "150px", // Make buttons longer
+                minWidth: isMobile ? "50px" : "150px", // Make buttons smaller on mobile
                 fontWeight: "bold", // Make text bolder
+                fontSize: isMobile ? "12px" : "inherit", // Smaller text on mobile
                 color: filter === f ? "#fff" : "#4F46E5", // Text color
                 borderColor: "#4F46E5", // Border color
                 backgroundColor: filter === f ? "#4F46E5" : "transparent", // Background color for selected button
@@ -143,11 +159,15 @@ const Leaderboard = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Handicapper (X profile)</TableCell>
-                <TableCell>Total Won Odds</TableCell>
-                <TableCell>Total Won %</TableCell>
-                <TableCell>Potential Wins</TableCell>
-                <TableCell>Donate to Handicapper</TableCell>
+                <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
+                  Handicapper (X profile)
+                </TableCell>
+                {!isMobile && <TableCell>Total Won Odds</TableCell>}
+                {!isMobile && <TableCell>Total Won %</TableCell>}
+                <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
+                  Potential Wins
+                </TableCell>
+                {!isMobile && <TableCell>Donate to Handicapper</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -159,8 +179,8 @@ const Leaderboard = () => {
                       src={`https://avatar.iran.liara.run/username?username=${handicapper.username}`}
                       alt={"Avatar"}
                       sx={{
-                        width: 24,
-                        height: 24,
+                        width: isMobile ? 15 : 24,
+                        height: isMobile ? 15 : 24,
                         display: "inline-flex",
                         verticalAlign: "middle",
                         marginRight: 1,
@@ -170,29 +190,34 @@ const Leaderboard = () => {
                       href={`https://x.com/${handicapper.username}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ fontSize: "20px" }}
+                      style={{ fontSize: isMobile ? "10px" : "inherit" }}
                     >
                       {handicapper.username}
                     </a>
                   </TableCell>
-                  <TableCell>
-                    {handicapper.totalWonOdds}
-                    <Tooltip title="Total amount of odds for bets that were won">
-                      <IconButton size="small">
-                        <HelpOutlineIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell>
-                    ({handicapper.numberOfBetsWon} / {handicapper.numberOfBets}){" "}
-                    {handicapper.winRatio.toFixed(2)}%
-                    <Tooltip title="Percentage of bets won out of total bets made">
-                      <IconButton size="small">
-                        <HelpOutlineIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell>
+                  {!isMobile && (
+                    <TableCell>
+                      {handicapper.totalWonOdds}
+                      <Tooltip title="Total amount of odds for bets that were won">
+                        <IconButton size="small">
+                          <HelpOutlineIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  )}
+                  {!isMobile && (
+                    <TableCell>
+                      ({handicapper.numberOfBetsWon} /{" "}
+                      {handicapper.numberOfBets}){" "}
+                      {handicapper.winRatio.toFixed(2)}%
+                      <Tooltip title="Percentage of bets won out of total bets made">
+                        <IconButton size="small">
+                          <HelpOutlineIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  )}
+                  <TableCell sx={{ fontSize: isMobile ? "10px" : "inherit" }}>
                     ${handicapper.potentialWins.toFixed(2)}
                     <Tooltip title="Potential earnings based on a $100 bet for each winning bet, adjusted for the odds">
                       <IconButton size="small">
@@ -200,21 +225,23 @@ const Leaderboard = () => {
                       </IconButton>
                     </Tooltip>
                   </TableCell>
-                  <TableCell>
-                    <a
-                      href="https://ko-fi.com/S6S710USRI"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <img
-                        height="36"
-                        style={{ border: "0px", height: "36px" }}
-                        src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"
-                        border="0"
-                        alt="Buy Me a Coffee at ko-fi.com"
-                      />
-                    </a>
-                  </TableCell>
+                  {!isMobile && (
+                    <TableCell>
+                      <a
+                        href="https://ko-fi.com/S6S710USRI"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img
+                          height="36"
+                          style={{ border: "0px", height: "36px" }}
+                          src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"
+                          border="0"
+                          alt="Buy Me a Coffee at ko-fi.com"
+                        />
+                      </a>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
