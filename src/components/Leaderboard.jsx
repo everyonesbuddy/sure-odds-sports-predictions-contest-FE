@@ -160,7 +160,7 @@ const Leaderboard = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
-                  Handicapper (X profile)
+                  Handicapper (X or Reddit profile)
                 </TableCell>
                 {!isMobile && <TableCell>Total Won Odds</TableCell>}
                 {!isMobile && <TableCell>Total Won %</TableCell>}
@@ -187,7 +187,11 @@ const Leaderboard = () => {
                       }}
                     />
                     <a
-                      href={`https://x.com/${handicapper.username}`}
+                      href={
+                        handicapper.socialType === "twitter"
+                          ? `https://x.com/${handicapper.username}`
+                          : `https://www.reddit.com/user/${handicapper.username}`
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ fontSize: isMobile ? "10px" : "inherit" }}

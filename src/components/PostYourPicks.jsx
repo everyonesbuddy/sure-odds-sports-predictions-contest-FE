@@ -72,6 +72,7 @@ const PostYourPicks = () => {
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
   const [twitterUsername, setTwitterUsername] = useState("");
+  const [socialType, setSocialType] = useState("twitter"); // default value
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState("");
   const [gameDetails, setGameDetails] = useState(null);
@@ -157,6 +158,7 @@ const PostYourPicks = () => {
     setOdds("");
     setPropLine("");
     setPropOverOrUnder("");
+    setSocialType("twitter");
     setMarket("");
     setPlayers([]);
     setPlayerPicked("");
@@ -170,6 +172,7 @@ const PostYourPicks = () => {
       league,
       pickType,
       twitterUsername,
+      socialType,
       selectedGame,
       teamPicked,
       odds,
@@ -185,6 +188,7 @@ const PostYourPicks = () => {
       league,
       pickType,
       twitterUsername,
+      socialType,
       selectedGameId: selectedGame,
       teamPicked,
       odds,
@@ -221,20 +225,44 @@ const PostYourPicks = () => {
       <Card
         sx={{
           mt: 2,
-          mb: 2,
+          mb: 12,
           borderRadius: "16px",
           boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
         }}
       >
         <CardContent>
+          <FormControl
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            sx={{
+              mb: 2,
+              "& .MuiInputBase-root": {
+                borderRadius: "8px",
+                height: "40px",
+              },
+            }}
+          >
+            <InputLabel id="social-type-label">Social Type</InputLabel>
+            <Select
+              labelId="social-type-label"
+              id="socialType"
+              value={socialType}
+              onChange={(e) => setSocialType(e.target.value)}
+              label="Social Type"
+            >
+              <MenuItem value="twitter">X (Twitter)</MenuItem>
+              <MenuItem value="reddit">Reddit</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
-            label="Twitter Username *"
+            label={`${socialType} username *`}
             value={twitterUsername}
             onChange={handleTwitterUsernameChange}
             fullWidth
             color={!twitterUsername ? "error" : "primary"}
             margin="normal"
-            placeholder="Twitter Username e.g sure_odds2023"
+            placeholder={`${socialType} username e.g sure_odds2023`}
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {

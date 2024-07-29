@@ -28,11 +28,14 @@ const PicksOfTheDay = () => {
         );
         // const currentTime = new Date();
         const livePicks = response.data.filter((pick) => {
-          const nonResolvedBets = pick.betResult === null;
+          const nonResolvedBets =
+            pick.betResult === null || pick.betResult === "";
           // console.log(gameStartTime, currentTime);
+
           return nonResolvedBets;
         });
         setPicks(livePicks);
+        console.log("livePicks", livePicks);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -148,9 +151,13 @@ const PicksOfTheDay = () => {
                   <Typography variant="body2">Odds: {pick.odds}</Typography>
                   {pick.twitterUsername !== "" && (
                     <Typography variant="body2">
-                      X Profile:{" "}
+                      X or Reddit Profile:{" "}
                       <Link
-                        href={`https://twitter.com/${pick.twitterUsername}`}
+                        href={
+                          pick.socialType === "twitter"
+                            ? `https://x.com/${pick.twitterUsername}`
+                            : `https://www.reddit.com/user/${pick.twitterUsername}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -173,7 +180,11 @@ const PicksOfTheDay = () => {
                     <Typography variant="body2">
                       X Profile:{" "}
                       <Link
-                        href={`https://twitter.com/${pick.twitterUsername}`}
+                        href={
+                          pick.socialType === "twitter"
+                            ? `https://x.com/${pick.twitterUsername}`
+                            : `https://www.reddit.com/user/${pick.twitterUsername}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                       >
