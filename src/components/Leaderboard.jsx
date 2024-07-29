@@ -83,6 +83,7 @@ const Leaderboard = () => {
           numberOfBets: 0,
           numberOfBetsWon: 0,
           potentialWins: 0,
+          socialType: bet.socialType,
         };
       }
       handicappers[username].totalOdds += odds;
@@ -99,6 +100,8 @@ const Leaderboard = () => {
       }
     });
 
+    console.log("handicappers", handicappers);
+
     return Object.entries(handicappers)
       .map(
         ([
@@ -109,6 +112,7 @@ const Leaderboard = () => {
             numberOfBets,
             numberOfBetsWon,
             potentialWins,
+            socialType,
           },
         ]) => ({
           username,
@@ -118,6 +122,7 @@ const Leaderboard = () => {
           numberOfBetsWon,
           winRatio: (numberOfBetsWon / numberOfBets) * 100, // Calculate win ratio as a percentage
           potentialWins,
+          socialType,
         })
       )
       .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
