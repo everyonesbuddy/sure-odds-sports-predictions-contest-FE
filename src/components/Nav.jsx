@@ -3,13 +3,13 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
+  // Button,
   IconButton,
   Drawer,
   List,
   ListItem,
   ListItemText,
-  Box,
+  // Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -56,7 +56,7 @@ const Nav = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Sure Odds
         </Typography>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <a
               href="https://ko-fi.com/sureodds"
@@ -67,7 +67,7 @@ const Nav = () => {
               Donate to Handicappers
             </a>
           </Button>
-        </Box>
+        </Box> */}
       </Toolbar>
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         {drawerList}
