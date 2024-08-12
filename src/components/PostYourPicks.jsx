@@ -219,8 +219,9 @@ const PostYourPicks = () => {
   return (
     <>
       <Typography align="center" gutterBottom>
-        🌟 Showcase Your Expertise: Post Your Top Picks Now and Climb the
-        Leaderboard 📈, Earn Money 💰, and Get Promotion! 🚀
+        🌟 Showcase Your Expertise: Share your top sports picks now to climb the
+        leaderboard 📈, earn money 💰in our Free to play sports prediction
+        contest🚀!
       </Typography>
       <Card
         sx={{

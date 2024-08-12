@@ -66,7 +66,7 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            Discover the Best Handicappers and Ride the Wave!
+            Join Our Weekly Free-to-Play Sports Prediction Contest!
           </Typography>
           <Typography
             variant="h6"
@@ -76,8 +76,8 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            Handicappers, show us what you got! Bettors, find the best picks and
-            cash in big!
+            📈 Showcase Your Sports Betting Skills: Post your top picks each
+            week to climb the leaderboard and earn monetary rewards!
           </Typography>
           <Typography
             variant="subtitle1"
@@ -87,8 +87,8 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            Track your bets, climb the leaderboard, and see who's at the top of
-            their game!
+            🏆Weekly Contests: Compete in our free-to-play contests every week.
+            The best predictors win prizes! 💰
           </Typography>
           <div>
             <iframe

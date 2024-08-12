@@ -19,6 +19,20 @@ import {
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import axios from "axios";
 import moment from "moment";
+import Countdown from "react-countdown";
+
+// Countdown renderer component
+const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    return <span style={{ color: "red" }}>The tournament has ended!</span>;
+  } else {
+    return (
+      <span style={{ color: "red" }}>
+        {days} days {hours} hours {minutes} minutes {seconds} seconds
+      </span>
+    );
+  }
+};
 
 const Leaderboard = () => {
   const [betsData, setBetsData] = useState([]);
@@ -100,8 +114,6 @@ const Leaderboard = () => {
       }
     });
 
-    console.log("handicappers", handicappers);
-
     return Object.entries(handicappers)
       .map(
         ([
@@ -128,13 +140,54 @@ const Leaderboard = () => {
       .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
   };
 
+  // Calculate the end time of the tournament
+  const getTournamentEndTime = () => {
+    const now = moment().utcOffset(-4); // EST is UTC-4
+    const dayOfWeek = now.day();
+    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+    const nextSunday = now
+      .clone()
+      .add(daysUntilSunday, "days")
+      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+    return nextSunday.toDate();
+  };
+
   return (
     <>
       <Typography align="center" gutterBottom>
-        💵 Each Bet is Treated as a Single Bet with an Assumption of $100 per
-        Bet. Top Handicappers Will Receive Weekly Payouts from Our Donation
-        Pool! 🎉
+        <ul style={{ listStyleType: "none", padding: 0 }}>
+          <li>
+            💵 <strong>Each Bet Counts as $100</strong>: Every bet is treated as
+            if it’s a $100 wager.
+          </li>
+          <li>
+            🏆 <strong>Weekly Payouts</strong>: Top participants in accuracy and
+            volume will receive weekly payouts.
+          </li>
+          <li>
+            🔍 <strong>Accuracy</strong>: Determined by potential wins, which
+            are calculated based on a $100 bet for each winning prediction,
+            adjusted for odds.
+          </li>
+          <li>
+            📊 <strong>Volume</strong>: Determined by the total number of bets
+            placed.
+          </li>
+          <li>
+            📬 <strong>Winner Notification</strong>: Winners will be contacted
+            via their social media accounts each week to receive their prizes.
+          </li>
+          <li>
+            ✨ <strong>Good Luck and Happy Predicting!</strong> 🎉
+          </li>
+        </ul>
       </Typography>
+
+      <Box sx={{ textAlign: "center", mb: 2 }}>
+        <Typography variant="h6">Countdown to Tournament End:</Typography>
+        <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
+      </Box>
+
       <Box>
         <Box sx={{ display: "flex", justifyContent: "space-around", p: 2 }}>
           {["all", "day", "week", "month"].map((f) => (
@@ -165,7 +218,7 @@ const Leaderboard = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
-                  Handicapper (X or Reddit profile)
+                  Partcipants (X or Reddit profile)
                 </TableCell>
                 {!isMobile && <TableCell>Total Won Odds</TableCell>}
                 {!isMobile && <TableCell>Total Won %</TableCell>}
