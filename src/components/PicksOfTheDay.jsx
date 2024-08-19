@@ -4,21 +4,7 @@ import { Card, CardContent, Typography, Grid, Link } from "@mui/material";
 
 const PicksOfTheDay = () => {
   const [picks, setPicks] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8"
-  //       );
-  //       setPicks(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  const [matchupData, setMatchupData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,16 +12,26 @@ const PicksOfTheDay = () => {
         const response = await axios.get(
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8"
         );
-        // const currentTime = new Date();
         const livePicks = response.data.filter((pick) => {
           const nonResolvedBets =
             pick.betResult === null || pick.betResult === "";
-          // console.log(gameStartTime, currentTime);
-
           return nonResolvedBets;
         });
         setPicks(livePicks);
-        console.log("livePicks", livePicks);
+
+        // Fetch matchup data for each pick
+        const matchupPromises = livePicks.map((pick) =>
+          getMatchUpData(pick.league, pick.selectedGameId)
+        );
+        const matchupResults = await Promise.all(matchupPromises);
+
+        // Create a lookup object for matchup data
+        const matchupDataObj = livePicks.reduce((acc, pick, index) => {
+          acc[pick.selectedGameId] = matchupResults[index];
+          return acc;
+        }, {});
+
+        setMatchupData(matchupDataObj);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -49,6 +45,7 @@ const PicksOfTheDay = () => {
       basketball_wnba: "WNBA 🏀",
       baseball_mlb: "MLB ⚾",
       americanfootball_nfl: "NFL 🏈",
+      soccer_epl: "EPL ⚽",
     };
 
     return leagueNames[leagueCode] || leagueCode;
@@ -58,12 +55,12 @@ const PicksOfTheDay = () => {
   function formatDate(dateString) {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-US", {
-      month: "short", // "Sep" instead of "September"
-      day: "2-digit", // "05"
-      year: "numeric", // "2024"
-      hour: "numeric", // "8 PM" instead of "08:20:00 PM"
-      minute: "2-digit", // "20"
-      hour12: true, // Use AM/PM instead of 24-hour format
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
     }).format(date);
   }
 
@@ -84,6 +81,23 @@ const PicksOfTheDay = () => {
     }
   };
 
+  const getMatchUpData = async (league, gameId) => {
+    const apiKey = "9a74934bfd1e9d98c6cc43068f53e7ae";
+    const url = `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=${apiKey}&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${gameId}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      const matchup = data[0];
+      const homeTeam = matchup.home_team;
+      const awayTeam = matchup.away_team;
+      return `${homeTeam} vs ${awayTeam}`;
+    } catch (error) {
+      console.error("Error fetching matchup data:", error);
+      return "Matchup data not available";
+    }
+  };
+
   const getStatusStyles = (status) => {
     const baseStyles = {
       color: "white",
@@ -100,19 +114,19 @@ const PicksOfTheDay = () => {
           ...baseStyles,
           backgroundColor: "#b56565",
           border: "1px solid #8b4a4a",
-        }; // Dull red
+        };
       case "Game starts today":
         return {
           ...baseStyles,
           backgroundColor: "#b5b565",
           border: "1px solid #8b8b4a",
-        }; // Dull yellow
+        };
       default:
         return {
           ...baseStyles,
           backgroundColor: "#65b565",
           border: "1px solid #4a8b4a",
-        }; // Dull green
+        };
     }
   };
 
@@ -131,6 +145,12 @@ const PicksOfTheDay = () => {
               <Typography variant="h5" component="div">
                 {getLeagueName(pick.league)}
               </Typography>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "0.875rem", color: "text.secondary" }}
+              >
+                Matchup: {matchupData[pick.selectedGameId] || "Loading..."}
+              </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
                 Bet Type: {pick.pickType}
               </Typography>
@@ -146,7 +166,7 @@ const PicksOfTheDay = () => {
               {pick.pickType === "money line" ? (
                 <>
                   <Typography variant="body2">
-                    Team Picked: {pick.teamPicked}
+                    Pick: {pick.teamPicked}
                   </Typography>
                   <Typography variant="body2">Odds: {pick.odds}</Typography>
                   {pick.twitterUsername !== "" && (

@@ -23,6 +23,8 @@ const leagueApiMap = {
     "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   americanfootball_nfl:
     "https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+  soccer_epl:
+    "https://api.the-odds-api.com/v4/sports/soccer_epl/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
 };
 
 const nbaAndWnbaMarkets = [
@@ -319,9 +321,10 @@ const PostYourPicks = () => {
               onChange={(e) => setLeague(e.target.value)}
             >
               <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem>
-              <MenuItem value="basketball_nba">NBA 🏀</MenuItem>
+              {/* <MenuItem value="basketball_nba">NBA 🏀</MenuItem> */}
               <MenuItem value="baseball_mlb">MLB ⚾</MenuItem>
               <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
+              <MenuItem value="soccer_epl">EPL ⚽</MenuItem>
             </Select>
           </FormControl>
 
@@ -357,7 +360,9 @@ const PostYourPicks = () => {
                   label="Pick Type *"
                   onChange={(e) => setPickType(e.target.value)}
                 >
-                  <MenuItem value="props">Props 🎲</MenuItem>
+                  {league !== "soccer_epl" && (
+                    <MenuItem value="props">Props 🎲</MenuItem>
+                  )}
                   <MenuItem value="money line">Money Line 💰</MenuItem>
                 </Select>
               </FormControl>
