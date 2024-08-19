@@ -360,9 +360,10 @@ const PostYourPicks = () => {
                   label="Pick Type *"
                   onChange={(e) => setPickType(e.target.value)}
                 >
-                  {league !== "soccer_epl" && (
-                    <MenuItem value="props">Props 🎲</MenuItem>
-                  )}
+                  {league !== "soccer_epl" &&
+                    league !== "americanfootball_nfl" && (
+                      <MenuItem value="props">Props 🎲</MenuItem>
+                    )}
                   <MenuItem value="money line">Money Line 💰</MenuItem>
                 </Select>
               </FormControl>
@@ -537,7 +538,7 @@ const PostYourPicks = () => {
                     </FormControl>
                   )}
 
-                  {players.length > 0 && (
+                  {players.length > 0 ? (
                     <FormControl
                       fullWidth
                       margin="normal"
@@ -604,6 +605,22 @@ const PostYourPicks = () => {
                         ))}
                       </Select>
                     </FormControl>
+                  ) : (
+                    market !== "" && (
+                      <TextField
+                        fullWidth
+                        margin="normal"
+                        value="This prop is not available right now"
+                        disabled
+                        sx={{
+                          mb: 2,
+                          "& .MuiInputBase-root": {
+                            borderRadius: "8px",
+                            height: "40px",
+                          },
+                        }}
+                      />
+                    )
                   )}
                   <TextField
                     label="Player Odds"
