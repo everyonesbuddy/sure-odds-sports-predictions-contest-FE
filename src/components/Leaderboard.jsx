@@ -69,7 +69,7 @@ const Leaderboard = () => {
       const postedTime = moment(bet?.postedTime);
       switch (filter) {
         case "day":
-          return now.diff(postedTime, "days") < 3;
+          return now.diff(postedTime, "days") < 1;
         case "week":
           return now.diff(postedTime, "weeks") < 1;
         case "month":
