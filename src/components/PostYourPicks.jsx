@@ -400,12 +400,25 @@ const PostYourPicks = () => {
                   label="Game *"
                   onChange={(e) => setSelectedGame(e.target.value)}
                 >
-                  {games.length > 0 ? (
+                  {/* {games.length > 0 ? (
                     games.map((game) => (
                       <MenuItem key={game.id} value={game.id}>
                         {game.home_team} vs {game.away_team}
                       </MenuItem>
                     ))
+                  ) : (
+                    <MenuItem disabled>No games available</MenuItem>
+                  )} */}
+                  {games.length > 0 ? (
+                    games
+                      .filter(
+                        (game) => new Date(game.commence_time) > new Date()
+                      )
+                      .map((game) => (
+                        <MenuItem key={game.id} value={game.id}>
+                          {game.home_team} vs {game.away_team}
+                        </MenuItem>
+                      ))
                   ) : (
                     <MenuItem disabled>No games available</MenuItem>
                   )}
