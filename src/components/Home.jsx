@@ -7,6 +7,7 @@ import PostYourPicks from "./PostYourPicks";
 import PicksOfTheDay from "./PicksOfTheDay";
 import Leaderboard from "./Leaderboard";
 import KofiWidget from "./KofiWidget";
+import TournamentDetails from "./TournamentDetails";
 
 // const affiliates = [
 //   {
@@ -77,7 +78,8 @@ const Home = () => {
             }}
           >
             📈 Showcase Your Sports Betting Skills: Post your top picks each
-            week to climb the leaderboard and earn monetary rewards!
+            week to climb the leaderboard, get promotion, and earn monetary
+            rewards!
           </Typography>
           <Typography
             variant="subtitle1"
@@ -155,6 +157,14 @@ const Home = () => {
                 fontSize: "10px",
               }}
             />
+            <Tab
+              label="Details 🔍"
+              {...a11yProps(3)}
+              sx={{
+                color: "#4F46E5",
+                fontSize: "10px",
+              }}
+            />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
@@ -165,6 +175,9 @@ const Home = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
           <PicksOfTheDay />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3}>
+          <TournamentDetails />
         </CustomTabPanel>
       </Box>
       <KofiWidget />

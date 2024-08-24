@@ -21,6 +21,8 @@ import axios from "axios";
 import moment from "moment";
 import Countdown from "react-countdown";
 
+const stripeApiKey = process.env.REACT_APP_STRIPE_API_KEY;
+
 // Countdown renderer component
 const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
@@ -39,6 +41,8 @@ const Leaderboard = () => {
   const [filteredBets, setFilteredBets] = useState([]);
   const [filter, setFilter] = useState("all");
   // const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+
+  const [balance, setBalance] = useState(null);
 
   // useEffect(() => {
   //   const handleResize = () => {
@@ -64,6 +68,22 @@ const Leaderboard = () => {
   }, []);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://api.stripe.com/v1/balance", {
+          headers: {
+            Authorization: `Bearer ${stripeApiKey}`,
+          },
+        });
+        setBalance(response.data);
+      } catch (error) {
+        console.error("Error fetching balance:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     const now = moment();
     const filtered = betsData.filter((bet) => {
       const postedTime = moment(bet?.postedTime);
@@ -81,6 +101,24 @@ const Leaderboard = () => {
     });
     setFilteredBets(filtered);
   }, [filter, betsData]);
+
+  const formatAmount = (amount) => {
+    return (amount / 100).toFixed(2);
+  };
+
+  const getTotalBalance = () => {
+    if (!balance) return "Loading...";
+    const availableAmount = balance.available.reduce(
+      (acc, item) => acc + item.amount,
+      0
+    );
+    const pendingAmount = balance.pending.reduce(
+      (acc, item) => acc + item.amount,
+      0
+    );
+    const totalAmount = availableAmount + pendingAmount;
+    return formatAmount(totalAmount);
+  };
 
   const aggregateBets = (bets) => {
     const handicappers = {};
@@ -154,38 +192,14 @@ const Leaderboard = () => {
 
   return (
     <>
-      <Typography align="center" gutterBottom>
-        <ul style={{ listStyleType: "none", padding: 0 }}>
-          <li>
-            💵 <strong>Each Bet Counts as $100</strong>: Every bet is treated as
-            if it’s a $100 wager.
-          </li>
-          <li>
-            🏆 <strong>Weekly Payouts</strong>: Top participants in accuracy and
-            volume will receive weekly payouts.
-          </li>
-          <li>
-            🔍 <strong>Accuracy</strong>: Determined by potential wins, which
-            are calculated based on a $100 bet for each winning prediction,
-            adjusted for odds.
-          </li>
-          <li>
-            📊 <strong>Volume</strong>: Determined by the total number of bets
-            placed.
-          </li>
-          <li>
-            📬 <strong>Winner Notification</strong>: Winners will be contacted
-            via their social media accounts each week to receive their prizes.
-          </li>
-          <li>
-            ✨ <strong>Good Luck and Happy Predicting!</strong> 🎉
-          </li>
-        </ul>
-      </Typography>
-
       <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="h6">Countdown to Tournament End:</Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
+      </Box>
+
+      <Box sx={{ textAlign: "center", mb: 2 }}>
+        <Typography variant="h6">Current Week Prize Pool:</Typography>
+        <Typography variant="h4">${getTotalBalance()}</Typography>
       </Box>
 
       <Box>
@@ -225,7 +239,7 @@ const Leaderboard = () => {
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
                   Potential Wins
                 </TableCell>
-                {/* {!isMobile && <TableCell>Donate to Handicapper</TableCell>} */}
+                {!isMobile && <TableCell>Donate to Handicapper</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -287,7 +301,7 @@ const Leaderboard = () => {
                       </IconButton>
                     </Tooltip>
                   </TableCell>
-                  {/* {!isMobile && (
+                  {!isMobile && (
                     <TableCell>
                       <a
                         href="https://ko-fi.com/S6S710USRI"
@@ -303,7 +317,7 @@ const Leaderboard = () => {
                         />
                       </a>
                     </TableCell>
-                  )} */}
+                  )}
                 </TableRow>
               ))}
             </TableBody>
