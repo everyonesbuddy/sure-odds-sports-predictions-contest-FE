@@ -31,7 +31,7 @@ const nbaAndWnbaMarkets = [
   { key: "player_points", name: "Points (Over/Under)" },
   { key: "player_rebounds", name: "Rebounds (Over/Under)" },
   { key: "player_assists", name: "Assists (Over/Under)" },
-  { key: "player_threes", name: "Threes (Over/Under)" },
+  // { key: "player_threes", name: "Threes (Over/Under)" },
   { key: "player_blocks", name: "Blocks (Over/Under)" },
   { key: "player_steals", name: "Steals (Over/Under)" },
   { key: "player_blocks_steals", name: "Blocks + Steals (Over/Under)" },
@@ -47,7 +47,7 @@ const nbaAndWnbaMarkets = [
 
 const mlbMarkets = [
   { key: "batter_home_runs", name: "Batter home runs (Over/Under)" },
-  { key: "batter_first_home_run", name: "Batter first home run (Yes/No)" },
+  // { key: "batter_first_home_run", name: "Batter first home run (Yes/No)" },
   { key: "batter_hits", name: "Batter hits (Over/Under)" },
   { key: "batter_total_bases", name: "Batter total bases (Over/Under)" },
   { key: "batter_rbis", name: "Batter RBIs (Over/Under)" },
@@ -63,7 +63,7 @@ const mlbMarkets = [
   { key: "batter_strikeouts", name: "Batter strikeouts (Over/Under)" },
   { key: "batter_stolen_bases", name: "Batter stolen bases (Over/Under)" },
   { key: "pitcher_strikeouts", name: "Pitcher strikeouts (Over/Under)" },
-  { key: "pitcher_record_a_win", name: "Pitcher to record a win (Yes/No)" },
+  // { key: "pitcher_record_a_win", name: "Pitcher to record a win (Yes/No)" },
   { key: "pitcher_hits_allowed", name: "Pitcher hits allowed (Over/Under)" },
   { key: "pitcher_walks", name: "Pitcher walks (Over/Under)" },
   { key: "pitcher_earned_runs", name: "Pitcher earned runs (Over/Under)" },
