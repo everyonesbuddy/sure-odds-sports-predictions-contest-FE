@@ -81,7 +81,7 @@ const Home = () => {
             week to climb the leaderboard, get promotion, and earn monetary
             rewards!
           </Typography>
-          <Typography
+          {/* <Typography
             variant="subtitle1"
             sx={{
               color: "gray",
@@ -91,7 +91,7 @@ const Home = () => {
           >
             🏆Weekly Contests: Compete in our free-to-play contests every week.
             The best predictors win prizes! 💰
-          </Typography>
+          </Typography> */}
           <div>
             <iframe
               src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"

@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Typography, List, ListItem, ListItemText, Box } from "@mui/material";
+import {
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  Link,
+} from "@mui/material";
 import axios from "axios";
 import moment from "moment";
 import Countdown from "react-countdown";
@@ -88,14 +95,40 @@ const TournamentDetails = () => {
           <List style={{ listStyleType: "none", padding: 0 }}>
             <ListItem>
               <ListItemText
-                primary="🏆 Weekly Payouts & 💵 Each Bet Value"
+                primary="🏆 Weekly Payouts &  Each Bet Value"
                 secondary="Every bet is treated as a $100 wager. Top participants in accuracy and volume will receive weekly payouts. Winners will be contacted via social media."
               />
             </ListItem>
             <ListItem>
               <ListItemText
-                primary="🔍 Accuracy & 📊 Volume"
-                secondary="Accuracy is based on potential wins from $100 bets, adjusted for odds. Volume is determined by the total number of bets placed."
+                primary="🔍 Accuracy "
+                secondary="Accuracy is based on potential wins from $100 bets, adjusted for odds."
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="💵 Prizes"
+                secondary={
+                  <>
+                    First Place receives 100% of the prize pool + a ticket to
+                    their favorite team's game + a 2 months subscription to{" "}
+                    <Link
+                      href="https://doinksports.com/?via=sureOdds"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Doink Sports
+                    </Link>
+                    . Second Place receives just a ticket to their favorite
+                    team's game.
+                  </>
+                }
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="💰 Prize Pool "
+                secondary="The Prize pool is a combination of donations from users, sponsors, and SureOdds. The prize pool is paid to the top participant."
               />
             </ListItem>
             <ListItem>

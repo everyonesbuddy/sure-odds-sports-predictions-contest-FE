@@ -12,6 +12,7 @@ import {
   Typography,
   Button,
   Box,
+  Link,
   Avatar,
   useMediaQuery,
   useTheme,
@@ -195,6 +196,28 @@ const Leaderboard = () => {
       <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="h6">Countdown to Tournament End:</Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
+      </Box>
+
+      <Box sx={{ textAlign: "center", mb: 2 }}>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            color: "gray",
+            mb: 3,
+            borderRadius: 1,
+          }}
+        >
+          Win 100% of prize pool + a ticket to your favorite team's game + a 2
+          months subscription to{" "}
+          <Link
+            href="doinksports.com/?via=sureOdds"
+            target="_blank"
+            rel="noopener"
+          >
+            Doink Sports
+          </Link>{" "}
+          for first place.
+        </Typography>
       </Box>
 
       <Box sx={{ textAlign: "center", mb: 2 }}>
