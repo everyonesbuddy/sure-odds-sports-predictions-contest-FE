@@ -210,7 +210,7 @@ const Leaderboard = () => {
           Win 100% of prize pool + a ticket to your favorite team's game + a 2
           months subscription to{" "}
           <Link
-            href="doinksports.com/?via=sureOdds"
+            href="https://doinksports.com/?via=sureOdds"
             target="_blank"
             rel="noopener"
           >
