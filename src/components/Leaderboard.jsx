@@ -22,7 +22,7 @@ import axios from "axios";
 import moment from "moment";
 import Countdown from "react-countdown";
 
-const stripeApiKey = process.env.REACT_APP_STRIPE_API_KEY;
+// const stripeApiKey = process.env.REACT_APP_STRIPE_API_KEY;
 
 // Countdown renderer component
 const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -43,7 +43,7 @@ const Leaderboard = () => {
   const [filter, setFilter] = useState("all");
   // const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 
-  const [balance, setBalance] = useState(null);
+  // const [balance, setBalance] = useState(null);
 
   // useEffect(() => {
   //   const handleResize = () => {
@@ -68,21 +68,21 @@ const Leaderboard = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://api.stripe.com/v1/balance", {
-          headers: {
-            Authorization: `Bearer ${stripeApiKey}`,
-          },
-        });
-        setBalance(response.data);
-      } catch (error) {
-        console.error("Error fetching balance:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("https://api.stripe.com/v1/balance", {
+  //         headers: {
+  //           Authorization: `Bearer ${stripeApiKey}`,
+  //         },
+  //       });
+  //       setBalance(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching balance:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     const now = moment();
@@ -103,23 +103,23 @@ const Leaderboard = () => {
     setFilteredBets(filtered);
   }, [filter, betsData]);
 
-  const formatAmount = (amount) => {
-    return (amount / 100).toFixed(2);
-  };
+  // const formatAmount = (amount) => {
+  //   return (amount / 100).toFixed(2);
+  // };
 
-  const getTotalBalance = () => {
-    if (!balance) return "Loading...";
-    const availableAmount = balance.available.reduce(
-      (acc, item) => acc + item.amount,
-      0
-    );
-    const pendingAmount = balance.pending.reduce(
-      (acc, item) => acc + item.amount,
-      0
-    );
-    const totalAmount = availableAmount + pendingAmount;
-    return formatAmount(totalAmount);
-  };
+  // const getTotalBalance = () => {
+  //   if (!balance) return "Loading...";
+  //   const availableAmount = balance.available.reduce(
+  //     (acc, item) => acc + item.amount,
+  //     0
+  //   );
+  //   const pendingAmount = balance.pending.reduce(
+  //     (acc, item) => acc + item.amount,
+  //     0
+  //   );
+  //   const totalAmount = availableAmount + pendingAmount;
+  //   return formatAmount(totalAmount);
+  // };
 
   const aggregateBets = (bets) => {
     const handicappers = {};
@@ -220,10 +220,10 @@ const Leaderboard = () => {
         </Typography>
       </Box>
 
-      <Box sx={{ textAlign: "center", mb: 2 }}>
+      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="h6">Current Week Prize Pool:</Typography>
         <Typography variant="h4">${getTotalBalance()}</Typography>
-      </Box>
+      </Box> */}
 
       <Box>
         <Box sx={{ display: "flex", justifyContent: "space-around", p: 2 }}>

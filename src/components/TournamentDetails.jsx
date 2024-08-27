@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Typography,
   List,
@@ -7,11 +7,11 @@ import {
   Box,
   Link,
 } from "@mui/material";
-import axios from "axios";
+// import axios from "axios";
 import moment from "moment";
 import Countdown from "react-countdown";
 
-const stripeApiKey = process.env.REACT_APP_STRIPE_API_KEY;
+// const stripeApiKey = process.env.REACT_APP_STRIPE_API_KEY;
 
 // Countdown renderer component
 const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -27,41 +27,41 @@ const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
 };
 
 const TournamentDetails = () => {
-  const [balance, setBalance] = useState(null);
+  // const [balance, setBalance] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://api.stripe.com/v1/balance", {
-          headers: {
-            Authorization: `Bearer ${stripeApiKey}`,
-          },
-        });
-        setBalance(response.data);
-      } catch (error) {
-        console.error("Error fetching balance:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("https://api.stripe.com/v1/balance", {
+  //         headers: {
+  //           Authorization: `Bearer ${stripeApiKey}`,
+  //         },
+  //       });
+  //       setBalance(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching balance:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  const formatAmount = (amount) => {
-    return (amount / 100).toFixed(2);
-  };
+  // const formatAmount = (amount) => {
+  //   return (amount / 100).toFixed(2);
+  // };
 
-  const getTotalBalance = () => {
-    if (!balance) return "Loading...";
-    const availableAmount = balance.available.reduce(
-      (acc, item) => acc + item.amount,
-      0
-    );
-    const pendingAmount = balance.pending.reduce(
-      (acc, item) => acc + item.amount,
-      0
-    );
-    const totalAmount = availableAmount + pendingAmount;
-    return formatAmount(totalAmount);
-  };
+  // const getTotalBalance = () => {
+  //   if (!balance) return "Loading...";
+  //   const availableAmount = balance.available.reduce(
+  //     (acc, item) => acc + item.amount,
+  //     0
+  //   );
+  //   const pendingAmount = balance.pending.reduce(
+  //     (acc, item) => acc + item.amount,
+  //     0
+  //   );
+  //   const totalAmount = availableAmount + pendingAmount;
+  //   return formatAmount(totalAmount);
+  // };
 
   // Calculate the end time of the tournament
   const getTournamentEndTime = () => {
@@ -143,10 +143,10 @@ const TournamentDetails = () => {
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
       </Box>
 
-      <Box sx={{ textAlign: "center", mb: 2 }}>
+      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="h6">Current Week Prize Pool:</Typography>
         <Typography variant="h4">${getTotalBalance()}</Typography>
-      </Box>
+      </Box> */}
     </>
   );
 };
