@@ -262,7 +262,7 @@ const Leaderboard = () => {
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
                   Potential Wins
                 </TableCell>
-                {!isMobile && <TableCell>Donate to Handicapper</TableCell>}
+                {/* {!isMobile && <TableCell>Donate to Handicapper</TableCell>} */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -324,7 +324,7 @@ const Leaderboard = () => {
                       </IconButton>
                     </Tooltip>
                   </TableCell>
-                  {!isMobile && (
+                  {/* {!isMobile && (
                     <TableCell>
                       <a
                         href="https://ko-fi.com/S6S710USRI"
@@ -340,7 +340,7 @@ const Leaderboard = () => {
                         />
                       </a>
                     </TableCell>
-                  )}
+                  )} */}
                 </TableRow>
               ))}
             </TableBody>
