@@ -6,7 +6,7 @@ import CustomTabPanel from "./CustomTabPanel";
 import PostYourPicks from "./PostYourPicks";
 import PicksOfTheDay from "./PicksOfTheDay";
 import Leaderboard from "./Leaderboard";
-import KofiWidget from "./KofiWidget";
+// import KofiWidget from "./KofiWidget";
 import TournamentDetails from "./TournamentDetails";
 
 // const affiliates = [
@@ -67,7 +67,7 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            Join Our Weekly Free-to-Play Sports Prediction Contest!
+            Africa's #1 Monthly Free-to-Play Sports Predictions Contest!
           </Typography>
           <Typography
             variant="h6"
@@ -77,9 +77,9 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            📈 Showcase Your Sports Betting Skills: Post your top picks each
-            week to climb the leaderboard, get promotion, and earn monetary
-            rewards!
+            📈 Showcase Your Sports Knowledge and Stand a Chance to Win
+            1,000,000 Naira (or $500 USD) Monthly—Risk-Free! Join Now and Don’t
+            Miss Out!
           </Typography>
           {/* <Typography
             variant="subtitle1"
@@ -180,7 +180,7 @@ const Home = () => {
           <TournamentDetails />
         </CustomTabPanel>
       </Box>
-      <KofiWidget />
+      {/* <KofiWidget /> */}
     </>
   );
 };

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-  Link,
-} from "@mui/material";
+import { Typography, List, ListItem, ListItemText, Box } from "@mui/material";
 // import axios from "axios";
 import moment from "moment";
 import Countdown from "react-countdown";
@@ -63,16 +56,26 @@ const TournamentDetails = () => {
   //   return formatAmount(totalAmount);
   // };
 
-  // Calculate the end time of the tournament
+  // Calculate the end time of the tournament for week
+  // const getTournamentEndTime = () => {
+  //   const now = moment().utcOffset(-4); // EST is UTC-4
+  //   const dayOfWeek = now.day();
+  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+  //   const nextSunday = now
+  //     .clone()
+  //     .add(daysUntilSunday, "days")
+  //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+  //   return nextSunday.toDate();
+  // };
+
+  // Calculate the end time of the tournament for month
   const getTournamentEndTime = () => {
     const now = moment().utcOffset(-4); // EST is UTC-4
-    const dayOfWeek = now.day();
-    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-    const nextSunday = now
+    const endOfMonth = now
       .clone()
-      .add(daysUntilSunday, "days")
+      .endOf("month")
       .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-    return nextSunday.toDate();
+    return endOfMonth.toDate();
   };
 
   return (
@@ -110,9 +113,8 @@ const TournamentDetails = () => {
                 primary="💵 Prizes"
                 secondary={
                   <>
-                    First Place receives 100% of the prize pool + a ticket to
-                    their favorite team's game + a 2 months subscription to{" "}
-                    <Link
+                    First Place receives Win 1,000,000 Naira (or $500 USD){" "}
+                    {/* <Link
                       href="https://doinksports.com/?via=sureOdds"
                       target="_blank"
                       rel="noopener"
@@ -120,7 +122,7 @@ const TournamentDetails = () => {
                       Doink Sports
                     </Link>
                     . Second Place receives just a ticket to their favorite
-                    team's game.
+                    team's game. */}
                   </>
                 }
               />
@@ -128,7 +130,7 @@ const TournamentDetails = () => {
             <ListItem>
               <ListItemText
                 primary="💰 Prize Pool "
-                secondary="The Prize pool is a combination of donations from users, sponsors, and SureOdds. The prize pool is paid to the top participant."
+                secondary="The Prize pool is a combination of sponsors, and SureOdds. The prize pool is paid to the top participant."
               />
             </ListItem>
             <ListItem>

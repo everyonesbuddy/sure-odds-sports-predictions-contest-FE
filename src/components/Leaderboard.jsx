@@ -12,7 +12,6 @@ import {
   Typography,
   Button,
   Box,
-  Link,
   Avatar,
   useMediaQuery,
   useTheme,
@@ -179,16 +178,26 @@ const Leaderboard = () => {
       .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
   };
 
-  // Calculate the end time of the tournament
+  // Calculate the end time of the tournament for week
+  // const getTournamentEndTime = () => {
+  //   const now = moment().utcOffset(-4); // EST is UTC-4
+  //   const dayOfWeek = now.day();
+  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+  //   const nextSunday = now
+  //     .clone()
+  //     .add(daysUntilSunday, "days")
+  //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+  //   return nextSunday.toDate();
+  // };
+
+  // Calculate the end time of the tournament for month
   const getTournamentEndTime = () => {
     const now = moment().utcOffset(-4); // EST is UTC-4
-    const dayOfWeek = now.day();
-    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-    const nextSunday = now
+    const endOfMonth = now
       .clone()
-      .add(daysUntilSunday, "days")
+      .endOf("month")
       .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-    return nextSunday.toDate();
+    return endOfMonth.toDate();
   };
 
   return (
@@ -207,15 +216,14 @@ const Leaderboard = () => {
             borderRadius: 1,
           }}
         >
-          Win 100% of prize pool + a ticket to your favorite team's game + a 2
-          months subscription to{" "}
-          <Link
+          Win 1,000,000 Naira (or $500 USD){" "}
+          {/* <Link
             href="https://doinksports.com/?via=sureOdds"
             target="_blank"
             rel="noopener"
           >
             Doink Sports
-          </Link>{" "}
+          </Link>{" "} */}
           for first place.
         </Typography>
       </Box>
