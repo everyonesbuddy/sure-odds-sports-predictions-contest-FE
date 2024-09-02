@@ -16,15 +16,15 @@ import axios from "axios";
 
 const leagueApiMap = {
   basketball_wnba:
-    "https://api.the-odds-api.com/v4/sports/basketball_wnba/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+    "https://api.the-odds-api.com/v4/sports/basketball_wnba/odds/?apiKey=7c4bb46f9759f7263e9e0c5e24f195a9&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   basketball_nba:
-    "https://api.the-odds-api.com/v4/sports/basketball_nba/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+    "https://api.the-odds-api.com/v4/sports/basketball_nba/odds/?apiKey=7c4bb46f9759f7263e9e0c5e24f195a9&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   baseball_mlb:
-    "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+    "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?apiKey=7c4bb46f9759f7263e9e0c5e24f195a9&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   americanfootball_nfl:
-    "https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+    "https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds/?apiKey=7c4bb46f9759f7263e9e0c5e24f195a9&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   soccer_epl:
-    "https://api.the-odds-api.com/v4/sports/soccer_epl/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+    "https://api.the-odds-api.com/v4/sports/soccer_epl/odds/?apiKey=7c4bb46f9759f7263e9e0c5e24f195a9&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
 };
 
 const nbaAndWnbaMarkets = [
@@ -114,7 +114,7 @@ const PostYourPicks = () => {
       const fetchGameDetails = async () => {
         try {
           const response = await axios.get(
-            `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGame}`
+            `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=7c4bb46f9759f7263e9e0c5e24f195a9&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGame}`
           );
 
           setGameDetails(response.data[0]);
@@ -131,7 +131,7 @@ const PostYourPicks = () => {
       const fetchMarketDetails = async () => {
         try {
           const response = await axios.get(
-            `https://api.the-odds-api.com/v4/sports/${league}/events/${selectedGame}/odds?apiKey=9a74934bfd1e9d98c6cc43068f53e7ae&regions=us&markets=${market}&oddsFormat=american&bookmakers=fanduel`
+            `https://api.the-odds-api.com/v4/sports/${league}/events/${selectedGame}/odds?apiKey=7c4bb46f9759f7263e9e0c5e24f195a9&regions=us&markets=${market}&oddsFormat=american&bookmakers=fanduel`
           );
 
           const outcomes =
