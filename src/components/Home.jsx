@@ -67,7 +67,7 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            Africa's #1 Monthly Free-to-Play Sports Predictions Contest!
+            #1 Monthly Free-to-Play Sports Predictions Contest!
           </Typography>
           <Typography
             variant="h6"
@@ -77,9 +77,8 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            📈 Showcase Your Sports Knowledge and Stand a Chance to Win
-            1,000,000 Naira (or $500 USD) Monthly—Risk-Free! Join Now and Don’t
-            Miss Out!
+            📈 Showcase Your Sports Knowledge and Stand a Chance to Win $500 USD
+            Monthly—Risk-Free! Join Now and Don’t Miss Out!
           </Typography>
           {/* <Typography
             variant="subtitle1"
