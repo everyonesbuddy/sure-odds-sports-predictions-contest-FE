@@ -190,11 +190,15 @@ const PicksOfTheDay = () => {
                 <>
                   <Typography variant="body2">
                     Market: {pick.market.split("_")[0].toUpperCase()}{" "}
-                    {pick.market.split("_")[1]?.toUpperCase()}
+                    {pick.market
+                      .split("_")
+                      .slice(1)
+                      .map((part) => part.toUpperCase())
+                      .join(" + ")}
                   </Typography>
-                  <Typography variant="body2">Odds: {pick.odds}</Typography>
+                  {/* <Typography variant="body2">Odds: {pick.odds}</Typography> */}
                   <Typography variant="body2">
-                    Player Picked: {pick.playerPicked}
+                    Pick: {pick.playerPicked} {pick.propOverOrUnder} {pick.odds}
                   </Typography>
                   {pick.twitterUsername !== "" && (
                     <Typography variant="body2">

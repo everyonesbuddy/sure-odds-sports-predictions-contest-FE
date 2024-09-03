@@ -216,7 +216,7 @@ const Leaderboard = () => {
             borderRadius: 1,
           }}
         >
-          Win 1,000,000 Naira (or $500 USD){" "}
+          Win or $500 USD{" "}
           {/* <Link
             href="https://doinksports.com/?via=sureOdds"
             target="_blank"
