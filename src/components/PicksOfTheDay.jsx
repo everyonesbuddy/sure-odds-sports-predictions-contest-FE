@@ -82,7 +82,7 @@ const PicksOfTheDay = () => {
   };
 
   const getMatchUpData = async (league, gameId) => {
-    const apiKey = "7c4bb46f9759f7263e9e0c5e24f195a9";
+    const apiKey = "ecd8403d91a6f9d3601bbecad890e8a5";
     const url = `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=${apiKey}&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${gameId}`;
 
     try {
