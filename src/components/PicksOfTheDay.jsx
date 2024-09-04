@@ -188,6 +188,29 @@ const PicksOfTheDay = () => {
                         </Link>
                       </Typography>
                     )}
+
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "gray",
+                        mt: 3,
+                        borderRadius: 1,
+                      }}
+                    >
+                      Win{" "}
+                      <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
+                        $500
+                      </span>{" "}
+                      USD for first place Sponsored By{" "}
+                      <Link
+                        href="https://doinksports.com/?via=Sure-Odds"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        Doink Sports
+                      </Link>{" "}
+                      The most complete betting research platform
+                    </Typography>
                   </>
                 ) : (
                   <>
@@ -220,6 +243,29 @@ const PicksOfTheDay = () => {
                         </Link>
                       </Typography>
                     )}
+
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "gray",
+                        mt: 3,
+                        borderRadius: 1,
+                      }}
+                    >
+                      Win{" "}
+                      <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
+                        $500
+                      </span>{" "}
+                      USD for first place Sponsored By{" "}
+                      <Link
+                        href="https://doinksports.com/?via=Sure-Odds"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        Doink Sports
+                      </Link>{" "}
+                      The most complete betting research platform
+                    </Typography>
                   </>
                 )}
               </CardContent>
