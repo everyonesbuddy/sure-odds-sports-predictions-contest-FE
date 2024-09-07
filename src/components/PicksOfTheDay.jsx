@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography, Grid, Link } from "@mui/material";
+// import {
+//   FacebookShareButton,
+//   TwitterShareButton,
+//   LinkedinShareButton,
+// // } from "react-share";
 
 const PicksOfTheDay = () => {
   const [picks, setPicks] = useState([]);
   const [matchupData, setMatchupData] = useState({});
+  // const shareUrl = window.location.href;
+  // const title = "Check out this pick!";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -211,6 +218,18 @@ const PicksOfTheDay = () => {
                       </Link>{" "}
                       The most complete betting research platform
                     </Typography>
+                    {/* Social Share Buttons */}
+                    {/* <div style={{ marginTop: "20px" }}>
+                      <FacebookShareButton url={shareUrl} quote={title}>
+                        <button>Share on Facebook</button>
+                      </FacebookShareButton>
+                      <TwitterShareButton url={shareUrl} title={title}>
+                        <button>Share on Twitter</button>
+                      </TwitterShareButton>
+                      <LinkedinShareButton url={shareUrl} title={title}>
+                        <button>Share on LinkedIn</button>
+                      </LinkedinShareButton>
+                    </div> */}
                   </>
                 ) : (
                   <>
@@ -266,6 +285,18 @@ const PicksOfTheDay = () => {
                       </Link>{" "}
                       The most complete betting research platform
                     </Typography>
+                    {/* Social Share Buttons */}
+                    {/* <div style={{ marginTop: "20px" }}>
+                      <FacebookShareButton url={shareUrl} quote={title}>
+                        <button>Share on Facebook</button>
+                      </FacebookShareButton>
+                      <TwitterShareButton url={shareUrl} title={title}>
+                        <button>Share on Twitter</button>
+                      </TwitterShareButton>
+                      <LinkedinShareButton url={shareUrl} title={title}>
+                        <button>Share on LinkedIn</button>
+                      </LinkedinShareButton>
+                    </div> */}
                   </>
                 )}
               </CardContent>
