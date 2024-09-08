@@ -4,6 +4,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  FormHelperText,
   TextField,
   Card,
   CardContent,
@@ -289,6 +290,9 @@ const PostYourPicks = () => {
               },
             }}
           />
+          {!twitterUsername && (
+            <FormHelperText error>This field is required</FormHelperText>
+          )}
 
           <FormControl
             fullWidth
@@ -326,6 +330,9 @@ const PostYourPicks = () => {
               <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
               <MenuItem value="soccer_epl">EPL ⚽</MenuItem>
             </Select>
+            {!league && (
+              <FormHelperText error>This field is required</FormHelperText>
+            )}
           </FormControl>
 
           {league && (
@@ -366,6 +373,9 @@ const PostYourPicks = () => {
                     )}
                   <MenuItem value="money line">Money Line 💰</MenuItem>
                 </Select>
+                {!pickType && (
+                  <FormHelperText error>This field is required</FormHelperText>
+                )}
               </FormControl>
 
               <FormControl
@@ -423,6 +433,9 @@ const PostYourPicks = () => {
                     <MenuItem disabled>No games available</MenuItem>
                   )}
                 </Select>
+                {!selectedGame && (
+                  <FormHelperText error>This field is required</FormHelperText>
+                )}
               </FormControl>
 
               {pickType === "money line" && gameDetails && (
@@ -482,6 +495,11 @@ const PostYourPicks = () => {
                         </MenuItem>
                       )}
                     </Select>
+                    {!teamPicked && (
+                      <FormHelperText error>
+                        This field is required
+                      </FormHelperText>
+                    )}
                   </FormControl>
                   <TextField
                     label="Odds"
@@ -548,6 +566,11 @@ const PostYourPicks = () => {
                           </MenuItem>
                         ))}
                       </Select>
+                      {!market && (
+                        <FormHelperText error>
+                          This field is required
+                        </FormHelperText>
+                      )}
                     </FormControl>
                   )}
 
@@ -617,6 +640,11 @@ const PostYourPicks = () => {
                           </MenuItem>
                         ))}
                       </Select>
+                      {!playerPickedDetailForView && (
+                        <FormHelperText error>
+                          This field is required
+                        </FormHelperText>
+                      )}
                     </FormControl>
                   ) : (
                     market !== "" && (
