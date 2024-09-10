@@ -67,7 +67,8 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            #1 Monthly Free-to-Play Sports Predictions Contest!
+            Find Trusted Betting Insights—We Track the Handicappers, So You
+            Don’t Have To
           </Typography>
           <Typography
             variant="h6"
@@ -77,8 +78,9 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            📈 Showcase Your Sports Knowledge and Stand a Chance to Win $500 USD
-            Monthly—Risk-Free! Join Now and Don’t Miss Out!
+            📈 Your one-stop platform for tracking the performance of
+            handicappers, tipsters, betting models, and research tools. Bet
+            smarter with reliable data and transparent rankings
           </Typography>
           {/* <Typography
             variant="subtitle1"

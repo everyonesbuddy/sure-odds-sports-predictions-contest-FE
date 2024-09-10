@@ -196,7 +196,7 @@ const PicksOfTheDay = () => {
                       </Typography>
                     )}
 
-                    <Typography
+                    {/* <Typography
                       variant="body2"
                       sx={{
                         color: "gray",
@@ -217,7 +217,7 @@ const PicksOfTheDay = () => {
                         Doink Sports
                       </Link>{" "}
                       The most complete betting research platform
-                    </Typography>
+                    </Typography> */}
                     {/* Social Share Buttons */}
                     {/* <div style={{ marginTop: "20px" }}>
                       <FacebookShareButton url={shareUrl} quote={title}>
@@ -263,7 +263,7 @@ const PicksOfTheDay = () => {
                       </Typography>
                     )}
 
-                    <Typography
+                    {/* <Typography
                       variant="body2"
                       sx={{
                         color: "gray",
@@ -284,7 +284,7 @@ const PicksOfTheDay = () => {
                         Doink Sports
                       </Link>{" "}
                       The most complete betting research platform
-                    </Typography>
+                    </Typography> */}
                     {/* Social Share Buttons */}
                     {/* <div style={{ marginTop: "20px" }}>
                       <FacebookShareButton url={shareUrl} quote={title}>

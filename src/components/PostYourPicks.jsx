@@ -223,8 +223,7 @@ const PostYourPicks = () => {
     <>
       <Typography align="center" gutterBottom>
         🌟 Showcase Your Expertise: Share your top sports picks now to climb the
-        leaderboard 📈, earn money 💰in our Free to play sports prediction
-        contest🚀!
+        leaderboard 📈
       </Typography>
       <Card
         sx={{
