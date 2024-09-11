@@ -244,7 +244,7 @@ const PicksOfTheDay = () => {
                     {/* <Typography variant="body2">Odds: {pick.odds}</Typography> */}
                     <Typography variant="body2">
                       Pick: {pick.playerPicked} {pick.propOverOrUnder}{" "}
-                      {pick.odds}
+                      {pick.propLine} ({pick.odds})
                     </Typography>
                     {pick.twitterUsername !== "" && (
                       <Typography variant="body2">
