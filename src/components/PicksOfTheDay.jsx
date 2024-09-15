@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography, Grid, Link } from "@mui/material";
-// import {
-//   FacebookShareButton,
-//   TwitterShareButton,
-//   LinkedinShareButton,
-// // } from "react-share";
 
 const PicksOfTheDay = () => {
   const [picks, setPicks] = useState([]);
   const [matchupData, setMatchupData] = useState({});
-  // const shareUrl = window.location.href;
-  // const title = "Check out this pick!";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -196,40 +189,24 @@ const PicksOfTheDay = () => {
                       </Typography>
                     )}
 
-                    {/* <Typography
-                      variant="body2"
-                      sx={{
-                        color: "gray",
-                        mt: 3,
-                        borderRadius: 1,
-                      }}
-                    >
-                      Win{" "}
-                      <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
-                        $500
-                      </span>{" "}
-                      USD for first place Sponsored By{" "}
-                      <Link
-                        href="https://doinksports.com/?via=Sure-Odds"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        Doink Sports
-                      </Link>{" "}
-                      The most complete betting research platform
-                    </Typography> */}
-                    {/* Social Share Buttons */}
-                    {/* <div style={{ marginTop: "20px" }}>
-                      <FacebookShareButton url={shareUrl} quote={title}>
-                        <button>Share on Facebook</button>
-                      </FacebookShareButton>
-                      <TwitterShareButton url={shareUrl} title={title}>
-                        <button>Share on Twitter</button>
-                      </TwitterShareButton>
-                      <LinkedinShareButton url={shareUrl} title={title}>
-                        <button>Share on LinkedIn</button>
-                      </LinkedinShareButton>
-                    </div> */}
+                    {pick.researchToolOrModelUsed !== null && (
+                      <Typography variant="body2">
+                        <Link
+                          href={`${
+                            pick.researchToolOrModelUsed.startsWith(
+                              "http://"
+                            ) ||
+                            pick.researchToolOrModelUsed.startsWith("https://")
+                              ? pick.researchToolOrModelUsed
+                              : `http://${pick.researchToolOrModelUsed}`
+                          }`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Research Tool Or Model Used
+                        </Link>
+                      </Typography>
+                    )}
                   </>
                 ) : (
                   <>
@@ -248,7 +225,7 @@ const PicksOfTheDay = () => {
                     </Typography>
                     {pick.twitterUsername !== "" && (
                       <Typography variant="body2">
-                        X Profile:{" "}
+                        X / Reddit Profile:{" "}
                         <Link
                           href={
                             pick.socialType === "twitter"
@@ -262,41 +239,24 @@ const PicksOfTheDay = () => {
                         </Link>
                       </Typography>
                     )}
-
-                    {/* <Typography
-                      variant="body2"
-                      sx={{
-                        color: "gray",
-                        mt: 3,
-                        borderRadius: 1,
-                      }}
-                    >
-                      Win{" "}
-                      <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
-                        $500
-                      </span>{" "}
-                      USD for first place Sponsored By{" "}
-                      <Link
-                        href="https://doinksports.com/?via=Sure-Odds"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        Doink Sports
-                      </Link>{" "}
-                      The most complete betting research platform
-                    </Typography> */}
-                    {/* Social Share Buttons */}
-                    {/* <div style={{ marginTop: "20px" }}>
-                      <FacebookShareButton url={shareUrl} quote={title}>
-                        <button>Share on Facebook</button>
-                      </FacebookShareButton>
-                      <TwitterShareButton url={shareUrl} title={title}>
-                        <button>Share on Twitter</button>
-                      </TwitterShareButton>
-                      <LinkedinShareButton url={shareUrl} title={title}>
-                        <button>Share on LinkedIn</button>
-                      </LinkedinShareButton>
-                    </div> */}
+                    {pick.researchToolOrModelUsed !== null && (
+                      <Typography variant="body2">
+                        <Link
+                          href={`${
+                            pick.researchToolOrModelUsed.startsWith(
+                              "http://"
+                            ) ||
+                            pick.researchToolOrModelUsed.startsWith("https://")
+                              ? pick.researchToolOrModelUsed
+                              : `http://${pick.researchToolOrModelUsed}`
+                          }`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Research Tool Or Model Used
+                        </Link>
+                      </Typography>
+                    )}
                   </>
                 )}
               </CardContent>

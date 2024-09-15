@@ -75,6 +75,7 @@ const PostYourPicks = () => {
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
   const [twitterUsername, setTwitterUsername] = useState("");
+  const [researchToolOrModelUsed, setResearchToolOrModelUsed] = useState("");
   const [socialType, setSocialType] = useState("twitter"); // default value
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState("");
@@ -154,6 +155,7 @@ const PostYourPicks = () => {
     setLeague("");
     setPickType("");
     setTwitterUsername("");
+    setResearchToolOrModelUsed("");
     setGames([]);
     setSelectedGame("");
     setGameDetails(null);
@@ -176,6 +178,7 @@ const PostYourPicks = () => {
       pickType,
       twitterUsername,
       socialType,
+      researchToolOrModelUsed,
       selectedGame,
       teamPicked,
       odds,
@@ -191,6 +194,7 @@ const PostYourPicks = () => {
       league,
       pickType,
       twitterUsername,
+      researchToolOrModelUsed,
       socialType,
       selectedGameId: selectedGame,
       teamPicked,
@@ -409,15 +413,6 @@ const PostYourPicks = () => {
                   label="Game *"
                   onChange={(e) => setSelectedGame(e.target.value)}
                 >
-                  {/* {games.length > 0 ? (
-                    games.map((game) => (
-                      <MenuItem key={game.id} value={game.id}>
-                        {game.home_team} vs {game.away_team}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem disabled>No games available</MenuItem>
-                  )} */}
                   {games.length > 0 ? (
                     games
                       .filter(
@@ -683,6 +678,26 @@ const PostYourPicks = () => {
               )}
             </>
           )}
+
+          <TextField
+            label={`Model or Research Tool Used`}
+            value={researchToolOrModelUsed}
+            onChange={(e) => setResearchToolOrModelUsed(e.target.value)}
+            fullWidth
+            margin="normal"
+            placeholder={`Model or Research Tool Used e.g www.dimers.com`}
+            variant="outlined"
+            sx={{
+              "& .MuiInputBase-root": {
+                borderRadius: "8px",
+                height: "40px",
+                "& input": {
+                  height: "40px",
+                  padding: "10px",
+                },
+              },
+            }}
+          />
 
           <Button
             variant="contained"
