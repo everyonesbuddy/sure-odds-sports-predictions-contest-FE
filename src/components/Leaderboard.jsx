@@ -137,6 +137,7 @@ const Leaderboard = () => {
           numberOfBetsWon: 0,
           potentialWins: 0,
           socialType: bet.socialType,
+          researchTools: [],
         };
       }
       handicappers[username].totalOdds += odds;
@@ -151,6 +152,14 @@ const Leaderboard = () => {
           handicappers[username].potentialWins += 100 * (100 / Math.abs(odds)); // For negative odds
         }
       }
+      if (
+        bet.researchToolOrModelUsed &&
+        !handicappers[username].researchTools.includes(
+          bet.researchToolOrModelUsed
+        )
+      ) {
+        handicappers[username].researchTools.push(bet.researchToolOrModelUsed);
+      }
     });
 
     return Object.entries(handicappers)
@@ -164,6 +173,7 @@ const Leaderboard = () => {
             numberOfBetsWon,
             potentialWins,
             socialType,
+            researchTools,
           },
         ]) => ({
           username,
@@ -174,6 +184,7 @@ const Leaderboard = () => {
           winRatio: (numberOfBetsWon / numberOfBets) * 100, // Calculate win ratio as a percentage
           potentialWins,
           socialType,
+          researchTools,
         })
       )
       .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
@@ -266,14 +277,14 @@ const Leaderboard = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
-                  Partcipants (X or Reddit profile)
+                  Handicapper/Tipster (X or Reddit profile)
                 </TableCell>
                 {!isMobile && <TableCell>Total Won Odds</TableCell>}
                 {!isMobile && <TableCell>Total Won %</TableCell>}
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
                   Potential Wins
                 </TableCell>
-                {/* {!isMobile && <TableCell>Donate to Handicapper</TableCell>} */}
+                {!isMobile && <TableCell>Research Tools/Models used</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -352,6 +363,38 @@ const Leaderboard = () => {
                       </a>
                     </TableCell>
                   )} */}
+                  {!isMobile && (
+                    <TableCell>
+                      {handicapper.researchTools &&
+                      handicapper.researchTools.length > 0
+                        ? handicapper.researchTools.map((tool, index) => {
+                            // Shorten the tool name if it's too long
+                            const shortenedTool =
+                              tool.length > 30
+                                ? `${tool.substring(0, 27)}...`
+                                : tool;
+
+                            // Ensure the URL starts with http:// or https://
+                            const toolUrl =
+                              tool.startsWith("http://") ||
+                              tool.startsWith("https://")
+                                ? tool
+                                : `http://${tool}`;
+                            return (
+                              <a
+                                key={index}
+                                href={toolUrl} // Use the full URL directly
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ display: "block" }} // Display each tool on a new line
+                              >
+                                {shortenedTool}
+                              </a>
+                            );
+                          })
+                        : "-"}
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
