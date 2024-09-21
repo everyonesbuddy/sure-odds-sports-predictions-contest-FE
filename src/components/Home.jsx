@@ -6,6 +6,7 @@ import CustomTabPanel from "./CustomTabPanel";
 import PostYourPicks from "./PostYourPicks";
 import PicksOfTheDay from "./PicksOfTheDay";
 import Leaderboard from "./Leaderboard";
+import ModelLeaderboard from "./ModelLeaderboard";
 // import KofiWidget from "./KofiWidget";
 import TournamentDetails from "./TournamentDetails";
 
@@ -82,17 +83,6 @@ const Home = () => {
             handicappers, tipsters, betting models, and research tools. Bet
             smarter with reliable data and transparent rankings
           </Typography>
-          {/* <Typography
-            variant="subtitle1"
-            sx={{
-              color: "gray",
-              mb: 3,
-              borderRadius: 1,
-            }}
-          >
-            🏆Weekly Contests: Compete in our free-to-play contests every week.
-            The best predictors win prizes! 💰
-          </Typography> */}
           <div>
             <iframe
               src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"
@@ -135,7 +125,7 @@ const Home = () => {
             }}
           >
             <Tab
-              label="Leaderboard 🏆"
+              label="Handicapper Leaderboard 🏆"
               {...a11yProps(0)}
               sx={{
                 color: "#4F46E5",
@@ -143,7 +133,7 @@ const Home = () => {
               }}
             />
             <Tab
-              label="Post Your Picks ✏️"
+              label="Model Leaderboard 🥇"
               {...a11yProps(1)}
               sx={{
                 color: "#4F46E5",
@@ -159,8 +149,16 @@ const Home = () => {
               }}
             />
             <Tab
-              label="Details 🔍"
+              label="Post Your Picks ✏️"
               {...a11yProps(3)}
+              sx={{
+                color: "#4F46E5",
+                fontSize: "10px",
+              }}
+            />
+            <Tab
+              label="Details 🔍"
+              {...a11yProps(4)}
               sx={{
                 color: "#4F46E5",
                 fontSize: "10px",
@@ -172,12 +170,15 @@ const Home = () => {
           <Leaderboard />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <PostYourPicks />
+          <ModelLeaderboard />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
           <PicksOfTheDay />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={3}>
+          <PostYourPicks />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={4}>
           <TournamentDetails />
         </CustomTabPanel>
       </Box>

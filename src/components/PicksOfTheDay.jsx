@@ -132,137 +132,151 @@ const PicksOfTheDay = () => {
 
   return (
     <Grid container spacing={2} sx={{ mb: 2 }}>
-      {picks
-        .slice()
-        .reverse()
-        .map((pick, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card
-              raised
-              sx={{
-                borderRadius: "16px",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {getLeagueName(pick.league)}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ fontSize: "0.875rem", color: "text.secondary" }}
-                >
-                  Matchup: {matchupData[pick.selectedGameId] || "Loading..."}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Bet Type: {pick.pickType}
-                </Typography>
-                <Typography variant="body2">
-                  Game Commence Time: {formatDate(pick.gameCommenceTime)}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={getStatusStyles(getGameStatus(pick.gameCommenceTime))}
-                >
-                  {getGameStatus(pick.gameCommenceTime)}
-                </Typography>
-                {pick.pickType === "money line" ? (
-                  <>
-                    <Typography variant="body2">
-                      Pick: {pick.teamPicked}
-                    </Typography>
-                    <Typography variant="body2">Odds: {pick.odds}</Typography>
-                    {pick.twitterUsername !== "" && (
+      {picks.length === 0 ? (
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ width: "100%", textAlign: "center", mt: 2 }}
+        >
+          Currently no live picks available. Please check back shortly!
+        </Typography>
+      ) : (
+        picks
+          .slice()
+          .reverse()
+          .map((pick, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card
+                raised
+                sx={{
+                  borderRadius: "16px",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                }}
+              >
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {getLeagueName(pick.league)}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontSize: "0.875rem", color: "text.secondary" }}
+                  >
+                    Matchup: {matchupData[pick.selectedGameId] || "Loading..."}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Bet Type: {pick.pickType}
+                  </Typography>
+                  <Typography variant="body2">
+                    Game Commence Time: {formatDate(pick.gameCommenceTime)}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={getStatusStyles(getGameStatus(pick.gameCommenceTime))}
+                  >
+                    {getGameStatus(pick.gameCommenceTime)}
+                  </Typography>
+                  {pick.pickType === "money line" ? (
+                    <>
                       <Typography variant="body2">
-                        X or Reddit Profile:{" "}
-                        <Link
-                          href={
-                            pick.socialType === "twitter"
-                              ? `https://x.com/${pick.twitterUsername}`
-                              : `https://www.reddit.com/user/${pick.twitterUsername}`
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {pick.twitterUsername}
-                        </Link>
+                        Pick: {pick.teamPicked}
                       </Typography>
-                    )}
+                      <Typography variant="body2">Odds: {pick.odds}</Typography>
+                      {pick.twitterUsername !== "" && (
+                        <Typography variant="body2">
+                          X or Reddit Profile:{" "}
+                          <Link
+                            href={
+                              pick.socialType === "twitter"
+                                ? `https://x.com/${pick.twitterUsername}`
+                                : `https://www.reddit.com/user/${pick.twitterUsername}`
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {pick.twitterUsername}
+                          </Link>
+                        </Typography>
+                      )}
 
-                    {pick.researchToolOrModelUsed !== null && (
+                      {pick.researchToolOrModelUsed !== null && (
+                        <Typography variant="body2">
+                          <Link
+                            href={`${
+                              pick.researchToolOrModelUsed.startsWith(
+                                "http://"
+                              ) ||
+                              pick.researchToolOrModelUsed.startsWith(
+                                "https://"
+                              )
+                                ? pick.researchToolOrModelUsed
+                                : `http://${pick.researchToolOrModelUsed}`
+                            }`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Research Tool Or Model Used
+                          </Link>
+                        </Typography>
+                      )}
+                    </>
+                  ) : (
+                    <>
                       <Typography variant="body2">
-                        <Link
-                          href={`${
-                            pick.researchToolOrModelUsed.startsWith(
-                              "http://"
-                            ) ||
-                            pick.researchToolOrModelUsed.startsWith("https://")
-                              ? pick.researchToolOrModelUsed
-                              : `http://${pick.researchToolOrModelUsed}`
-                          }`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Research Tool Or Model Used
-                        </Link>
+                        Market: {pick.market.split("_")[0].toUpperCase()}{" "}
+                        {pick.market
+                          .split("_")
+                          .slice(1)
+                          .map((part) => part.toUpperCase())
+                          .join(" + ")}
                       </Typography>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <Typography variant="body2">
-                      Market: {pick.market.split("_")[0].toUpperCase()}{" "}
-                      {pick.market
-                        .split("_")
-                        .slice(1)
-                        .map((part) => part.toUpperCase())
-                        .join(" + ")}
-                    </Typography>
-                    {/* <Typography variant="body2">Odds: {pick.odds}</Typography> */}
-                    <Typography variant="body2">
-                      Pick: {pick.playerPicked} {pick.propOverOrUnder}{" "}
-                      {pick.propLine} ({pick.odds})
-                    </Typography>
-                    {pick.twitterUsername !== "" && (
+                      {/* <Typography variant="body2">Odds: {pick.odds}</Typography> */}
                       <Typography variant="body2">
-                        X / Reddit Profile:{" "}
-                        <Link
-                          href={
-                            pick.socialType === "twitter"
-                              ? `https://x.com/${pick.twitterUsername}`
-                              : `https://www.reddit.com/user/${pick.twitterUsername}`
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {pick.twitterUsername}
-                        </Link>
+                        Pick: {pick.playerPicked} {pick.propOverOrUnder}{" "}
+                        {pick.propLine} ({pick.odds})
                       </Typography>
-                    )}
-                    {pick.researchToolOrModelUsed !== null && (
-                      <Typography variant="body2">
-                        <Link
-                          href={`${
-                            pick.researchToolOrModelUsed.startsWith(
-                              "http://"
-                            ) ||
-                            pick.researchToolOrModelUsed.startsWith("https://")
-                              ? pick.researchToolOrModelUsed
-                              : `http://${pick.researchToolOrModelUsed}`
-                          }`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Research Tool Or Model Used
-                        </Link>
-                      </Typography>
-                    )}
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+                      {pick.twitterUsername !== "" && (
+                        <Typography variant="body2">
+                          X / Reddit Profile:{" "}
+                          <Link
+                            href={
+                              pick.socialType === "twitter"
+                                ? `https://x.com/${pick.twitterUsername}`
+                                : `https://www.reddit.com/user/${pick.twitterUsername}`
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {pick.twitterUsername}
+                          </Link>
+                        </Typography>
+                      )}
+                      {pick.researchToolOrModelUsed !== null && (
+                        <Typography variant="body2">
+                          <Link
+                            href={`${
+                              pick.researchToolOrModelUsed.startsWith(
+                                "http://"
+                              ) ||
+                              pick.researchToolOrModelUsed.startsWith(
+                                "https://"
+                              )
+                                ? pick.researchToolOrModelUsed
+                                : `http://${pick.researchToolOrModelUsed}`
+                            }`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Research Tool Or Model Used
+                          </Link>
+                        </Typography>
+                      )}
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+          ))
+      )}
     </Grid>
   );
 };
