@@ -225,7 +225,7 @@ const PostYourPicks = () => {
 
   return (
     <>
-      <Typography align="center" gutterBottom>
+      <Typography align="center" gutterBottom sx={{ paddingTop: "15px" }}>
         🌟 Showcase Your Expertise: Share your top sports picks now to climb the
         leaderboard 📈
       </Typography>
@@ -235,6 +235,13 @@ const PostYourPicks = () => {
           mb: 12,
           borderRadius: "16px",
           boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+          maxWidth: "600px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          margin: "auto",
+          marginTop: 5,
         }}
       >
         <CardContent>

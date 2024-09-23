@@ -3,12 +3,9 @@ import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
-import PostYourPicks from "./PostYourPicks";
-import PicksOfTheDay from "./PicksOfTheDay";
 import Leaderboard from "./Leaderboard";
 import ModelLeaderboard from "./ModelLeaderboard";
 // import KofiWidget from "./KofiWidget";
-import TournamentDetails from "./TournamentDetails";
 
 // const affiliates = [
 //   {
@@ -140,30 +137,6 @@ const Home = () => {
                 fontSize: isMobile ? "8px" : "10px",
               }}
             />
-            <Tab
-              label="Live Picks ⚡"
-              {...a11yProps(2)}
-              sx={{
-                color: "#4F46E5",
-                fontSize: "10px",
-              }}
-            />
-            <Tab
-              label="Post Your Picks ✏️"
-              {...a11yProps(3)}
-              sx={{
-                color: "#4F46E5",
-                fontSize: "10px",
-              }}
-            />
-            <Tab
-              label="Details 🔍"
-              {...a11yProps(4)}
-              sx={{
-                color: "#4F46E5",
-                fontSize: "10px",
-              }}
-            />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
@@ -171,15 +144,6 @@ const Home = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <ModelLeaderboard />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          <PicksOfTheDay />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={3}>
-          <PostYourPicks />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={4}>
-          <TournamentDetails />
         </CustomTabPanel>
       </Box>
       {/* <KofiWidget /> */}

@@ -160,15 +160,44 @@ const ModelLeaderboard = () => {
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
                   Model/Research Tool
                 </TableCell>
-                {!isMobile && <TableCell>Total Won Odds</TableCell>}
-                {!isMobile && <TableCell>Total Won %</TableCell>}
+                {!isMobile && (
+                  <TableCell>
+                    Total Won Odds{" "}
+                    <Tooltip title="Total amount of odds for bets that were won">
+                      <IconButton size="small">
+                        <HelpOutlineIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                )}
+                {!isMobile && (
+                  <TableCell>
+                    Total Won %
+                    <Tooltip title="Percentage of bets won out of total bets made">
+                      <IconButton size="small">
+                        <HelpOutlineIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                )}
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
                   Potential Wins
+                  <Tooltip title="Potential earnings based on a $100 bet for each winning bet, adjusted for the odds">
+                    <IconButton size="small">
+                      <HelpOutlineIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {aggregateBets(filteredBets).map((handicapper, index) => {
+                // Shorten the tool name if it's too long
+                const shortenedTool =
+                  handicapper.username.length > 25
+                    ? `${handicapper.username.substring(0, 20)}...`
+                    : handicapper.username;
+
                 const toolUrl =
                   handicapper.username.startsWith("http://") ||
                   handicapper.username.startsWith("https://")
@@ -203,39 +232,22 @@ const ModelLeaderboard = () => {
                           rel="noopener noreferrer"
                           style={{ fontSize: isMobile ? "10px" : "inherit" }}
                         >
-                          {handicapper.username}
+                          {shortenedTool}
                         </a>
                       )}
                     </TableCell>
                     {!isMobile && (
-                      <TableCell>
-                        {handicapper.totalWonOdds}
-                        <Tooltip title="Total amount of odds for bets that were won">
-                          <IconButton size="small">
-                            <HelpOutlineIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
+                      <TableCell>{handicapper.totalWonOdds}</TableCell>
                     )}
                     {!isMobile && (
                       <TableCell>
                         ({handicapper.numberOfBetsWon} /{" "}
                         {handicapper.numberOfBets}){" "}
                         {handicapper.winRatio.toFixed(2)}%
-                        <Tooltip title="Percentage of bets won out of total bets made">
-                          <IconButton size="small">
-                            <HelpOutlineIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
                       </TableCell>
                     )}
                     <TableCell sx={{ fontSize: isMobile ? "10px" : "inherit" }}>
                       ${handicapper.potentialWins.toFixed(2)}
-                      <Tooltip title="Potential earnings based on a $100 bet for each winning bet, adjusted for the odds">
-                        <IconButton size="small">
-                          <HelpOutlineIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 );

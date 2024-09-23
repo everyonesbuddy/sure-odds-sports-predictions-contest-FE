@@ -131,7 +131,7 @@ const PicksOfTheDay = () => {
   };
 
   return (
-    <Grid container spacing={2} sx={{ mb: 2 }}>
+    <Grid container spacing={2} sx={{ mb: 2, mt: 2, padding: 2 }}>
       {picks.length === 0 ? (
         <Typography
           variant="h6"

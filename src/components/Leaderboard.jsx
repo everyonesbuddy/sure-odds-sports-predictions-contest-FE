@@ -279,10 +279,33 @@ const Leaderboard = () => {
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
                   Handicapper/Tipster (X or Reddit profile)
                 </TableCell>
-                {!isMobile && <TableCell>Total Won Odds</TableCell>}
-                {!isMobile && <TableCell>Total Won %</TableCell>}
+                {!isMobile && (
+                  <TableCell>
+                    Total Won Odds
+                    <Tooltip title="Total amount of odds for bets that were won">
+                      <IconButton size="small">
+                        <HelpOutlineIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                )}
+                {!isMobile && (
+                  <TableCell>
+                    Total Won %{" "}
+                    <Tooltip title="Percentage of bets won out of total bets made">
+                      <IconButton size="small">
+                        <HelpOutlineIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                )}
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
                   Potential Wins
+                  <Tooltip title="Potential earnings based on a $100 bet for each winning bet, adjusted for the odds">
+                    <IconButton size="small">
+                      <HelpOutlineIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
                 {!isMobile && <TableCell>Research Tools/Models used</TableCell>}
               </TableRow>
@@ -317,52 +340,18 @@ const Leaderboard = () => {
                     </a>
                   </TableCell>
                   {!isMobile && (
-                    <TableCell>
-                      {handicapper.totalWonOdds}
-                      <Tooltip title="Total amount of odds for bets that were won">
-                        <IconButton size="small">
-                          <HelpOutlineIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
+                    <TableCell>{handicapper.totalWonOdds}</TableCell>
                   )}
                   {!isMobile && (
                     <TableCell>
                       ({handicapper.numberOfBetsWon} /{" "}
                       {handicapper.numberOfBets}){" "}
                       {handicapper.winRatio.toFixed(2)}%
-                      <Tooltip title="Percentage of bets won out of total bets made">
-                        <IconButton size="small">
-                          <HelpOutlineIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
                     </TableCell>
                   )}
                   <TableCell sx={{ fontSize: isMobile ? "10px" : "inherit" }}>
                     ${handicapper.potentialWins.toFixed(2)}
-                    <Tooltip title="Potential earnings based on a $100 bet for each winning bet, adjusted for the odds">
-                      <IconButton size="small">
-                        <HelpOutlineIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
                   </TableCell>
-                  {/* {!isMobile && (
-                    <TableCell>
-                      <a
-                        href="https://ko-fi.com/S6S710USRI"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <img
-                          height="36"
-                          style={{ border: "0px", height: "36px" }}
-                          src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"
-                          border="0"
-                          alt="Buy Me a Coffee at ko-fi.com"
-                        />
-                      </a>
-                    </TableCell>
-                  )} */}
                   {!isMobile && (
                     <TableCell>
                       {handicapper.researchTools &&
@@ -370,8 +359,8 @@ const Leaderboard = () => {
                         ? handicapper.researchTools.map((tool, index) => {
                             // Shorten the tool name if it's too long
                             const shortenedTool =
-                              tool.length > 30
-                                ? `${tool.substring(0, 27)}...`
+                              tool.length > 25
+                                ? `${tool.substring(0, 20)}...`
                                 : tool;
 
                             // Ensure the URL starts with http:// or https://

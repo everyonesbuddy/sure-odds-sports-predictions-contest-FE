@@ -3,14 +3,15 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  // Button,
+  Button,
   IconButton,
   Drawer,
   List,
   ListItem,
   ListItemText,
-  // Box,
+  Box,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const Nav = () => {
@@ -38,6 +39,30 @@ const Nav = () => {
       >
         <ListItemText primary="Donate to Handicappers" />
       </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/picksOfTheDay"
+        onClick={toggleDrawer(false)}
+      >
+        <ListItemText primary="Live Picks" />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/postYourPicks"
+        onClick={toggleDrawer(false)}
+      >
+        <ListItemText primary="Post Your Picks" />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/about"
+        onClick={toggleDrawer(false)}
+      >
+        <ListItemText primary="About" />
+      </ListItem>
     </List>
   );
 
@@ -54,20 +79,40 @@ const Nav = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Sure Odds
+          <Link to="/" style={{ textDecoration: "none", color: "#ffffff" }}>
+            Sure Odds
+          </Link>
         </Typography>
-        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
-            <a
-              href="https://ko-fi.com/sureodds"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/picksOfTheDay"
               style={{ textDecoration: "none", color: "#ffffff" }}
             >
-              Donate to Handicappers
-            </a>
+              Live Picks
+            </Link>
           </Button>
-        </Box> */}
+        </Box>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Button color="inherit" style={{ fontSize: "12px" }}>
+            <Link
+              to="/postYourPicks"
+              style={{ textDecoration: "none", color: "#ffffff" }}
+            >
+              post your picks
+            </Link>
+          </Button>
+        </Box>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Button color="inherit" style={{ fontSize: "12px" }}>
+            <Link
+              to="/about"
+              style={{ textDecoration: "none", color: "#ffffff" }}
+            >
+              about
+            </Link>
+          </Button>
+        </Box>
       </Toolbar>
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         {drawerList}

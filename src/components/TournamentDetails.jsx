@@ -92,6 +92,7 @@ const TournamentDetails = () => {
           backgroundColor: "background.paper",
           maxWidth: 600,
           margin: "auto",
+          marginTop: 5,
         }}
       >
         <Typography align="center" gutterBottom>
