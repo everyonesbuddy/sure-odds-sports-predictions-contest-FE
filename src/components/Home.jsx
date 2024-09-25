@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import ModelLeaderboard from "./ModelLeaderboard";
-// import KofiWidget from "./KofiWidget";
+import KofiWidget from "./KofiWidget";
 
 // const affiliates = [
 //   {
@@ -146,7 +146,7 @@ const Home = () => {
           <ModelLeaderboard />
         </CustomTabPanel>
       </Box>
-      {/* <KofiWidget /> */}
+      <KofiWidget />
     </>
   );
 };

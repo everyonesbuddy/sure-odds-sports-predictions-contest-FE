@@ -32,12 +32,12 @@ const Nav = () => {
       <ListItem
         button
         component="a"
-        href="https://buymeacoffee.com/sureodds"
+        href="https://ko-fi.com/sureodds"
         target="_blank"
         rel="noopener noreferrer"
         onClick={toggleDrawer(false)}
       >
-        <ListItemText primary="Donate to Handicappers" />
+        <ListItemText primary="Donate" />
       </ListItem>
       <ListItem
         button
@@ -83,6 +83,17 @@ const Nav = () => {
             Sure Odds
           </Link>
         </Typography>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Button color="inherit" style={{ fontSize: "12px" }}>
+            <Link
+              to="https://ko-fi.com/sureodds"
+              target="_blank"
+              style={{ textDecoration: "none", color: "#ffffff" }}
+            >
+              Donate
+            </Link>
+          </Button>
+        </Box>
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
