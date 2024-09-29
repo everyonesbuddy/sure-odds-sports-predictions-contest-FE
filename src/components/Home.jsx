@@ -4,8 +4,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
-import ModelLeaderboard from "./ModelLeaderboard";
-import KofiWidget from "./KofiWidget";
+// import ModelLeaderboard from "./ModelLeaderboard";
+import PostYourPicks from "./PostYourPicks";
+// import KofiWidget from "./KofiWidget";
 
 // const affiliates = [
 //   {
@@ -65,8 +66,9 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            Find Trusted Betting Insights—We Track the Handicappers, So You
-            Don’t Have To
+            {/* Find Trusted Betting Insights—We Track the Handicappers, So You
+            Don’t Have To */}
+            Join the premier free-to-play sports prediction contest!
           </Typography>
           <Typography
             variant="h6"
@@ -76,9 +78,11 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            📈 Your one-stop platform for tracking the performance of
+            {/* 📈 Your one-stop platform for tracking the performance of
             handicappers, tipsters, betting models, and research tools. Bet
-            smarter with reliable data and transparent rankings
+            smarter with reliable data and transparent rankings */}
+            📈 Compete with fellow bettors and win money to fund a sportsbook of
+            your choice!
           </Typography>
           <div>
             <iframe
@@ -122,7 +126,7 @@ const Home = () => {
             }}
           >
             <Tab
-              label="Handicapper Leaderboard 🏆"
+              label="Leaderboard 🏆"
               {...a11yProps(0)}
               sx={{
                 color: "#4F46E5",
@@ -130,7 +134,7 @@ const Home = () => {
               }}
             />
             <Tab
-              label="Model Leaderboard 🥇"
+              label="Post Your Picks 🥇"
               {...a11yProps(1)}
               sx={{
                 color: "#4F46E5",
@@ -143,10 +147,10 @@ const Home = () => {
           <Leaderboard />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <ModelLeaderboard />
+          <PostYourPicks />
         </CustomTabPanel>
       </Box>
-      <KofiWidget />
+      {/* <KofiWidget /> */}
     </>
   );
 };

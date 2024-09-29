@@ -382,8 +382,8 @@ const PostYourPicks = () => {
   return (
     <>
       <Typography align="center" gutterBottom sx={{ paddingTop: "15px" }}>
-        🌟 Showcase Your Expertise: Share your top sports picks now to climb the
-        leaderboard 📈
+        🌟 Join the Contest: Share your top sports picks now to climb the
+        leaderboard, and win 📈
       </Typography>
       {/* Pick 1 */}
       <Card

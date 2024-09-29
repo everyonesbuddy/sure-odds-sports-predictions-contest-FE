@@ -9,8 +9,8 @@ import {
   Paper,
   Tooltip,
   IconButton,
-  // Link,
-  // Typography,
+  Link,
+  Typography,
   Button,
   Box,
   Avatar,
@@ -20,39 +20,25 @@ import {
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import axios from "axios";
 import moment from "moment";
-// import Countdown from "react-countdown";
-
-// const stripeApiKey = process.env.REACT_APP_STRIPE_API_KEY;
+import Countdown from "react-countdown";
 
 // Countdown renderer component
-// const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
-//   if (completed) {
-//     return <span style={{ color: "red" }}>The tournament has ended!</span>;
-//   } else {
-//     return (
-//       <span style={{ color: "red" }}>
-//         {days} days {hours} hours {minutes} minutes {seconds} seconds
-//       </span>
-//     );
-//   }
-// };
+const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    return <span style={{ color: "red" }}>The tournament has ended!</span>;
+  } else {
+    return (
+      <span style={{ color: "red" }}>
+        {days} days {hours} hours {minutes} minutes {seconds} seconds
+      </span>
+    );
+  }
+};
 
 const Leaderboard = () => {
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
   const [filter, setFilter] = useState("all");
-  // const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
-
-  // const [balance, setBalance] = useState(null);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setIsMobile(window.innerWidth <= 600);
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -67,22 +53,6 @@ const Leaderboard = () => {
     };
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("https://api.stripe.com/v1/balance", {
-  //         headers: {
-  //           Authorization: `Bearer ${stripeApiKey}`,
-  //         },
-  //       });
-  //       setBalance(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching balance:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     const now = moment();
@@ -102,24 +72,6 @@ const Leaderboard = () => {
     });
     setFilteredBets(filtered);
   }, [filter, betsData]);
-
-  // const formatAmount = (amount) => {
-  //   return (amount / 100).toFixed(2);
-  // };
-
-  // const getTotalBalance = () => {
-  //   if (!balance) return "Loading...";
-  //   const availableAmount = balance.available.reduce(
-  //     (acc, item) => acc + item.amount,
-  //     0
-  //   );
-  //   const pendingAmount = balance.pending.reduce(
-  //     (acc, item) => acc + item.amount,
-  //     0
-  //   );
-  //   const totalAmount = availableAmount + pendingAmount;
-  //   return formatAmount(totalAmount);
-  // };
 
   const aggregateBets = (bets) => {
     const handicappers = {};
@@ -191,16 +143,16 @@ const Leaderboard = () => {
   };
 
   // Calculate the end time of the tournament for week
-  // const getTournamentEndTime = () => {
-  //   const now = moment().utcOffset(-4); // EST is UTC-4
-  //   const dayOfWeek = now.day();
-  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-  //   const nextSunday = now
-  //     .clone()
-  //     .add(daysUntilSunday, "days")
-  //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-  //   return nextSunday.toDate();
-  // };
+  const getTournamentEndTime = () => {
+    const now = moment().utcOffset(-4); // EST is UTC-4
+    const dayOfWeek = now.day();
+    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+    const nextSunday = now
+      .clone()
+      .add(daysUntilSunday, "days")
+      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+    return nextSunday.toDate();
+  };
 
   // Calculate the end time of the tournament for month
   // const getTournamentEndTime = () => {
@@ -214,12 +166,12 @@ const Leaderboard = () => {
 
   return (
     <>
-      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
+      <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="h6">Countdown to Tournament End:</Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
-      </Box> */}
+      </Box>
 
-      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
+      <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography
           variant="subtitle1"
           sx={{
@@ -229,8 +181,8 @@ const Leaderboard = () => {
           }}
         >
           Win{" "}
-          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$500</span>{" "}
-          USD for first place sponsored by{" "}
+          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$100</span>{" "}
+          USD to the sportbook of your choice sponsored by{" "}
           <Link
             href="https://doinksports.com/?via=Sure-Odds"
             target="_blank"
@@ -240,12 +192,7 @@ const Leaderboard = () => {
           </Link>{" "}
           The most complete betting research platform
         </Typography>
-      </Box> */}
-
-      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography variant="h6">Current Week Prize Pool:</Typography>
-        <Typography variant="h4">${getTotalBalance()}</Typography>
-      </Box> */}
+      </Box>
 
       <Box>
         <Box sx={{ display: "flex", justifyContent: "space-around", p: 2 }}>
@@ -277,7 +224,7 @@ const Leaderboard = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
-                  Handicapper/Tipster (X or Reddit profile)
+                  Participant (X or Reddit profile)
                 </TableCell>
                 {!isMobile && (
                   <TableCell>

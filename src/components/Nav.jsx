@@ -29,7 +29,7 @@ const Nav = () => {
 
   const drawerList = (
     <List>
-      <ListItem
+      {/* <ListItem
         button
         component="a"
         href="https://ko-fi.com/sureodds"
@@ -38,7 +38,7 @@ const Nav = () => {
         onClick={toggleDrawer(false)}
       >
         <ListItemText primary="Donate" />
-      </ListItem>
+      </ListItem> */}
       <ListItem
         button
         component={Link}
@@ -47,14 +47,14 @@ const Nav = () => {
       >
         <ListItemText primary="Live Picks" />
       </ListItem>
-      <ListItem
+      {/* <ListItem
         button
         component={Link}
         to="/postYourPicks"
         onClick={toggleDrawer(false)}
       >
         <ListItemText primary="Post Your Picks" />
-      </ListItem>
+      </ListItem> */}
       <ListItem
         button
         component={Link}
@@ -83,7 +83,7 @@ const Nav = () => {
             Sure Odds
           </Link>
         </Typography>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
               to="https://ko-fi.com/sureodds"
@@ -93,7 +93,7 @@ const Nav = () => {
               Donate
             </Link>
           </Button>
-        </Box>
+        </Box> */}
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
@@ -104,7 +104,7 @@ const Nav = () => {
             </Link>
           </Button>
         </Box>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
               to="/postYourPicks"
@@ -113,14 +113,14 @@ const Nav = () => {
               post your picks
             </Link>
           </Button>
-        </Box>
+        </Box> */}
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
               to="/about"
               style={{ textDecoration: "none", color: "#ffffff" }}
             >
-              about
+              About
             </Link>
           </Button>
         </Box>
