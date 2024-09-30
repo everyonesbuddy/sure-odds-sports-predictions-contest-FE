@@ -143,31 +143,33 @@ const Leaderboard = () => {
   };
 
   // Calculate the end time of the tournament for week
-  const getTournamentEndTime = () => {
-    const now = moment().utcOffset(-4); // EST is UTC-4
-    const dayOfWeek = now.day();
-    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-    const nextSunday = now
-      .clone()
-      .add(daysUntilSunday, "days")
-      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-    return nextSunday.toDate();
-  };
-
-  // Calculate the end time of the tournament for month
   // const getTournamentEndTime = () => {
   //   const now = moment().utcOffset(-4); // EST is UTC-4
-  //   const endOfMonth = now
+  //   const dayOfWeek = now.day();
+  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+  //   const nextSunday = now
   //     .clone()
-  //     .endOf("month")
+  //     .add(daysUntilSunday, "days")
   //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-  //   return endOfMonth.toDate();
+  //   return nextSunday.toDate();
   // };
+
+  // Calculate the end time of the tournament for month
+  const getTournamentEndTime = () => {
+    const now = moment().utcOffset(-4); // EST is UTC-4
+    const endOfMonth = now
+      .clone()
+      .endOf("month")
+      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+    return endOfMonth.toDate();
+  };
 
   return (
     <>
       <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography variant="h6">Countdown to Tournament End:</Typography>
+        <Typography variant="body2">
+          Countdown to Current Monthly Tournament End:
+        </Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
       </Box>
 
@@ -181,7 +183,7 @@ const Leaderboard = () => {
           }}
         >
           Win{" "}
-          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$100</span>{" "}
+          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$500</span>{" "}
           USD to the sportbook of your choice sponsored by{" "}
           <Link
             href="https://doinksports.com/?via=Sure-Odds"

@@ -26,26 +26,26 @@ const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
 
 const TournamentDetails = () => {
   // Calculate the end time of the tournament for week
-  const getTournamentEndTime = () => {
-    const now = moment().utcOffset(-4); // EST is UTC-4
-    const dayOfWeek = now.day();
-    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-    const nextSunday = now
-      .clone()
-      .add(daysUntilSunday, "days")
-      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-    return nextSunday.toDate();
-  };
-
-  // Calculate the end time of the tournament for month
   // const getTournamentEndTime = () => {
   //   const now = moment().utcOffset(-4); // EST is UTC-4
-  //   const endOfMonth = now
+  //   const dayOfWeek = now.day();
+  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+  //   const nextSunday = now
   //     .clone()
-  //     .endOf("month")
+  //     .add(daysUntilSunday, "days")
   //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-  //   return endOfMonth.toDate();
+  //   return nextSunday.toDate();
   // };
+
+  // Calculate the end time of the tournament for month
+  const getTournamentEndTime = () => {
+    const now = moment().utcOffset(-4); // EST is UTC-4
+    const endOfMonth = now
+      .clone()
+      .endOf("month")
+      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+    return endOfMonth.toDate();
+  };
 
   return (
     <>
@@ -100,7 +100,7 @@ const TournamentDetails = () => {
             <ListItem>
               <ListItemText
                 primary="🔍 Performance Tracking & Leaderboards"
-                secondary="Each picks are tracked based on a simulated $100 wager per pick. Our rankings are built on ROI (return on investment) and accuracy over time, so you can see who’s consistently delivering results."
+                secondary="Each picks are tracked based on a simulated $500 wager per pick. Our rankings are built on ROI (return on investment) and accuracy over time, so you can see who’s consistently delivering results."
               />
             </ListItem>
             <ListItem>
@@ -111,7 +111,9 @@ const TournamentDetails = () => {
       </Box>
 
       <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography variant="h6">Countdown to Tournament End:</Typography>
+        <Typography variant="body2">
+          Countdown to Current Monthly Tournament End:
+        </Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
       </Box>
     </>

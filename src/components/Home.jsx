@@ -82,7 +82,7 @@ const Home = () => {
             handicappers, tipsters, betting models, and research tools. Bet
             smarter with reliable data and transparent rankings */}
             📈 Compete with fellow bettors and win money to fund a sportsbook of
-            your choice!
+            your choice, every month!
           </Typography>
           <div>
             <iframe
