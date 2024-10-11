@@ -5,7 +5,7 @@ import {
   ListItem,
   ListItemText,
   Box,
-  Link,
+  // Link,
 } from "@mui/material";
 // import axios from "axios";
 import moment from "moment";
@@ -83,14 +83,14 @@ const TournamentDetails = () => {
                 primary="💵 Prizes"
                 secondary={
                   <>
-                    First Place: Win $500 to fund a sportsbook of your choice!{" "}
-                    <Link
+                    First Place: Win $100 cas prize!{" "}
+                    {/* <Link
                       href="https://doinksports.com/?via=sureOdds"
                       target="_blank"
                       rel="noopener"
                     >
                       Doink Sports
-                    </Link>
+                    </Link> */}
                     {/* . Second Place receives just a ticket to their favorite
                     team's game. */}
                   </>

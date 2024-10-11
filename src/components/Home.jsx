@@ -68,7 +68,7 @@ const Home = () => {
           >
             {/* Find Trusted Betting Insights—We Track the Handicappers, So You
             Don’t Have To */}
-            Join the premier free-to-play sports prediction contest!
+            Africas premier Pick'em sports prediction contest!
           </Typography>
           <Typography
             variant="h6"
@@ -81,8 +81,8 @@ const Home = () => {
             {/* 📈 Your one-stop platform for tracking the performance of
             handicappers, tipsters, betting models, and research tools. Bet
             smarter with reliable data and transparent rankings */}
-            📈 Compete with fellow bettors and win money to fund a sportsbook of
-            your choice, every month!
+            📈 Compete with fellow bettors and win money to win cash prizes and
+            more!
           </Typography>
           <div>
             <iframe
