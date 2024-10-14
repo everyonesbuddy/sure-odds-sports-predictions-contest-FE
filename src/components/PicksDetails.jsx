@@ -295,7 +295,7 @@ import {
   Box,
 } from "@mui/material";
 
-const PicksOfTheDay = () => {
+const PicksDetails = () => {
   const [userBets, setUserBets] = useState({});
   const [matchupData, setMatchupData] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -404,9 +404,21 @@ const PicksOfTheDay = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredUserBets = Object.keys(userBets).filter((username) =>
-    username.toLowerCase().includes(searchTerm.toLowerCase())
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const filteredUserBets = shuffleArray(
+    Object.keys(userBets).filter((username) =>
+      username.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   );
+
+  console.log(filteredUserBets);
 
   return (
     <div>
@@ -496,10 +508,10 @@ const PicksOfTheDay = () => {
                       mt: 2,
                     }}
                   >
-                    Live Picks Preview:
+                    {username} Live Picks Preview:
                   </Typography>
                   {userBets[username].liveBets.length === 0 ? (
-                    <Typography variant="body2">No live picks</Typography>
+                    <Typography variant="body2">No live preview</Typography>
                   ) : (
                     userBets[username].liveBets.map((bet, idx) => (
                       <Box key={idx} sx={{ mt: 1 }}>
@@ -552,7 +564,7 @@ const PicksOfTheDay = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      here
+                      Here
                     </Link>
                   </Typography>
                 </CardContent>
@@ -565,4 +577,4 @@ const PicksOfTheDay = () => {
   );
 };
 
-export default PicksOfTheDay;
+export default PicksDetails;

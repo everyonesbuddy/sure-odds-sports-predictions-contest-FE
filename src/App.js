@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import Leaderboard from "./components/Leaderboard";
 import PostYourPicks from "./components/PostYourPicks";
 import TournamentDetails from "./components/TournamentDetails";
-import PicksOfTheDay from "./components/PicksOfTheDay";
+import PicksDetails from "./components/PicksDetails";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/postYourPicks" element={<PostYourPicks />} />
         <Route path="/about" element={<TournamentDetails />} />
-        <Route path="/picksOfTheDay" element={<PicksOfTheDay />} />
+        <Route path="/picksDetails" element={<PicksDetails />} />
       </Routes>
     </Router>
   );

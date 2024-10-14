@@ -42,7 +42,7 @@ const Nav = () => {
       <ListItem
         button
         component={Link}
-        to="/picksOfTheDay"
+        to="/picksDetails"
         onClick={toggleDrawer(false)}
       >
         <ListItemText primary="Live Picks" />
@@ -97,10 +97,10 @@ const Nav = () => {
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
-              to="/picksOfTheDay"
+              to="/picksDetails"
               style={{ textDecoration: "none", color: "#ffffff" }}
             >
-              Live Picks
+              Picks Details
             </Link>
           </Button>
         </Box>
