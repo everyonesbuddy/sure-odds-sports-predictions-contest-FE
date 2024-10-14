@@ -8,21 +8,21 @@ import {
   // Link,
 } from "@mui/material";
 // import axios from "axios";
-import moment from "moment";
-import Countdown from "react-countdown";
+// import moment from "moment";
+// import Countdown from "react-countdown";
 
 // Countdown renderer component
-const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
-  if (completed) {
-    return <span style={{ color: "red" }}>The tournament has ended!</span>;
-  } else {
-    return (
-      <span style={{ color: "red" }}>
-        {days} days {hours} hours {minutes} minutes {seconds} seconds
-      </span>
-    );
-  }
-};
+// const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
+//   if (completed) {
+//     return <span style={{ color: "red" }}>The tournament has ended!</span>;
+//   } else {
+//     return (
+//       <span style={{ color: "red" }}>
+//         {days} days {hours} hours {minutes} minutes {seconds} seconds
+//       </span>
+//     );
+//   }
+// };
 
 const TournamentDetails = () => {
   // Calculate the end time of the tournament for week
@@ -38,14 +38,14 @@ const TournamentDetails = () => {
   // };
 
   // Calculate the end time of the tournament for month
-  const getTournamentEndTime = () => {
-    const now = moment().utcOffset(-4); // EST is UTC-4
-    const endOfMonth = now
-      .clone()
-      .endOf("month")
-      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-    return endOfMonth.toDate();
-  };
+  // const getTournamentEndTime = () => {
+  //   const now = moment().utcOffset(-4); // EST is UTC-4
+  //   const endOfMonth = now
+  //     .clone()
+  //     .endOf("month")
+  //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+  //   return endOfMonth.toDate();
+  // };
 
   return (
     <>
@@ -78,25 +78,25 @@ const TournamentDetails = () => {
                 secondary="Our business is a free-to-play sports prediction platform designed to engage global sports fans in friendly competition. We believe in creating an inclusive space where everyone can participate, share their passion for sports, and enjoy the excitement of predicting outcomes without any financial risk. By fostering a fun and competitive environment, we aim to bring fans together and elevate their sports experience."
               />
             </ListItem>
-            <ListItem>
+            {/* <ListItem>
               <ListItemText
                 primary="💵 Prizes"
                 secondary={
                   <>
-                    First Place: Win $100 cas prize!{" "}
-                    {/* <Link
+                    First Place: Win $100 cas prize!{" "} */}
+            {/* <Link
                       href="https://doinksports.com/?via=sureOdds"
                       target="_blank"
                       rel="noopener"
                     >
                       Doink Sports
                     </Link> */}
-                    {/* . Second Place receives just a ticket to their favorite
+            {/* . Second Place receives just a ticket to their favorite
                     team's game. */}
-                  </>
-                }
-              />
-            </ListItem>
+            {/* </> */}
+            {/* //   }
+              // /> */}
+            {/* </ListItem> */}
             <ListItem>
               <ListItemText
                 primary="🔍 Performance Tracking & Leaderboards"
@@ -110,12 +110,12 @@ const TournamentDetails = () => {
         </Typography>
       </Box>
 
-      <Box sx={{ textAlign: "center", mb: 2 }}>
+      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="body2">
           Countdown to Current Monthly Tournament End:
         </Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
-      </Box>
+      </Box> */}
     </>
   );
 };

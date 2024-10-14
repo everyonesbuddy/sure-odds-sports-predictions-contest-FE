@@ -6,7 +6,7 @@ import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 // import ModelLeaderboard from "./ModelLeaderboard";
 import PostYourPicks from "./PostYourPicks";
-// import KofiWidget from "./KofiWidget";
+import KofiWidget from "./KofiWidget";
 
 // const affiliates = [
 //   {
@@ -66,9 +66,7 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            {/* Find Trusted Betting Insights—We Track the Handicappers, So You
-            Don’t Have To */}
-            Africas premier Pick'em sports prediction contest!
+            Discover Winning Sports Betting Handicappers, Tipsters and Models!
           </Typography>
           <Typography
             variant="h6"
@@ -78,11 +76,8 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            {/* 📈 Your one-stop platform for tracking the performance of
-            handicappers, tipsters, betting models, and research tools. Bet
-            smarter with reliable data and transparent rankings */}
-            📈 Compete with fellow bettors and win money to win cash prizes and
-            more!
+            📈 We track the performance of handicappers, tipsters, betting
+            models, and research tools.
           </Typography>
           <div>
             <iframe
@@ -150,7 +145,7 @@ const Home = () => {
           <PostYourPicks />
         </CustomTabPanel>
       </Box>
-      {/* <KofiWidget /> */}
+      <KofiWidget />
     </>
   );
 };
