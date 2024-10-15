@@ -39,14 +39,14 @@ const Nav = () => {
       >
         <ListItemText primary="Donate" />
       </ListItem> */}
-      <ListItem
+      {/* <ListItem
         button
         component={Link}
         to="/picksDetails"
         onClick={toggleDrawer(false)}
       >
         <ListItemText primary="Live Picks" />
-      </ListItem>
+      </ListItem> */}
       {/* <ListItem
         button
         component={Link}
@@ -94,7 +94,7 @@ const Nav = () => {
             </Link>
           </Button>
         </Box> */}
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
               to="/picksDetails"
@@ -103,7 +103,7 @@ const Nav = () => {
               Picks Details
             </Link>
           </Button>
-        </Box>
+        </Box> */}
         {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link

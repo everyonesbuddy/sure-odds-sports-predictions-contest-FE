@@ -68,14 +68,14 @@ const TournamentDetails = () => {
           <List style={{ listStyleType: "none", padding: 0 }}>
             <ListItem>
               <ListItemText
-                primary="🏆 Compete and Win: Join Our Free-to-Play Sports Prediction Contest!"
-                secondary="Our platform allows everyday bettors to showcase their skills in predicting sports outcomes. Whether you’re a casual fan or a seasoned bettor, you can compete for exciting prizes while enjoying the thrill of the game!"
+                primary="About Us"
+                secondary="At SureOdds, we bring transparency and trust to sports betting by tracking the real performance of top handicappers and models. Our goal is simple: help bettors make informed decisions by showing who’s delivering results, while giving handicappers the visibility they deserve."
               />
             </ListItem>
             <ListItem>
               <ListItemText
-                primary="📈 Why We Do This"
-                secondary="Our business is a free-to-play sports prediction platform designed to engage global sports fans in friendly competition. We believe in creating an inclusive space where everyone can participate, share their passion for sports, and enjoy the excitement of predicting outcomes without any financial risk. By fostering a fun and competitive environment, we aim to bring fans together and elevate their sports experience."
+                primary="Why We Do This"
+                secondary="With so much noise in the betting world, it’s hard to know who’s actually winning. We’re here to change that. By using data and tracking performance, we help bettors find proven winners and give handicappers a platform to showcase their expertise based on facts, not hype."
               />
             </ListItem>
             {/* <ListItem>
@@ -99,12 +99,15 @@ const TournamentDetails = () => {
             {/* </ListItem> */}
             <ListItem>
               <ListItemText
-                primary="🔍 Performance Tracking & Leaderboards"
+                primary="Performance Tracking & Leaderboards"
                 secondary="Each picks are tracked based on a simulated $500 wager per pick. Our rankings are built on ROI (return on investment) and accuracy over time, so you can see who’s consistently delivering results."
               />
             </ListItem>
             <ListItem>
-              <ListItemText primary="✨ Good Luck and Happy Predicting! 🎉" />
+              <ListItemText
+                primary="Supporting Handicappers"
+                secondary="We don’t sell or give away handicappers’ picks. Instead, we focus on their performance data, showing past results to build credibility. Bettors can tip handicappers directly on our platform, and handicappers can pay for sponsored spots to boost visibility without disrupting their business. Our goal is to help handicappers grow while keeping their picks valuable."
+              />
             </ListItem>
           </List>
         </Typography>

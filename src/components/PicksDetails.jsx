@@ -490,7 +490,7 @@ const PicksDetails = () => {
                   <Box
                     sx={{
                       display: "flex",
-                      // justifyContent: "space-between",
+                      justifyContent: "center",
                       mt: 1,
                     }}
                   >
