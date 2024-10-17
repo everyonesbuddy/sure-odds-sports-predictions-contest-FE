@@ -1261,9 +1261,9 @@ const PostYourPicks = () => {
                         {(league2 === "basketball_nba" ||
                         league2 === "basketball_wnba"
                           ? nbaAndWnbaMarkets
-                          : league === "baseball_mlb"
+                          : league2 === "baseball_mlb"
                           ? mlbMarkets
-                          : league === "icehockey_nhl"
+                          : league2 === "icehockey_nhl"
                           ? nhlMarkets
                           : nflMarkets
                         ).map((market) => (
