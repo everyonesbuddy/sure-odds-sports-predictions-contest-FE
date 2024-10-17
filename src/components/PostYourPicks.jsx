@@ -26,13 +26,22 @@ const leagueApiMap = {
     "https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   soccer_epl:
     "https://api.the-odds-api.com/v4/sports/soccer_epl/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+  soccer_germany_bundesliga:
+    "https://api.the-odds-api.com/v4/sports/soccer_germany_bundesliga/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+  soccer_italy_serie_a:
+    "https://api.the-odds-api.com/v4/sports/soccer_italy_serie_a/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+  soccer_spain_la_liga:
+    "https://api.the-odds-api.com/v4/sports/soccer_spain_la_liga/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+  soccer_usa_mls:
+    "https://api.the-odds-api.com/v4/sports/soccer_usa_mls/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+  icehockey_nhl:
+    "https://api.the-odds-api.com/v4/sports/icehockey_nhl/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
 };
 
 const nbaAndWnbaMarkets = [
   { key: "player_points", name: "Points (Over/Under)" },
   { key: "player_rebounds", name: "Rebounds (Over/Under)" },
   { key: "player_assists", name: "Assists (Over/Under)" },
-  // { key: "player_threes", name: "Threes (Over/Under)" },
   { key: "player_blocks", name: "Blocks (Over/Under)" },
   { key: "player_steals", name: "Steals (Over/Under)" },
   { key: "player_blocks_steals", name: "Blocks + Steals (Over/Under)" },
@@ -48,7 +57,6 @@ const nbaAndWnbaMarkets = [
 
 const mlbMarkets = [
   { key: "batter_home_runs", name: "Batter home runs (Over/Under)" },
-  // { key: "batter_first_home_run", name: "Batter first home run (Yes/No)" },
   { key: "batter_hits", name: "Batter hits (Over/Under)" },
   { key: "batter_total_bases", name: "Batter total bases (Over/Under)" },
   { key: "batter_rbis", name: "Batter RBIs (Over/Under)" },
@@ -64,11 +72,33 @@ const mlbMarkets = [
   { key: "batter_strikeouts", name: "Batter strikeouts (Over/Under)" },
   { key: "batter_stolen_bases", name: "Batter stolen bases (Over/Under)" },
   { key: "pitcher_strikeouts", name: "Pitcher strikeouts (Over/Under)" },
-  // { key: "pitcher_record_a_win", name: "Pitcher to record a win (Yes/No)" },
   { key: "pitcher_hits_allowed", name: "Pitcher hits allowed (Over/Under)" },
   { key: "pitcher_walks", name: "Pitcher walks (Over/Under)" },
   { key: "pitcher_earned_runs", name: "Pitcher earned runs (Over/Under)" },
   { key: "pitcher_outs", name: "Pitcher outs (Over/Under)" },
+];
+
+const nflMarkets = [
+  { key: "player_pass_attempts", name: "Pass Attempts (Over/Under)" },
+  { key: "player_pass_completions", name: "Pass Completions (Over/Under)" },
+  { key: "player_pass_interceptions", name: "Pass Interceptions (Over/Under)" },
+  { key: "player_pass_yds", name: "Pass Yards (Over/Under)" },
+  { key: "player_rush_yds", name: "Rush Yards (Over/Under)" },
+  { key: "player_reception_yds", name: "Reception Yards (Over/Under)" },
+  { key: "player_receptions", name: "Receptions (Over/Under)" },
+  // {
+  //   key: "player_rush_reception_tds",
+  //   name: "Rush + Reception Touchdowns (Over/Under)",
+  // },
+  { key: "player_pass_tds", name: "Pass Touchdowns (Over/Under)" },
+  { key: "player_rush_attempts", name: "Rush Attempts (Over/Under)" },
+];
+
+const nhlMarkets = [
+  { key: "player_goals", name: "Player Goals (Over/Under)" },
+  { key: "player_assists", name: "Player Assists (Over/Under)" },
+  // { key: "player_shots_on_goal", name: "Shots on goal  (Over/Under)" },
+  { key: "player_total_saves", name: "Total saves (Over/Under)" },
 ];
 
 const PostYourPicks = () => {
@@ -494,7 +524,14 @@ const PostYourPicks = () => {
               {/* <MenuItem value="basketball_nba">NBA 🏀</MenuItem> */}
               <MenuItem value="baseball_mlb">MLB ⚾</MenuItem>
               <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
+              <MenuItem value="icehockey_nhl">NHL 🏒</MenuItem>
               <MenuItem value="soccer_epl">EPL ⚽</MenuItem>
+              <MenuItem value="soccer_germany_bundesliga">
+                Bundesliga ⚽
+              </MenuItem>
+              <MenuItem value="soccer_italy_serie_a">Serie A ⚽</MenuItem>
+              <MenuItem value="soccer_spain_la_liga"> La Liga ⚽</MenuItem>
+              <MenuItem value="soccer_usa_mls"> MLS ⚽</MenuItem>
             </Select>
             {!league && (
               <FormHelperText error>This field is required</FormHelperText>
@@ -534,7 +571,10 @@ const PostYourPicks = () => {
                   onChange={(e) => setPickType(e.target.value)}
                 >
                   {league !== "soccer_epl" &&
-                    league !== "americanfootball_nfl" && (
+                    league !== "soccer_germany_bundesliga" &&
+                    league !== "soccer_italy_serie_a" &&
+                    league !== "soccer_spain_la_liga" &&
+                    league !== "soccer_usa_mls" && (
                       <MenuItem value="props">Props 🎲</MenuItem>
                     )}
                   <MenuItem value="money line">Money Line 💰</MenuItem>
@@ -716,7 +756,11 @@ const PostYourPicks = () => {
                         {(league === "basketball_nba" ||
                         league === "basketball_wnba"
                           ? nbaAndWnbaMarkets
-                          : mlbMarkets
+                          : league === "baseball_mlb"
+                          ? mlbMarkets
+                          : league === "icehockey_nhl"
+                          ? nhlMarkets
+                          : nflMarkets
                         ).map((market) => (
                           <MenuItem key={market.key} value={market.key}>
                             {market.name}
@@ -985,7 +1029,14 @@ const PostYourPicks = () => {
               {/* <MenuItem value="basketball_nba">NBA 🏀</MenuItem> */}
               <MenuItem value="baseball_mlb">MLB ⚾</MenuItem>
               <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
+              <MenuItem value="icehockey_nhl">NHL 🏒</MenuItem>
               <MenuItem value="soccer_epl">EPL ⚽</MenuItem>
+              <MenuItem value="soccer_germany_bundesliga">
+                Bundesliga ⚽
+              </MenuItem>
+              <MenuItem value="soccer_italy_serie_a">Serie A ⚽</MenuItem>
+              <MenuItem value="soccer_spain_la_liga"> La Liga ⚽</MenuItem>
+              <MenuItem value="soccer_usa_mls"> MLS ⚽</MenuItem>
             </Select>
             {!league2 && (
               <FormHelperText error>This field is required</FormHelperText>
@@ -1025,7 +1076,10 @@ const PostYourPicks = () => {
                   onChange={(e) => setPickType2(e.target.value)}
                 >
                   {league2 !== "soccer_epl" &&
-                    league2 !== "americanfootball_nfl" && (
+                    league2 !== "soccer_germany_bundesliga" &&
+                    league2 !== "soccer_italy_serie_a" &&
+                    league2 !== "soccer_spain_la_liga" &&
+                    league2 !== "soccer_usa_mls" && (
                       <MenuItem value="props">Props 🎲</MenuItem>
                     )}
                   <MenuItem value="money line">Money Line 💰</MenuItem>
@@ -1207,7 +1261,11 @@ const PostYourPicks = () => {
                         {(league2 === "basketball_nba" ||
                         league2 === "basketball_wnba"
                           ? nbaAndWnbaMarkets
-                          : mlbMarkets
+                          : league === "baseball_mlb"
+                          ? mlbMarkets
+                          : league === "icehockey_nhl"
+                          ? nhlMarkets
+                          : nflMarkets
                         ).map((market) => (
                           <MenuItem key={market.key} value={market.key}>
                             {market.name}
