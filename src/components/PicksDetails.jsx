@@ -378,6 +378,11 @@ const PicksDetails = () => {
       baseball_mlb: "MLB ⚾",
       americanfootball_nfl: "NFL 🏈",
       soccer_epl: "EPL ⚽",
+      icehockey_nhl: "NHL 🏒",
+      soccer_germany_bundesliga: "Bundesliga ⚽",
+      soccer_italy_serie_a: "Serie A ⚽",
+      soccer_spain_la_liga: "La Liga ⚽",
+      soccer_usa_mls: "MLS ⚽",
     };
 
     return leagueNames[leagueCode] || leagueCode;
