@@ -88,7 +88,7 @@ const TournamentDetails = () => {
                 secondary={
                   <>
                     First Place: Win $100 cash prize and a free 2 months
-                    subcription to{" "}
+                    subscription to{" "}
                     <Link
                       href="https://doinksports.com/?via=sureOdds"
                       target="_blank"

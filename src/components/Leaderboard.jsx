@@ -184,7 +184,7 @@ const Leaderboard = () => {
         >
           Win{" "}
           <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$100</span>{" "}
-          USD cash prize and a free 2 months subcription to {""}
+          USD cash prize and a free 2 months subscription to {""}
           <Link
             href="https://doinksports.com/?via=Sure-Odds"
             target="_blank"
