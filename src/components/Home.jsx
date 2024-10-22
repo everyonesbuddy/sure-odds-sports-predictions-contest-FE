@@ -5,8 +5,8 @@ import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 // import ModelLeaderboard from "./ModelLeaderboard";
-// import PostYourPicks from "./PostYourPicks";
-import PicksDetails from "./PicksDetails";
+import PostYourPicks from "./PostYourPicks";
+// import PicksDetails from "./PicksDetails";
 import KofiWidget from "./KofiWidget";
 
 // const affiliates = [
@@ -131,7 +131,7 @@ const Home = () => {
               }}
             />
             <Tab
-              label="Picks Details🥇"
+              label="Post Your Picks🥇"
               {...a11yProps(1)}
               sx={{
                 color: "#4F46E5",
@@ -144,7 +144,7 @@ const Home = () => {
           <Leaderboard />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <PicksDetails />
+          <PostYourPicks />
         </CustomTabPanel>
       </Box>
       <KofiWidget />
