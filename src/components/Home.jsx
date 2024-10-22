@@ -67,7 +67,7 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            Discover Winning Sports Betting Handicappers, Tipsters and Models!
+            The #1 Global Free-to-Play Sports Pick'em Contest
           </Typography>
           <Typography
             variant="h6"
@@ -77,8 +77,9 @@ const Home = () => {
               borderRadius: 1,
             }}
           >
-            📈 We track the performance of handicappers, tipsters, betting
-            models, and research tools.
+            Think you can predict the game? Compete in our free-to-play pick'em
+            contests for a chance to win amazing prizes. It’s free, fun, and
+            global!
           </Typography>
           <div>
             <iframe

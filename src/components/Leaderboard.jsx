@@ -9,8 +9,8 @@ import {
   Paper,
   Tooltip,
   IconButton,
-  // Link,
-  // Typography,
+  Link,
+  Typography,
   Button,
   Box,
   Avatar,
@@ -20,20 +20,20 @@ import {
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import axios from "axios";
 import moment from "moment";
-// import Countdown from "react-countdown";
+import Countdown from "react-countdown";
 
 // Countdown renderer component
-// const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
-//   if (completed) {
-//     return <span style={{ color: "red" }}>The tournament has ended!</span>;
-//   } else {
-//     return (
-//       <span style={{ color: "red" }}>
-//         {days} days {hours} hours {minutes} minutes {seconds} seconds
-//       </span>
-//     );
-//   }
-// };
+const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    return <span style={{ color: "red" }}>The tournament has ended!</span>;
+  } else {
+    return (
+      <span style={{ color: "red" }}>
+        {days} days {hours} hours {minutes} minutes {seconds} seconds
+      </span>
+    );
+  }
+};
 
 const Leaderboard = () => {
   const [betsData, setBetsData] = useState([]);
@@ -143,16 +143,16 @@ const Leaderboard = () => {
   };
 
   // Calculate the end time of the tournament for week
-  // const getTournamentEndTime = () => {
-  //   const now = moment().utcOffset(-4); // EST is UTC-4
-  //   const dayOfWeek = now.day();
-  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-  //   const nextSunday = now
-  //     .clone()
-  //     .add(daysUntilSunday, "days")
-  //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-  //   return nextSunday.toDate();
-  // };
+  const getTournamentEndTime = () => {
+    const now = moment().utcOffset(-4); // EST is UTC-4
+    const dayOfWeek = now.day();
+    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+    const nextSunday = now
+      .clone()
+      .add(daysUntilSunday, "days")
+      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+    return nextSunday.toDate();
+  };
 
   // Calculate the end time of the tournament for month
   // const getTournamentEndTime = () => {
@@ -166,14 +166,14 @@ const Leaderboard = () => {
 
   return (
     <>
-      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
+      <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="body2">
           Countdown to Current Monthly Tournament End:
         </Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
-      </Box> */}
+      </Box>
 
-      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
+      <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography
           variant="subtitle1"
           sx={{
@@ -184,17 +184,17 @@ const Leaderboard = () => {
         >
           Win{" "}
           <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$100</span>{" "}
-          USD cash prize{" "} */}
-      {/* <Link
+          USD cash prize and a free 2 months subcription to {""}
+          <Link
             href="https://doinksports.com/?via=Sure-Odds"
             target="_blank"
             rel="noopener"
           >
             Doink Sports
           </Link>{" "}
-          The most complete betting research platform */}
-      {/* </Typography>
-      </Box> */}
+          The most complete betting research platform
+        </Typography>
+      </Box>
 
       <Box>
         <Box sx={{ display: "flex", justifyContent: "space-around", p: 2 }}>
