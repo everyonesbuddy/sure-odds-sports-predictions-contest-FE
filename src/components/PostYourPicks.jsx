@@ -520,8 +520,8 @@ const PostYourPicks = () => {
               label="League *"
               onChange={(e) => setLeague(e.target.value)}
             >
-              <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem>
-              {/* <MenuItem value="basketball_nba">NBA 🏀</MenuItem> */}
+              {/* <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem> */}
+              <MenuItem value="basketball_nba">NBA 🏀</MenuItem>
               <MenuItem value="baseball_mlb">MLB ⚾</MenuItem>
               <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
               <MenuItem value="icehockey_nhl">NHL 🏒</MenuItem>
@@ -1025,8 +1025,8 @@ const PostYourPicks = () => {
               label="League *"
               onChange={(e) => setLeague2(e.target.value)}
             >
-              <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem>
-              {/* <MenuItem value="basketball_nba">NBA 🏀</MenuItem> */}
+              {/* <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem> */}
+              <MenuItem value="basketball_nba">NBA 🏀</MenuItem>
               <MenuItem value="baseball_mlb">MLB ⚾</MenuItem>
               <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
               <MenuItem value="icehockey_nhl">NHL 🏒</MenuItem>
