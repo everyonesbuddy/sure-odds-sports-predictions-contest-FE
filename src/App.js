@@ -6,6 +6,8 @@ import Leaderboard from "./components/Leaderboard";
 import PostYourPicks from "./components/PostYourPicks";
 import TournamentDetails from "./components/TournamentDetails";
 import PicksDetails from "./components/PicksDetails";
+import Blog from "./components/Blog";
+import BlogPost from "./components/BlogPost";
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
         <Route path="/postYourPicks" element={<PostYourPicks />} />
         <Route path="/about" element={<TournamentDetails />} />
         <Route path="/picksDetails" element={<PicksDetails />} />
+        <Route path="/blogs" element={<Blog />} />
+        <Route path="/blogs/:slug/:id" element={<BlogPost />} />
       </Routes>
     </Router>
   );

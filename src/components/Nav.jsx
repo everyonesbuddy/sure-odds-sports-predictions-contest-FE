@@ -63,6 +63,14 @@ const Nav = () => {
       >
         <ListItemText primary="About" />
       </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/blogs"
+        onClick={toggleDrawer(false)}
+      >
+        <ListItemText primary="Blog" />
+      </ListItem>
     </List>
   );
 
@@ -121,6 +129,16 @@ const Nav = () => {
               style={{ textDecoration: "none", color: "#ffffff" }}
             >
               About
+            </Link>
+          </Button>
+        </Box>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Button color="inherit" style={{ fontSize: "12px" }}>
+            <Link
+              to="/blogs"
+              style={{ textDecoration: "none", color: "#ffffff" }}
+            >
+              Blog
             </Link>
           </Button>
         </Box>
