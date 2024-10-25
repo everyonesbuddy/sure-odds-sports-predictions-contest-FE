@@ -7,7 +7,6 @@ import {
   Box,
   Link,
 } from "@mui/material";
-// import axios from "axios";
 import moment from "moment";
 import Countdown from "react-countdown";
 
@@ -25,18 +24,6 @@ const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
 };
 
 const TournamentDetails = () => {
-  // Calculate the end time of the tournament for week
-  // const getTournamentEndTime = () => {
-  //   const now = moment().utcOffset(-4); // EST is UTC-4
-  //   const dayOfWeek = now.day();
-  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-  //   const nextSunday = now
-  //     .clone()
-  //     .add(daysUntilSunday, "days")
-  //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-  //   return nextSunday.toDate();
-  // };
-
   // Calculate the end time of the tournament for month
   const getTournamentEndTime = () => {
     const now = moment().utcOffset(-4); // EST is UTC-4
@@ -76,12 +63,6 @@ const TournamentDetails = () => {
               Join us today, make your picks, and see if you have what it takes to be a champion!"
               />
             </ListItem>
-            {/* <ListItem>
-              <ListItemText
-                primary="Why We Do This"
-                secondary="With so much noise in the betting world, it’s hard to know who’s actually winning. We’re here to change that. By using data and tracking performance, we help bettors find proven winners and give handicappers a platform to showcase their expertise based on facts, not hype."
-              />
-            </ListItem> */}
             <ListItem>
               <ListItemText
                 primary="💵 Prizes"
