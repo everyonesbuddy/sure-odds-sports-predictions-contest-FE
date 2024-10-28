@@ -6,7 +6,7 @@ import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 // import ModelLeaderboard from "./ModelLeaderboard";
 import PostYourPicks from "./PostYourPicks";
-// import PicksDetails from "./PicksDetails";
+import PicksDetails from "./PicksDetails";
 import KofiWidget from "./KofiWidget";
 
 // const affiliates = [
@@ -138,6 +138,14 @@ const Home = () => {
                 fontSize: isMobile ? "8px" : "10px",
               }}
             />
+            <Tab
+              label="Pick Details📊"
+              {...a11yProps(1)}
+              sx={{
+                color: "#4F46E5",
+                fontSize: isMobile ? "8px" : "10px",
+              }}
+            />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
@@ -145,6 +153,9 @@ const Home = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <PostYourPicks />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          <PicksDetails />
         </CustomTabPanel>
       </Box>
       <KofiWidget />
