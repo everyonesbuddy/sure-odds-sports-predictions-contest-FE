@@ -443,7 +443,7 @@ const PostYourPicks = () => {
               },
             }}
           >
-            <InputLabel id="social-type-label">Social Type</InputLabel>
+            {/* <InputLabel id="social-type-label">Social Type</InputLabel>
             <Select
               labelId="social-type-label"
               id="socialType"
@@ -453,16 +453,16 @@ const PostYourPicks = () => {
             >
               <MenuItem value="twitter">X (Twitter)</MenuItem>
               <MenuItem value="reddit">Reddit</MenuItem>
-            </Select>
+            </Select> */}
           </FormControl>
           <TextField
-            label={`${socialType} username *`}
+            label={`Enter Your Email*`}
             value={twitterUsername}
             onChange={handleTwitterUsernameChange}
             fullWidth
             color={!twitterUsername ? "error" : "primary"}
             margin="normal"
-            placeholder={`${socialType} username e.g sure_odds2023`}
+            placeholder={`Email e.g info@sure-odds.com`}
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {
@@ -886,7 +886,7 @@ const PostYourPicks = () => {
             </>
           )}
 
-          <TextField
+          {/* <TextField
             label={`Model or Research Tool Used`}
             value={researchToolOrModelUsed}
             onChange={(e) => setResearchToolOrModelUsed(e.target.value)}
@@ -904,7 +904,7 @@ const PostYourPicks = () => {
                 },
               },
             }}
-          />
+          /> */}
 
           <Button
             variant="contained"
@@ -946,7 +946,7 @@ const PostYourPicks = () => {
               },
             }}
           >
-            <InputLabel id="social-type-label">Social Type</InputLabel>
+            {/* <InputLabel id="social-type-label">Social Type</InputLabel>
             <Select
               labelId="social-type-label"
               id="socialType"
@@ -956,16 +956,16 @@ const PostYourPicks = () => {
             >
               <MenuItem value="twitter">X (Twitter)</MenuItem>
               <MenuItem value="reddit">Reddit</MenuItem>
-            </Select>
+            </Select> */}
           </FormControl>
           <TextField
-            label={`${socialType2} username *`}
+            label={`Enter Your Email*`}
             value={twitterUsername2}
             onChange={handleTwitterUsernameChange2}
             fullWidth
             color={!twitterUsername2 ? "error" : "primary"}
             margin="normal"
-            placeholder={`${socialType2} username e.g sure_odds2023`}
+            placeholder={`Email e.g info@sure-odds.com`}
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {
@@ -1391,7 +1391,7 @@ const PostYourPicks = () => {
             </>
           )}
 
-          <TextField
+          {/* <TextField
             label={`Model or Research Tool Used`}
             value={researchToolOrModelUsed2}
             onChange={(e) => setResearchToolOrModelUsed2(e.target.value)}
@@ -1409,7 +1409,7 @@ const PostYourPicks = () => {
                 },
               },
             }}
-          />
+          /> */}
 
           <Button
             variant="contained"

@@ -226,7 +226,7 @@ const Leaderboard = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
-                  Participant (X or Reddit profile)
+                  Participant (Email)
                 </TableCell>
                 {!isMobile && (
                   <TableCell>
@@ -275,7 +275,7 @@ const Leaderboard = () => {
                         marginRight: 1,
                       }}
                     />
-                    <a
+                    {/* <a
                       href={
                         handicapper.socialType === "twitter"
                           ? `https://x.com/${handicapper.username}`
@@ -286,7 +286,8 @@ const Leaderboard = () => {
                       style={{ fontSize: isMobile ? "10px" : "inherit" }}
                     >
                       {handicapper.username}
-                    </a>
+                    </a> */}
+                    {handicapper.username}
                   </TableCell>
                   {!isMobile && (
                     <TableCell>{handicapper.totalWonOdds}</TableCell>

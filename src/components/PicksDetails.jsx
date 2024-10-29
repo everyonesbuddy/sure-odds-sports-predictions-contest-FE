@@ -5,7 +5,6 @@ import {
   CardContent,
   Typography,
   Grid,
-  Link,
   TextField,
   Box,
 } from "@mui/material";
@@ -227,7 +226,7 @@ const PicksDetails = () => {
               >
                 <CardContent>
                   <Typography variant="h5" component="div">
-                    <Link
+                    {/* <Link
                       href={
                         userBets[username].allBets[0].socialType === "twitter"
                           ? `https://x.com/${username}`
@@ -237,7 +236,9 @@ const PicksDetails = () => {
                       rel="noopener noreferrer"
                     >
                       {username}
-                    </Link>
+                    </Link> */}
+
+                    {username}
                   </Typography>
                   <Typography
                     variant="body2"
