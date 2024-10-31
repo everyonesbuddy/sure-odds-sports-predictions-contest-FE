@@ -47,14 +47,6 @@ const Nav = () => {
       >
         <ListItemText primary="Live Picks" />
       </ListItem> */}
-      {/* <ListItem
-        button
-        component={Link}
-        to="/postYourPicks"
-        onClick={toggleDrawer(false)}
-      >
-        <ListItemText primary="Post Your Picks" />
-      </ListItem> */}
       <ListItem
         button
         component={Link}
@@ -70,6 +62,14 @@ const Nav = () => {
         onClick={toggleDrawer(false)}
       >
         <ListItemText primary="Blog" />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/personalizedAnalytics"
+        onClick={toggleDrawer(false)}
+      >
+        <ListItemText primary="personalized Analytics" />
       </ListItem>
     </List>
   );
@@ -112,16 +112,6 @@ const Nav = () => {
             </Link>
           </Button>
         </Box> */}
-        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <Button color="inherit" style={{ fontSize: "12px" }}>
-            <Link
-              to="/postYourPicks"
-              style={{ textDecoration: "none", color: "#ffffff" }}
-            >
-              post your picks
-            </Link>
-          </Button>
-        </Box> */}
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
@@ -139,6 +129,16 @@ const Nav = () => {
               style={{ textDecoration: "none", color: "#ffffff" }}
             >
               Blog
+            </Link>
+          </Button>
+        </Box>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Button color="inherit" style={{ fontSize: "12px" }}>
+            <Link
+              to="/personalizedAnalytics"
+              style={{ textDecoration: "none", color: "#ffffff" }}
+            >
+              Personalized Analytics
             </Link>
           </Button>
         </Box>
