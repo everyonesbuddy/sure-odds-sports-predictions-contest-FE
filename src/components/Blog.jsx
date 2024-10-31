@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createClient } from "contentful";
 import "../css/Blog.css";
+import Footer from "./Footer";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -61,6 +62,7 @@ const Blog = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

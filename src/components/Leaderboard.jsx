@@ -168,7 +168,8 @@ const Leaderboard = () => {
     <>
       <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="body2">
-          Countdown to Current Monthly Tournament End:
+          Countdown to {new Date().toLocaleString("default", { month: "long" })}{" "}
+          {new Date().getFullYear()} Tournament End:
         </Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
       </Box>
@@ -183,8 +184,8 @@ const Leaderboard = () => {
           }}
         >
           Win{" "}
-          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$100</span>{" "}
-          USD cash prize and a free 2 months subscription to {""}
+          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$250</span>{" "}
+          USD cash prize Sponored By {""}
           <Link
             href="https://doinksports.com/?via=Sure-Odds"
             target="_blank"

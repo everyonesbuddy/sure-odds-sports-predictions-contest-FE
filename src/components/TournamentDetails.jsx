@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import Countdown from "react-countdown";
+import Footer from "./Footer";
 
 // Countdown renderer component
 const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -49,6 +50,7 @@ const TournamentDetails = () => {
           maxWidth: 600,
           margin: "auto",
           marginTop: 5,
+          marginBottom: 5,
         }}
       >
         <Typography align="center" gutterBottom>
@@ -68,8 +70,7 @@ const TournamentDetails = () => {
                 primary="💵 Prizes"
                 secondary={
                   <>
-                    First Place: Win $100 cash prize and a free 2 months
-                    subscription to{" "}
+                    First Place: Win $250 cash prize Sponsored by{" "}
                     <Link
                       href="https://doinksports.com/?via=sureOdds"
                       target="_blank"
@@ -100,10 +101,12 @@ const TournamentDetails = () => {
 
       <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="body2">
-          Countdown to Current Monthly Tournament End:
+          Countdown to {new Date().toLocaleString("default", { month: "long" })}{" "}
+          {new Date().getFullYear()} Tournament End:
         </Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
       </Box>
+      <Footer />
     </>
   );
 };

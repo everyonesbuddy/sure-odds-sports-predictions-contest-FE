@@ -2,6 +2,7 @@ import React from "react";
 import PricingCard from "./PricingCard";
 import { Box, Typography } from "@mui/material";
 import "../css/PersonalizedAnalytics.css"; // Import the CSS file
+import Footer from "./Footer";
 
 const PersonalizedAnalytics = () => {
   const features = [
@@ -10,6 +11,7 @@ const PersonalizedAnalytics = () => {
     "Competitor Benchmarking",
     "Recommendations & Predictive Tips",
     "Visual Dashboards & Custom Reports",
+    "Weekly reports delivered directly to your email",
   ];
 
   return (
@@ -21,17 +23,15 @@ const PersonalizedAnalytics = () => {
             color: "black",
             mb: 3,
             p: 2,
-            borderRadius: 1,
+            fontWeight: "bold",
           }}
         >
-          Improve Your Game with Personalized Analytics & Performance Insights
+          Personalized Analytics & Performance Insights
         </Typography>
         <Typography
-          variant="h6"
+          variant="body1"
           sx={{
             color: "black",
-
-            borderRadius: 1,
           }}
         >
           Take your sports predictions to the next level! With Personalized
@@ -46,7 +46,7 @@ const PersonalizedAnalytics = () => {
         <PricingCard
           title="Monthly Subscription"
           price="$4.99/month"
-          description="Access all features with a monthly subscription."
+          description="Access all features with a monthly subscription"
           features={features}
           buttonText="Subscribe Monthly"
           buttonLink="https://buy.stripe.com/7sI013cNJ45t3wk000"
@@ -54,12 +54,23 @@ const PersonalizedAnalytics = () => {
         <PricingCard
           title="Annual Subscription"
           price="$49.99/year"
-          description="Access all features with an annual subscription."
+          description="Access all features with an annual subscription"
           features={features}
           buttonText="Subscribe Annually"
           buttonLink="https://buy.stripe.com/dR67tv2950Th3wk145"
         />
       </div>
+      <Typography
+        variant="body2"
+        sx={{
+          color: "gray",
+          mt: 3,
+        }}
+      >
+        Subscribe with the email used to post picks. Have questions? Email us at{" "}
+        <a href="mailto:info@sure-odds.com">info@sure-odds.com</a>.
+      </Typography>
+      <Footer />
     </Box>
   );
 };

@@ -8,6 +8,7 @@ import Leaderboard from "./Leaderboard";
 import PostYourPicks from "./PostYourPicks";
 import PicksDetails from "./PicksDetails";
 import KofiWidget from "./KofiWidget";
+import Footer from "./Footer";
 
 // const affiliates = [
 //   {
@@ -64,24 +65,22 @@ const Home = () => {
               color: "black",
               mb: 3,
               p: 2,
-              borderRadius: 1,
+              fontWeight: "bold",
             }}
           >
             The #1 Global Free-to-Play Sports Pick'em Contest
           </Typography>
           <Typography
-            variant="h6"
+            variant="p"
             sx={{
               color: "black",
-
-              borderRadius: 1,
             }}
           >
             Think you can predict the game? Compete in our free-to-play pick'em
             contests for a chance to win amazing prizes. It’s free, fun, and
             global!
           </Typography>
-          <div>
+          <div style={{ paddingTop: 10 }}>
             <iframe
               src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"
               data-test-id="beehiiv-embed"
@@ -159,6 +158,7 @@ const Home = () => {
         </CustomTabPanel>
       </Box>
       <KofiWidget />
+      <Footer />
     </>
   );
 };
