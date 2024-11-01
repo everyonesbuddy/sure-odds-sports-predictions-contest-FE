@@ -428,9 +428,11 @@ const PostYourPicks = () => {
           margin: "auto",
           marginTop: 2,
           marginBottom: 5,
+          backgroundColor: "#2b2b2b",
+          color: "#fff",
         }}
       >
-        <CardContent>
+        <CardContent sx={{ color: "fff" }}>
           <FormControl
             fullWidth
             margin="normal"
@@ -471,17 +473,21 @@ const PostYourPicks = () => {
                 "& input": {
                   height: "40px",
                   padding: "10px",
+                  color: "#fff",
                 },
+              },
+              "& .MuiInputLabel-root": {
+                color: "#fff",
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: !twitterUsername ? "error.main" : "",
+                  borderColor: !twitterUsername ? "error.main" : "#fff",
                 },
                 "&:hover fieldset": {
-                  borderColor: !twitterUsername ? "error.main" : "",
+                  borderColor: !twitterUsername ? "error.main" : "#fff",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: !twitterUsername ? "error.main" : "primary.main",
+                  borderColor: !twitterUsername ? "error.main" : "#fff",
                 },
               },
             }}
@@ -498,16 +504,20 @@ const PostYourPicks = () => {
               "& .MuiInputBase-root": {
                 borderRadius: "8px",
                 height: "40px",
+                color: "#fff",
+              },
+              "& .MuiInputLabel-root": {
+                color: "#fff",
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: !league ? "error.main" : "",
+                  borderColor: !league ? "error.main" : "#fff",
                 },
                 "&:hover fieldset": {
-                  borderColor: !league ? "error.main" : "",
+                  borderColor: !league ? "error.main" : "#fff",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: !league ? "error.main" : "primary.main",
+                  borderColor: !league ? "error.main" : "#fff",
                 },
               },
             }}
@@ -548,16 +558,20 @@ const PostYourPicks = () => {
                   "& .MuiInputBase-root": {
                     borderRadius: "8px",
                     height: "40px",
+                    color: "#fff",
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#fff",
                   },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
-                      borderColor: !pickType ? "error.main" : "",
+                      borderColor: !pickType ? "error.main" : "#fff",
                     },
                     "&:hover fieldset": {
-                      borderColor: !pickType ? "error.main" : "",
+                      borderColor: !pickType ? "error.main" : "#fff",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: !pickType ? "error.main" : "primary.main",
+                      borderColor: !pickType ? "error.main" : "#fff",
                     },
                   },
                 }}
@@ -592,18 +606,20 @@ const PostYourPicks = () => {
                   "& .MuiInputBase-root": {
                     borderRadius: "8px",
                     height: "40px",
+                    color: "#fff",
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#fff",
                   },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
-                      borderColor: !selectedGame ? "error.main" : "",
+                      borderColor: !selectedGame ? "error.main" : "#fff",
                     },
                     "&:hover fieldset": {
-                      borderColor: !selectedGame ? "error.main" : "",
+                      borderColor: !selectedGame ? "error.main" : "#fff",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: !selectedGame
-                        ? "error.main"
-                        : "primary.main",
+                      borderColor: !selectedGame ? "error.main" : "#fff",
                     },
                   },
                 }}
@@ -645,18 +661,20 @@ const PostYourPicks = () => {
                       "& .MuiInputBase-root": {
                         borderRadius: "8px",
                         height: "40px",
+                        color: "#fff",
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#fff",
                       },
                       "& .MuiOutlinedInput-root": {
                         "& fieldset": {
-                          borderColor: !teamPicked ? "error.main" : "",
+                          borderColor: !teamPicked ? "error.main" : "#fff",
                         },
                         "&:hover fieldset": {
-                          borderColor: !teamPicked ? "error.main" : "",
+                          borderColor: !teamPicked ? "error.main" : "#fff",
                         },
                         "&.Mui-focused fieldset": {
-                          borderColor: !teamPicked
-                            ? "error.main"
-                            : "primary.main",
+                          borderColor: !teamPicked ? "error.main" : "#fff",
                         },
                       },
                     }}
@@ -703,7 +721,6 @@ const PostYourPicks = () => {
                     value={odds}
                     fullWidth
                     margin="normal"
-                    disabled
                     sx={{
                       "& .MuiInputBase-root": {
                         borderRadius: "8px",
@@ -711,7 +728,11 @@ const PostYourPicks = () => {
                         "& input": {
                           height: "40px",
                           padding: "10px",
+                          color: "#fff",
                         },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#fff",
                       },
                     }}
                   />
@@ -729,18 +750,20 @@ const PostYourPicks = () => {
                         "& .MuiInputBase-root": {
                           borderRadius: "8px",
                           height: "40px",
+                          color: "#fff",
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: "#fff",
                         },
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": {
-                            borderColor: !market ? "error.main" : "",
+                            borderColor: !market ? "error.main" : "#fff",
                           },
                           "&:hover fieldset": {
-                            borderColor: !market ? "error.main" : "",
+                            borderColor: !market ? "error.main" : "#fff",
                           },
                           "&.Mui-focused fieldset": {
-                            borderColor: !market
-                              ? "error.main"
-                              : "primary.main",
+                            borderColor: !market ? "error.main" : "#fff",
                           },
                         },
                       }}
@@ -784,6 +807,10 @@ const PostYourPicks = () => {
                         "& .MuiInputBase-root": {
                           borderRadius: "8px",
                           height: "40px",
+                          color: "#fff",
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: "#fff",
                         },
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": {
@@ -859,6 +886,7 @@ const PostYourPicks = () => {
                           "& .MuiInputBase-root": {
                             borderRadius: "8px",
                             height: "40px",
+                            color: "#fff",
                           },
                         }}
                       />
@@ -869,15 +897,20 @@ const PostYourPicks = () => {
                     value={odds}
                     fullWidth
                     margin="normal"
-                    disabled
                     sx={{
                       "& .MuiInputBase-root": {
                         borderRadius: "8px",
                         height: "40px",
+                        color: "#fff",
                         "& input": {
                           height: "40px",
                           padding: "10px",
+                          color: "#fff",
                         },
+                      },
+
+                      "& .MuiInputLabel-root": {
+                        color: "#fff",
                       },
                     }}
                   />
@@ -911,7 +944,15 @@ const PostYourPicks = () => {
             color="primary"
             disabled={!twitterUsername || !league || !pickType || !selectedGame}
             onClick={handleSubmit}
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+              backgroundColor: "#4F46E5",
+              color: "#000",
+              "&.Mui-disabled": {
+                backgroundColor: "#ccc",
+                color: "#666",
+              },
+            }}
           >
             {isSubmitting ? <CircularProgress size={24} /> : "Submit Pick 1"}
           </Button>
@@ -931,9 +972,11 @@ const PostYourPicks = () => {
           margin: "auto",
           marginTop: 5,
           marginBottom: 5,
+          backgroundColor: "#2b2b2b",
+          color: "#fff",
         }}
       >
-        <CardContent>
+        <CardContent sx={{ color: "fff" }}>
           <FormControl
             fullWidth
             margin="normal"
@@ -971,22 +1014,25 @@ const PostYourPicks = () => {
               "& .MuiInputBase-root": {
                 borderRadius: "8px",
                 height: "40px",
+                color: "#fff",
                 "& input": {
                   height: "40px",
                   padding: "10px",
+                  color: "#fff",
                 },
+              },
+              "& .MuiInputLabel-root": {
+                color: "#fff",
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: !twitterUsername2 ? "error.main" : "",
+                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
                 },
                 "&:hover fieldset": {
-                  borderColor: !twitterUsername2 ? "error.main" : "",
+                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: !twitterUsername2
-                    ? "error.main"
-                    : "primary.main",
+                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
                 },
               },
             }}
@@ -1003,16 +1049,20 @@ const PostYourPicks = () => {
               "& .MuiInputBase-root": {
                 borderRadius: "8px",
                 height: "40px",
+                color: "#fff",
+              },
+              "& .MuiInputLabel-root": {
+                color: "#fff",
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: !league2 ? "error.main" : "",
+                  borderColor: !league2 ? "error.main" : "#fff",
                 },
                 "&:hover fieldset": {
-                  borderColor: !league2 ? "error.main" : "",
+                  borderColor: !league2 ? "error.main" : "#fff",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: !league2 ? "error.main" : "primary.main",
+                  borderColor: !league2 ? "error.main" : "#fff",
                 },
               },
             }}
@@ -1053,16 +1103,20 @@ const PostYourPicks = () => {
                   "& .MuiInputBase-root": {
                     borderRadius: "8px",
                     height: "40px",
+                    color: "#fff",
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#fff",
                   },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
-                      borderColor: !pickType2 ? "error.main" : "",
+                      borderColor: !pickType2 ? "error.main" : "#fff",
                     },
                     "&:hover fieldset": {
-                      borderColor: !pickType2 ? "error.main" : "",
+                      borderColor: !pickType2 ? "error.main" : "#fff",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: !pickType2 ? "error.main" : "primary.main",
+                      borderColor: !pickType2 ? "error.main" : "#fff",
                     },
                   },
                 }}
@@ -1097,18 +1151,20 @@ const PostYourPicks = () => {
                   "& .MuiInputBase-root": {
                     borderRadius: "8px",
                     height: "40px",
+                    color: "#fff",
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#fff",
                   },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
-                      borderColor: !selectedGame2 ? "error.main" : "",
+                      borderColor: !selectedGame2 ? "error.main" : "#fff",
                     },
                     "&:hover fieldset": {
-                      borderColor: !selectedGame2 ? "error.main" : "",
+                      borderColor: !selectedGame2 ? "error.main" : "#fff",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: !selectedGame2
-                        ? "error.main"
-                        : "primary.main",
+                      borderColor: !selectedGame2 ? "error.main" : "#fff",
                     },
                   },
                 }}
@@ -1150,18 +1206,20 @@ const PostYourPicks = () => {
                       "& .MuiInputBase-root": {
                         borderRadius: "8px",
                         height: "40px",
+                        color: "#fff",
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#fff",
                       },
                       "& .MuiOutlinedInput-root": {
                         "& fieldset": {
-                          borderColor: !teamPicked2 ? "error.main" : "",
+                          borderColor: !teamPicked2 ? "error.main" : "#fff",
                         },
                         "&:hover fieldset": {
-                          borderColor: !teamPicked2 ? "error.main" : "",
+                          borderColor: !teamPicked2 ? "error.main" : "#fff",
                         },
                         "&.Mui-focused fieldset": {
-                          borderColor: !teamPicked2
-                            ? "error.main"
-                            : "primary.main",
+                          borderColor: !teamPicked2 ? "error.main" : "#fff",
                         },
                       },
                     }}
@@ -1208,15 +1266,19 @@ const PostYourPicks = () => {
                     value={odds2}
                     fullWidth
                     margin="normal"
-                    disabled
                     sx={{
                       "& .MuiInputBase-root": {
                         borderRadius: "8px",
                         height: "40px",
+                        color: "#fff",
                         "& input": {
                           height: "40px",
                           padding: "10px",
+                          color: "#fff",
                         },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#fff",
                       },
                     }}
                   />
@@ -1234,18 +1296,20 @@ const PostYourPicks = () => {
                         "& .MuiInputBase-root": {
                           borderRadius: "8px",
                           height: "40px",
+                          color: "#fff",
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: "#fff",
                         },
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": {
-                            borderColor: !market2 ? "error.main" : "",
+                            borderColor: !market2 ? "error.main" : "#fff",
                           },
                           "&:hover fieldset": {
-                            borderColor: !market2 ? "error.main" : "",
+                            borderColor: !market2 ? "error.main" : "#fff",
                           },
                           "&.Mui-focused fieldset": {
-                            borderColor: !market2
-                              ? "error.main"
-                              : "primary.main",
+                            borderColor: !market2 ? "error.main" : "#fff",
                           },
                         },
                       }}
@@ -1289,22 +1353,26 @@ const PostYourPicks = () => {
                         "& .MuiInputBase-root": {
                           borderRadius: "8px",
                           height: "40px",
+                          color: "#fff",
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: "#fff",
                         },
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": {
                             borderColor: !playerPickedDetailForView2
                               ? "error.main"
-                              : "",
+                              : "#fff",
                           },
                           "&:hover fieldset": {
                             borderColor: !playerPickedDetailForView2
                               ? "error.main"
-                              : "",
+                              : "#fff",
                           },
                           "&.Mui-focused fieldset": {
                             borderColor: !playerPickedDetailForView2
                               ? "error.main"
-                              : "primary.main",
+                              : "#fff",
                           },
                         },
                       }}
@@ -1358,12 +1426,12 @@ const PostYourPicks = () => {
                         fullWidth
                         margin="normal"
                         value="This prop is not available right now"
-                        disabled
                         sx={{
                           mb: 2,
                           "& .MuiInputBase-root": {
                             borderRadius: "8px",
                             height: "40px",
+                            color: "#fff",
                           },
                         }}
                       />
@@ -1374,15 +1442,19 @@ const PostYourPicks = () => {
                     value={odds2}
                     fullWidth
                     margin="normal"
-                    disabled
                     sx={{
                       "& .MuiInputBase-root": {
                         borderRadius: "8px",
                         height: "40px",
+                        color: "#fff",
                         "& input": {
                           height: "40px",
                           padding: "10px",
+                          color: "#fff",
                         },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#fff",
                       },
                     }}
                   />
@@ -1418,7 +1490,15 @@ const PostYourPicks = () => {
               !twitterUsername2 || !league2 || !pickType2 || !selectedGame2
             }
             onClick={handleSubmit2}
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+              backgroundColor: "#4F46E5",
+              color: "#000",
+              "&.Mui-disabled": {
+                backgroundColor: "#ccc",
+                color: "#666",
+              },
+            }}
           >
             {isSubmitting2 ? <CircularProgress size={24} /> : "Submit Pick 2"}
           </Button>

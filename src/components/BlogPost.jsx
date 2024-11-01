@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { createClient } from "contentful";
 import ReactMarkdown from "react-markdown";
 import "../css/BlogPost.css";
+import Footer from "./Footer";
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -41,24 +42,27 @@ const BlogPost = () => {
   if (!blogPost) return <p>Blog post not found.</p>;
 
   return (
-    <div className="blog-post">
-      <h1 className="blog-post-title">{blogPost.fields.title}</h1>
-      <div className="blog-post-meta">
-        <p>Written by: {blogPost.fields.writtenBy}</p>
-        <p>Date: {blogPost.fields.date}</p>
+    <>
+      <div className="blog-post">
+        <h1 className="blog-post-title">{blogPost.fields.title}</h1>
+        <div className="blog-post-meta">
+          <p>Written by: {blogPost.fields.writtenBy}</p>
+          <p>Date: {blogPost.fields.date}</p>
+        </div>
+        {blogPost.fields.featuredImage && (
+          <img
+            src={blogPost.fields.featuredImage.fields.file.url}
+            alt={blogPost.fields.title}
+            className="blog-post-image"
+          />
+        )}
+        {/* Render markdown content */}
+        <div className="blog-post-content">
+          <ReactMarkdown>{blogPost.fields.content2}</ReactMarkdown>
+        </div>
       </div>
-      {blogPost.fields.featuredImage && (
-        <img
-          src={blogPost.fields.featuredImage.fields.file.url}
-          alt={blogPost.fields.title}
-          className="blog-post-image"
-        />
-      )}
-      {/* Render markdown content */}
-      <div className="blog-post-content">
-        <ReactMarkdown>{blogPost.fields.content2}</ReactMarkdown>
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

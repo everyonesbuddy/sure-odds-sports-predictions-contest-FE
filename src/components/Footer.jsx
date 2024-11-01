@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        width: "100%",
+        width: "auto",
         textAlign: "center",
         p: 3,
         mt: 5,
@@ -34,7 +34,7 @@ const Footer = () => {
           Twitter
         </Link>
       </Typography>
-      <Typography variant="body2" color="textSecondary">
+      <Typography variant="body2" color="white">
         &copy; {new Date().getFullYear()} SureOdds. All rights reserved.
       </Typography>
     </Box>

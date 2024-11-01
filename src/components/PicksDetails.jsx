@@ -198,7 +198,22 @@ const PicksDetails = () => {
           margin: "16px 16px 0",
           width: "calc(100% - 32px)",
           borderRadius: "8px",
-        }} // Add margin and rounded corners
+          "& .MuiInputLabel-root": { color: "#fff" }, // Label color
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#fff", // Border color
+            },
+            "&:hover fieldset": {
+              borderColor: "#fff", // Border color on hover
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#fff", // Border color when focused
+            },
+            "& input": {
+              color: "#fff", // Input text color
+            },
+          },
+        }}
         margin="normal"
         value={searchTerm}
         onChange={handleSearchChange}
@@ -222,6 +237,8 @@ const PicksDetails = () => {
                   boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
                   // height: "420px", // Adjusted height for new content
                   overflow: "auto", // Scroll if content overflows
+                  backgroundColor: "#2b2b2b",
+                  color: "#fff",
                 }}
               >
                 <CardContent>
@@ -242,19 +259,19 @@ const PicksDetails = () => {
                   </Typography>
                   <Typography
                     variant="body2"
-                    sx={{ fontSize: "0.875rem", color: "text.secondary" }}
+                    sx={{ fontSize: "0.875rem", color: "#fff" }}
                   >
                     Total Bets: {userBets[username].totalBets}
                   </Typography>
                   <Typography
                     variant="body2"
-                    sx={{ fontSize: "0.875rem", color: "text.secondary" }}
+                    sx={{ fontSize: "0.875rem", color: "#fff" }}
                   >
                     Total Bets Won: {userBets[username].totalBetsWon}
                   </Typography>
                   <Typography
                     variant="body2"
-                    sx={{ fontSize: "0.875rem", color: "text.secondary" }}
+                    sx={{ fontSize: "0.875rem", color: "#fff" }}
                   >
                     Last Five Bets:
                   </Typography>
@@ -302,7 +319,7 @@ const PicksDetails = () => {
                     variant="body2"
                     sx={{
                       fontSize: "0.875rem",
-                      color: "text.secondary",
+                      color: "#fff",
                       mt: 2,
                     }}
                   >
@@ -312,7 +329,7 @@ const PicksDetails = () => {
                     variant="body2"
                     sx={{
                       fontSize: "0.875rem",
-                      color: "text.secondary",
+                      color: "#fff",
                       mt: 1,
                     }}
                   >

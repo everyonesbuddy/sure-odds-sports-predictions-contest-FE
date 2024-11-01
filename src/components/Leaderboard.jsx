@@ -222,48 +222,69 @@ const Leaderboard = () => {
             </Button>
           ))}
         </Box>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ backgroundColor: "#2b2b2b" }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
+                <TableCell
+                  sx={{
+                    fontSize: isMobile ? "12px" : "inherit",
+                    color: "#fff",
+                  }}
+                >
                   Participant (Email)
                 </TableCell>
                 {!isMobile && (
-                  <TableCell>
+                  <TableCell sx={{ color: "#fff" }}>
                     Total Won Odds
                     <Tooltip title="Total amount of odds for bets that were won">
                       <IconButton size="small">
-                        <HelpOutlineIcon fontSize="small" />
+                        <HelpOutlineIcon
+                          fontSize="small"
+                          sx={{ color: "#fff" }}
+                        />
                       </IconButton>
                     </Tooltip>
                   </TableCell>
                 )}
                 {!isMobile && (
-                  <TableCell>
+                  <TableCell sx={{ color: "#fff" }}>
                     Total Won %{" "}
                     <Tooltip title="Percentage of bets won out of total bets made">
                       <IconButton size="small">
-                        <HelpOutlineIcon fontSize="small" />
+                        <HelpOutlineIcon
+                          fontSize="small"
+                          sx={{ color: "#fff" }}
+                        />
                       </IconButton>
                     </Tooltip>
                   </TableCell>
                 )}
-                <TableCell sx={{ fontSize: isMobile ? "12px" : "inherit" }}>
+                <TableCell
+                  sx={{
+                    fontSize: isMobile ? "12px" : "inherit",
+                    color: "#fff",
+                  }}
+                >
                   Potential Wins
                   <Tooltip title="Potential earnings based on a $100 bet for each winning bet, adjusted for the odds">
                     <IconButton size="small">
-                      <HelpOutlineIcon fontSize="small" />
+                      <HelpOutlineIcon
+                        fontSize="small"
+                        sx={{ color: "#fff" }}
+                      />
                     </IconButton>
                   </Tooltip>
                 </TableCell>
-                {/* {!isMobile && <TableCell>Research Tools/Models used</TableCell>} */}
               </TableRow>
             </TableHead>
             <TableBody>
               {aggregateBets(filteredBets).map((handicapper, index) => (
-                <TableRow key={handicapper.username}>
-                  <TableCell>
+                <TableRow
+                  key={handicapper.username}
+                  sx={{ backgroundColor: "#2b2b2b" }}
+                >
+                  <TableCell sx={{ color: "#fff" }}>
                     {index + 1}.{" "}
                     <Avatar
                       src={`https://avatar.iran.liara.run/username?username=${handicapper.username}`}
@@ -276,65 +297,28 @@ const Leaderboard = () => {
                         marginRight: 1,
                       }}
                     />
-                    {/* <a
-                      href={
-                        handicapper.socialType === "twitter"
-                          ? `https://x.com/${handicapper.username}`
-                          : `https://www.reddit.com/user/${handicapper.username}`
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontSize: isMobile ? "10px" : "inherit" }}
-                    >
-                      {handicapper.username}
-                    </a> */}
                     {handicapper.username}
                   </TableCell>
                   {!isMobile && (
-                    <TableCell>{handicapper.totalWonOdds}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>
+                      {handicapper.totalWonOdds}
+                    </TableCell>
                   )}
                   {!isMobile && (
-                    <TableCell>
+                    <TableCell sx={{ color: "#fff" }}>
                       ({handicapper.numberOfBetsWon} /{" "}
                       {handicapper.numberOfBets}){" "}
                       {handicapper.winRatio.toFixed(2)}%
                     </TableCell>
                   )}
-                  <TableCell sx={{ fontSize: isMobile ? "10px" : "inherit" }}>
+                  <TableCell
+                    sx={{
+                      fontSize: isMobile ? "10px" : "inherit",
+                      color: "#fff",
+                    }}
+                  >
                     ${handicapper.potentialWins.toFixed(2)}
                   </TableCell>
-                  {/* {!isMobile && (
-                    <TableCell>
-                      {handicapper.researchTools &&
-                      handicapper.researchTools.length > 0
-                        ? handicapper.researchTools.map((tool, index) => {
-                            // Shorten the tool name if it's too long
-                            const shortenedTool =
-                              tool.length > 25
-                                ? `${tool.substring(0, 20)}...`
-                                : tool;
-
-                            // Ensure the URL starts with http:// or https://
-                            const toolUrl =
-                              tool.startsWith("http://") ||
-                              tool.startsWith("https://")
-                                ? tool
-                                : `http://${tool}`;
-                            return (
-                              <a
-                                key={index}
-                                href={toolUrl} // Use the full URL directly
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{ display: "block" }} // Display each tool on a new line
-                              >
-                                {shortenedTool}
-                              </a>
-                            );
-                          })
-                        : "-"}
-                    </TableCell>
-                  )} */}
                 </TableRow>
               ))}
             </TableBody>

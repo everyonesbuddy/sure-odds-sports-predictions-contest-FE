@@ -20,7 +20,7 @@ const PersonalizedAnalytics = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "black",
+            color: "white",
             mb: 3,
             p: 2,
             fontWeight: "bold",
@@ -31,7 +31,7 @@ const PersonalizedAnalytics = () => {
         <Typography
           variant="body1"
           sx={{
-            color: "black",
+            color: "white",
           }}
         >
           Take your sports predictions to the next level! With Personalized
@@ -63,7 +63,7 @@ const PersonalizedAnalytics = () => {
       <Typography
         variant="body2"
         sx={{
-          color: "gray",
+          color: "white",
           mt: 3,
         }}
       >

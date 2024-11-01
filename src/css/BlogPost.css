@@ -5,7 +5,7 @@
   max-width: 800px; /* Maximum width of the blog post card */
   margin: 20px auto; /* Center the card on the page */
   padding: 20px; /* Padding inside the card */
-  background-color: #fff; /* Background color for the card */
+  background-color: #2b2b2b; /* Background color for the card */
   border-radius: 5px; /* Rounded corners for the card */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
 }
@@ -14,13 +14,13 @@
 .blog-post-title {
   font-size: 2rem; /* Font size for the title */
   margin-bottom: 15px; /* Space below the title */
-  color: var(--first-color); /* Use a CSS variable for color */
+  color: #fff; /* Use a CSS variable for color */
 }
 
 /* Meta information styling */
 .blog-post-meta {
   margin-bottom: 20px; /* Space below the meta information */
-  color: #666; /* Color for meta info */
+  color: #fff; /* Color for meta info */
 }
 
 /* Styling for images in the blog post */
@@ -51,7 +51,7 @@
 .blog-post-content h1,
 .blog-post-content h2,
 .blog-post-content h3 {
-  color: var(--first-color); /* Use a CSS variable for heading color */
+  color: #fff; /* Use a CSS variable for heading color */
   margin-top: 20px; /* Space above headings */
   margin-bottom: 10px; /* Space below headings */
 }
@@ -59,7 +59,7 @@
 /* Paragraph styling in markdown */
 .blog-post-content p {
   line-height: 1.6; /* Line height for readability */
-  color: #444; /* Color for text */
+  color: #fff; /* Color for text */
   margin: 10px 0; /* Space between paragraphs */
 }
 

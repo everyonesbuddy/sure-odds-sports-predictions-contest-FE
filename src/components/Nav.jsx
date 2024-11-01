@@ -69,7 +69,7 @@ const Nav = () => {
         to="/personalizedAnalytics"
         onClick={toggleDrawer(false)}
       >
-        <ListItemText primary="personalized Analytics" />
+        <ListItemText primary="Personalized Analytics" />
       </ListItem>
     </List>
   );

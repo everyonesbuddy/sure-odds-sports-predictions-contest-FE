@@ -62,7 +62,7 @@ const Home = () => {
           <Typography
             variant="h4"
             sx={{
-              color: "black",
+              color: "white",
               mb: 3,
               p: 2,
               fontWeight: "bold",
@@ -73,7 +73,7 @@ const Home = () => {
           <Typography
             variant="p"
             sx={{
-              color: "black",
+              color: "white",
             }}
           >
             Think you can predict the game? Compete in our free-to-play pick'em
@@ -102,12 +102,12 @@ const Home = () => {
 
         <Box
           sx={{
-            borderBottom: 1,
+            // borderBottom: 1,
             // borderColor: "divider",
             zIndex: 1100,
             position: "sticky",
             top: 0,
-            backgroundColor: "background.paper",
+            backgroundColor: "#161616",
           }}
         >
           <Tabs
