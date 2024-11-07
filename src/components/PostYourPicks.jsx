@@ -442,10 +442,30 @@ const PostYourPicks = () => {
               "& .MuiInputBase-root": {
                 borderRadius: "8px",
                 height: "40px",
+                color: "#fff",
+                "& input": {
+                  height: "40px",
+                  padding: "10px",
+                  color: "#fff",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: "#fff",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: !twitterUsername ? "error.main" : "#fff",
+                },
+                "&:hover fieldset": {
+                  borderColor: !twitterUsername ? "error.main" : "#fff",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: !twitterUsername ? "error.main" : "#fff",
+                },
               },
             }}
           >
-            {/* <InputLabel id="social-type-label">Social Type</InputLabel>
+            <InputLabel id="social-type-label">Social Type</InputLabel>
             <Select
               labelId="social-type-label"
               id="socialType"
@@ -455,16 +475,16 @@ const PostYourPicks = () => {
             >
               <MenuItem value="twitter">X (Twitter)</MenuItem>
               <MenuItem value="reddit">Reddit</MenuItem>
-            </Select> */}
+            </Select>
           </FormControl>
           <TextField
-            label={`Enter Your Email*`}
+            label={`${socialType} username *`}
             value={twitterUsername}
             onChange={handleTwitterUsernameChange}
             fullWidth
             color={!twitterUsername ? "error" : "primary"}
             margin="normal"
-            placeholder={`Email e.g info@sure-odds.com`}
+            placeholder={`${socialType} username e.g sure_odds2023`}
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {
@@ -986,10 +1006,30 @@ const PostYourPicks = () => {
               "& .MuiInputBase-root": {
                 borderRadius: "8px",
                 height: "40px",
+                color: "#fff",
+                "& input": {
+                  height: "40px",
+                  padding: "10px",
+                  color: "#fff",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: "#fff",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
+                },
+                "&:hover fieldset": {
+                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
+                },
               },
             }}
           >
-            {/* <InputLabel id="social-type-label">Social Type</InputLabel>
+            <InputLabel id="social-type-label">Social Type</InputLabel>
             <Select
               labelId="social-type-label"
               id="socialType"
@@ -999,16 +1039,16 @@ const PostYourPicks = () => {
             >
               <MenuItem value="twitter">X (Twitter)</MenuItem>
               <MenuItem value="reddit">Reddit</MenuItem>
-            </Select> */}
+            </Select>
           </FormControl>
           <TextField
-            label={`Enter Your Email*`}
+            label={`${socialType} username *`}
             value={twitterUsername2}
             onChange={handleTwitterUsernameChange2}
             fullWidth
             color={!twitterUsername2 ? "error" : "primary"}
             margin="normal"
-            placeholder={`Email e.g info@sure-odds.com`}
+            placeholder={`${socialType} username e.g sure_odds2023`}
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {

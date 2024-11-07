@@ -7,11 +7,12 @@ import {
   Grid,
   TextField,
   Box,
+  Link,
 } from "@mui/material";
 
 const PicksDetails = () => {
   const [userBets, setUserBets] = useState({});
-  // const [matchupData, setMatchupData] = useState({});
+  const [matchupData, setMatchupData] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -115,19 +116,19 @@ const PicksDetails = () => {
         setUserBets(aggregatedData);
 
         // Fetch matchup data for live bets
-        // const liveBets = data.filter((bet) => bet.betResult === null);
-        // const matchupPromises = liveBets.map((bet) =>
-        //   getMatchUpData(bet.league, bet.selectedGameId)
-        // );
-        // const matchupResults = await Promise.all(matchupPromises);
+        const liveBets = data.filter((bet) => bet.betResult === null);
+        const matchupPromises = liveBets.map((bet) =>
+          getMatchUpData(bet.league, bet.selectedGameId)
+        );
+        const matchupResults = await Promise.all(matchupPromises);
 
         // Create a lookup object for matchup data
-        // const matchupDataObj = liveBets.reduce((acc, bet, index) => {
-        //   acc[bet.selectedGameId] = matchupResults[index];
-        //   return acc;
-        // }, {});
+        const matchupDataObj = liveBets.reduce((acc, bet, index) => {
+          acc[bet.selectedGameId] = matchupResults[index];
+          return acc;
+        }, {});
 
-        // setMatchupData(matchupDataObj);
+        setMatchupData(matchupDataObj);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -136,38 +137,39 @@ const PicksDetails = () => {
     fetchData();
   }, []);
 
-  // const getLeagueName = (leagueCode) => {
-  //   const leagueNames = {
-  //     basketball_wnba: "WNBA 🏀",
-  //     baseball_mlb: "MLB ⚾",
-  //     americanfootball_nfl: "NFL 🏈",
-  //     soccer_epl: "EPL ⚽",
-  //     icehockey_nhl: "NHL 🏒",
-  //     soccer_germany_bundesliga: "Bundesliga ⚽",
-  //     soccer_italy_serie_a: "Serie A ⚽",
-  //     soccer_spain_la_liga: "La Liga ⚽",
-  //     soccer_usa_mls: "MLS ⚽",
-  //   };
+  const getLeagueName = (leagueCode) => {
+    const leagueNames = {
+      basketball_wnba: "WNBA 🏀",
+      basketball_nba: "NBA 🏀",
+      baseball_mlb: "MLB ⚾",
+      americanfootball_nfl: "NFL 🏈",
+      soccer_epl: "EPL ⚽",
+      icehockey_nhl: "NHL 🏒",
+      soccer_germany_bundesliga: "Bundesliga ⚽",
+      soccer_italy_serie_a: "Serie A ⚽",
+      soccer_spain_la_liga: "La Liga ⚽",
+      soccer_usa_mls: "MLS ⚽",
+    };
 
-  //   return leagueNames[leagueCode] || leagueCode;
-  // };
+    return leagueNames[leagueCode] || leagueCode;
+  };
 
-  // const getMatchUpData = async (league, gameId) => {
-  //   const apiKey = "402f2e4bba957e5e98c7e1a178393c8c";
-  //   const url = `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=${apiKey}&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${gameId}`;
+  const getMatchUpData = async (league, gameId) => {
+    const apiKey = "402f2e4bba957e5e98c7e1a178393c8c";
+    const url = `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=${apiKey}&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${gameId}`;
 
-  //   try {
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-  //     const matchup = data[0];
-  //     const homeTeam = matchup.home_team;
-  //     const awayTeam = matchup.away_team;
-  //     return `${homeTeam} vs ${awayTeam}`;
-  //   } catch (error) {
-  //     console.error("Error fetching matchup data:", error);
-  //     return "Matchup data not available";
-  //   }
-  // };
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      const matchup = data[0];
+      const homeTeam = matchup.home_team;
+      const awayTeam = matchup.away_team;
+      return `${homeTeam} vs ${awayTeam}`;
+    } catch (error) {
+      console.error("Error fetching matchup data:", error);
+      return "Matchup data not available";
+    }
+  };
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -243,7 +245,7 @@ const PicksDetails = () => {
               >
                 <CardContent>
                   <Typography variant="h5" component="div">
-                    {/* <Link
+                    <Link
                       href={
                         userBets[username].allBets[0].socialType === "twitter"
                           ? `https://x.com/${username}`
@@ -253,9 +255,8 @@ const PicksDetails = () => {
                       rel="noopener noreferrer"
                     >
                       {username}
-                    </Link> */}
-
-                    {username}
+                    </Link>
+                    {/* {username} */}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -288,11 +289,11 @@ const PicksDetails = () => {
                       </Typography>
                     ))}
                   </Box>
-                  {/* <Typography
+                  <Typography
                     variant="body2"
                     sx={{
                       fontSize: "0.875rem",
-                      color: "text.secondary",
+                      color: "#fff",
                       mt: 2,
                     }}
                   >
@@ -314,8 +315,8 @@ const PicksDetails = () => {
                         </Typography>
                       </Box>
                     ))
-                  )} */}
-                  <Typography
+                  )}
+                  {/* <Typography
                     variant="body2"
                     sx={{
                       fontSize: "0.875rem",
@@ -324,8 +325,8 @@ const PicksDetails = () => {
                     }}
                   >
                     Post Streak: {userBets[username].postStreak} days
-                  </Typography>
-                  <Typography
+                  </Typography> */}
+                  {/* <Typography
                     variant="body2"
                     sx={{
                       fontSize: "0.875rem",
@@ -335,7 +336,7 @@ const PicksDetails = () => {
                   >
                     Last Post Time:{" "}
                     {new Date(userBets[username].lastPostTime).toLocaleString()}
-                  </Typography>
+                  </Typography> */}
                 </CardContent>
               </Card>
             </Grid>

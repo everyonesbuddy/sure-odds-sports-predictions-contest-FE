@@ -6,9 +6,9 @@ import Footer from "./Footer";
 
 const PersonalizedAnalytics = () => {
   const features = [
-    "Prediction Accuracy Tracking",
-    "Historical Performance Analysis",
-    "Competitor Benchmarking",
+    "Trends by Sports",
+    "Trends by Players",
+    "Trends by Odds",
     "Recommendations & Predictive Tips",
     "Visual Dashboards & Custom Reports",
     "Weekly reports delivered directly to your email",
@@ -26,7 +26,7 @@ const PersonalizedAnalytics = () => {
             fontWeight: "bold",
           }}
         >
-          Personalized Analytics & Performance Insights
+          Stay Ahead of the Trends. Bet Smarter with Sure Odds.
         </Typography>
         <Typography
           variant="body1"
@@ -34,12 +34,8 @@ const PersonalizedAnalytics = () => {
             color: "white",
           }}
         >
-          Take your sports predictions to the next level! With Personalized
-          Analytics & Performance Insights, you gain access to powerful tools
-          that help you understand and improve your strategy. Dive deep into
-          your prediction history, identify patterns in your accuracy, and get a
-          competitive edge with tips and recommendations based on your unique
-          performance.
+          Discover actionable trends and insights, powered by data—so you can
+          make every bet with confidence.
         </Typography>
       </div>
       <div className="pricing-cards">

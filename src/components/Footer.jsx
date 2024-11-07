@@ -9,8 +9,6 @@ const Footer = () => {
         textAlign: "center",
         p: 3,
         mt: 5,
-        // backgroundColor: '#f5f5f5',
-        // position: "sticky",
         bottom: 0,
         left: 0,
         right: 0,
@@ -28,7 +26,7 @@ const Footer = () => {
           Blog
         </Link>
         <Link href="/personalizedAnalytics" sx={{ mx: 1 }}>
-          Personalized Analytics
+          Advanced Analytics
         </Link>
         <Link href="https://x.com/sure_odds2023" target="_blank" sx={{ mx: 1 }}>
           Twitter

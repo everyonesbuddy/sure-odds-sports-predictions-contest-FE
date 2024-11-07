@@ -29,24 +29,6 @@ const Nav = () => {
 
   const drawerList = (
     <List>
-      {/* <ListItem
-        button
-        component="a"
-        href="https://ko-fi.com/sureodds"
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={toggleDrawer(false)}
-      >
-        <ListItemText primary="Donate" />
-      </ListItem> */}
-      {/* <ListItem
-        button
-        component={Link}
-        to="/picksDetails"
-        onClick={toggleDrawer(false)}
-      >
-        <ListItemText primary="Live Picks" />
-      </ListItem> */}
       <ListItem
         button
         component={Link}
@@ -69,7 +51,7 @@ const Nav = () => {
         to="/personalizedAnalytics"
         onClick={toggleDrawer(false)}
       >
-        <ListItemText primary="Personalized Analytics" />
+        <ListItemText primary="Advanced Analytics" />
       </ListItem>
     </List>
   );
@@ -91,27 +73,6 @@ const Nav = () => {
             Sure Odds
           </Link>
         </Typography>
-        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <Button color="inherit" style={{ fontSize: "12px" }}>
-            <Link
-              to="https://ko-fi.com/sureodds"
-              target="_blank"
-              style={{ textDecoration: "none", color: "#ffffff" }}
-            >
-              Donate
-            </Link>
-          </Button>
-        </Box> */}
-        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <Button color="inherit" style={{ fontSize: "12px" }}>
-            <Link
-              to="/picksDetails"
-              style={{ textDecoration: "none", color: "#ffffff" }}
-            >
-              Picks Details
-            </Link>
-          </Button>
-        </Box> */}
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
@@ -138,7 +99,7 @@ const Nav = () => {
               to="/personalizedAnalytics"
               style={{ textDecoration: "none", color: "#ffffff" }}
             >
-              Personalized Analytics
+              Advanced Analytics
             </Link>
           </Button>
         </Box>
