@@ -237,7 +237,7 @@ const PicksDetails = () => {
                 sx={{
                   borderRadius: "16px",
                   boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
-                  // height: "420px", // Adjusted height for new content
+                  height: "220px", // Adjusted height for new content
                   overflow: "auto", // Scroll if content overflows
                   backgroundColor: "#2b2b2b",
                   color: "#fff",
