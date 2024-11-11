@@ -307,21 +307,21 @@ const PostYourPicks = () => {
     setPlayerPickedDetailForView2("");
   };
 
-  const handleOddsChange = (e) => {
-    setOdds(e.target.value);
-  };
+  // const handleOddsChange = (e) => {
+  //   setOdds(e.target.value);
+  // };
 
-  const handleOddsChange2 = (e) => {
-    setOdds2(e.target.value);
-  };
+  // const handleOddsChange2 = (e) => {
+  //   setOdds2(e.target.value);
+  // };
 
-  const handlePropLineChange = (e) => {
-    setPropLine(e.target.value);
-  };
+  // const handlePropLineChange = (e) => {
+  //   setPropLine(e.target.value);
+  // };
 
-  const handlePropLineChange2 = (e) => {
-    setPropLine2(e.target.value);
-  };
+  // const handlePropLineChange2 = (e) => {
+  //   setPropLine2(e.target.value);
+  // };
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -766,7 +766,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Odds"
                     value={odds}
-                    onChange={handleOddsChange}
+                    // onChange={handleOddsChange}
                     fullWidth
                     margin="normal"
                     sx={{
@@ -943,7 +943,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Player Odds"
                     value={odds}
-                    onChange={handleOddsChange}
+                    // onChange={handleOddsChange}
                     fullWidth
                     margin="normal"
                     sx={{
@@ -966,7 +966,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Prop Line"
                     value={propLine}
-                    onChange={handlePropLineChange}
+                    // onChange={handlePropLineChange}
                     fullWidth
                     margin="normal"
                     sx={{
@@ -1362,7 +1362,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Odds"
                     value={odds2}
-                    onChange={handleOddsChange2}
+                    // onChange={handleOddsChange2}
                     fullWidth
                     margin="normal"
                     sx={{
@@ -1539,7 +1539,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Player Odds"
                     value={odds2}
-                    onChange={handleOddsChange2}
+                    // onChange={handleOddsChange2}
                     fullWidth
                     margin="normal"
                     sx={{
@@ -1561,7 +1561,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Prop Line"
                     value={propLine2}
-                    onChange={handlePropLineChange2}
+                    // onChange={handlePropLineChange2}
                     fullWidth
                     margin="normal"
                     sx={{
