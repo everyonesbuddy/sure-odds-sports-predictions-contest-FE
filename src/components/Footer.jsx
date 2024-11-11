@@ -26,7 +26,7 @@ const Footer = () => {
           Blog
         </Link>
         <Link href="/personalizedAnalytics" sx={{ mx: 1 }}>
-          Advanced Analytics
+          Personalized Analytics
         </Link>
         <Link href="https://x.com/sure_odds2023" target="_blank" sx={{ mx: 1 }}>
           Twitter

@@ -5,25 +5,25 @@ import {
   ListItem,
   ListItemText,
   Box,
-  Link as MuiLink,
+  Link,
 } from "@mui/material";
-// import moment from "moment";
-// import Countdown from "react-countdown";
+import moment from "moment";
+import Countdown from "react-countdown";
 import Footer from "./Footer";
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 
 // Countdown renderer component
-// const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
-//   if (completed) {
-//     return <span style={{ color: "red" }}>The tournament has ended!</span>;
-//   } else {
-//     return (
-//       <span style={{ color: "red" }}>
-//         {days} days {hours} hours {minutes} minutes {seconds} seconds
-//       </span>
-//     );
-//   }
-// };
+const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    return <span style={{ color: "red" }}>The tournament has ended!</span>;
+  } else {
+    return (
+      <span style={{ color: "red" }}>
+        {days} days {hours} hours {minutes} minutes {seconds} seconds
+      </span>
+    );
+  }
+};
 
 const TournamentDetails = () => {
   // Calculate the end time of the tournament for month
@@ -35,6 +35,18 @@ const TournamentDetails = () => {
   //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
   //   return endOfMonth.toDate();
   // };
+
+  // Calculate the end time of the tournament for week
+  const getTournamentEndTime = () => {
+    const now = moment().utcOffset(-4); // EST is UTC-4
+    const dayOfWeek = now.day();
+    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+    const nextSunday = now
+      .clone()
+      .add(daysUntilSunday, "days")
+      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+    return nextSunday.toDate();
+  };
 
   return (
     <>
@@ -59,7 +71,9 @@ const TournamentDetails = () => {
             <ListItem>
               <ListItemText
                 primary="About Us"
-                secondary="At Sure Odds, we’re all about one thing: giving you the facts. We track every handicapper and model, bringing you the verified data that matters. Say goodbye to guesswork and hello to confidence. With Sure Odds, you know exactly who’s worth following and who’s not, every time you place a bet."
+                secondary="Welcome to SureOdds, the world’s #1 destination for free-to-play sports pick'em contests. We bring together sports enthusiasts from every corner of the globe to predict game outcomes, compete with friends, and win incredible prizes – all without spending a cent.
+              Our mission is simple: make sports more exciting by letting you test your knowledge and predictions against fans from around the world. Whether you’re a die-hard football fan, a cricket enthusiast, or a basketball buff, we’ve got contests for you. Play for free, win prizes, and enjoy the thrill of competition on a global scale.
+              Join us today, make your picks, and see if you have what it takes to be a champion!"
                 primaryTypographyProps={{
                   sx: {
                     color: "#fff",
@@ -72,36 +86,20 @@ const TournamentDetails = () => {
             </ListItem>
             <ListItem>
               <ListItemText
-                primary="Handicapper and Model List"
+                primary="💵 Prizes"
                 secondary={
                   <>
-                    We have provided a list of Handicappers and Models we are
-                    currently tracking{" "}
-                    <MuiLink
-                      href="https://docs.google.com/document/d/1nEXq22ncM1fZNVi4FROGb0Pj8vxHnADuDdpiv2A96Pg/edit?usp=sharing"
+                    First Place: Win $250 cash prize Sponsored by{" "}
+                    <Link
+                      href="https://doinksports.com/?via=sureOdds"
                       target="_blank"
                       rel="noopener"
                     >
-                      here
-                    </MuiLink>
+                      Doink Sports
+                    </Link>
                     , the most complete betting research platform.
                   </>
                 }
-                primaryTypographyProps={{
-                  sx: {
-                    color: "#fff",
-                    textAlign: "center",
-                    fontWeight: "bold",
-                  },
-                }}
-                secondaryTypographyProps={{ sx: { color: "#fff" } }}
-              />
-            </ListItem>
-
-            <ListItem>
-              <ListItemText
-                primary="Daily Pick Tracking"
-                secondary="Every day, our team carefully tracks up to five picks from each top handicapper and model. We gather these picks directly from their subscription platforms, social feeds, and other verified sources. But we don’t publish the picks themselves—out of respect for the experts’ business, we only post the results. This way, we help you make informed decisions without interfering with the pros’ work"
                 primaryTypographyProps={{
                   sx: {
                     color: "#fff",
@@ -127,31 +125,10 @@ const TournamentDetails = () => {
                 secondaryTypographyProps={{ sx: { color: "#fff" } }}
               />
             </ListItem>
-
             <ListItem>
               <ListItemText
-                primary="Advanced Analytics"
-                secondary={
-                  <>
-                    Our subscription plan gives you more than a leaderboard.
-                    Dive into in-depth reports built from real performance data,
-                    helping you spot trends, identify undervalued picks, and
-                    track long-term performance across different sports, time
-                    frames, and conditions. We take the data beyond surface
-                    stats, giving you actionable insights that can fine-tune
-                    your strategy and help you make confident, data-backed
-                    decisions. From profitability trends to consistency reports,
-                    Sure Odds subscribers have the advantage of powerful, clear
-                    analytics that make every bet smarter{" "}
-                    <RouterLink
-                      to="/personalizedAnalytics"
-                      style={{ textDecoration: "none", color: "#61dafb" }}
-                    >
-                      Subscribe Now
-                    </RouterLink>{" "}
-                    and win more.
-                  </>
-                }
+                primary="Supporting Handicappers"
+                secondary="We don’t sell or give away handicappers’ picks. Instead, we focus on their performance data, showing past results to build credibility. Bettors can tip handicappers directly on our platform, and handicappers can pay for sponsored spots to boost visibility without disrupting their business. Our goal is to help handicappers grow while keeping their picks valuable."
                 primaryTypographyProps={{
                   sx: {
                     color: "#fff",
@@ -166,13 +143,16 @@ const TournamentDetails = () => {
         </Typography>
       </Box>
 
-      {/* <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography variant="body2">
+      <Box sx={{ textAlign: "center", mb: 2 }}>
+        {/* <Typography variant="body2">
           Countdown to {new Date().toLocaleString("default", { month: "long" })}{" "}
           {new Date().getFullYear()} Tournament End:
+        </Typography> */}
+        <Typography variant="body2">
+          Countdown to Weekly Tournament End:
         </Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
-      </Box> */}
+      </Box>
       <Footer />
     </>
   );

@@ -6,11 +6,9 @@ import Footer from "./Footer";
 
 const PersonalizedAnalytics = () => {
   const features = [
-    "Trends by Sports",
-    "Trends by Players",
-    "Trends by Odds",
-    "Recommendations & Predictive Tips",
-    "Visual Dashboards & Custom Reports",
+    "Top Capper/Models by Sports",
+    "Top Capper/Models by Bet Type",
+    "Top Capper/Models by Prop Type",
     "Weekly reports delivered directly to your email",
   ];
 
@@ -34,8 +32,8 @@ const PersonalizedAnalytics = () => {
             color: "white",
           }}
         >
-          Discover actionable trends and insights, powered by data—so you can
-          make every bet with confidence.
+          Get access to deeper, more granular insights into the handicappers’
+          and models’ performance.—so you can make every bet with confidence.
         </Typography>
       </div>
       <div className="pricing-cards">

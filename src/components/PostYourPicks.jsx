@@ -24,6 +24,10 @@ const leagueApiMap = {
     "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   americanfootball_nfl:
     "https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+  americanfootball_ncaaf:
+    "https://api.the-odds-api.com/v4/sports/americanfootball_ncaaf/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
+  basketball_ncaab:
+    "https://api.the-odds-api.com/v4/sports/basketball_ncaab/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   soccer_epl:
     "https://api.the-odds-api.com/v4/sports/soccer_epl/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
   soccer_germany_bundesliga:
@@ -303,6 +307,22 @@ const PostYourPicks = () => {
     setPlayerPickedDetailForView2("");
   };
 
+  const handleOddsChange = (e) => {
+    setOdds(e.target.value);
+  };
+
+  const handleOddsChange2 = (e) => {
+    setOdds2(e.target.value);
+  };
+
+  const handlePropLineChange = (e) => {
+    setPropLine(e.target.value);
+  };
+
+  const handlePropLineChange2 = (e) => {
+    setPropLine2(e.target.value);
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
@@ -465,8 +485,8 @@ const PostYourPicks = () => {
               },
             }}
           >
-            <InputLabel id="social-type-label">Social Type</InputLabel>
-            <Select
+            {/* <InputLabel id="social-type-label">Social Type</InputLabel> */}
+            {/* <Select
               labelId="social-type-label"
               id="socialType"
               value={socialType}
@@ -475,16 +495,16 @@ const PostYourPicks = () => {
             >
               <MenuItem value="twitter">X (Twitter)</MenuItem>
               <MenuItem value="reddit">Reddit</MenuItem>
-            </Select>
+            </Select> */}
           </FormControl>
           <TextField
-            label={`${socialType} username *`}
+            label={`Enter Your Email *`}
             value={twitterUsername}
             onChange={handleTwitterUsernameChange}
             fullWidth
             color={!twitterUsername ? "error" : "primary"}
             margin="normal"
-            placeholder={`${socialType} username e.g sure_odds2023`}
+            placeholder={`Email e.g info@sure-odds.com`}
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {
@@ -552,9 +572,14 @@ const PostYourPicks = () => {
             >
               {/* <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem> */}
               <MenuItem value="basketball_nba">NBA 🏀</MenuItem>
-              <MenuItem value="baseball_mlb">MLB ⚾</MenuItem>
+              {/* <MenuItem value="baseball_mlb">MLB ⚾</MenuItem> */}
               <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
+              <MenuItem value="americanfootball_ncaaf">
+                NCAA Football 🏈
+              </MenuItem>
+              <MenuItem value="basketball_ncaab">NCAA Basketball 🏀</MenuItem>
               <MenuItem value="icehockey_nhl">NHL 🏒</MenuItem>
+
               <MenuItem value="soccer_epl">EPL ⚽</MenuItem>
               <MenuItem value="soccer_germany_bundesliga">
                 Bundesliga ⚽
@@ -608,7 +633,9 @@ const PostYourPicks = () => {
                     league !== "soccer_germany_bundesliga" &&
                     league !== "soccer_italy_serie_a" &&
                     league !== "soccer_spain_la_liga" &&
-                    league !== "soccer_usa_mls" && (
+                    league !== "soccer_usa_mls" &&
+                    league !== "americanfootball_ncaaf" &&
+                    league !== "basketball_ncaab" && (
                       <MenuItem value="props">Props 🎲</MenuItem>
                     )}
                   <MenuItem value="money line">Money Line 💰</MenuItem>
@@ -739,6 +766,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Odds"
                     value={odds}
+                    onChange={handleOddsChange}
                     fullWidth
                     margin="normal"
                     sx={{
@@ -915,6 +943,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Player Odds"
                     value={odds}
+                    onChange={handleOddsChange}
                     fullWidth
                     margin="normal"
                     sx={{
@@ -929,6 +958,28 @@ const PostYourPicks = () => {
                         },
                       },
 
+                      "& .MuiInputLabel-root": {
+                        color: "#fff",
+                      },
+                    }}
+                  />
+                  <TextField
+                    label="Prop Line"
+                    value={propLine}
+                    onChange={handlePropLineChange}
+                    fullWidth
+                    margin="normal"
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        borderRadius: "8px",
+                        height: "40px",
+                        color: "#fff",
+                        "& input": {
+                          height: "40px",
+                          padding: "10px",
+                          color: "#fff",
+                        },
+                      },
                       "& .MuiInputLabel-root": {
                         color: "#fff",
                       },
@@ -1029,8 +1080,8 @@ const PostYourPicks = () => {
               },
             }}
           >
-            <InputLabel id="social-type-label">Social Type</InputLabel>
-            <Select
+            {/* <InputLabel id="social-type-label">Social Type</InputLabel> */}
+            {/* <Select
               labelId="social-type-label"
               id="socialType"
               value={socialType2}
@@ -1039,16 +1090,16 @@ const PostYourPicks = () => {
             >
               <MenuItem value="twitter">X (Twitter)</MenuItem>
               <MenuItem value="reddit">Reddit</MenuItem>
-            </Select>
+            </Select> */}
           </FormControl>
           <TextField
-            label={`${socialType} username *`}
+            label={`Enter Your Email *`}
             value={twitterUsername2}
             onChange={handleTwitterUsernameChange2}
             fullWidth
             color={!twitterUsername2 ? "error" : "primary"}
             margin="normal"
-            placeholder={`${socialType} username e.g sure_odds2023`}
+            placeholder={`Email e.g info@sure-odds.com`}
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {
@@ -1117,8 +1168,13 @@ const PostYourPicks = () => {
             >
               {/* <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem> */}
               <MenuItem value="basketball_nba">NBA 🏀</MenuItem>
-              <MenuItem value="baseball_mlb">MLB ⚾</MenuItem>
+              {/* <MenuItem value="baseball_mlb">MLB ⚾</MenuItem> */}
               <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
+              <MenuItem value="americanfootball_ncaaf">
+                NCAA Football 🏈
+              </MenuItem>
+
+              <MenuItem value="basketball_ncaab">NCAA Basketball 🏀</MenuItem>
               <MenuItem value="icehockey_nhl">NHL 🏒</MenuItem>
               <MenuItem value="soccer_epl">EPL ⚽</MenuItem>
               <MenuItem value="soccer_germany_bundesliga">
@@ -1173,7 +1229,9 @@ const PostYourPicks = () => {
                     league2 !== "soccer_germany_bundesliga" &&
                     league2 !== "soccer_italy_serie_a" &&
                     league2 !== "soccer_spain_la_liga" &&
-                    league2 !== "soccer_usa_mls" && (
+                    league2 !== "soccer_usa_mls" &&
+                    league2 !== "americanfootball_ncaaf" &&
+                    league2 !== "basketball_ncaab" && (
                       <MenuItem value="props">Props 🎲</MenuItem>
                     )}
                   <MenuItem value="money line">Money Line 💰</MenuItem>
@@ -1304,6 +1362,7 @@ const PostYourPicks = () => {
                   <TextField
                     label="Odds"
                     value={odds2}
+                    onChange={handleOddsChange2}
                     fullWidth
                     margin="normal"
                     sx={{
@@ -1480,6 +1539,29 @@ const PostYourPicks = () => {
                   <TextField
                     label="Player Odds"
                     value={odds2}
+                    onChange={handleOddsChange2}
+                    fullWidth
+                    margin="normal"
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        borderRadius: "8px",
+                        height: "40px",
+                        color: "#fff",
+                        "& input": {
+                          height: "40px",
+                          padding: "10px",
+                          color: "#fff",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#fff",
+                      },
+                    }}
+                  />
+                  <TextField
+                    label="Prop Line"
+                    value={propLine2}
+                    onChange={handlePropLineChange2}
                     fullWidth
                     margin="normal"
                     sx={{

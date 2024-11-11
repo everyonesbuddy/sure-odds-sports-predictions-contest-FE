@@ -5,9 +5,9 @@ import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 // import ModelLeaderboard from "./ModelLeaderboard";
-// import PostYourPicks from "./PostYourPicks";
+import PostYourPicks from "./PostYourPicks";
 import PicksDetails from "./PicksDetails";
-import KofiWidget from "./KofiWidget";
+// import KofiWidget from "./KofiWidget";
 import Footer from "./Footer";
 
 // const affiliates = [
@@ -68,7 +68,7 @@ const Home = () => {
               fontWeight: "bold",
             }}
           >
-            Bet with Confidence
+            The #1 Global Free-to-Play Sports Pick'em Contest
           </Typography>
           <Typography
             variant="p"
@@ -76,8 +76,9 @@ const Home = () => {
               color: "white",
             }}
           >
-            Verified data on top sport handicappers and models, so you can bet
-            smarter
+            Think you can predict the game? Compete in our free-to-play pick'em
+            contests for a chance to win amazing prizes. It’s free, fun, and
+            global!
           </Typography>
           <div style={{ paddingTop: 10 }}>
             <iframe
@@ -126,17 +127,17 @@ const Home = () => {
                 fontSize: isMobile ? "8px" : "10px",
               }}
             />
-            {/* <Tab
+            <Tab
               label="Post Your Picks🥇"
               {...a11yProps(1)}
               sx={{
                 color: "#4F46E5",
                 fontSize: isMobile ? "8px" : "10px",
               }}
-            /> */}
+            />
             <Tab
               label="Live Picks Preview 📊"
-              {...a11yProps(1)}
+              {...a11yProps(2)}
               sx={{
                 color: "#4F46E5",
                 fontSize: isMobile ? "8px" : "10px",
@@ -147,14 +148,14 @@ const Home = () => {
         <CustomTabPanel value={value} index={0}>
           <Leaderboard />
         </CustomTabPanel>
-        {/* <CustomTabPanel value={value} index={1}>
-          <PostYourPicks />
-        </CustomTabPanel> */}
         <CustomTabPanel value={value} index={1}>
+          <PostYourPicks />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
           <PicksDetails />
         </CustomTabPanel>
       </Box>
-      <KofiWidget />
+      {/* <KofiWidget /> */}
       <Footer />
     </>
   );

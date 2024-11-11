@@ -51,7 +51,7 @@ const Nav = () => {
         to="/personalizedAnalytics"
         onClick={toggleDrawer(false)}
       >
-        <ListItemText primary="Advanced Analytics" />
+        <ListItemText primary="Personalized Analytics" />
       </ListItem>
     </List>
   );
@@ -99,7 +99,7 @@ const Nav = () => {
               to="/personalizedAnalytics"
               style={{ textDecoration: "none", color: "#ffffff" }}
             >
-              Advanced Analytics
+              Personalized Analytics
             </Link>
           </Button>
         </Box>
