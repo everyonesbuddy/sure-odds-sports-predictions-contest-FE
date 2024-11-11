@@ -6,9 +6,11 @@ import Footer from "./Footer";
 
 const PersonalizedAnalytics = () => {
   const features = [
-    "Top Capper/Models by Sports",
-    "Top Capper/Models by Bet Type",
-    "Top Capper/Models by Prop Type",
+    "Prediction Accuracy Tracking",
+    "Historical Performance Analysis",
+    "Competitor Benchmarking",
+    "Recommendations & Predictive Tips",
+    "Visual Dashboards & Custom Reports",
     "Weekly reports delivered directly to your email",
   ];
 
@@ -24,7 +26,7 @@ const PersonalizedAnalytics = () => {
             fontWeight: "bold",
           }}
         >
-          Stay Ahead of the Trends. Bet Smarter with Sure Odds.
+          Personalized Analytics & Performance Insights
         </Typography>
         <Typography
           variant="body1"
@@ -32,8 +34,12 @@ const PersonalizedAnalytics = () => {
             color: "white",
           }}
         >
-          Get access to deeper, more granular insights into the handicappers’
-          and models’ performance.—so you can make every bet with confidence.
+          Take your sports predictions to the next level! With Personalized
+          Analytics & Performance Insights, you gain access to powerful tools
+          that help you understand and improve your strategy. Dive deep into
+          your prediction history, identify patterns in your accuracy, and get a
+          competitive edge with tips and recommendations based on your unique
+          performance.
         </Typography>
       </div>
       <div className="pricing-cards">
