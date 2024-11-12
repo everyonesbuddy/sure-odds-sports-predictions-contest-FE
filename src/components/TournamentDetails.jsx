@@ -5,7 +5,7 @@ import {
   ListItem,
   ListItemText,
   Box,
-  Link,
+  // Link,
 } from "@mui/material";
 import moment from "moment";
 import Countdown from "react-countdown";
@@ -89,7 +89,8 @@ const TournamentDetails = () => {
                 primary="💵 Prizes"
                 secondary={
                   <>
-                    First Place: Win $250 cash prize Sponsored by{" "}
+                    First Place: Win $250 cash prize
+                    {/* Sponsored by{" "}
                     <Link
                       href="https://doinksports.com/?via=sureOdds"
                       target="_blank"
@@ -97,7 +98,7 @@ const TournamentDetails = () => {
                     >
                       Doink Sports
                     </Link>
-                    , the most complete betting research platform.
+                    , the most complete betting research platform. */}
                   </>
                 }
                 primaryTypographyProps={{

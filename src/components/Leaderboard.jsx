@@ -9,7 +9,7 @@ import {
   Paper,
   Tooltip,
   IconButton,
-  Link,
+  // Link,
   Typography,
   Button,
   Box,
@@ -186,7 +186,8 @@ const Leaderboard = () => {
         >
           Win{" "}
           <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$250</span>{" "}
-          USD cash prize Sponored By {""}
+          USD cash prize
+          {/* Sponored By {""}
           <Link
             href="https://doinksports.com/?via=Sure-Odds"
             target="_blank"
@@ -194,7 +195,7 @@ const Leaderboard = () => {
           >
             Doink Sports
           </Link>{" "}
-          The most complete betting research platform
+          The most complete betting research platform */}
         </Typography>
       </Box>
 

@@ -45,14 +45,14 @@ const Nav = () => {
       >
         <ListItemText primary="Blog" />
       </ListItem>
-      <ListItem
+      {/* <ListItem
         button
         component={Link}
         to="/personalizedAnalytics"
         onClick={toggleDrawer(false)}
       >
         <ListItemText primary="Personalized Analytics" />
-      </ListItem>
+      </ListItem> */}
     </List>
   );
 
@@ -93,7 +93,7 @@ const Nav = () => {
             </Link>
           </Button>
         </Box>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
               to="/personalizedAnalytics"
@@ -102,7 +102,7 @@ const Nav = () => {
               Personalized Analytics
             </Link>
           </Button>
-        </Box>
+        </Box> */}
       </Toolbar>
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         {drawerList}
