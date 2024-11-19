@@ -43,6 +43,7 @@ const Leaderboard = ({
   spreadsheetUrl,
   secondaryImageUrl,
   sponsored,
+  contestFormat,
 }) => {
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
@@ -149,19 +150,19 @@ const Leaderboard = ({
   };
 
   // Calculate the end time of the tournament for week
-  // const getTournamentEndTime = () => {
-  //   const now = moment().utcOffset(-4); // EST is UTC-4
-  //   const dayOfWeek = now.day();
-  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-  //   const nextSunday = now
-  //     .clone()
-  //     .add(daysUntilSunday, "days")
-  //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-  //   return nextSunday.toDate();
-  // };
+  const getTournamentEndTimeForWeekly = () => {
+    const now = moment().utcOffset(-4); // EST is UTC-4
+    const dayOfWeek = now.day();
+    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
+    const nextSunday = now
+      .clone()
+      .add(daysUntilSunday, "days")
+      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
+    return nextSunday.toDate();
+  };
 
   // Calculate the end time of the tournament for month
-  const getTournamentEndTime = () => {
+  const getTournamentEndTimeForMonthly = () => {
     const now = moment().utcOffset(-4); // EST is UTC-4
     const endOfMonth = now
       .clone()
@@ -170,13 +171,21 @@ const Leaderboard = ({
     return endOfMonth.toDate();
   };
 
+  const getTournamentEndTime = () => {
+    return contestFormat === "weekly"
+      ? getTournamentEndTimeForWeekly()
+      : getTournamentEndTimeForMonthly();
+  };
+
   return (
     <>
       <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="body2">
-          Countdown to {new Date().toLocaleString("default", { month: "long" })}{" "}
-          {new Date().getFullYear()} Tournament End:
-          {/* Countdown to Weekly Tournament End: */}
+          {contestFormat === "weekly"
+            ? "Countdown to Weekly Tournament End"
+            : `Countdown to ${new Date().toLocaleString("default", {
+                month: "long",
+              })} ${new Date().getFullYear()} Tournament End:`}
         </Typography>
         <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
       </Box>
@@ -190,18 +199,9 @@ const Leaderboard = ({
             borderRadius: 1,
           }}
         >
-          Win{" "}
-          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>$250</span>{" "}
-          USD cash prize
-          {/* Sponored By {""}
-          <Link
-            href="https://doinksports.com/?via=Sure-Odds"
-            target="_blank"
-            rel="noopener"
-          >
-            Doink Sports
-          </Link>{" "}
-          The most complete betting research platform */}
+          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
+            Win {price}
+          </span>{" "}
         </Typography>
       </Box>
 

@@ -113,6 +113,7 @@ const PostYourPicks = ({
   spreadsheetUrl,
   secondaryImageUrl,
   sponsored,
+  affiliateUrl,
 }) => {
   //pick state 1
   const [league, setLeague] = useState("");
@@ -434,8 +435,12 @@ const PostYourPicks = ({
   return (
     <>
       <Typography align="center" gutterBottom sx={{ paddingTop: "15px" }}>
-        🌟 Join the Contest: Share your top sports picks now to climb the
-        leaderboard, and win 📈
+        🌟 Join the{" "}
+        <a href={affiliateUrl} target="_blank" rel="noreferrer">
+          {companyName}
+        </a>{" "}
+        Contest: Share your top sports picks now to climb the leaderboard, and
+        win 📈
       </Typography>
       {/* Pick 1 */}
       <Card

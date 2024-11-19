@@ -1,53 +1,8 @@
 import React from "react";
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-  // Link,
-} from "@mui/material";
-import moment from "moment";
-import Countdown from "react-countdown";
+import { Typography, List, ListItem, ListItemText, Box } from "@mui/material";
 import Footer from "./Footer";
-// import { Link as RouterLink } from "react-router-dom";
-
-// Countdown renderer component
-const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
-  if (completed) {
-    return <span style={{ color: "red" }}>The tournament has ended!</span>;
-  } else {
-    return (
-      <span style={{ color: "red" }}>
-        {days} days {hours} hours {minutes} minutes {seconds} seconds
-      </span>
-    );
-  }
-};
 
 const TournamentDetails = () => {
-  // Calculate the end time of the tournament for month
-  const getTournamentEndTime = () => {
-    const now = moment().utcOffset(-4); // EST is UTC-4
-    const endOfMonth = now
-      .clone()
-      .endOf("month")
-      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-    return endOfMonth.toDate();
-  };
-
-  // Calculate the end time of the tournament for week
-  // const getTournamentEndTime = () => {
-  //   const now = moment().utcOffset(-4); // EST is UTC-4
-  //   const dayOfWeek = now.day();
-  //   const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-  //   const nextSunday = now
-  //     .clone()
-  //     .add(daysUntilSunday, "days")
-  //     .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-  //   return nextSunday.toDate();
-  // };
-
   return (
     <>
       <Box
@@ -86,21 +41,12 @@ const TournamentDetails = () => {
             </ListItem>
             <ListItem>
               <ListItemText
-                primary="💵 Prizes"
+                primary="Prizes"
                 secondary={
                   <>
                     Prices are based on contest you participate in and are
                     awarded to the top performer. Prizes can range from, free
-                    subscriptions, cash, gift cards, and other rewards.{" "}
-                    {/* Sponsored by{" "}
-                    <Link
-                      href="https://doinksports.com/?via=sureOdds"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      Doink Sports
-                    </Link>
-                    , the most complete betting research platform. */}
+                    subscriptions, cash, gift cards, and other rewards.
                   </>
                 }
                 primaryTypographyProps={{
@@ -144,17 +90,6 @@ const TournamentDetails = () => {
             </ListItem>
           </List>
         </Typography>
-      </Box>
-
-      <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography variant="body2">
-          Countdown to {new Date().toLocaleString("default", { month: "long" })}{" "}
-          {new Date().getFullYear()} Tournament End:
-        </Typography>
-        {/* <Typography variant="body2">
-          Countdown to Weekly Tournament End:
-        </Typography> */}
-        <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
       </Box>
       <Footer />
     </>

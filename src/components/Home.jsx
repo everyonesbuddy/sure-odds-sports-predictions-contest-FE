@@ -61,7 +61,8 @@ const Home = () => {
         "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
       secondaryImageUrl: "https://i.ibb.co/XYjWV6p/1500x500-1.jpg",
       sponsored: false,
-      affiliateUrl: "doinksports.com/?via=Sure-Odds",
+      affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
+      contestFormat: "weekly",
     },
     {
       companyName: "Daily Grind Fantasy Sports",
@@ -75,6 +76,7 @@ const Home = () => {
       secondaryImageUrl: "https://i.ibb.co/CVVwBv1/1500x500.jpg",
       sponsored: false,
       affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+      contestFormat: "monthly",
     },
   ];
 
@@ -142,7 +144,7 @@ const Home = () => {
               companyName={item.companyName}
               description={item.description}
               price={item.price}
-              // spreadsheetUrl={item.spreadsheetUrl}
+              contestFormat={item.contestFormat}
             />
           ))}
         </div>

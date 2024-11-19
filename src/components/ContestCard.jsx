@@ -2,7 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/CardContest.css";
 
-const ContestCard = ({ primaryImageUrl, companyName, description, price }) => {
+const ContestCard = ({
+  primaryImageUrl,
+  companyName,
+  description,
+  price,
+  contestFormat,
+}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -16,6 +22,9 @@ const ContestCard = ({ primaryImageUrl, companyName, description, price }) => {
         <h2 className="card-title">{companyName} Contest</h2>
         <p className="card-description">{description}</p>
         <p className="card-price">Prize: {price}</p>
+        <p className="card-contest-format">
+          Contest Format: {contestFormat} Pick'em contest
+        </p>
       </div>
     </div>
   );

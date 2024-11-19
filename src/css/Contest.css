@@ -33,3 +33,21 @@
   height: auto;
   border-radius: 8px;
 }
+
+.button-link {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #4f46e5;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.button-link:hover {
+  background-color: #756fe6;
+}

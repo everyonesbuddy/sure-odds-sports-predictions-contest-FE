@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import PostYourPicks from "./PostYourPicks";
-import PicksDetails from "./PicksDetails";
+// import PicksDetails from "./PicksDetails";
 import "../css/Contest.css";
 
 const Contest = () => {
@@ -25,6 +25,8 @@ const Contest = () => {
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         secondaryImageUrl: "https://i.ibb.co/XYjWV6p/1500x500-1.jpg",
         sponsored: false,
+        affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
+        contestFormat: "weekly",
       },
       {
         companyName: "Daily Grind Fantasy Sports",
@@ -37,6 +39,8 @@ const Contest = () => {
           "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
         secondaryImageUrl: "https://i.ibb.co/CVVwBv1/1500x500.jpg",
         sponsored: false,
+        affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+        contestFormat: "monthly",
       },
     ],
     []
@@ -75,9 +79,17 @@ const Contest = () => {
       <Box sx={{ width: "auto", textAlign: "center", p: 3 }}>
         <div className="contest-header">
           <div className="contest-header-left">
-            <h1>Welcome to {contestDetails.companyName} Contest</h1>
-            <p>Participate and win {contestDetails.price}</p>
-            {/* <p>{contestDetails.description}</p> */}
+            <h1>
+              Welcome to {contestDetails.companyName}{" "}
+              {contestDetails.contestFormat} contest
+            </h1>
+            {!isMobile && <p>Participate and Win {contestDetails.price}</p>}
+            <button
+              onClick={() => window.open(contestDetails.affiliateUrl, "_blank")}
+              className="button-link"
+            >
+              Go to {contestDetails.companyName}
+            </button>
           </div>
           <div className="contest-header-right">
             <img
@@ -121,14 +133,14 @@ const Contest = () => {
                 fontSize: isMobile ? "8px" : "10px",
               }}
             />
-            <Tab
+            {/* <Tab
               label="Live Picks Preview 📊"
               {...a11yProps(2)}
               sx={{
                 color: "#4F46E5",
                 fontSize: isMobile ? "8px" : "10px",
               }}
-            />
+            /> */}
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
@@ -140,6 +152,8 @@ const Contest = () => {
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             secondaryImageUrl={contestDetails.secondaryImageUrl}
             sponsored={contestDetails.sponsored}
+            contestFormat={contestDetails.contestFormat}
+            affiliateUrl={contestDetails.affiliateUrl}
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
@@ -151,9 +165,11 @@ const Contest = () => {
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             secondaryImageUrl={contestDetails.secondaryImageUrl}
             sponsored={contestDetails.sponsored}
+            contestFormat={contestDetails.contestFormat}
+            affiliateUrl={contestDetails.affiliateUrl}
           />
         </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
+        {/* <CustomTabPanel value={value} index={2}>
           <PicksDetails
             companyName={contestDetails.companyName}
             primaryImageUrl={contestDetails.primaryImageUrl}
@@ -162,8 +178,10 @@ const Contest = () => {
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             secondaryImageUrl={contestDetails.secondaryImageUrl}
             sponsored={contestDetails.sponsored}
+            contestFormat={contestDetails.contestFormat}
+            affiliateUrl={contestDetails.affiliateUrl}
           />
-        </CustomTabPanel>
+        </CustomTabPanel> */}
       </Box>
     </>
   );
