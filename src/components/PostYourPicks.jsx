@@ -105,7 +105,15 @@ const nhlMarkets = [
   { key: "player_total_saves", name: "Total saves (Over/Under)" },
 ];
 
-const PostYourPicks = () => {
+const PostYourPicks = ({
+  companyName,
+  primaryImageUrl,
+  description,
+  price,
+  spreadsheetUrl,
+  secondaryImageUrl,
+  sponsored,
+}) => {
   //pick state 1
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
@@ -361,10 +369,7 @@ const PostYourPicks = () => {
     };
 
     try {
-      const response = await axios.post(
-        "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
-        data
-      ); // Step 2: Send POST request
+      const response = await axios.post(spreadsheetUrl, data); // Step 2: Send POST request
       console.log(response); // Handle response
       clearFields(); // Clear all fields after submit
       toast.success("Submit Successful!"); // Show success toast
@@ -414,10 +419,7 @@ const PostYourPicks = () => {
     };
 
     try {
-      const response = await axios.post(
-        "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
-        data
-      ); // Step 2: Send POST request
+      const response = await axios.post(spreadsheetUrl, data); // Step 2: Send POST request
       console.log(response); // Handle response
       clearFields2(); // Clear all fields after submit
       toast.success("Submit Successful!"); // Show success toast

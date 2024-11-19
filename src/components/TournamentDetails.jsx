@@ -89,7 +89,9 @@ const TournamentDetails = () => {
                 primary="💵 Prizes"
                 secondary={
                   <>
-                    First Place: Win $250 cash prize
+                    Prices are based on contest you participate in and are
+                    awarded to the top performer. Prizes can range from, free
+                    subscriptions, cash, gift cards, and other rewards.{" "}
                     {/* Sponsored by{" "}
                     <Link
                       href="https://doinksports.com/?via=sureOdds"

@@ -10,7 +10,15 @@ import {
   // Link,
 } from "@mui/material";
 
-const PicksDetails = () => {
+const PicksDetails = ({
+  companyName,
+  primaryImageUrl,
+  description,
+  price,
+  spreadsheetUrl,
+  secondaryImageUrl,
+  sponsored,
+}) => {
   const [userBets, setUserBets] = useState({});
   // const [matchupData, setMatchupData] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,9 +26,7 @@ const PicksDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8"
-        );
+        const response = await axios.get(spreadsheetUrl);
         const data = response.data;
 
         // Aggregate data by twitterUsername
@@ -135,7 +141,7 @@ const PicksDetails = () => {
     };
 
     fetchData();
-  }, []);
+  }, [spreadsheetUrl]);
 
   // const getLeagueName = (leagueCode) => {
   //   const leagueNames = {

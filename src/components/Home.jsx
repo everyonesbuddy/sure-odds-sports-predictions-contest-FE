@@ -1,14 +1,9 @@
 import React from "react";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import CustomTabPanel from "./CustomTabPanel";
-import Leaderboard from "./Leaderboard";
-// import ModelLeaderboard from "./ModelLeaderboard";
-import PostYourPicks from "./PostYourPicks";
-import PicksDetails from "./PicksDetails";
+import { Box, Typography } from "@mui/material";
 // import KofiWidget from "./KofiWidget";
 import Footer from "./Footer";
+import ContestCard from "./ContestCard";
+import "../css/Home.css";
 
 // const affiliates = [
 //   {
@@ -30,19 +25,19 @@ import Footer from "./Footer";
 // ];
 
 const Home = () => {
-  const a11yProps = (index) => ({
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  });
+  // const a11yProps = (index) => ({
+  //   id: `simple-tab-${index}`,
+  //   "aria-controls": `simple-tabpanel-${index}`,
+  // });
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  // const theme = useTheme();
+  // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   // const [currentAffiliateIndex, setCurrentAffiliateIndex] = useState(0);
 
   // useEffect(() => {
@@ -54,6 +49,34 @@ const Home = () => {
 
   //   return () => clearInterval(interval);
   // }, []);
+
+  const contest = [
+    {
+      companyName: "Doink Sports",
+      primaryImageUrl: "https://i.ibb.co/L6zK67S/0k0-A7-Ib3-400x400.jpg",
+      description:
+        "Sports betting research platform. Props, trends, +EV, odds charts, arbs, matchup analysis and more!",
+      price: "Free 2 month subscription to Doink Sports Research Platform",
+      spreadsheetUrl:
+        "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
+      secondaryImageUrl: "https://i.ibb.co/XYjWV6p/1500x500-1.jpg",
+      sponsored: false,
+      affiliateUrl: "doinksports.com/?via=Sure-Odds",
+    },
+    {
+      companyName: "Daily Grind Fantasy Sports",
+      primaryImageUrl: "https://i.ibb.co/PhvNXsj/o-GXbjunp-400x400.png",
+      description:
+        "Profitable bets at your fingertips! We make fantasy betting simpler.",
+      price:
+        "Free 2 month subscription to Daily Grind Fantasy Fantasy Bundle tools",
+      spreadsheetUrl:
+        "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
+      secondaryImageUrl: "https://i.ibb.co/CVVwBv1/1500x500.jpg",
+      sponsored: false,
+      affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+    },
+  ];
 
   return (
     <>
@@ -99,61 +122,30 @@ const Home = () => {
             </p>
           </div>
         </div>
-
-        <Box
+        <Typography
+          variant="h4"
           sx={{
-            zIndex: 1100,
-            position: "sticky",
-            top: 0,
-            backgroundColor: "#161616",
+            color: "white",
+            mb: 3,
+            p: 2,
+            fontWeight: "bold",
           }}
         >
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-            centered
-            sx={{
-              "& .MuiTabs-indicator": {
-                backgroundColor: "#4F46E5",
-              },
-            }}
-          >
-            <Tab
-              label="Leaderboard 🏆"
-              {...a11yProps(0)}
-              sx={{
-                color: "#4F46E5",
-                fontSize: isMobile ? "8px" : "10px",
-              }}
+          Contests
+        </Typography>
+
+        <div className="card-container">
+          {contest.map((item, index) => (
+            <ContestCard
+              key={index}
+              primaryImageUrl={item.primaryImageUrl}
+              companyName={item.companyName}
+              description={item.description}
+              price={item.price}
+              // spreadsheetUrl={item.spreadsheetUrl}
             />
-            <Tab
-              label="Post Your Picks🥇"
-              {...a11yProps(1)}
-              sx={{
-                color: "#4F46E5",
-                fontSize: isMobile ? "8px" : "10px",
-              }}
-            />
-            <Tab
-              label="Live Picks Preview 📊"
-              {...a11yProps(2)}
-              sx={{
-                color: "#4F46E5",
-                fontSize: isMobile ? "8px" : "10px",
-              }}
-            />
-          </Tabs>
-        </Box>
-        <CustomTabPanel value={value} index={0}>
-          <Leaderboard />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <PostYourPicks />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          <PicksDetails />
-        </CustomTabPanel>
+          ))}
+        </div>
       </Box>
       {/* <KofiWidget /> */}
       <Footer />

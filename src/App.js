@@ -9,6 +9,7 @@ import PicksDetails from "./components/PicksDetails";
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import PersonalizedAnalytics from "./components/PersonalizedAnalytics";
+import Contest from "./components/Contest";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           path="/personalizedAnalytics"
           element={<PersonalizedAnalytics />}
         />
+        <Route path="/contest/:companyName" element={<Contest />} />
       </Routes>
     </Router>
   );

@@ -35,7 +35,15 @@ const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
   }
 };
 
-const Leaderboard = () => {
+const Leaderboard = ({
+  companyName,
+  primaryImageUrl,
+  description,
+  price,
+  spreadsheetUrl,
+  secondaryImageUrl,
+  sponsored,
+}) => {
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -45,14 +53,12 @@ const Leaderboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8"
-      );
+      const response = await axios.get(spreadsheetUrl);
       setBetsData(response.data);
       setFilteredBets(response.data); // Initial filter setup
     };
     fetchData();
-  }, []);
+  }, [spreadsheetUrl]);
 
   useEffect(() => {
     const now = moment();
