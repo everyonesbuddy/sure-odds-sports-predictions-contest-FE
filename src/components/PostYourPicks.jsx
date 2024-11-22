@@ -108,7 +108,6 @@ const nhlMarkets = [
 const PostYourPicks = ({
   companyName,
   primaryImageUrl,
-  description,
   price,
   spreadsheetUrl,
   secondaryImageUrl,
@@ -120,7 +119,8 @@ const PostYourPicks = ({
   const [pickType, setPickType] = useState("");
   const [twitterUsername, setTwitterUsername] = useState("");
   const [researchToolOrModelUsed, setResearchToolOrModelUsed] = useState("");
-  const [socialType, setSocialType] = useState("twitter"); // default value
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState("");
   const [gameDetails, setGameDetails] = useState(null);
@@ -135,36 +135,24 @@ const PostYourPicks = ({
   const [propOverOrUnder, setPropOverOrUnder] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  //Pick state 2
-  const [league2, setLeague2] = useState("");
-  const [pickType2, setPickType2] = useState("");
-  const [twitterUsername2, setTwitterUsername2] = useState("");
-  const [researchToolOrModelUsed2, setResearchToolOrModelUsed2] = useState("");
-  const [socialType2, setSocialType2] = useState("twitter"); // default value
-  const [games2, setGames2] = useState([]);
-  const [selectedGame2, setSelectedGame2] = useState("");
-  const [gameDetails2, setGameDetails2] = useState(null);
-  const [teamPicked2, setTeamPicked2] = useState("");
-  const [odds2, setOdds2] = useState("");
-  const [market2, setMarket2] = useState("");
-  const [players2, setPlayers2] = useState([]);
-  const [playerPicked2, setPlayerPicked2] = useState("");
-  const [playerPickedDetailForView2, setPlayerPickedDetailForView2] =
-    useState("");
-  const [propLine2, setPropLine2] = useState("");
-  const [propOverOrUnder2, setPropOverOrUnder2] = useState("");
-  const [isSubmitting2, setIsSubmitting2] = useState(false);
-
   // Call this function when the Twitter username input changes
   const handleTwitterUsernameChange = (event) => {
     const username = event.target.value;
     setTwitterUsername(username);
   };
 
-  // Call this function when the Twitter username input changes2
-  const handleTwitterUsernameChange2 = (event) => {
-    const username = event.target.value;
-    setTwitterUsername2(username);
+  //call this function when the emailinput changes
+  const handleEmailChange = (event) => {
+    const value = event.target.value;
+    setEmail(value);
+
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) {
+      setEmailError("Invalid email format");
+    } else {
+      setEmailError("");
+    }
   };
 
   useEffect(() => {
@@ -179,19 +167,7 @@ const PostYourPicks = ({
       };
       fetchGames();
     }
-
-    if (league2) {
-      const fetchGames = async () => {
-        try {
-          const response = await axios.get(leagueApiMap[league2]);
-          setGames2(response.data);
-        } catch (error) {
-          console.error("Error fetching games:", error);
-        }
-      };
-      fetchGames();
-    }
-  }, [league, league2]);
+  }, [league]);
 
   useEffect(() => {
     if (selectedGame && pickType === "money line") {
@@ -208,22 +184,7 @@ const PostYourPicks = ({
       };
       fetchGameDetails();
     }
-
-    if (selectedGame2 && pickType2 === "money line") {
-      const fetchGameDetails2 = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.the-odds-api.com/v4/sports/${league2}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGame2}`
-          );
-
-          setGameDetails2(response.data[0]);
-        } catch (error) {
-          console.error("Error fetching game details:", error);
-        }
-      };
-      fetchGameDetails2();
-    }
-  }, [selectedGame, pickType, league, selectedGame2, pickType2, league2]);
+  }, [selectedGame, pickType, league]);
 
   useEffect(() => {
     if (selectedGame && pickType === "props" && market) {
@@ -246,37 +207,7 @@ const PostYourPicks = ({
       };
       fetchMarketDetails();
     }
-
-    if (selectedGame2 && pickType2 === "props" && market2) {
-      const fetchMarketDetails2 = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.the-odds-api.com/v4/sports/${league2}/events/${selectedGame2}/odds?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=${market2}&oddsFormat=american&bookmakers=fanduel`
-          );
-
-          const outcomes =
-            response.data?.bookmakers?.[0]?.markets?.[0]?.outcomes;
-
-          if (outcomes) {
-            setPlayers2(outcomes);
-          }
-          setGameDetails2(response.data);
-        } catch (error) {
-          console.error("Error fetching market details:", error);
-        }
-      };
-      fetchMarketDetails2();
-    }
-  }, [
-    selectedGame,
-    pickType,
-    league,
-    market,
-    selectedGame2,
-    pickType2,
-    league2,
-    market2,
-  ]);
+  }, [selectedGame, pickType, league, market]);
 
   const clearFields = () => {
     setLeague("");
@@ -290,30 +221,11 @@ const PostYourPicks = ({
     setOdds("");
     setPropLine("");
     setPropOverOrUnder("");
-    setSocialType("twitter");
+    setEmail("");
     setMarket("");
     setPlayers([]);
     setPlayerPicked("");
     setPlayerPickedDetailForView("");
-  };
-
-  const clearFields2 = () => {
-    setLeague2("");
-    setPickType2("");
-    setTwitterUsername2("");
-    setResearchToolOrModelUsed2("");
-    setGames2([]);
-    setSelectedGame2("");
-    setGameDetails2(null);
-    setTeamPicked2("");
-    setOdds2("");
-    setPropLine2("");
-    setPropOverOrUnder2("");
-    setSocialType2("twitter");
-    setMarket2("");
-    setPlayers2([]);
-    setPlayerPicked2("");
-    setPlayerPickedDetailForView2("");
   };
 
   // const handleOddsChange = (e) => {
@@ -339,7 +251,7 @@ const PostYourPicks = ({
       league,
       pickType,
       twitterUsername,
-      socialType,
+      email,
       researchToolOrModelUsed,
       selectedGame,
       teamPicked,
@@ -357,7 +269,7 @@ const PostYourPicks = ({
       pickType,
       twitterUsername,
       researchToolOrModelUsed,
-      socialType,
+      email,
       selectedGameId: selectedGame,
       teamPicked,
       odds,
@@ -379,56 +291,6 @@ const PostYourPicks = ({
       toast.error("Submit Failed!"); // Show error toast
     } finally {
       setIsSubmitting(false); // Disable spinner
-    }
-  };
-
-  const handleSubmit2 = async () => {
-    setIsSubmitting2(true);
-
-    console.log({
-      league2,
-      pickType2,
-      twitterUsername2,
-      socialType2,
-      researchToolOrModelUsed2,
-      selectedGame2,
-      teamPicked2,
-      odds2,
-      propLine2,
-      propOverOrUnder2,
-      market2,
-      playerPicked2,
-      gameDetails2,
-    });
-
-    const data = {
-      // Step 2: Prepare the data object
-      league: league2,
-      pickType: pickType2,
-      twitterUsername: twitterUsername2,
-      researchToolOrModelUsed: researchToolOrModelUsed2,
-      socialType: socialType2,
-      selectedGameId: selectedGame2,
-      teamPicked: teamPicked2,
-      odds: odds2,
-      propLine: propLine2,
-      propOverOrUnder: propOverOrUnder2,
-      market: market2,
-      playerPicked: playerPicked2,
-      postedTime: new Date().toISOString(),
-      gameCommenceTime: gameDetails2?.commence_time,
-    };
-
-    try {
-      const response = await axios.post(spreadsheetUrl, data); // Step 2: Send POST request
-      console.log(response); // Handle response
-      clearFields2(); // Clear all fields after submit
-      toast.success("Submit Successful!"); // Show success toast
-    } catch (error) {
-      console.error(error); // Step 3: Handle error
-      toast.error("Submit Failed!"); // Show error toast
-    } finally {
-      setIsSubmitting2(false); // Disable spinner
     }
   };
 
@@ -505,13 +367,13 @@ const PostYourPicks = ({
             </Select> */}
           </FormControl>
           <TextField
-            label={`Enter Your Email *`}
+            label={`Enter your twitter username *`}
             value={twitterUsername}
             onChange={handleTwitterUsernameChange}
             fullWidth
             color={!twitterUsername ? "error" : "primary"}
             margin="normal"
-            placeholder={`Email e.g info@sure-odds.com`}
+            placeholder={`Twitter username e.g sure_odds2023`}
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {
@@ -542,6 +404,48 @@ const PostYourPicks = ({
           {!twitterUsername && (
             <FormHelperText error>This field is required</FormHelperText>
           )}
+
+          <TextField
+            label={`Enter your email *`}
+            value={email}
+            onChange={handleEmailChange}
+            fullWidth
+            color={!email || emailError ? "error" : "primary"}
+            margin="normal"
+            placeholder={`Email e.g info@sure-odds.com`}
+            variant="outlined"
+            sx={{
+              "& .MuiInputBase-root": {
+                borderRadius: "8px",
+                height: "40px",
+                "& input": {
+                  height: "40px",
+                  padding: "10px",
+                  color: "#fff",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: "#fff",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: !email || emailError ? "error.main" : "#fff",
+                },
+                "&:hover fieldset": {
+                  borderColor: !email || emailError ? "error.main" : "#fff",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: !email || emailError ? "error.main" : "#fff",
+                },
+              },
+            }}
+          />
+          {!email ||
+            (emailError && (
+              <FormHelperText error>
+                {emailError || "This field is required"}
+              </FormHelperText>
+            ))}
 
           <FormControl
             fullWidth
@@ -1020,7 +924,14 @@ const PostYourPicks = ({
           <Button
             variant="contained"
             color="primary"
-            disabled={!twitterUsername || !league || !pickType || !selectedGame}
+            disabled={
+              !twitterUsername ||
+              !league ||
+              !pickType ||
+              !selectedGame ||
+              !email ||
+              emailError
+            }
             onClick={handleSubmit}
             sx={{
               mt: 2,
@@ -1032,604 +943,7 @@ const PostYourPicks = ({
               },
             }}
           >
-            {isSubmitting ? <CircularProgress size={24} /> : "Submit Pick 1"}
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Pick 2 */}
-      <Card
-        sx={{
-          borderRadius: "16px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
-          maxWidth: "600px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          margin: "auto",
-          marginTop: 5,
-          marginBottom: 5,
-          backgroundColor: "#2b2b2b",
-          color: "#fff",
-        }}
-      >
-        <CardContent sx={{ color: "fff" }}>
-          <FormControl
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            sx={{
-              mb: 2,
-              "& .MuiInputBase-root": {
-                borderRadius: "8px",
-                height: "40px",
-                color: "#fff",
-                "& input": {
-                  height: "40px",
-                  padding: "10px",
-                  color: "#fff",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                color: "#fff",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
-                },
-                "&:hover fieldset": {
-                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
-                },
-              },
-            }}
-          >
-            {/* <InputLabel id="social-type-label">Social Type</InputLabel> */}
-            {/* <Select
-              labelId="social-type-label"
-              id="socialType"
-              value={socialType2}
-              onChange={(e) => setSocialType2(e.target.value)}
-              label="Social Type"
-            >
-              <MenuItem value="twitter">X (Twitter)</MenuItem>
-              <MenuItem value="reddit">Reddit</MenuItem>
-            </Select> */}
-          </FormControl>
-          <TextField
-            label={`Enter Your Email *`}
-            value={twitterUsername2}
-            onChange={handleTwitterUsernameChange2}
-            fullWidth
-            color={!twitterUsername2 ? "error" : "primary"}
-            margin="normal"
-            placeholder={`Email e.g info@sure-odds.com`}
-            variant="outlined"
-            sx={{
-              "& .MuiInputBase-root": {
-                borderRadius: "8px",
-                height: "40px",
-                color: "#fff",
-                "& input": {
-                  height: "40px",
-                  padding: "10px",
-                  color: "#fff",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                color: "#fff",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
-                },
-                "&:hover fieldset": {
-                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: !twitterUsername2 ? "error.main" : "#fff",
-                },
-              },
-            }}
-          />
-          {!twitterUsername2 && (
-            <FormHelperText error>This field is required</FormHelperText>
-          )}
-
-          <FormControl
-            fullWidth
-            margin="normal"
-            sx={{
-              mb: 2,
-              "& .MuiInputBase-root": {
-                borderRadius: "8px",
-                height: "40px",
-                color: "#fff",
-              },
-              "& .MuiInputLabel-root": {
-                color: "#fff",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: !league2 ? "error.main" : "#fff",
-                },
-                "&:hover fieldset": {
-                  borderColor: !league2 ? "error.main" : "#fff",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: !league2 ? "error.main" : "#fff",
-                },
-              },
-            }}
-          >
-            <InputLabel id="league-label">League</InputLabel>
-            <Select
-              labelId="league-label"
-              id="league-select"
-              value={league2}
-              label="League *"
-              onChange={(e) => setLeague2(e.target.value)}
-            >
-              {/* <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem> */}
-              <MenuItem value="basketball_nba">NBA 🏀</MenuItem>
-              {/* <MenuItem value="baseball_mlb">MLB ⚾</MenuItem> */}
-              <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
-              <MenuItem value="americanfootball_ncaaf">
-                NCAA Football 🏈
-              </MenuItem>
-
-              <MenuItem value="basketball_ncaab">NCAA Basketball 🏀</MenuItem>
-              <MenuItem value="icehockey_nhl">NHL 🏒</MenuItem>
-              <MenuItem value="soccer_epl">EPL ⚽</MenuItem>
-              <MenuItem value="soccer_germany_bundesliga">
-                Bundesliga ⚽
-              </MenuItem>
-              <MenuItem value="soccer_italy_serie_a">Serie A ⚽</MenuItem>
-              <MenuItem value="soccer_spain_la_liga"> La Liga ⚽</MenuItem>
-              <MenuItem value="soccer_usa_mls"> MLS ⚽</MenuItem>
-            </Select>
-            {!league2 && (
-              <FormHelperText error>This field is required</FormHelperText>
-            )}
-          </FormControl>
-
-          {league2 && (
-            <>
-              <FormControl
-                fullWidth
-                margin="normal"
-                sx={{
-                  mb: 2,
-                  "& .MuiInputBase-root": {
-                    borderRadius: "8px",
-                    height: "40px",
-                    color: "#fff",
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "#fff",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: !pickType2 ? "error.main" : "#fff",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: !pickType2 ? "error.main" : "#fff",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: !pickType2 ? "error.main" : "#fff",
-                    },
-                  },
-                }}
-              >
-                <InputLabel id="pick-type-label">Pick Type</InputLabel>
-                <Select
-                  labelId="pick-type-label"
-                  id="pick-type-select"
-                  value={pickType2}
-                  label="Pick Type *"
-                  onChange={(e) => setPickType2(e.target.value)}
-                >
-                  {league2 !== "soccer_epl" &&
-                    league2 !== "soccer_germany_bundesliga" &&
-                    league2 !== "soccer_italy_serie_a" &&
-                    league2 !== "soccer_spain_la_liga" &&
-                    league2 !== "soccer_usa_mls" &&
-                    league2 !== "americanfootball_ncaaf" &&
-                    league2 !== "basketball_ncaab" && (
-                      <MenuItem value="props">Props 🎲</MenuItem>
-                    )}
-                  <MenuItem value="money line">Money Line 💰</MenuItem>
-                </Select>
-                {!pickType2 && (
-                  <FormHelperText error>This field is required</FormHelperText>
-                )}
-              </FormControl>
-
-              <FormControl
-                fullWidth
-                margin="normal"
-                sx={{
-                  mb: 2,
-                  "& .MuiInputBase-root": {
-                    borderRadius: "8px",
-                    height: "40px",
-                    color: "#fff",
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "#fff",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: !selectedGame2 ? "error.main" : "#fff",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: !selectedGame2 ? "error.main" : "#fff",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: !selectedGame2 ? "error.main" : "#fff",
-                    },
-                  },
-                }}
-              >
-                <InputLabel id="game-label">Game</InputLabel>
-                <Select
-                  labelId="game-label"
-                  id="game-select"
-                  value={selectedGame2}
-                  label="Game *"
-                  onChange={(e) => setSelectedGame2(e.target.value)}
-                >
-                  {games2.length > 0 ? (
-                    games2
-                      .filter(
-                        (game) => new Date(game.commence_time) > new Date()
-                      )
-                      .map((game) => (
-                        <MenuItem key={game.id} value={game.id}>
-                          {game.home_team} vs {game.away_team}
-                        </MenuItem>
-                      ))
-                  ) : (
-                    <MenuItem disabled>No games available</MenuItem>
-                  )}
-                </Select>
-                {!selectedGame2 && (
-                  <FormHelperText error>This field is required</FormHelperText>
-                )}
-              </FormControl>
-
-              {pickType2 === "money line" && gameDetails2 && (
-                <>
-                  <FormControl
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      mb: 2,
-                      "& .MuiInputBase-root": {
-                        borderRadius: "8px",
-                        height: "40px",
-                        color: "#fff",
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#fff",
-                      },
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderColor: !teamPicked2 ? "error.main" : "#fff",
-                        },
-                        "&:hover fieldset": {
-                          borderColor: !teamPicked2 ? "error.main" : "#fff",
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: !teamPicked2 ? "error.main" : "#fff",
-                        },
-                      },
-                    }}
-                  >
-                    <InputLabel id="team-picked-label">Team Picked</InputLabel>
-                    <Select
-                      labelId="team-picked-label"
-                      id="team-picked-select"
-                      value={teamPicked2}
-                      label="Team Picked *"
-                      onChange={(e) => {
-                        const team = e.target.value;
-                        const outcome =
-                          gameDetails2?.bookmakers[0]?.markets[0]?.outcomes.find(
-                            (outcome) => outcome?.name === team
-                          );
-                        setTeamPicked2(team);
-                        setOdds2(outcome?.price);
-                      }}
-                    >
-                      {gameDetails2?.bookmakers &&
-                      gameDetails2.bookmakers.length > 0 ? (
-                        gameDetails2.bookmakers[0]?.markets[0]?.outcomes.map(
-                          (outcome) => (
-                            <MenuItem key={outcome?.name} value={outcome?.name}>
-                              {outcome?.name} ({outcome?.price})
-                            </MenuItem>
-                          )
-                        )
-                      ) : (
-                        <MenuItem disabled>
-                          No betting options available
-                        </MenuItem>
-                      )}
-                    </Select>
-                    {!teamPicked2 && (
-                      <FormHelperText error>
-                        This field is required
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                  <TextField
-                    label="Odds"
-                    value={odds2}
-                    // onChange={handleOddsChange2}
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      "& .MuiInputBase-root": {
-                        borderRadius: "8px",
-                        height: "40px",
-                        color: "#fff",
-                        "& input": {
-                          height: "40px",
-                          padding: "10px",
-                          color: "#fff",
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#fff",
-                      },
-                    }}
-                  />
-                </>
-              )}
-
-              {pickType2 === "props" && (
-                <>
-                  {games2.length > 0 && (
-                    <FormControl
-                      fullWidth
-                      margin="normal"
-                      sx={{
-                        mb: 2,
-                        "& .MuiInputBase-root": {
-                          borderRadius: "8px",
-                          height: "40px",
-                          color: "#fff",
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#fff",
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: !market2 ? "error.main" : "#fff",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: !market2 ? "error.main" : "#fff",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: !market2 ? "error.main" : "#fff",
-                          },
-                        },
-                      }}
-                    >
-                      <InputLabel id="market-label">Market</InputLabel>
-                      <Select
-                        labelId="market-label"
-                        id="market-select"
-                        value={market2}
-                        label="Market *"
-                        onChange={(e) => setMarket2(e.target.value)}
-                      >
-                        {(league2 === "basketball_nba" ||
-                        league2 === "basketball_wnba"
-                          ? nbaAndWnbaMarkets
-                          : league2 === "baseball_mlb"
-                          ? mlbMarkets
-                          : league2 === "icehockey_nhl"
-                          ? nhlMarkets
-                          : nflMarkets
-                        ).map((market) => (
-                          <MenuItem key={market.key} value={market.key}>
-                            {market.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      {!market2 && (
-                        <FormHelperText error>
-                          This field is required
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  )}
-
-                  {players2.length > 0 ? (
-                    <FormControl
-                      fullWidth
-                      margin="normal"
-                      sx={{
-                        mb: 2,
-                        "& .MuiInputBase-root": {
-                          borderRadius: "8px",
-                          height: "40px",
-                          color: "#fff",
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#fff",
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: !playerPickedDetailForView2
-                              ? "error.main"
-                              : "#fff",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: !playerPickedDetailForView2
-                              ? "error.main"
-                              : "#fff",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: !playerPickedDetailForView2
-                              ? "error.main"
-                              : "#fff",
-                          },
-                        },
-                      }}
-                    >
-                      <InputLabel id="player-picked-label">
-                        Player Picked
-                      </InputLabel>
-                      <Select
-                        labelId="player-picked-label"
-                        id="player-picked-select"
-                        value={playerPickedDetailForView2}
-                        label="Player Picked"
-                        onChange={(e) => {
-                          const [player, name, point] =
-                            e.target.value.split("|"); // Split the value to get both parts
-                          const playerDetailsForView = e.target.value;
-                          const outcome = players2.find(
-                            (outcome) =>
-                              outcome.description === player &&
-                              outcome.name === name &&
-                              outcome.point === Number(point)
-                          );
-                          setPlayerPicked2(player);
-                          setPlayerPickedDetailForView2(playerDetailsForView);
-                          setOdds2(outcome.price);
-                          setPropLine2(outcome.point);
-                          setPropOverOrUnder2(outcome.name);
-                        }}
-                      >
-                        {players2.map((outcome) => (
-                          <MenuItem
-                            key={
-                              outcome.description + outcome.name + outcome.point
-                            } // Adjusted key to be unique for Over/Under
-                            value={`${outcome.description}|${outcome.name}|${outcome.point}`} // Combine description and name
-                          >
-                            {outcome.description} ({outcome.name}{" "}
-                            {outcome.point} ({outcome.price}))
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      {!playerPickedDetailForView2 && (
-                        <FormHelperText error>
-                          This field is required
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  ) : (
-                    market2 !== "" && (
-                      <TextField
-                        fullWidth
-                        margin="normal"
-                        value="This prop is not available right now"
-                        sx={{
-                          mb: 2,
-                          "& .MuiInputBase-root": {
-                            borderRadius: "8px",
-                            height: "40px",
-                            color: "#fff",
-                          },
-                        }}
-                      />
-                    )
-                  )}
-                  <TextField
-                    label="Player Odds"
-                    value={odds2}
-                    // onChange={handleOddsChange2}
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      "& .MuiInputBase-root": {
-                        borderRadius: "8px",
-                        height: "40px",
-                        color: "#fff",
-                        "& input": {
-                          height: "40px",
-                          padding: "10px",
-                          color: "#fff",
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#fff",
-                      },
-                    }}
-                  />
-                  <TextField
-                    label="Prop Line"
-                    value={propLine2}
-                    // onChange={handlePropLineChange2}
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      "& .MuiInputBase-root": {
-                        borderRadius: "8px",
-                        height: "40px",
-                        color: "#fff",
-                        "& input": {
-                          height: "40px",
-                          padding: "10px",
-                          color: "#fff",
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#fff",
-                      },
-                    }}
-                  />
-                </>
-              )}
-            </>
-          )}
-
-          {/* <TextField
-            label={`Model or Research Tool Used`}
-            value={researchToolOrModelUsed2}
-            onChange={(e) => setResearchToolOrModelUsed2(e.target.value)}
-            fullWidth
-            margin="normal"
-            placeholder={`Model or Research Tool Used e.g www.dimers.com`}
-            variant="outlined"
-            sx={{
-              "& .MuiInputBase-root": {
-                borderRadius: "8px",
-                height: "40px",
-                "& input": {
-                  height: "40px",
-                  padding: "10px",
-                },
-              },
-            }}
-          /> */}
-
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={
-              !twitterUsername2 || !league2 || !pickType2 || !selectedGame2
-            }
-            onClick={handleSubmit2}
-            sx={{
-              mt: 2,
-              backgroundColor: "#4F46E5",
-              color: "#000",
-              "&.Mui-disabled": {
-                backgroundColor: "#ccc",
-                color: "#666",
-              },
-            }}
-          >
-            {isSubmitting2 ? <CircularProgress size={24} /> : "Submit Pick 2"}
+            {isSubmitting ? <CircularProgress size={24} /> : "Submit Pick"}
           </Button>
         </CardContent>
       </Card>

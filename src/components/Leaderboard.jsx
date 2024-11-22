@@ -9,7 +9,6 @@ import {
   Paper,
   Tooltip,
   IconButton,
-  // Link,
   Typography,
   Button,
   Box,
@@ -38,7 +37,6 @@ const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
 const Leaderboard = ({
   companyName,
   primaryImageUrl,
-  description,
   price,
   spreadsheetUrl,
   secondaryImageUrl,
@@ -199,9 +197,7 @@ const Leaderboard = ({
             borderRadius: 1,
           }}
         >
-          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
-            Win {price}
-          </span>{" "}
+          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>{price}</span>{" "}
         </Typography>
       </Box>
 
@@ -305,18 +301,17 @@ const Leaderboard = ({
                         marginRight: 1,
                       }}
                     />
-                    {/* <a
-                      href={
-                        handicapper.socialType === "twitter"
-                          ? `https://x.com/${handicapper.username}`
-                          : `https://www.reddit.com/user/${handicapper.username}`
-                      }
+                    <a
+                      href={`https://x.com/${handicapper.username}`}
                       blank="_blank"
-                      style={{ fontSize: isMobile ? "10px" : "inherit" }}
+                      style={{
+                        fontSize: isMobile ? "10px" : "inherit",
+                        color: "#4F46E5",
+                      }}
                     >
                       {handicapper.username}
-                    </a> */}
-                    {handicapper.username}
+                    </a>
+                    {/* {handicapper.username} */}
                   </TableCell>
                   {!isMobile && (
                     <TableCell sx={{ color: "#fff" }}>

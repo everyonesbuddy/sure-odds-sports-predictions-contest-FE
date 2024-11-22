@@ -5,7 +5,6 @@ import "../css/CardContest.css";
 const ContestCard = ({
   primaryImageUrl,
   companyName,
-  description,
   price,
   contestFormat,
 }) => {
@@ -20,7 +19,6 @@ const ContestCard = ({
       <img src={primaryImageUrl} alt={companyName} className="card-image" />
       <div className="card-content">
         <h2 className="card-title">{companyName} Contest</h2>
-        <p className="card-description">{description}</p>
         <p className="card-price">Prize: {price}</p>
         <p className="card-contest-format">
           Contest Format: {contestFormat} Pick'em contest

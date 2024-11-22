@@ -16,11 +16,9 @@ const Contest = () => {
   const contest = useMemo(
     () => [
       {
-        companyName: "Doink Sports",
+        companyName: "Super Bowl Tickets Contest",
         primaryImageUrl: "https://i.ibb.co/L6zK67S/0k0-A7-Ib3-400x400.jpg",
-        description:
-          "Sports betting research platform. Props, trends, +EV, odds charts, arbs, matchup analysis and more!",
-        price: "Free 2 month subscription to Doink Sports Research Platform",
+        price: "Win a ticket to the 2024/2025 Super Bowl in New Orleans",
         spreadsheetUrl:
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         secondaryImageUrl: "https://i.ibb.co/XYjWV6p/1500x500-1.jpg",
@@ -29,12 +27,9 @@ const Contest = () => {
         contestFormat: "weekly",
       },
       {
-        companyName: "Daily Grind Fantasy Sports",
+        companyName: "NBA All Star Game Contest",
         primaryImageUrl: "https://i.ibb.co/PhvNXsj/o-GXbjunp-400x400.png",
-        description:
-          "Profitable bets at your fingertips! We make fantasy betting simpler.",
-        price:
-          "Free 2 month subscription to Daily Grind Fantasy Fantasy Bundle tools",
+        price: "Win a ticket to the 2024 NBA All Star Game in Salt Lake City",
         spreadsheetUrl:
           "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
         secondaryImageUrl: "https://i.ibb.co/CVVwBv1/1500x500.jpg",
@@ -147,7 +142,6 @@ const Contest = () => {
           <Leaderboard
             companyName={contestDetails.companyName}
             primaryImageUrl={contestDetails.primaryImageUrl}
-            description={contestDetails.description}
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             secondaryImageUrl={contestDetails.secondaryImageUrl}
@@ -160,7 +154,6 @@ const Contest = () => {
           <PostYourPicks
             companyName={contestDetails.companyName}
             primaryImageUrl={contestDetails.primaryImageUrl}
-            description={contestDetails.description}
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             secondaryImageUrl={contestDetails.secondaryImageUrl}
@@ -173,7 +166,6 @@ const Contest = () => {
           <PicksDetails
             companyName={contestDetails.companyName}
             primaryImageUrl={contestDetails.primaryImageUrl}
-            description={contestDetails.description}
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             secondaryImageUrl={contestDetails.secondaryImageUrl}
