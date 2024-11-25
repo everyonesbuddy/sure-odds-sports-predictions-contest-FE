@@ -106,7 +106,7 @@ const nhlMarkets = [
 ];
 
 const PostYourPicks = ({
-  companyName,
+  contestName,
   primaryImageUrl,
   price,
   spreadsheetUrl,
@@ -299,7 +299,7 @@ const PostYourPicks = ({
       <Typography align="center" gutterBottom sx={{ paddingTop: "15px" }}>
         🌟 Join the{" "}
         <a href={affiliateUrl} target="_blank" rel="noreferrer">
-          {companyName}
+          {contestName} Contest
         </a>{" "}
         Contest: Share your top sports picks now to climb the leaderboard, and
         win 📈

@@ -10,29 +10,28 @@ import PostYourPicks from "./PostYourPicks";
 import "../css/Contest.css";
 
 const Contest = () => {
-  const { companyName } = useParams();
+  const { contestName } = useParams();
   const [contestDetails, setContestDetails] = useState(null);
 
   const contest = useMemo(
     () => [
       {
-        companyName: "Super Bowl Tickets Contest",
-        primaryImageUrl: "https://i.ibb.co/L6zK67S/0k0-A7-Ib3-400x400.jpg",
+        contestName: "Super Bowl",
+        primaryImageUrl: "https://i.ibb.co/SvNwJZF/01j6wp56sds8hpb1haxr.webp",
         price: "Win a ticket to the 2024/2025 Super Bowl in New Orleans",
         spreadsheetUrl:
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
-        secondaryImageUrl: "https://i.ibb.co/XYjWV6p/1500x500-1.jpg",
         sponsored: false,
         affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
         contestFormat: "weekly",
       },
       {
-        companyName: "NBA All Star Game Contest",
-        primaryImageUrl: "https://i.ibb.co/PhvNXsj/o-GXbjunp-400x400.png",
+        contestName: "NBA All Star Game",
+        primaryImageUrl:
+          "https://i.ibb.co/8MZ6Fn7/2025-NBA-All-Star-1280x720.webp",
         price: "Win a ticket to the 2024 NBA All Star Game in Salt Lake City",
         spreadsheetUrl:
           "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
-        secondaryImageUrl: "https://i.ibb.co/CVVwBv1/1500x500.jpg",
         sponsored: false,
         affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
         contestFormat: "monthly",
@@ -43,13 +42,13 @@ const Contest = () => {
 
   useEffect(() => {
     const contestDetail = contest.find(
-      (item) => item.companyName === companyName
+      (item) => item.contestName === contestName
     );
     if (contestDetail) {
       setContestDetails(contestDetail);
     }
-    console.log("companyName", companyName);
-  }, [companyName, contest]);
+    console.log("contestName", contestName);
+  }, [contestName, contest]);
 
   const a11yProps = (index) => ({
     id: `simple-tab-${index}`,
@@ -74,22 +73,19 @@ const Contest = () => {
       <Box sx={{ width: "auto", textAlign: "center", p: 3 }}>
         <div className="contest-header">
           <div className="contest-header-left">
-            <h1>
-              Welcome to {contestDetails.companyName}{" "}
-              {contestDetails.contestFormat} contest
-            </h1>
-            {!isMobile && <p>Participate and Win {contestDetails.price}</p>}
-            <button
+            <h1>Welcome To The {contestDetails.contestName} Contest</h1>
+            {!isMobile && <p>Participate and {contestDetails.price}</p>}
+            {/* <button
               onClick={() => window.open(contestDetails.affiliateUrl, "_blank")}
               className="button-link"
             >
-              Go to {contestDetails.companyName}
-            </button>
+              Go to {contestDetails.contestName}
+            </button> */}
           </div>
           <div className="contest-header-right">
             <img
               src={contestDetails.primaryImageUrl}
-              alt={contestDetails.companyName}
+              alt={contestDetails.contestName}
             />
           </div>
         </div>
@@ -140,11 +136,10 @@ const Contest = () => {
         </Box>
         <CustomTabPanel value={value} index={0}>
           <Leaderboard
-            companyName={contestDetails.companyName}
+            contestName={contestDetails.contestName}
             primaryImageUrl={contestDetails.primaryImageUrl}
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
-            secondaryImageUrl={contestDetails.secondaryImageUrl}
             sponsored={contestDetails.sponsored}
             contestFormat={contestDetails.contestFormat}
             affiliateUrl={contestDetails.affiliateUrl}
@@ -152,11 +147,10 @@ const Contest = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <PostYourPicks
-            companyName={contestDetails.companyName}
+            contestName={contestDetails.contestName}
             primaryImageUrl={contestDetails.primaryImageUrl}
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
-            secondaryImageUrl={contestDetails.secondaryImageUrl}
             sponsored={contestDetails.sponsored}
             contestFormat={contestDetails.contestFormat}
             affiliateUrl={contestDetails.affiliateUrl}
@@ -164,7 +158,7 @@ const Contest = () => {
         </CustomTabPanel>
         {/* <CustomTabPanel value={value} index={2}>
           <PicksDetails
-            companyName={contestDetails.companyName}
+            contestName={contestDetails.contestName}
             primaryImageUrl={contestDetails.primaryImageUrl}
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}

@@ -35,7 +35,7 @@ const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
 };
 
 const Leaderboard = ({
-  companyName,
+  contestName,
   primaryImageUrl,
   price,
   spreadsheetUrl,

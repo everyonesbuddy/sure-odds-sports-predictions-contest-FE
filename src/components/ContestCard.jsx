@@ -4,21 +4,21 @@ import "../css/CardContest.css";
 
 const ContestCard = ({
   primaryImageUrl,
-  companyName,
+  contestName,
   price,
   contestFormat,
 }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/contest/${companyName}`);
+    navigate(`/contest/${contestName}`);
   };
 
   return (
     <div className="card" onClick={handleClick}>
-      <img src={primaryImageUrl} alt={companyName} className="card-image" />
+      <img src={primaryImageUrl} alt={contestName} className="card-image" />
       <div className="card-content">
-        <h2 className="card-title">{companyName} Contest</h2>
+        <h2 className="card-title">{contestName} Contest</h2>
         <p className="card-price">Prize: {price}</p>
         <p className="card-contest-format">
           Contest Format: {contestFormat} Pick'em contest

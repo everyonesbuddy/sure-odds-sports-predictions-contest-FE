@@ -52,23 +52,22 @@ const Home = () => {
 
   const contest = [
     {
-      companyName: "Super Bowl Tickets Contest",
-      primaryImageUrl: "https://i.ibb.co/L6zK67S/0k0-A7-Ib3-400x400.jpg",
+      contestName: "Super Bowl",
+      primaryImageUrl: "https://i.ibb.co/SvNwJZF/01j6wp56sds8hpb1haxr.webp",
       price: "Win a ticket to the 2024/2025 Super Bowl in New Orleans",
       spreadsheetUrl:
         "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
-      secondaryImageUrl: "https://i.ibb.co/XYjWV6p/1500x500-1.jpg",
       sponsored: false,
       affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
       contestFormat: "weekly",
     },
     {
-      companyName: "NBA All Star Game Contest",
-      primaryImageUrl: "https://i.ibb.co/PhvNXsj/o-GXbjunp-400x400.png",
+      contestName: "NBA All Star Game",
+      primaryImageUrl:
+        "https://i.ibb.co/8MZ6Fn7/2025-NBA-All-Star-1280x720.webp",
       price: "Win a ticket to the 2024 NBA All Star Game in Salt Lake City",
       spreadsheetUrl:
         "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
-      secondaryImageUrl: "https://i.ibb.co/CVVwBv1/1500x500.jpg",
       sponsored: false,
       affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
       contestFormat: "monthly",
@@ -136,7 +135,7 @@ const Home = () => {
             <ContestCard
               key={index}
               primaryImageUrl={item.primaryImageUrl}
-              companyName={item.companyName}
+              contestName={item.contestName}
               price={item.price}
               contestFormat={item.contestFormat}
             />

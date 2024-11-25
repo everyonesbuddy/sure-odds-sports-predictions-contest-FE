@@ -27,7 +27,7 @@ const App = () => {
           path="/personalizedAnalytics"
           element={<PersonalizedAnalytics />}
         />
-        <Route path="/contest/:companyName" element={<Contest />} />
+        <Route path="/contest/:contestName" element={<Contest />} />
       </Routes>
     </Router>
   );
