@@ -6,7 +6,8 @@ const ContestCard = ({
   primaryImageUrl,
   contestName,
   price,
-  contestFormat,
+  contestEndDate,
+  contestLeague,
 }) => {
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const ContestCard = ({
         <h2 className="card-title">{contestName} Contest</h2>
         <p className="card-price">Prize: {price}</p>
         <p className="card-contest-format">
-          Contest Format: {contestFormat} Pick'em contest
+          Contest End Date: {contestEndDate}
         </p>
       </div>
     </div>

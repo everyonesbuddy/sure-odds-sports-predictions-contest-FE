@@ -31,18 +31,16 @@
 
 .card-description {
   font-size: 1.2em;
-  color: #555;
+  color: #e7e6e6;
   margin: 8px 0;
 }
 
 .card-price {
-  font-size: 1em;
-  color: #333;
-  font-weight: bold;
+  font-size: 0.8em;
+  color: #e7e6e6;
 }
 
 .card-contest-format {
   font-size: 0.8em;
-  color: #333;
-  font-weight: bold;
+  color: #e7e6e6;
 }

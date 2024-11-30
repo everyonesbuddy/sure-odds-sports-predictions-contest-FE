@@ -39,9 +39,8 @@ const Leaderboard = ({
   primaryImageUrl,
   price,
   spreadsheetUrl,
-  secondaryImageUrl,
   sponsored,
-  contestFormat,
+  contestEndDate,
 }) => {
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
@@ -147,45 +146,19 @@ const Leaderboard = ({
       .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
   };
 
-  // Calculate the end time of the tournament for week
-  const getTournamentEndTimeForWeekly = () => {
-    const now = moment().utcOffset(-4); // EST is UTC-4
-    const dayOfWeek = now.day();
-    const daysUntilSunday = (7 - dayOfWeek) % 7; // Days until the next Sunday
-    const nextSunday = now
-      .clone()
-      .add(daysUntilSunday, "days")
-      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-    return nextSunday.toDate();
-  };
-
-  // Calculate the end time of the tournament for month
-  const getTournamentEndTimeForMonthly = () => {
-    const now = moment().utcOffset(-4); // EST is UTC-4
-    const endOfMonth = now
-      .clone()
-      .endOf("month")
-      .set({ hour: 23, minute: 59, second: 0, millisecond: 0 });
-    return endOfMonth.toDate();
-  };
-
-  const getTournamentEndTime = () => {
-    return contestFormat === "weekly"
-      ? getTournamentEndTimeForWeekly()
-      : getTournamentEndTimeForMonthly();
+  const getTournamentEndTime = (contestEndDate) => {
+    // Parse the contestEndDate string into a Date object
+    return new Date(contestEndDate);
   };
 
   return (
     <>
       <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography variant="body2">
-          {contestFormat === "weekly"
-            ? "Countdown to Weekly Tournament End"
-            : `Countdown to ${new Date().toLocaleString("default", {
-                month: "long",
-              })} ${new Date().getFullYear()} Tournament End:`}
-        </Typography>
-        <Countdown date={getTournamentEndTime()} renderer={CountdownRenderer} />
+        <Typography variant="body2">Countdown to Contest End</Typography>
+        <Countdown
+          date={getTournamentEndTime(contestEndDate)}
+          renderer={CountdownRenderer}
+        />
       </Box>
 
       <Box sx={{ textAlign: "center", mb: 2 }}>

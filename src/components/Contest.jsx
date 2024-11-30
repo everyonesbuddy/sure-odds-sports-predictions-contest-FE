@@ -23,7 +23,8 @@ const Contest = () => {
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         sponsored: false,
         affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
-        contestFormat: "weekly",
+        contestEndDate: "2/2/2025",
+        contestLeague: ["americanfootball_nfl"],
       },
       {
         contestName: "NBA All Star Game",
@@ -34,7 +35,8 @@ const Contest = () => {
           "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
         sponsored: false,
         affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
-        contestFormat: "monthly",
+        contestEndDate: "2/9/2025",
+        contestLeague: ["americanfootball_nfl"],
       },
     ],
     []
@@ -141,8 +143,9 @@ const Contest = () => {
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             sponsored={contestDetails.sponsored}
-            contestFormat={contestDetails.contestFormat}
+            contestEndDate={contestDetails.contestEndDate}
             affiliateUrl={contestDetails.affiliateUrl}
+            contestLeague={contestDetails.contestLeague}
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
@@ -152,8 +155,9 @@ const Contest = () => {
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             sponsored={contestDetails.sponsored}
-            contestFormat={contestDetails.contestFormat}
+            contestEndDate={contestDetails.contestEndDate}
             affiliateUrl={contestDetails.affiliateUrl}
+            contestLeague={contestDetails.contestLeague}
           />
         </CustomTabPanel>
         {/* <CustomTabPanel value={value} index={2}>

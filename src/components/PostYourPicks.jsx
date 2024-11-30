@@ -42,6 +42,19 @@ const leagueApiMap = {
     "https://api.the-odds-api.com/v4/sports/icehockey_nhl/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings",
 };
 
+const leagueOptions = [
+  { value: "basketball_nba", label: "NBA 🏀" },
+  { value: "americanfootball_nfl", label: "NFL 🏈" },
+  { value: "americanfootball_ncaaf", label: "NCAA Football 🏈" },
+  { value: "basketball_ncaab", label: "NCAA Basketball 🏀" },
+  { value: "icehockey_nhl", label: "NHL 🏒" },
+  { value: "soccer_epl", label: "EPL ⚽" },
+  { value: "soccer_germany_bundesliga", label: "Bundesliga ⚽" },
+  { value: "soccer_italy_serie_a", label: "Serie A ⚽" },
+  { value: "soccer_spain_la_liga", label: "La Liga ⚽" },
+  { value: "soccer_usa_mls", label: "MLS ⚽" },
+];
+
 const nbaAndWnbaMarkets = [
   { key: "player_points", name: "Points (Over/Under)" },
   { key: "player_rebounds", name: "Rebounds (Over/Under)" },
@@ -110,15 +123,14 @@ const PostYourPicks = ({
   primaryImageUrl,
   price,
   spreadsheetUrl,
-  secondaryImageUrl,
   sponsored,
   affiliateUrl,
+  contestLeague,
+  contestEndDate,
 }) => {
-  //pick state 1
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
   const [twitterUsername, setTwitterUsername] = useState("");
-  const [researchToolOrModelUsed, setResearchToolOrModelUsed] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [games, setGames] = useState([]);
@@ -134,6 +146,7 @@ const PostYourPicks = ({
   const [propLine, setPropLine] = useState("");
   const [propOverOrUnder, setPropOverOrUnder] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [picks, setPicks] = useState([]);
 
   // Call this function when the Twitter username input changes
   const handleTwitterUsernameChange = (event) => {
@@ -209,11 +222,15 @@ const PostYourPicks = ({
     }
   }, [selectedGame, pickType, league, market]);
 
+  useEffect(() => {
+    if (contestLeague && contestLeague.length > 0) {
+      setLeague(contestLeague[0]);
+    }
+  }, [contestLeague]);
+
   const clearFields = () => {
     setLeague("");
     setPickType("");
-    setTwitterUsername("");
-    setResearchToolOrModelUsed("");
     setGames([]);
     setSelectedGame("");
     setGameDetails(null);
@@ -221,7 +238,6 @@ const PostYourPicks = ({
     setOdds("");
     setPropLine("");
     setPropOverOrUnder("");
-    setEmail("");
     setMarket("");
     setPlayers([]);
     setPlayerPicked("");
@@ -232,65 +248,53 @@ const PostYourPicks = ({
   //   setOdds(e.target.value);
   // };
 
-  // const handleOddsChange2 = (e) => {
-  //   setOdds2(e.target.value);
-  // };
-
   // const handlePropLineChange = (e) => {
   //   setPropLine(e.target.value);
   // };
 
-  // const handlePropLineChange2 = (e) => {
-  //   setPropLine2(e.target.value);
-  // };
+  const addPick = () => {
+    if (!league || !pickType || !selectedGame || !email || emailError) {
+      toast.error("Please complete all required fields before adding a pick!");
+      return;
+    }
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-
-    console.log({
+    const newPick = {
       league,
       pickType,
       twitterUsername,
       email,
-      researchToolOrModelUsed,
       selectedGame,
       teamPicked,
       odds,
-      propLine,
-      propOverOrUnder,
       market,
       playerPicked,
-      gameDetails,
-    });
-
-    const data = {
-      // Step 2: Prepare the data object
-      league,
-      pickType,
-      twitterUsername,
-      researchToolOrModelUsed,
-      email,
-      selectedGameId: selectedGame,
-      teamPicked,
-      odds,
       propLine,
       propOverOrUnder,
-      market,
-      playerPicked,
       postedTime: new Date().toISOString(),
-      gameCommenceTime: gameDetails?.commence_time,
     };
+    setPicks([...picks, newPick]);
+    toast.success("Pick added!");
+    clearFields();
+  };
+
+  const handleSubmitAll = async () => {
+    if (picks.length === 0) {
+      toast.error("No picks to submit!");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
-      const response = await axios.post(spreadsheetUrl, data); // Step 2: Send POST request
-      console.log(response); // Handle response
-      clearFields(); // Clear all fields after submit
-      toast.success("Submit Successful!"); // Show success toast
+      const response = await axios.post(spreadsheetUrl, picks);
+      console.log(response);
+      toast.success("All picks submitted successfully!");
+      setPicks([]);
     } catch (error) {
-      console.error(error); // Step 3: Handle error
-      toast.error("Submit Failed!"); // Show error toast
+      console.error("Error submitting picks:", error);
+      toast.error("Failed to submit picks!");
     } finally {
-      setIsSubmitting(false); // Disable spinner
+      setIsSubmitting(false);
     }
   };
 
@@ -353,19 +357,7 @@ const PostYourPicks = ({
                 },
               },
             }}
-          >
-            {/* <InputLabel id="social-type-label">Social Type</InputLabel> */}
-            {/* <Select
-              labelId="social-type-label"
-              id="socialType"
-              value={socialType}
-              onChange={(e) => setSocialType(e.target.value)}
-              label="Social Type"
-            >
-              <MenuItem value="twitter">X (Twitter)</MenuItem>
-              <MenuItem value="reddit">Reddit</MenuItem>
-            </Select> */}
-          </FormControl>
+          ></FormControl>
           <TextField
             label={`Enter your twitter username *`}
             value={twitterUsername}
@@ -481,23 +473,13 @@ const PostYourPicks = ({
               label="League *"
               onChange={(e) => setLeague(e.target.value)}
             >
-              {/* <MenuItem value="basketball_wnba">WNBA 🏀</MenuItem> */}
-              <MenuItem value="basketball_nba">NBA 🏀</MenuItem>
-              {/* <MenuItem value="baseball_mlb">MLB ⚾</MenuItem> */}
-              <MenuItem value="americanfootball_nfl">NFL 🏈</MenuItem>
-              <MenuItem value="americanfootball_ncaaf">
-                NCAA Football 🏈
-              </MenuItem>
-              <MenuItem value="basketball_ncaab">NCAA Basketball 🏀</MenuItem>
-              <MenuItem value="icehockey_nhl">NHL 🏒</MenuItem>
-
-              <MenuItem value="soccer_epl">EPL ⚽</MenuItem>
-              <MenuItem value="soccer_germany_bundesliga">
-                Bundesliga ⚽
-              </MenuItem>
-              <MenuItem value="soccer_italy_serie_a">Serie A ⚽</MenuItem>
-              <MenuItem value="soccer_spain_la_liga"> La Liga ⚽</MenuItem>
-              <MenuItem value="soccer_usa_mls"> MLS ⚽</MenuItem>
+              {leagueOptions
+                .filter((option) => contestLeague.includes(option.value))
+                .map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
             </Select>
             {!league && (
               <FormHelperText error>This field is required</FormHelperText>
@@ -900,50 +882,89 @@ const PostYourPicks = ({
               )}
             </>
           )}
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={addPick}
+            sx={{ marginRight: 2 }}
+          >
+            Add Pick
+          </Button>
+        </CardContent>
+      </Card>
 
-          {/* <TextField
-            label={`Model or Research Tool Used`}
-            value={researchToolOrModelUsed}
-            onChange={(e) => setResearchToolOrModelUsed(e.target.value)}
-            fullWidth
-            margin="normal"
-            placeholder={`Model or Research Tool Used e.g www.dimers.com`}
-            variant="outlined"
-            sx={{
-              "& .MuiInputBase-root": {
-                borderRadius: "8px",
-                height: "40px",
-                "& input": {
-                  height: "40px",
-                  padding: "10px",
-                },
-              },
-            }}
-          /> */}
+      <Card
+        sx={{
+          borderRadius: "16px",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+          maxWidth: "600px",
+          margin: "auto",
+          marginTop: 2,
+          marginBottom: 5,
+          backgroundColor: "#fff",
+        }}
+      >
+        <CardContent>
+          <Typography variant="h6" align="center" gutterBottom>
+            Your Picks
+          </Typography>
+          {picks.length === 0 ? (
+            <Typography variant="body1" align="center">
+              <span style={{ fontSize: "1.25rem", fontWeight: "bold" }}>
+                No Picks Selected
+              </span>
+              <br />
+              <span style={{ fontSize: "1rem" }}>
+                Add Picks with the form above.
+              </span>
+            </Typography>
+          ) : (
+            <>
+              <ul>
+                {picks.map((pick, index) => {
+                  const leagueLabel = leagueOptions.find(
+                    (option) => option.value === pick.league
+                  )?.label;
 
+                  return (
+                    <li
+                      key={index}
+                      style={{ padding: "10px 0", fontSize: "0.875rem" }}
+                    >
+                      {leagueLabel} - {pick.pickType} -{" "}
+                      {pick.pickType === "money line"
+                        ? `${pick.teamPicked} (${pick.odds})`
+                        : `${pick.playerPicked} (${pick.propOverOrUnder} ${
+                            pick.propLine
+                          } ${pick.market
+                            .replace(/_/g, " ")
+                            .replace("player ", "")}) (${pick.odds})`}
+                      <Button
+                        variant="contained"
+                        color="error"
+                        size="small"
+                        onClick={() => {
+                          const newPicks = picks.filter((_, i) => i !== index);
+                          setPicks(newPicks);
+                        }}
+                        sx={{ marginLeft: 2 }}
+                      >
+                        Delete
+                      </Button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          )}
           <Button
             variant="contained"
             color="primary"
-            disabled={
-              !twitterUsername ||
-              !league ||
-              !pickType ||
-              !selectedGame ||
-              !email ||
-              emailError
-            }
-            onClick={handleSubmit}
-            sx={{
-              mt: 2,
-              backgroundColor: "#4F46E5",
-              color: "#000",
-              "&.Mui-disabled": {
-                backgroundColor: "#ccc",
-                color: "#666",
-              },
-            }}
+            onClick={handleSubmitAll}
+            disabled={picks.length === 0 || isSubmitting}
+            sx={{ marginTop: 2 }}
           >
-            {isSubmitting ? <CircularProgress size={24} /> : "Submit Pick"}
+            {isSubmitting ? <CircularProgress size={24} /> : "Submit All Picks"}
           </Button>
         </CardContent>
       </Card>
