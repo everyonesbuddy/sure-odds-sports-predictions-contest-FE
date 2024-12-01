@@ -276,7 +276,8 @@ const Leaderboard = ({
                     />
                     <a
                       href={`https://x.com/${handicapper.username}`}
-                      blank="_blank"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{
                         fontSize: isMobile ? "10px" : "inherit",
                         color: "#4F46E5",
