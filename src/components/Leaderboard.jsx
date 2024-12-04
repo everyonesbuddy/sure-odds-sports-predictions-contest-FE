@@ -285,7 +285,6 @@ const Leaderboard = ({
                     >
                       {handicapper.username}
                     </a>
-                    {/* {handicapper.username} */}
                   </TableCell>
                   {!isMobile && (
                     <TableCell sx={{ color: "#fff" }}>
