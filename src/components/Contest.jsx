@@ -16,9 +16,9 @@ const Contest = () => {
   const contest = useMemo(
     () => [
       {
-        contestName: "Super Bowl",
-        primaryImageUrl: "https://i.ibb.co/SvNwJZF/01j6wp56sds8hpb1haxr.webp",
-        price: "Win a ticket to the 2024/2025 Super Bowl in New Orleans",
+        contestName: "Doink Sports",
+        primaryImageUrl: "https://i.ibb.co/xzk85XK/0k0-A7-Ib3-400x400.jpg",
+        price: "Win a free 2 months subscription to Doink Sports",
         spreadsheetUrl:
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         sponsored: false,
@@ -27,10 +27,9 @@ const Contest = () => {
         contestLeague: ["americanfootball_nfl"],
       },
       {
-        contestName: "NBA All Star Game",
-        primaryImageUrl:
-          "https://i.ibb.co/8MZ6Fn7/2025-NBA-All-Star-1280x720.webp",
-        price: "Win a ticket to the 2024 NBA All Star Game in Salt Lake City",
+        contestName: "DG Fantasy",
+        primaryImageUrl: "https://i.ibb.co/p4w0j39/o-GXbjunp-400x400.png",
+        price: "Win a free 2 months subscription to DG Fantasy",
         spreadsheetUrl:
           "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
         sponsored: false,
