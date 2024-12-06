@@ -145,6 +145,7 @@ const PostYourPicks = ({
     useState("");
   const [propLine, setPropLine] = useState("");
   const [propOverOrUnder, setPropOverOrUnder] = useState("");
+  const [gameCommenceTime, setGameCommenceTime] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [picks, setPicks] = useState([]);
 
@@ -233,6 +234,7 @@ const PostYourPicks = ({
     setPickType("");
     setGames([]);
     setSelectedGame("");
+    setGameCommenceTime("");
     setGameDetails(null);
     setTeamPicked("");
     setOdds("");
@@ -271,6 +273,7 @@ const PostYourPicks = ({
       propLine,
       propOverOrUnder,
       postedTime: new Date().toISOString(),
+      gameCommenceTime: gameCommenceTime,
     };
     setPicks([...picks, newPick]);
     toast.success("Pick added!");
@@ -570,7 +573,16 @@ const PostYourPicks = ({
                   id="game-select"
                   value={selectedGame}
                   label="Game *"
-                  onChange={(e) => setSelectedGame(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedGame(e.target.value);
+
+                    const selectedGame = games.find(
+                      (game) => game.id === e.target.value
+                    );
+                    if (selectedGame) {
+                      setGameCommenceTime(selectedGame.commence_time);
+                    }
+                  }}
                 >
                   {games.length > 0 ? (
                     games

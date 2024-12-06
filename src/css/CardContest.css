@@ -38,9 +38,28 @@
 .card-price {
   font-size: 0.8em;
   color: #e7e6e6;
+  margin: 8px 0;
 }
 
 .card-contest-format {
   font-size: 0.8em;
   color: #e7e6e6;
+  margin: 8px 0;
+}
+
+.before-start {
+  color: green;
+}
+
+.before-end {
+  color: red;
+}
+
+.league-card {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
 }

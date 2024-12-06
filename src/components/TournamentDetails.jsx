@@ -74,20 +74,6 @@ const TournamentDetails = () => {
                 secondaryTypographyProps={{ sx: { color: "#fff" } }}
               />
             </ListItem>
-            <ListItem>
-              <ListItemText
-                primary="Supporting Handicappers"
-                secondary="We don’t sell or give away handicappers’ picks. Instead, we focus on their performance data, showing past results to build credibility. Bettors can tip handicappers directly on our platform, and handicappers can pay for sponsored spots to boost visibility without disrupting their business. Our goal is to help handicappers grow while keeping their picks valuable."
-                primaryTypographyProps={{
-                  sx: {
-                    color: "#fff",
-                    textAlign: "center",
-                    fontWeight: "bold",
-                  },
-                }}
-                secondaryTypographyProps={{ sx: { color: "#fff" } }}
-              />
-            </ListItem>
           </List>
         </Typography>
       </Box>

@@ -51,3 +51,19 @@
 .button-link:hover {
   background-color: #756fe6;
 }
+
+/* Media query for mobile view */
+@media (max-width: 600px) {
+  .contest-header {
+    flex-direction: column;
+  }
+
+  .contest-header-left {
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .contest-header-right {
+    display: none;
+  }
+}

@@ -23,8 +23,10 @@ const Contest = () => {
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         sponsored: false,
         affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
+        affiliateCopy: "Try Doink Sports Research Platform For Free",
         contestEndDate: "2/2/2025",
-        contestLeague: ["americanfootball_nfl"],
+        contestStartDate: "11/15/2024",
+        contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
       },
       {
         contestName: "DG Fantasy",
@@ -34,8 +36,10 @@ const Contest = () => {
           "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
         sponsored: false,
         affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+        affiliateCopy: "Try DG Fantasy Research Platform For Free",
         contestEndDate: "2/9/2025",
-        contestLeague: ["americanfootball_nfl"],
+        contestStartDate: "12/9/2024",
+        contestLeague: ["americanfootball_nfl", "soccer_germany_bundesliga"],
       },
     ],
     []
@@ -76,12 +80,12 @@ const Contest = () => {
           <div className="contest-header-left">
             <h1>Welcome To The {contestDetails.contestName} Contest</h1>
             {!isMobile && <p>Participate and {contestDetails.price}</p>}
-            {/* <button
+            <button
               onClick={() => window.open(contestDetails.affiliateUrl, "_blank")}
               className="button-link"
             >
-              Go to {contestDetails.contestName}
-            </button> */}
+              {contestDetails.affiliateCopy}
+            </button>
           </div>
           <div className="contest-header-right">
             <img
@@ -143,7 +147,9 @@ const Contest = () => {
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             sponsored={contestDetails.sponsored}
             contestEndDate={contestDetails.contestEndDate}
+            contestStartDate={contestDetails.contestStartDate}
             affiliateUrl={contestDetails.affiliateUrl}
+            affiliateCopy={contestDetails.affiliateCopy}
             contestLeague={contestDetails.contestLeague}
           />
         </CustomTabPanel>
@@ -155,7 +161,9 @@ const Contest = () => {
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             sponsored={contestDetails.sponsored}
             contestEndDate={contestDetails.contestEndDate}
+            contestStartDate={contestDetails.contestStartDate}
             affiliateUrl={contestDetails.affiliateUrl}
+            affiliateCopy={contestDetails.affiliateCopy}
             contestLeague={contestDetails.contestLeague}
           />
         </CustomTabPanel>

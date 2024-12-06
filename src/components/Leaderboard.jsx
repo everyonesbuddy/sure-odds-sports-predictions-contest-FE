@@ -10,7 +10,6 @@ import {
   Tooltip,
   IconButton,
   Typography,
-  Button,
   Box,
   Avatar,
   useMediaQuery,
@@ -19,20 +18,6 @@ import {
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import axios from "axios";
 import moment from "moment";
-import Countdown from "react-countdown";
-
-// Countdown renderer component
-const CountdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
-  if (completed) {
-    return <span style={{ color: "red" }}>The tournament has ended!</span>;
-  } else {
-    return (
-      <span style={{ color: "red" }}>
-        {days} days {hours} hours {minutes} minutes {seconds} seconds
-      </span>
-    );
-  }
-};
 
 const Leaderboard = ({
   contestName,
@@ -41,10 +26,10 @@ const Leaderboard = ({
   spreadsheetUrl,
   sponsored,
   contestEndDate,
+  contestStartDate,
 }) => {
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
-  const [filter, setFilter] = useState("all");
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -59,23 +44,13 @@ const Leaderboard = ({
   }, [spreadsheetUrl]);
 
   useEffect(() => {
-    const now = moment();
+    const contestStart = moment(contestStartDate);
     const filtered = betsData.filter((bet) => {
       const postedTime = moment(bet?.postedTime);
-      switch (filter) {
-        case "day":
-          return now.diff(postedTime, "days") < 1;
-        case "week":
-          return now.diff(postedTime, "weeks") < 1;
-        case "month":
-          return now.diff(postedTime, "months") < 1;
-        case "all":
-        default:
-          return true;
-      }
+      return postedTime.isSameOrAfter(contestStart);
     });
     setFilteredBets(filtered);
-  }, [filter, betsData]);
+  }, [betsData, contestStartDate]);
 
   const aggregateBets = (bets) => {
     const handicappers = {};
@@ -146,19 +121,52 @@ const Leaderboard = ({
       .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
   };
 
-  const getTournamentEndTime = (contestEndDate) => {
-    // Parse the contestEndDate string into a Date object
-    return new Date(contestEndDate);
+  const calculateDuration = (start, end) => {
+    const currentDate = new Date();
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    if (currentDate < startDate) {
+      const durationInMilliseconds = startDate - currentDate;
+      const durationInDays = Math.ceil(
+        durationInMilliseconds / (1000 * 60 * 60 * 24)
+      );
+      return {
+        duration: durationInDays,
+        message: `Contest starts in ${durationInDays} days`,
+        isBeforeStart: true,
+      };
+    } else {
+      const durationInMilliseconds = endDate - currentDate;
+      const durationInDays = Math.ceil(
+        durationInMilliseconds / (1000 * 60 * 60 * 24)
+      );
+      return {
+        duration: durationInDays,
+        message: `Contest ends in ${durationInDays} days`,
+        isBeforeStart: false,
+      };
+    }
   };
+
+  const { message, isBeforeStart } = calculateDuration(
+    contestStartDate,
+    contestEndDate
+  );
 
   return (
     <>
       <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography variant="body2">Countdown to Contest End</Typography>
-        <Countdown
-          date={getTournamentEndTime(contestEndDate)}
-          renderer={CountdownRenderer}
-        />
+        <Typography variant="subtitle1">
+          <p
+            className={`card-contest-format ${
+              isBeforeStart ? "before-start" : "before-end"
+            }`}
+            style={{ fontSize: "20px", fontWeight: "bold" }}
+          >
+            {message}
+          </p>
+        </Typography>
       </Box>
 
       <Box sx={{ textAlign: "center", mb: 2 }}>
@@ -175,30 +183,6 @@ const Leaderboard = ({
       </Box>
 
       <Box>
-        <Box sx={{ display: "flex", justifyContent: "space-around", p: 2 }}>
-          {["all", "day", "week", "month"].map((f) => (
-            <Button
-              key={f}
-              variant={filter === f ? "contained" : "outlined"}
-              onClick={() => setFilter(f)}
-              sx={{
-                minWidth: isMobile ? "50px" : "150px", // Make buttons smaller on mobile
-                fontWeight: "bold", // Make text bolder
-                fontSize: isMobile ? "12px" : "inherit", // Smaller text on mobile
-                color: filter === f ? "#fff" : "#4F46E5", // Text color
-                borderColor: "#4F46E5", // Border color
-                backgroundColor: filter === f ? "#4F46E5" : "transparent", // Background color for selected button
-                "&:hover": {
-                  backgroundColor:
-                    filter === f ? "#4F46E5" : "rgba(79, 70, 229, 0.1)", // Hover effect
-                  borderColor: "#4F46E5",
-                },
-              }}
-            >
-              {f.charAt(0).toUpperCase() + f.slice(1)}
-            </Button>
-          ))}
-        </Box>
         <TableContainer component={Paper} sx={{ backgroundColor: "#2b2b2b" }}>
           <Table>
             <TableHead>

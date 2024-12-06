@@ -59,8 +59,10 @@ const Home = () => {
         "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
       sponsored: false,
       affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
+      affiliateCopy: "Try Doink Sports Research Platform For Free",
       contestEndDate: "2/2/2025",
-      contestLeague: ["americanfootball_nfl"],
+      contestStartDate: "11/15/2024",
+      contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
     },
     {
       contestName: "DG Fantasy",
@@ -70,8 +72,10 @@ const Home = () => {
         "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
       sponsored: false,
       affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+      affiliateCopy: "Try DG Fantasy Research Platform For Free",
       contestEndDate: "2/9/2025",
-      contestLeague: ["americanfootball_nfl"],
+      contestStartDate: "12/9/2024",
+      contestLeague: ["americanfootball_nfl", "soccer_germany_bundesliga"],
     },
   ];
 
@@ -139,7 +143,10 @@ const Home = () => {
               contestName={item.contestName}
               price={item.price}
               contestEndDate={item.contestEndDate}
+              contestStartDate={item.contestStartDate}
               contestLeague={item.contestLeague}
+              affiliateUrl={item.affiliateUrl}
+              affiliateCopy={item.affiliateCopy}
             />
           ))}
         </div>
