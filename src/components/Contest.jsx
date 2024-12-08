@@ -6,7 +6,6 @@ import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import PostYourPicks from "./PostYourPicks";
-// import PicksDetails from "./PicksDetails";
 import "../css/Contest.css";
 
 const Contest = () => {
@@ -24,8 +23,8 @@ const Contest = () => {
         sponsored: false,
         affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
         affiliateCopy: "Try Doink Sports Research Platform For Free",
-        contestEndDate: "2/2/2025",
-        contestStartDate: "11/15/2024",
+        contestEndDate: "1/31/2025",
+        contestStartDate: "12/8/2024",
         contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
       },
       {
@@ -37,9 +36,38 @@ const Contest = () => {
         sponsored: false,
         affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
         affiliateCopy: "Try DG Fantasy Research Platform For Free",
-        contestEndDate: "2/9/2025",
-        contestStartDate: "12/9/2024",
+        contestEndDate: "1/31/2025",
+        contestStartDate: "12/8/2024",
         contestLeague: ["americanfootball_nfl", "soccer_germany_bundesliga"],
+      },
+      {
+        contestName: "Prize Picks",
+        primaryImageUrl: "https://i.ibb.co/C8Cb5BF/Po6-QETC5-400x400.jpg",
+        price: "Win $100 to play on Prize Picks or whatever you want",
+        spreadsheetUrl:
+          "https://api.sheetbest.com/sheets/09d34a2c-8cc1-4cf6-951c-dbc2ce537971",
+        sponsored: false,
+        affiliateUrl:
+          "https://app.prizepicks.com/sign-up?invite_code=PR-SUWVT13",
+        affiliateCopy:
+          "Place a $5 Lineup, Get $50 Instantly - No Strings Attached!",
+        contestEndDate: "1/31/2025",
+        contestStartDate: "12/8/2024",
+        contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
+      },
+      {
+        contestName: "Underdog",
+        primaryImageUrl: "https://i.ibb.co/0Z74yfz/Qt3-Ggq-We-400x400.jpg",
+        price: "Win $100 to play on Underdog or whatever you want",
+        spreadsheetUrl:
+          "https://api.sheetbest.com/sheets/996f6b90-a6e4-4ddf-b3a8-a3c004d0a2fa",
+        sponsored: false,
+        affiliateUrl: "https://play.underdogfantasy.com/magnusdomitor",
+        affiliateCopy:
+          "Get up to $1000 Bonus Cash when you make your first deposit!",
+        contestEndDate: "1/31/2025",
+        contestStartDate: "12/8/2024",
+        contestLeague: ["americanfootball_nfl", "basketball_nba"],
       },
     ],
     []
@@ -114,7 +142,7 @@ const Contest = () => {
             }}
           >
             <Tab
-              label="Leaderboard 🏆"
+              label="Post Your Picks🥇"
               {...a11yProps(0)}
               sx={{
                 color: "#4F46E5",
@@ -122,38 +150,16 @@ const Contest = () => {
               }}
             />
             <Tab
-              label="Post Your Picks🥇"
+              label="Leaderboard 🏆"
               {...a11yProps(1)}
               sx={{
                 color: "#4F46E5",
                 fontSize: isMobile ? "8px" : "10px",
               }}
             />
-            {/* <Tab
-              label="Live Picks Preview 📊"
-              {...a11yProps(2)}
-              sx={{
-                color: "#4F46E5",
-                fontSize: isMobile ? "8px" : "10px",
-              }}
-            /> */}
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <Leaderboard
-            contestName={contestDetails.contestName}
-            primaryImageUrl={contestDetails.primaryImageUrl}
-            price={contestDetails.price}
-            spreadsheetUrl={contestDetails.spreadsheetUrl}
-            sponsored={contestDetails.sponsored}
-            contestEndDate={contestDetails.contestEndDate}
-            contestStartDate={contestDetails.contestStartDate}
-            affiliateUrl={contestDetails.affiliateUrl}
-            affiliateCopy={contestDetails.affiliateCopy}
-            contestLeague={contestDetails.contestLeague}
-          />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
           <PostYourPicks
             contestName={contestDetails.contestName}
             primaryImageUrl={contestDetails.primaryImageUrl}
@@ -167,18 +173,20 @@ const Contest = () => {
             contestLeague={contestDetails.contestLeague}
           />
         </CustomTabPanel>
-        {/* <CustomTabPanel value={value} index={2}>
-          <PicksDetails
+        <CustomTabPanel value={value} index={1}>
+          <Leaderboard
             contestName={contestDetails.contestName}
             primaryImageUrl={contestDetails.primaryImageUrl}
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
-            secondaryImageUrl={contestDetails.secondaryImageUrl}
             sponsored={contestDetails.sponsored}
-            contestFormat={contestDetails.contestFormat}
+            contestEndDate={contestDetails.contestEndDate}
+            contestStartDate={contestDetails.contestStartDate}
             affiliateUrl={contestDetails.affiliateUrl}
+            affiliateCopy={contestDetails.affiliateCopy}
+            contestLeague={contestDetails.contestLeague}
           />
-        </CustomTabPanel> */}
+        </CustomTabPanel>
       </Box>
     </>
   );

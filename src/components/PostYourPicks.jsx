@@ -10,6 +10,7 @@ import {
   CardContent,
   Typography,
   Button,
+  Box,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -127,6 +128,7 @@ const PostYourPicks = ({
   affiliateUrl,
   contestLeague,
   contestEndDate,
+  contestStartDate,
 }) => {
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
@@ -301,6 +303,39 @@ const PostYourPicks = ({
     }
   };
 
+  const calculateDuration = (start, end) => {
+    const currentDate = new Date();
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    if (currentDate < startDate) {
+      const durationInMilliseconds = startDate - currentDate;
+      const durationInDays = Math.ceil(
+        durationInMilliseconds / (1000 * 60 * 60 * 24)
+      );
+      return {
+        duration: durationInDays,
+        message: `Contest starts in ${durationInDays} days`,
+        isBeforeStart: true,
+      };
+    } else {
+      const durationInMilliseconds = endDate - currentDate;
+      const durationInDays = Math.ceil(
+        durationInMilliseconds / (1000 * 60 * 60 * 24)
+      );
+      return {
+        duration: durationInDays,
+        message: `Contest ends in ${durationInDays} days`,
+        isBeforeStart: false,
+      };
+    }
+  };
+
+  const { message, isBeforeStart } = calculateDuration(
+    contestStartDate,
+    contestEndDate
+  );
+
   return (
     <>
       <Typography align="center" gutterBottom sx={{ paddingTop: "15px" }}>
@@ -311,7 +346,33 @@ const PostYourPicks = ({
         Contest: Share your top sports picks now to climb the leaderboard, and
         win 📈
       </Typography>
-      {/* Pick 1 */}
+
+      <Box sx={{ textAlign: "center", mb: 2 }}>
+        <Typography variant="subtitle1">
+          <p
+            className={`card-contest-format ${
+              isBeforeStart ? "before-start" : "before-end"
+            }`}
+            style={{ fontSize: "20px", fontWeight: "bold" }}
+          >
+            {message}
+          </p>
+        </Typography>
+      </Box>
+
+      <Box sx={{ textAlign: "center", mb: 2 }}>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            color: "gray",
+            mb: 3,
+            borderRadius: 1,
+          }}
+        >
+          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>{price}</span>{" "}
+        </Typography>
+      </Box>
+
       <Card
         sx={{
           borderRadius: "16px",

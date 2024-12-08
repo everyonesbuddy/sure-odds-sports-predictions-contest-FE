@@ -5,51 +5,7 @@ import Footer from "./Footer";
 import ContestCard from "./ContestCard";
 import "../css/Home.css";
 
-// const affiliates = [
-//   {
-//     message: "Parlay Play: Get $100 match for your first deposit",
-//     color: "#eac100",
-//     url: "https://parlayplay.io/account/signup?coupon=joeddomitor",
-//   },
-//   {
-//     message: "Underdog: Get first deposit matched in bonus cash up to $250",
-//     color: "#1b1b1b",
-//     url: "https://play.underdogfantasy.com/magnusdomitor",
-//   },
-//   {
-//     message: "Prize Picks: First deposit match up to $100!",
-//     color: "#8000ff",
-//     url: "https://app.prizepicks.com/sign-up?invite_code=PR-SUWVT13",
-//   },
-//   // Add more affiliates here
-// ];
-
 const Home = () => {
-  // const a11yProps = (index) => ({
-  //   id: `simple-tab-${index}`,
-  //   "aria-controls": `simple-tabpanel-${index}`,
-  // });
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
-
-  // const [value, setValue] = React.useState(0);
-
-  // const theme = useTheme();
-  // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  // const [currentAffiliateIndex, setCurrentAffiliateIndex] = useState(0);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentAffiliateIndex(
-  //       (prevIndex) => (prevIndex + 1) % affiliates.length
-  //     );
-  //   }, 3000); // Change slide every 3 seconds
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
   const contest = [
     {
       contestName: "Doink Sports",
@@ -60,8 +16,8 @@ const Home = () => {
       sponsored: false,
       affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
       affiliateCopy: "Try Doink Sports Research Platform For Free",
-      contestEndDate: "2/2/2025",
-      contestStartDate: "11/15/2024",
+      contestEndDate: "1/31/2025",
+      contestStartDate: "12/8/2024",
       contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
     },
     {
@@ -73,9 +29,42 @@ const Home = () => {
       sponsored: false,
       affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
       affiliateCopy: "Try DG Fantasy Research Platform For Free",
-      contestEndDate: "2/9/2025",
-      contestStartDate: "12/9/2024",
-      contestLeague: ["americanfootball_nfl", "soccer_germany_bundesliga"],
+      contestEndDate: "1/31/2025",
+      contestStartDate: "12/8/2024",
+      contestLeague: [
+        "americanfootball_nfl",
+        "basketball_nba",
+        "soccer_epl",
+        "soccer_germany_bundesliga",
+      ],
+    },
+    {
+      contestName: "Prize Picks",
+      primaryImageUrl: "https://i.ibb.co/C8Cb5BF/Po6-QETC5-400x400.jpg",
+      price: "Win $100 to play on Prize Picks or whatever you want",
+      spreadsheetUrl:
+        "https://api.sheetbest.com/sheets/09d34a2c-8cc1-4cf6-951c-dbc2ce537971",
+      sponsored: false,
+      affiliateUrl: "https://app.prizepicks.com/sign-up?invite_code=PR-SUWVT13",
+      affiliateCopy:
+        "Place a $5 Lineup, Get $50 Instantly - No Strings Attached!",
+      contestEndDate: "1/31/2025",
+      contestStartDate: "12/8/2024",
+      contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
+    },
+    {
+      contestName: "Underdog",
+      primaryImageUrl: "https://i.ibb.co/0Z74yfz/Qt3-Ggq-We-400x400.jpg",
+      price: "Win $100 to play on Underdog or whatever you want",
+      spreadsheetUrl:
+        "https://api.sheetbest.com/sheets/996f6b90-a6e4-4ddf-b3a8-a3c004d0a2fa",
+      sponsored: false,
+      affiliateUrl: "https://play.underdogfantasy.com/magnusdomitor",
+      affiliateCopy:
+        "Get up to $1000 Bonus Cash when you make your first deposit!",
+      contestEndDate: "1/31/2025",
+      contestStartDate: "12/8/2024",
+      contestLeague: ["americanfootball_nfl", "basketball_nba"],
     },
   ];
 
