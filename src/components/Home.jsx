@@ -81,7 +81,7 @@ const Home = () => {
               fontWeight: "bold",
             }}
           >
-            The #1 Global Free-to-Play Sports Pick'em Contest
+            Africas #1 Crypto betting market
           </Typography>
           <Typography
             variant="p"
