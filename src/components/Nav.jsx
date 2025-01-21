@@ -53,6 +53,23 @@ const Nav = () => {
       >
         <ListItemText primary="Personalized Analytics" />
       </ListItem>
+
+      <ListItem
+        button
+        component={Link}
+        to="/login"
+        onClick={toggleDrawer(false)}
+      >
+        <ListItemText primary="Login" />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/signup"
+        onClick={toggleDrawer(false)}
+      >
+        <ListItemText primary="Signup" />
+      </ListItem>
     </List>
   );
 
@@ -100,6 +117,26 @@ const Nav = () => {
               style={{ textDecoration: "none", color: "#ffffff" }}
             >
               Personalized Analytics
+            </Link>
+          </Button>
+        </Box>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Button color="inherit" style={{ fontSize: "12px" }}>
+            <Link
+              to="/login"
+              style={{ textDecoration: "none", color: "#ffffff" }}
+            >
+              Login
+            </Link>
+          </Button>
+        </Box>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Button color="inherit" style={{ fontSize: "12px" }}>
+            <Link
+              to="/signup"
+              style={{ textDecoration: "none", color: "#ffffff" }}
+            >
+              Signup
             </Link>
           </Button>
         </Box>
