@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -18,8 +18,6 @@ import {
   useTheme,
 } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import axios from "axios";
-import moment from "moment";
 
 const Leaderboard = ({
   contestName,
@@ -29,99 +27,15 @@ const Leaderboard = ({
   sponsored,
   contestEndDate,
   contestStartDate,
+  contestFrequency,
+  filteredBets,
+  aggregateBets,
+  lastPeriodAggregateBets,
 }) => {
-  const [betsData, setBetsData] = useState([]);
-  const [filteredBets, setFilteredBets] = useState([]);
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(spreadsheetUrl);
-      setBetsData(response.data);
-      setFilteredBets(response.data); // Initial filter setup
-    };
-    fetchData();
-  }, [spreadsheetUrl]);
-
-  useEffect(() => {
-    const contestStart = moment(contestStartDate);
-    const filtered = betsData.filter((bet) => {
-      const postedTime = moment(bet?.postedTime);
-      return postedTime.isSameOrAfter(contestStart);
-    });
-    setFilteredBets(filtered);
-  }, [betsData, contestStartDate]);
-
-  const aggregateBets = (bets) => {
-    const handicappers = {};
-
-    bets.forEach((bet) => {
-      if (bet.betResult === null) return;
-
-      const odds = parseInt(bet.odds, 10);
-      const username = bet.twitterUsername || "Anonymous";
-      if (!handicappers[username]) {
-        handicappers[username] = {
-          totalOdds: 0,
-          totalWonOdds: 0,
-          numberOfBets: 0,
-          numberOfBetsWon: 0,
-          potentialWins: 0,
-          socialType: bet.socialType,
-          researchTools: [],
-        };
-      }
-      handicappers[username].totalOdds += odds;
-      handicappers[username].numberOfBets += 1;
-      if (bet.betResult === "won") {
-        handicappers[username].totalWonOdds += odds;
-        handicappers[username].numberOfBetsWon += 1;
-        // Adjust calculation based on the sign of the odds
-        if (odds > 0) {
-          handicappers[username].potentialWins += 100 * (odds / 100); // For positive odds
-        } else {
-          handicappers[username].potentialWins += 100 * (100 / Math.abs(odds)); // For negative odds
-        }
-      }
-      if (
-        bet.researchToolOrModelUsed &&
-        !handicappers[username].researchTools.includes(
-          bet.researchToolOrModelUsed
-        )
-      ) {
-        handicappers[username].researchTools.push(bet.researchToolOrModelUsed);
-      }
-    });
-
-    return Object.entries(handicappers)
-      .map(
-        ([
-          username,
-          {
-            totalOdds,
-            totalWonOdds,
-            numberOfBets,
-            numberOfBetsWon,
-            potentialWins,
-            socialType,
-            researchTools,
-          },
-        ]) => ({
-          username,
-          totalOdds,
-          totalWonOdds,
-          numberOfBets,
-          numberOfBetsWon,
-          winRatio: (numberOfBetsWon / numberOfBets) * 100, // Calculate win ratio as a percentage
-          potentialWins,
-          socialType,
-          researchTools,
-        })
-      )
-      .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
-  };
+  console.log("aggregateBets", aggregateBets);
 
   const calculateDuration = (start, end) => {
     const currentDate = new Date();
@@ -185,7 +99,7 @@ const Leaderboard = ({
       </Box>
 
       <Box>
-        {aggregateBets(filteredBets).length === 0 ? (
+        {aggregateBets.length === 0 ? (
           <Card
             sx={{
               borderRadius: "16px",
@@ -263,7 +177,7 @@ const Leaderboard = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {aggregateBets(filteredBets).map((handicapper, index) => (
+                {aggregateBets.map((handicapper, index) => (
                   <TableRow
                     key={handicapper.username}
                     sx={{ backgroundColor: "#2b2b2b" }}

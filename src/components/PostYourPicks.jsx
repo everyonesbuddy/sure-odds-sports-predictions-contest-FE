@@ -13,8 +13,11 @@ import {
   Box,
 } from "@mui/material";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
+import { useTimer } from "../context/TimerContext";
 
 const leagueApiMap = {
   basketball_wnba:
@@ -125,16 +128,18 @@ const PostYourPicks = ({
   price,
   spreadsheetUrl,
   sponsored,
-  affiliateUrl,
   contestLeague,
   contestEndDate,
   contestStartDate,
+  contestFrequency,
+  filteredBets,
+  aggregateBets,
+  lastPeriodAggregateBets,
 }) => {
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
   const [twitterUsername, setTwitterUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState("");
   const [gameDetails, setGameDetails] = useState(null);
@@ -150,26 +155,92 @@ const PostYourPicks = ({
   const [gameCommenceTime, setGameCommenceTime] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [picks, setPicks] = useState([]);
+  const [code, setCode] = useState("");
+  const { state, dispatch } = useTimer();
+  const [isCodeSubmitting, setIsCodeSubmitting] = useState(false);
+  const totalTime = 600; // 10 minutes in seconds
+
+  const { user } = useAuth();
 
   // Call this function when the Twitter username input changes
-  const handleTwitterUsernameChange = (event) => {
-    const username = event.target.value;
-    setTwitterUsername(username);
-  };
+  // const handleTwitterUsernameChange = (event) => {
+  //   const username = event.target.value;
+  //   setTwitterUsername(username);
+  // };
 
   //call this function when the emailinput changes
-  const handleEmailChange = (event) => {
-    const value = event.target.value;
-    setEmail(value);
+  // const handleEmailChange = (event) => {
+  //   const value = event.target.value;
+  //   setEmail(value);
 
-    // Email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) {
-      setEmailError("Invalid email format");
-    } else {
-      setEmailError("");
+  //   // Email validation regex
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   if (!emailRegex.test(value)) {
+  //     setEmailError("Invalid email format");
+  //   } else {
+  //     setEmailError("");
+  //   }
+  // };
+  const handleCodeSubmit = async () => {
+    setIsCodeSubmitting(true);
+    try {
+      // Fetch the current list of codes
+      const response = await fetch(
+        "https://api.sheetbest.com/sheets/ef14d1b6-72df-47a9-8be8-9046b19cfa87"
+      );
+      const data = await response.json();
+
+      // Check if the entered code is valid and not already used
+      const codeEntry = data.find(
+        (entry) => entry.Code === code && entry.isUsed === "FALSE"
+      );
+
+      if (codeEntry) {
+        // Set the timer for 10 minutes (600 seconds)
+        dispatch({ type: "SET_TIMER", payload: 600 });
+
+        // Update the code's status to "used"
+        await fetch(
+          `https://api.sheetbest.com/sheets/ef14d1b6-72df-47a9-8be8-9046b19cfa87/Code/${code}`,
+          {
+            method: "PATCH",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              Code: code,
+              isUsed: "TRUE",
+            }),
+          }
+        );
+
+        setCode(""); // Clear the input field
+        alert("Code applied successfully!");
+      } else {
+        alert("Invalid or already used code.");
+      }
+    } catch (error) {
+      console.error("Error validating code:", error);
+      alert("Failed to validate code. Please try again.");
+    } finally {
+      setIsCodeSubmitting(false);
     }
   };
+
+  const calculateStrokeDashoffset = () => {
+    if (state.timer === null || totalTime === null) return 0;
+    const percentage = state.timer / totalTime;
+    const circumference = 2 * Math.PI * 45; // Radius is 45
+    return circumference * (1 - percentage);
+  };
+
+  useEffect(() => {
+    if (user && user.email) {
+      setTwitterUsername(user.email);
+      setEmail(user.email);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (league) {
@@ -257,7 +328,7 @@ const PostYourPicks = ({
   // };
 
   const addPick = () => {
-    if (!league || !pickType || !selectedGame || !email || emailError) {
+    if (!league || !pickType || !selectedGame || !email) {
       toast.error("Please complete all required fields before adding a pick!");
       return;
     }
@@ -285,6 +356,17 @@ const PostYourPicks = ({
   const handleSubmitAll = async () => {
     if (picks.length === 0) {
       toast.error("No picks to submit!");
+      return;
+    }
+
+    // Check if the twitterUsername has less than 5 bets
+    const userBets = aggregateBets.filter(
+      (bet) => bet.username === twitterUsername
+    );
+    console.log("userBets", userBets);
+    console.log("twitterUsername", twitterUsername);
+    if (userBets[0].numberOfBets >= 5) {
+      toast.error("You have reached the maximum number of bets!");
       return;
     }
 
@@ -338,13 +420,18 @@ const PostYourPicks = ({
 
   return (
     <>
-      <Typography align="center" gutterBottom sx={{ paddingTop: "15px" }}>
-        🌟 Join the{" "}
-        <a href={affiliateUrl} target="_blank" rel="noreferrer">
-          {contestName} Contest
-        </a>{" "}
-        Contest: Share your top sports picks now to climb the leaderboard, and
-        win 📈
+      <Typography
+        align="center"
+        gutterBottom
+        sx={{
+          paddingTop: "15px",
+          fontSize: "24px",
+          fontWeight: "bold",
+          color: "#fff",
+        }}
+      >
+        🌟 Join the {contestName} Contest: Share your top sports picks now to
+        climb the leaderboard, and win 📈
       </Typography>
 
       <Box sx={{ textAlign: "center", mb: 2 }}>
@@ -353,7 +440,7 @@ const PostYourPicks = ({
             className={`card-contest-format ${
               isBeforeStart ? "before-start" : "before-end"
             }`}
-            style={{ fontSize: "20px", fontWeight: "bold" }}
+            style={{ fontSize: "20px", fontWeight: "bold", color: "#555" }}
           >
             {message}
           </p>
@@ -364,12 +451,29 @@ const PostYourPicks = ({
         <Typography
           variant="subtitle1"
           sx={{
-            color: "gray",
+            color: "#888",
             mb: 3,
             borderRadius: 1,
+            fontSize: "18px",
+            fontWeight: "500",
           }}
         >
-          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>{price}</span>{" "}
+          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>{price}</span>
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            color: "#17b978",
+            mb: 3,
+            borderRadius: 1,
+            fontSize: "16px",
+            fontWeight: "500",
+          }}
+        >
+          <span style={{ fontWeight: "bold", fontSize: "1em" }}>
+            Last {contestFrequency === "Monthly" ? "Month's" : "Week's"} Contest
+            Winner 🏆 was {lastPeriodAggregateBets[0]?.username}
+          </span>
         </Typography>
       </Box>
 
@@ -423,9 +527,9 @@ const PostYourPicks = ({
             }}
           ></FormControl>
           <TextField
-            label={`Enter your twitter username *`}
+            label={`username / email `}
             value={twitterUsername}
-            onChange={handleTwitterUsernameChange}
+            // onChange={handleTwitterUsernameChange}
             fullWidth
             color={!twitterUsername ? "error" : "primary"}
             margin="normal"
@@ -461,7 +565,7 @@ const PostYourPicks = ({
             <FormHelperText error>This field is required</FormHelperText>
           )}
 
-          <TextField
+          {/* <TextField
             label={`Enter your email *`}
             value={email}
             onChange={handleEmailChange}
@@ -501,7 +605,7 @@ const PostYourPicks = ({
               <FormHelperText error>
                 {emailError || "This field is required"}
               </FormHelperText>
-            ))}
+            ))} */}
 
           <FormControl
             fullWidth
@@ -1041,6 +1145,95 @@ const PostYourPicks = ({
           </Button>
         </CardContent>
       </Card>
+
+      <Box sx={{ textAlign: "center", mb: 2 }}>
+        {state.timer > 0 ? (
+          <>
+            <svg width="120" height="120" viewBox="0 0 100 100">
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                stroke="#E0E0E0"
+                strokeWidth="6"
+                fill="none"
+              />
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                stroke="#d72323"
+                strokeWidth="6"
+                fill="none"
+                strokeDasharray={`${2 * Math.PI * 45}`}
+                strokeDashoffset={calculateStrokeDashoffset()}
+                style={{ transition: "stroke-dashoffset 1s linear" }}
+              />
+              <text
+                x="50"
+                y="55"
+                textAnchor="middle"
+                fontSize="18"
+                fill="#d72323"
+                fontWeight="bold"
+              >
+                {Math.floor(state.timer / 60)}:
+                {String(state.timer % 60).padStart(2, "0")}
+              </text>
+            </svg>
+            <Typography variant="subtitle1" sx={{ color: "#17b978", mt: 2 }}>
+              You can place unlimited bets for the next 10 minutes.
+            </Typography>
+          </>
+        ) : (
+          <>
+            <TextField
+              label="Enter Code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              fullWidth
+              sx={{
+                mb: 2,
+                "& .MuiInputBase-root": {
+                  borderRadius: "8px",
+                  height: "40px",
+                  "& input": {
+                    height: "40px",
+                    padding: "10px",
+                    color: "#fff",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "#fff",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#fff",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#fff",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#fff",
+                  },
+                },
+              }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCodeSubmit}
+              disabled={isCodeSubmitting}
+            >
+              {isCodeSubmitting ? (
+                <CircularProgress size={24} />
+              ) : (
+                "Submit Code"
+              )}
+            </Button>
+          </>
+        )}
+      </Box>
     </>
   );
 };

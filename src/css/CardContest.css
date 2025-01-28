@@ -55,6 +55,12 @@
   color: red;
 }
 
+.card-frequency {
+  font-size: 0.8em;
+  color: red;
+  margin: 8px 0;
+}
+
 .league-card {
   display: inline-block;
   padding: 5px 10px;

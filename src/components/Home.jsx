@@ -8,29 +8,15 @@ import "../css/Home.css";
 const Home = () => {
   const contest = [
     {
-      contestName: "Doink Sports",
+      contestName: "Multi Sport Weekly Pick'em",
       primaryImageUrl: "https://i.ibb.co/xzk85XK/0k0-A7-Ib3-400x400.jpg",
-      price: "Win a free 2 months subscription to Doink Sports",
+      price: "Win 5 USDT to a crypto wallet of your choice",
       spreadsheetUrl:
         "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
       sponsored: false,
       affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
       affiliateCopy: "Try Doink Sports Research Platform For Free",
-      contestEndDate: "1/31/2025",
-      contestStartDate: "12/8/2024",
-      contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
-    },
-    {
-      contestName: "DG Fantasy",
-      primaryImageUrl: "https://i.ibb.co/p4w0j39/o-GXbjunp-400x400.png",
-      price: "Win a free 2 months subscription to DG Fantasy",
-      spreadsheetUrl:
-        "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
-      sponsored: false,
-      affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
-      affiliateCopy: "Try DG Fantasy Research Platform For Free",
-      contestEndDate: "1/31/2025",
-      contestStartDate: "12/8/2024",
+      contestFrequency: "Weekly",
       contestLeague: [
         "americanfootball_nfl",
         "basketball_nba",
@@ -39,32 +25,19 @@ const Home = () => {
       ],
     },
     {
-      contestName: "Prize Picks",
+      contestName: "Multi Sport Monthly Pick'em",
       primaryImageUrl: "https://i.ibb.co/C8Cb5BF/Po6-QETC5-400x400.jpg",
-      price: "Win $100 to play on Prize Picks or whatever you want",
+      price: "Win 50 USDT to a crypto wallet of your choice",
       spreadsheetUrl:
         "https://api.sheetbest.com/sheets/09d34a2c-8cc1-4cf6-951c-dbc2ce537971",
       sponsored: false,
-      affiliateUrl: "https://app.prizepicks.com/sign-up?invite_code=PR-SUWVT13",
-      affiliateCopy:
-        "Place a $5 Lineup, Get $50 Instantly - No Strings Attached!",
-      contestEndDate: "1/31/2025",
-      contestStartDate: "12/8/2024",
-      contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
-    },
-    {
-      contestName: "Underdog",
-      primaryImageUrl: "https://i.ibb.co/0Z74yfz/Qt3-Ggq-We-400x400.jpg",
-      price: "Win $100 to play on Underdog or whatever you want",
-      spreadsheetUrl:
-        "https://api.sheetbest.com/sheets/996f6b90-a6e4-4ddf-b3a8-a3c004d0a2fa",
-      sponsored: false,
-      affiliateUrl: "https://play.underdogfantasy.com/magnusdomitor",
-      affiliateCopy:
-        "Get up to $1000 Bonus Cash when you make your first deposit!",
-      contestEndDate: "1/31/2025",
-      contestStartDate: "12/8/2024",
-      contestLeague: ["americanfootball_nfl", "basketball_nba"],
+      contestFrequency: "Monthly",
+      contestLeague: [
+        "americanfootball_nfl",
+        "basketball_nba",
+        "soccer_epl",
+        "soccer_germany_bundesliga",
+      ],
     },
   ];
 
@@ -131,11 +104,8 @@ const Home = () => {
               primaryImageUrl={item.primaryImageUrl}
               contestName={item.contestName}
               price={item.price}
-              contestEndDate={item.contestEndDate}
-              contestStartDate={item.contestStartDate}
               contestLeague={item.contestLeague}
-              affiliateUrl={item.affiliateUrl}
-              affiliateCopy={item.affiliateCopy}
+              contestFrequency={item.contestFrequency}
             />
           ))}
         </div>

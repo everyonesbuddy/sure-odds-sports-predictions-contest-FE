@@ -13,9 +13,11 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useAuth } from "../context/AuthContext";
 
 const Nav = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -45,31 +47,46 @@ const Nav = () => {
       >
         <ListItemText primary="Blog" />
       </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/personalizedAnalytics"
-        onClick={toggleDrawer(false)}
-      >
-        <ListItemText primary="Personalized Analytics" />
-      </ListItem>
-
-      <ListItem
-        button
-        component={Link}
-        to="/login"
-        onClick={toggleDrawer(false)}
-      >
-        <ListItemText primary="Login" />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/signup"
-        onClick={toggleDrawer(false)}
-      >
-        <ListItemText primary="Signup" />
-      </ListItem>
+      {user ? (
+        <>
+          {/* <ListItem
+            button
+            component={Link}
+            to="/profile"
+            onClick={toggleDrawer(false)}
+          >
+            <ListItemText primary="Profile" />
+          </ListItem> */}
+          <ListItem
+            button
+            onClick={() => {
+              logout();
+              toggleDrawer(false)();
+            }}
+          >
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </>
+      ) : (
+        <>
+          <ListItem
+            button
+            component={Link}
+            to="/login"
+            onClick={toggleDrawer(false)}
+          >
+            <ListItemText primary="Login" />
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to="/signup"
+            onClick={toggleDrawer(false)}
+          >
+            <ListItemText primary="Signup" />
+          </ListItem>
+        </>
+      )}
     </List>
   );
 
@@ -110,36 +127,52 @@ const Nav = () => {
             </Link>
           </Button>
         </Box>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <Button color="inherit" style={{ fontSize: "12px" }}>
-            <Link
-              to="/personalizedAnalytics"
-              style={{ textDecoration: "none", color: "#ffffff" }}
-            >
-              Personalized Analytics
-            </Link>
-          </Button>
-        </Box>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <Button color="inherit" style={{ fontSize: "12px" }}>
-            <Link
-              to="/login"
-              style={{ textDecoration: "none", color: "#ffffff" }}
-            >
-              Login
-            </Link>
-          </Button>
-        </Box>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <Button color="inherit" style={{ fontSize: "12px" }}>
-            <Link
-              to="/signup"
-              style={{ textDecoration: "none", color: "#ffffff" }}
-            >
-              Signup
-            </Link>
-          </Button>
-        </Box>
+        {user ? (
+          <>
+            {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Button color="inherit" style={{ fontSize: "12px" }}>
+                <Link
+                  to="/profile"
+                  style={{ textDecoration: "none", color: "#ffffff" }}
+                >
+                  Profile
+                </Link>
+              </Button>
+            </Box> */}
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Button
+                color="inherit"
+                style={{ fontSize: "12px" }}
+                onClick={logout}
+              >
+                Logout
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Button color="inherit" style={{ fontSize: "12px" }}>
+                <Link
+                  to="/login"
+                  style={{ textDecoration: "none", color: "#ffffff" }}
+                >
+                  Login
+                </Link>
+              </Button>
+            </Box>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Button color="inherit" style={{ fontSize: "12px" }}>
+                <Link
+                  to="/signup"
+                  style={{ textDecoration: "none", color: "#ffffff" }}
+                >
+                  Signup
+                </Link>
+              </Button>
+            </Box>
+          </>
+        )}
       </Toolbar>
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         {drawerList}

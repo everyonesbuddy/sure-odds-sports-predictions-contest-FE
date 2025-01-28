@@ -33,11 +33,8 @@ const ContestCard = ({
   primaryImageUrl,
   contestName,
   price,
-  contestEndDate,
-  contestStartDate,
   contestLeague,
-  affiliateUrl,
-  affiliateCopy,
+  contestFrequency,
 }) => {
   const navigate = useNavigate();
 
@@ -45,38 +42,38 @@ const ContestCard = ({
     navigate(`/contest/${contestName}`);
   };
 
-  const calculateDuration = (start, end) => {
-    const currentDate = new Date();
-    const startDate = new Date(start);
-    const endDate = new Date(end);
+  // const calculateDuration = (start, end) => {
+  //   const currentDate = new Date();
+  //   const startDate = new Date(start);
+  //   const endDate = new Date(end);
 
-    if (currentDate < startDate) {
-      const durationInMilliseconds = startDate - currentDate;
-      const durationInDays = Math.ceil(
-        durationInMilliseconds / (1000 * 60 * 60 * 24)
-      );
-      return {
-        duration: durationInDays,
-        message: `Contest starts in ${durationInDays} days`,
-        isBeforeStart: true,
-      };
-    } else {
-      const durationInMilliseconds = endDate - currentDate;
-      const durationInDays = Math.ceil(
-        durationInMilliseconds / (1000 * 60 * 60 * 24)
-      );
-      return {
-        duration: durationInDays,
-        message: `Contest ends in ${durationInDays} days`,
-        isBeforeStart: false,
-      };
-    }
-  };
+  //   if (currentDate < startDate) {
+  //     const durationInMilliseconds = startDate - currentDate;
+  //     const durationInDays = Math.ceil(
+  //       durationInMilliseconds / (1000 * 60 * 60 * 24)
+  //     );
+  //     return {
+  //       duration: durationInDays,
+  //       message: `Contest starts in ${durationInDays} days`,
+  //       isBeforeStart: true,
+  //     };
+  //   } else {
+  //     const durationInMilliseconds = endDate - currentDate;
+  //     const durationInDays = Math.ceil(
+  //       durationInMilliseconds / (1000 * 60 * 60 * 24)
+  //     );
+  //     return {
+  //       duration: durationInDays,
+  //       message: `Contest ends in ${durationInDays} days`,
+  //       isBeforeStart: false,
+  //     };
+  //   }
+  // };
 
-  const { message, isBeforeStart } = calculateDuration(
-    contestStartDate,
-    contestEndDate
-  );
+  // const { message, isBeforeStart } = calculateDuration(
+  //   contestStartDate,
+  //   contestEndDate
+  // );
 
   return (
     <div className="card" onClick={handleClick}>
@@ -84,12 +81,15 @@ const ContestCard = ({
       <div className="card-content">
         <h2 className="card-title">{contestName} Contest</h2>
         <p className="card-price">Prize: {price}</p>
-        <p
+        {/* <p
           className={`card-contest-format ${
             isBeforeStart ? "before-start" : "before-end"
           }`}
         >
           {message}
+        </p> */}
+        <p>
+          Duration: <span className="card-frequency">{contestFrequency} </span>
         </p>
         <div className="card-leagues">
           {contestLeague.map((league) => (

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 import "../css/SignupForm.css";
 
 const SignupForm = () => {
@@ -10,6 +12,7 @@ const SignupForm = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,11 +20,12 @@ const SignupForm = () => {
     // Client-side validation for password match
     if (password !== passwordConfirm) {
       setError("Passwords do not match.");
+      toast.error("Passwords do not match.");
       return;
     }
 
     try {
-      await axios.post(
+      const response = await axios.post(
         "https://sure-odds-be-5f8d8ba5995a.herokuapp.com/api/v1/auth/signup",
         {
           name,
@@ -30,9 +34,12 @@ const SignupForm = () => {
           passwordConfirm,
         }
       );
-      navigate("/login");
+      login(response.data.data.user, response.data.data.token);
+      toast.success("Signup successful!");
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed.");
+      toast.error(err.response?.data?.message || "Signup failed.");
     }
   };
 

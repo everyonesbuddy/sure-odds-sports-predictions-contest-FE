@@ -22,7 +22,7 @@ const LoginForm = () => {
           password,
         }
       );
-      login(response.data.user);
+      login(response.data.data.user, response.data.data.token);
       navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed.");

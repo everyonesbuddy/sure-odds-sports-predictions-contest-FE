@@ -6,82 +6,248 @@ import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import PostYourPicks from "./PostYourPicks";
+import axios from "axios";
+import moment from "moment";
 import "../css/Contest.css";
 
 const Contest = () => {
   const { contestName } = useParams();
   const [contestDetails, setContestDetails] = useState(null);
+  const [betsData, setBetsData] = useState([]);
+  const [filteredBets, setFilteredBets] = useState([]);
+  const [aggregateBets, setAggregateBets] = useState([]);
+  const [lastPeriodAggregateBets, setLastPeriodAggregateBets] = useState([]);
 
   const contest = useMemo(
     () => [
       {
-        contestName: "Doink Sports",
+        contestName: "Multi Sport Weekly Pick'em",
         primaryImageUrl: "https://i.ibb.co/xzk85XK/0k0-A7-Ib3-400x400.jpg",
-        price: "Win a free 2 months subscription to Doink Sports",
+        price: "Win 5 USDT to a crypto wallet of your choice",
         spreadsheetUrl:
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         sponsored: false,
-        affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
-        affiliateCopy: "Try Doink Sports Research Platform For Free",
-        contestEndDate: "1/31/2025",
-        contestStartDate: "12/8/2024",
-        contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
+        contestFrequency: "Weekly",
+        contestLeague: [
+          "americanfootball_nfl",
+          "basketball_nba",
+          "soccer_epl",
+          "soccer_germany_bundesliga",
+        ],
       },
       {
-        contestName: "DG Fantasy",
-        primaryImageUrl: "https://i.ibb.co/p4w0j39/o-GXbjunp-400x400.png",
-        price: "Win a free 2 months subscription to DG Fantasy",
-        spreadsheetUrl:
-          "https://api.sheetbest.com/sheets/8dc7d109-648f-4403-8d28-37303439a580",
-        sponsored: false,
-        affiliateUrl: "https://dgfantasy.com/membership-signup?ref=mjkwmti",
-        affiliateCopy: "Try DG Fantasy Research Platform For Free",
-        contestEndDate: "1/31/2025",
-        contestStartDate: "12/8/2024",
-        contestLeague: ["americanfootball_nfl", "soccer_germany_bundesliga"],
-      },
-      {
-        contestName: "Prize Picks",
+        contestName: "Multi Sport Monthly Pick'em",
         primaryImageUrl: "https://i.ibb.co/C8Cb5BF/Po6-QETC5-400x400.jpg",
-        price: "Win $100 to play on Prize Picks or whatever you want",
+        price: "Win 50 USDT to a crypto wallet of your choice",
         spreadsheetUrl:
           "https://api.sheetbest.com/sheets/09d34a2c-8cc1-4cf6-951c-dbc2ce537971",
         sponsored: false,
-        affiliateUrl:
-          "https://app.prizepicks.com/sign-up?invite_code=PR-SUWVT13",
-        affiliateCopy:
-          "Place a $5 Lineup, Get $50 Instantly - No Strings Attached!",
-        contestEndDate: "1/31/2025",
-        contestStartDate: "12/8/2024",
-        contestLeague: ["americanfootball_nfl", "basketball_nba", "soccer_epl"],
-      },
-      {
-        contestName: "Underdog",
-        primaryImageUrl: "https://i.ibb.co/0Z74yfz/Qt3-Ggq-We-400x400.jpg",
-        price: "Win $100 to play on Underdog or whatever you want",
-        spreadsheetUrl:
-          "https://api.sheetbest.com/sheets/996f6b90-a6e4-4ddf-b3a8-a3c004d0a2fa",
-        sponsored: false,
-        affiliateUrl: "https://play.underdogfantasy.com/magnusdomitor",
-        affiliateCopy:
-          "Get up to $1000 Bonus Cash when you make your first deposit!",
-        contestEndDate: "1/31/2025",
-        contestStartDate: "12/8/2024",
-        contestLeague: ["americanfootball_nfl", "basketball_nba"],
+        contestFrequency: "Monthly",
+        contestLeague: [
+          "americanfootball_nfl",
+          "basketball_nba",
+          "soccer_epl",
+          "soccer_germany_bundesliga",
+        ],
       },
     ],
     []
   );
+
+  const getWeekNumber = (date) => {
+    const target = new Date(date.valueOf());
+    const dayNumber = (date.getUTCDay() + 6) % 7;
+    target.setUTCDate(target.getUTCDate() - dayNumber + 3);
+    const firstThursday = target.valueOf();
+    target.setUTCMonth(0, 1);
+    if (target.getUTCDay() !== 4) {
+      target.setUTCMonth(0, 1 + ((4 - target.getUTCDay() + 7) % 7));
+    }
+    return 1 + Math.ceil((firstThursday - target) / 604800000);
+  };
 
   useEffect(() => {
     const contestDetail = contest.find(
       (item) => item.contestName === contestName
     );
     if (contestDetail) {
-      setContestDetails(contestDetail);
+      const currentDate = new Date();
+      let periodStartDate,
+        periodEndDate,
+        lastPeriodStartDate,
+        lastPeriodEndDate;
+
+      if (contestDetail.contestFrequency === "Weekly") {
+        const dayOfWeek = currentDate.getDay();
+        const startOfWeek = new Date(currentDate);
+        startOfWeek.setDate(currentDate.getDate() - dayOfWeek);
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+        const startOfLastWeek = new Date(startOfWeek);
+        startOfLastWeek.setDate(startOfWeek.getDate() - 7);
+        const endOfLastWeek = new Date(startOfLastWeek);
+        endOfLastWeek.setDate(startOfLastWeek.getDate() + 6);
+
+        periodStartDate = startOfWeek.toLocaleDateString("en-US");
+        periodEndDate = endOfWeek.toLocaleDateString("en-US");
+        lastPeriodStartDate = startOfLastWeek.toLocaleDateString("en-US");
+        lastPeriodEndDate = endOfLastWeek.toLocaleDateString("en-US");
+      } else if (contestDetail.contestFrequency === "Monthly") {
+        const startOfMonth = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          1
+        );
+        const endOfMonth = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() + 1,
+          0
+        );
+
+        const startOfLastMonth = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() - 1,
+          1
+        );
+        const endOfLastMonth = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          0
+        );
+
+        periodStartDate = startOfMonth.toLocaleDateString("en-US");
+        periodEndDate = endOfMonth.toLocaleDateString("en-US");
+        lastPeriodStartDate = startOfLastMonth.toLocaleDateString("en-US");
+        lastPeriodEndDate = endOfLastMonth.toLocaleDateString("en-US");
+      }
+
+      const currentDayOfWeek = currentDate.toLocaleString("default", {
+        weekday: "long",
+      });
+      const currentDateInMonth = currentDate.getDate();
+      const currentMonth = currentDate.toLocaleString("default", {
+        month: "long",
+      });
+      const weekNumber = getWeekNumber(currentDate);
+
+      setContestDetails({
+        ...contestDetail,
+        periodStartDate: "9/1/2024",
+        periodEndDate: "1/30/2025",
+        lastPeriodStartDate: "8/1/2024",
+        lastPeriodEndDate: "8/31/2024",
+        currentDayOfWeek,
+        currentDateInMonth,
+        currentMonth,
+        weekNumber,
+      });
     }
-    console.log("contestName", contestName);
   }, [contestName, contest]);
+
+  useEffect(() => {
+    if (contestDetails) {
+      const fetchData = async () => {
+        const response = await axios.get(contestDetails.spreadsheetUrl);
+        setBetsData(response.data);
+        setFilteredBets(response.data); // Initial filter setup
+      };
+      fetchData();
+    }
+  }, [contestDetails]);
+
+  useEffect(() => {
+    if (contestDetails) {
+      const contestStart = moment(contestDetails.periodStartDate);
+      const filtered = betsData.filter((bet) => {
+        const postedTime = moment(bet.postedTime);
+        return postedTime.isSameOrAfter(contestStart);
+      });
+      setFilteredBets(filtered);
+      setAggregateBets(aggregateBetsCalculation(filtered));
+
+      const lastPeriodStart = moment(contestDetails.lastPeriodStartDate);
+      const lastPeriodEnd = moment(contestDetails.lastPeriodEndDate);
+      const lastPeriodFiltered = betsData.filter((bet) => {
+        const postedTime = moment(bet.postedTime);
+        return postedTime.isBetween(lastPeriodStart, lastPeriodEnd, null, "[]");
+      });
+      setLastPeriodAggregateBets(aggregateBetsCalculation(lastPeriodFiltered));
+    }
+  }, [betsData, contestDetails]);
+
+  const aggregateBetsCalculation = (bets) => {
+    const handicappers = {};
+
+    bets.forEach((bet) => {
+      const odds = parseInt(bet.odds, 10);
+      const username = bet.twitterUsername || "Anonymous";
+      if (!handicappers[username]) {
+        handicappers[username] = {
+          totalOdds: 0,
+          totalWonOdds: 0,
+          numberOfBets: 0,
+          numberOfBetsWon: 0,
+          potentialWins: 0,
+          socialType: bet.socialType,
+          researchTools: [],
+        };
+      }
+      handicappers[username].numberOfBets += 1;
+
+      if (bet.betResult !== null) {
+        handicappers[username].totalOdds += odds;
+        if (bet.betResult === "won") {
+          handicappers[username].totalWonOdds += odds;
+          handicappers[username].numberOfBetsWon += 1;
+          // Adjust calculation based on the sign of the odds
+          if (odds > 0) {
+            handicappers[username].potentialWins += 100 * (odds / 100); // For positive odds
+          } else {
+            handicappers[username].potentialWins +=
+              100 * (100 / Math.abs(odds)); // For negative odds
+          }
+        }
+        if (
+          bet.researchToolOrModelUsed &&
+          !handicappers[username].researchTools.includes(
+            bet.researchToolOrModelUsed
+          )
+        ) {
+          handicappers[username].researchTools.push(
+            bet.researchToolOrModelUsed
+          );
+        }
+      }
+    });
+
+    return Object.entries(handicappers)
+      .map(
+        ([
+          username,
+          {
+            totalOdds,
+            totalWonOdds,
+            numberOfBets,
+            numberOfBetsWon,
+            potentialWins,
+            socialType,
+            researchTools,
+          },
+        ]) => ({
+          username,
+          totalOdds,
+          totalWonOdds,
+          numberOfBets,
+          numberOfBetsWon,
+          winRatio: (numberOfBetsWon / numberOfBets) * 100, // Calculate win ratio as a percentage
+          potentialWins,
+          socialType,
+          researchTools,
+        })
+      )
+      .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
+  };
 
   const a11yProps = (index) => ({
     id: `simple-tab-${index}`,
@@ -108,12 +274,6 @@ const Contest = () => {
           <div className="contest-header-left">
             <h1>Welcome To The {contestDetails.contestName} Contest</h1>
             {!isMobile && <p>Participate and {contestDetails.price}</p>}
-            <button
-              onClick={() => window.open(contestDetails.affiliateUrl, "_blank")}
-              className="button-link"
-            >
-              {contestDetails.affiliateCopy}
-            </button>
           </div>
           <div className="contest-header-right">
             <img
@@ -166,11 +326,13 @@ const Contest = () => {
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             sponsored={contestDetails.sponsored}
-            contestEndDate={contestDetails.contestEndDate}
-            contestStartDate={contestDetails.contestStartDate}
-            affiliateUrl={contestDetails.affiliateUrl}
-            affiliateCopy={contestDetails.affiliateCopy}
+            contestEndDate={"1/30/2025"}
+            contestStartDate={"9/1/2024"}
+            contestFrequency={contestDetails.contestFrequency}
             contestLeague={contestDetails.contestLeague}
+            filteredBets={filteredBets}
+            aggregateBets={aggregateBets}
+            lastPeriodAggregateBets={lastPeriodAggregateBets}
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
@@ -180,11 +342,13 @@ const Contest = () => {
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             sponsored={contestDetails.sponsored}
-            contestEndDate={contestDetails.contestEndDate}
-            contestStartDate={contestDetails.contestStartDate}
-            affiliateUrl={contestDetails.affiliateUrl}
-            affiliateCopy={contestDetails.affiliateCopy}
+            contestEndDate={"1/30/2025"}
+            contestStartDate={"9/1/2024"}
+            contestFrequency={contestDetails.contestFrequency}
             contestLeague={contestDetails.contestLeague}
+            filteredBets={filteredBets}
+            aggregateBets={aggregateBets}
+            lastPeriodAggregateBets={lastPeriodAggregateBets}
           />
         </CustomTabPanel>
       </Box>
