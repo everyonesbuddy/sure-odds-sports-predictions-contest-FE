@@ -94,7 +94,9 @@ const Leaderboard = ({
             borderRadius: 1,
           }}
         >
-          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>{price}</span>{" "}
+          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
+            Win {price}
+          </span>{" "}
         </Typography>
       </Box>
 

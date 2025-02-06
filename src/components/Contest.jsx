@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme, Typography } from "@mui/material";
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
@@ -22,8 +22,9 @@ const Contest = () => {
     () => [
       {
         contestName: "Multi Sport Weekly Pick'em",
-        primaryImageUrl: "https://i.ibb.co/xzk85XK/0k0-A7-Ib3-400x400.jpg",
-        price: "Win 5 USDT to a crypto wallet of your choice",
+        primaryImageUrl:
+          "https://i.ibb.co/cKyCDdvq/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-2.jpg",
+        price: "$50 in Crypto of your choice",
         spreadsheetUrl:
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         sponsored: false,
@@ -34,13 +35,17 @@ const Contest = () => {
           "soccer_epl",
           "soccer_germany_bundesliga",
         ],
+        availableFreePicks: 5,
       },
       {
         contestName: "Multi Sport Monthly Pick'em",
-        primaryImageUrl: "https://i.ibb.co/C8Cb5BF/Po6-QETC5-400x400.jpg",
-        price: "Win 50 USDT to a crypto wallet of your choice",
+        primaryImageUrl:
+          "https://i.ibb.co/YBqhzMsf/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-1.jpg",
+        price: "$100 in Crypto of your choice",
+        // spreadsheetUrl:
+        //   "https://api.sheetbest.com/sheets/09d34a2c-8cc1-4cf6-951c-dbc2ce537971",
         spreadsheetUrl:
-          "https://api.sheetbest.com/sheets/09d34a2c-8cc1-4cf6-951c-dbc2ce537971",
+          "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         sponsored: false,
         contestFrequency: "Monthly",
         contestLeague: [
@@ -49,6 +54,7 @@ const Contest = () => {
           "soccer_epl",
           "soccer_germany_bundesliga",
         ],
+        availableFreePicks: 10,
       },
     ],
     []
@@ -133,10 +139,10 @@ const Contest = () => {
 
       setContestDetails({
         ...contestDetail,
-        periodStartDate: "9/1/2024",
-        periodEndDate: "1/30/2025",
-        lastPeriodStartDate: "8/1/2024",
-        lastPeriodEndDate: "8/31/2024",
+        periodStartDate,
+        periodEndDate,
+        lastPeriodStartDate,
+        lastPeriodEndDate,
         currentDayOfWeek,
         currentDateInMonth,
         currentMonth,
@@ -270,24 +276,141 @@ const Contest = () => {
   return (
     <>
       <Box sx={{ width: "auto", textAlign: "center", p: 3 }}>
-        <div className="contest-header">
-          <div className="contest-header-left">
-            <h1>Welcome To The {contestDetails.contestName} Contest</h1>
-            {!isMobile && <p>Participate and {contestDetails.price}</p>}
-          </div>
-          <div className="contest-header-right">
-            <img
-              src={contestDetails.primaryImageUrl}
-              alt={contestDetails.contestName}
-            />
-          </div>
-        </div>
+        <Box
+          sx={{
+            width: "100%",
+            textAlign: "center",
+            color: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "black",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 3,
+              textAlign: "center",
+              maxWidth: "800px",
+            }}
+          >
+            <Typography
+              variant="h2"
+              sx={{
+                fontWeight: "700",
+                fontSize: { xs: "32px", sm: "48px" },
+                lineHeight: 1.2,
+              }}
+            >
+              🌟 Join the {contestDetails.contestName}
+            </Typography>
+
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "400",
+                fontSize: { xs: "16px", sm: "20px" },
+                opacity: 0.8,
+                maxWidth: "600px",
+              }}
+            >
+              Participate, make your best picks, and win{" "}
+              <span style={{ fontWeight: "600" }}>{contestDetails.price}</span>.
+            </Typography>
+
+            <Box
+              sx={{
+                position: "relative",
+                width: isMobile ? "260px" : "350px", // Conditional width
+                height: isMobile ? "260px" : "350px", // Conditional height
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%", // Adjust to match the outer Box height
+                  background:
+                    "radial-gradient(circle, rgba(79,70,229,0.2) 0%, rgba(0,0,0,0) 70%)",
+                  borderRadius: "50%",
+                  filter: "blur(30px)",
+                  overflow: "hidden",
+                  margin: "0 auto",
+                }}
+              />
+              <img
+                src={contestDetails.primaryImageUrl}
+                alt={contestDetails.contestName}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "20px",
+                  boxShadow: "0 10px 40px rgba(255, 255, 255, 0.1)",
+                }}
+              />
+            </Box>
+
+            {/* <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 2,
+                mt: 3,
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  background: "#4F46E5",
+                  color: "white",
+                  fontWeight: "600",
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: "30px",
+                  textTransform: "none",
+                  fontSize: "16px",
+                  "&:hover": {
+                    background: "#3730A3",
+                  },
+                }}
+              >
+                Enter Contest
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderColor: "#4F46E5",
+                  color: "#4F46E5",
+                  fontWeight: "600",
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: "30px",
+                  textTransform: "none",
+                  fontSize: "16px",
+                  "&:hover": {
+                    background: "rgba(79, 70, 229, 0.1)",
+                  },
+                }}
+              >
+                Learn More
+              </Button>
+            </Box> */}
+          </Box>
+        </Box>
+
         <Box
           sx={{
             zIndex: 1100,
             position: "sticky",
             top: 0,
-            backgroundColor: "#161616",
+            backgroundColor: "black",
           }}
         >
           <Tabs
@@ -326,13 +449,14 @@ const Contest = () => {
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             sponsored={contestDetails.sponsored}
-            contestEndDate={"1/30/2025"}
-            contestStartDate={"9/1/2024"}
+            contestEndDate={contestDetails.periodEndDate}
+            contestStartDate={contestDetails.periodStartDate}
             contestFrequency={contestDetails.contestFrequency}
             contestLeague={contestDetails.contestLeague}
             filteredBets={filteredBets}
             aggregateBets={aggregateBets}
             lastPeriodAggregateBets={lastPeriodAggregateBets}
+            availableFreePicks={contestDetails.availableFreePicks}
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
@@ -342,13 +466,14 @@ const Contest = () => {
             price={contestDetails.price}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
             sponsored={contestDetails.sponsored}
-            contestEndDate={"1/30/2025"}
-            contestStartDate={"9/1/2024"}
+            contestEndDate={contestDetails.periodEndDate}
+            contestStartDate={contestDetails.periodStartDate}
             contestFrequency={contestDetails.contestFrequency}
             contestLeague={contestDetails.contestLeague}
             filteredBets={filteredBets}
             aggregateBets={aggregateBets}
             lastPeriodAggregateBets={lastPeriodAggregateBets}
+            availableFreePicks={contestDetails.availableFreePicks}
           />
         </CustomTabPanel>
       </Box>

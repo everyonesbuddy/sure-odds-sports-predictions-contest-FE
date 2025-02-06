@@ -35,6 +35,7 @@ const ContestCard = ({
   price,
   contestLeague,
   contestFrequency,
+  availableFreePicks,
 }) => {
   const navigate = useNavigate();
 

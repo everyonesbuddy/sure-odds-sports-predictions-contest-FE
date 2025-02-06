@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-// import KofiWidget from "./KofiWidget";
 import Footer from "./Footer";
 import ContestCard from "./ContestCard";
 import "../css/Home.css";
@@ -9,13 +8,12 @@ const Home = () => {
   const contest = [
     {
       contestName: "Multi Sport Weekly Pick'em",
-      primaryImageUrl: "https://i.ibb.co/xzk85XK/0k0-A7-Ib3-400x400.jpg",
-      price: "Win 5 USDT to a crypto wallet of your choice",
+      primaryImageUrl:
+        "https://i.ibb.co/cKyCDdvq/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-2.jpg",
+      price: "$50 in Crypto of your choice",
       spreadsheetUrl:
         "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
       sponsored: false,
-      affiliateUrl: "https://doinksports.com/?via=Sure-Odds",
-      affiliateCopy: "Try Doink Sports Research Platform For Free",
       contestFrequency: "Weekly",
       contestLeague: [
         "americanfootball_nfl",
@@ -23,13 +21,15 @@ const Home = () => {
         "soccer_epl",
         "soccer_germany_bundesliga",
       ],
+      availableFreePicks: 5,
     },
     {
       contestName: "Multi Sport Monthly Pick'em",
-      primaryImageUrl: "https://i.ibb.co/C8Cb5BF/Po6-QETC5-400x400.jpg",
-      price: "Win 50 USDT to a crypto wallet of your choice",
+      primaryImageUrl:
+        "https://i.ibb.co/YBqhzMsf/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-1.jpg",
+      price: "$100 in Crypto of your choice",
       spreadsheetUrl:
-        "https://api.sheetbest.com/sheets/09d34a2c-8cc1-4cf6-951c-dbc2ce537971",
+        "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
       sponsored: false,
       contestFrequency: "Monthly",
       contestLeague: [
@@ -38,63 +38,133 @@ const Home = () => {
         "soccer_epl",
         "soccer_germany_bundesliga",
       ],
+      availableFreePicks: 10,
     },
   ];
 
   return (
     <>
-      <Box sx={{ width: "auto", textAlign: "center", p: 3 }}>
-        <div>
-          <Typography
-            variant="h4"
-            sx={{
-              color: "white",
-              mb: 3,
-              p: 2,
-              fontWeight: "bold",
-            }}
-          >
-            Free to Play Pick'em Contests
-          </Typography>
-          <Typography
-            variant="p"
-            sx={{
-              color: "white",
-            }}
-          >
-            Think you can predict the game? Compete in our free-to-play pick'em
-            contests for a chance to win amazing prizes. It’s free, fun, and
-            global!
-          </Typography>
-          <div style={{ paddingTop: 10 }}>
-            <iframe
-              src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"
-              data-test-id="beehiiv-embed"
-              height="52"
-              title="Beehiiv Embed"
-              frameBorder="0"
-              scrolling="no"
-              style={{
-                margin: 0,
-                borderRadius: "0px",
-                backgroundColor: "transparent",
-              }}
-            ></iframe>
-            <p style={{ color: "gray", fontSize: "12px" }}>
-              Join the smartest sport bettors community
-            </p>
-          </div>
-        </div>
-        <Typography
-          variant="h4"
+      {/* Prevent unwanted horizontal scrolling */}
+      <Box
+        sx={{
+          width: "100vw",
+          maxWidth: "100%",
+          overflowX: "hidden",
+          textAlign: "center",
+          color: "white",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          py: { xs: 5, sm: 6 },
+          // px: 3,
+          background: "black",
+        }}
+      >
+        {/* HERO SECTION */}
+        <Box
           sx={{
-            color: "white",
-            mb: 3,
-            p: 2,
-            fontWeight: "bold",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 3,
+            textAlign: "center",
+            maxWidth: "800px",
+            width: "100%",
           }}
         >
-          Contests
+          <Typography
+            variant="h2"
+            sx={{
+              fontWeight: "700",
+              fontSize: { xs: "28px", sm: "42px", md: "48px" },
+              lineHeight: 1.2,
+              maxWidth: "100%",
+            }}
+          >
+            🏆 Free to Play Pick'em Contests
+          </Typography>
+
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: "400",
+              fontSize: { xs: "16px", sm: "20px" },
+              opacity: 0.8,
+              maxWidth: "600px",
+            }}
+          >
+            Think you can predict the game? Compete for free and win crypto
+            prizes. It’s fun, challenging, and global! 🌎🔥
+          </Typography>
+        </Box>
+      </Box>
+
+      {/* NEWSLETTER SIGNUP */}
+      <Box
+        sx={{
+          width: "100vw",
+          maxWidth: "100%",
+          overflowX: "hidden",
+          textAlign: "center",
+          color: "white",
+          py: { xs: 3, sm: 5 },
+          // px: { xs: 2, sm: 3 },
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 100%)",
+        }}
+      >
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "600",
+            fontSize: { xs: "18px", sm: "22px" },
+            mb: 2,
+          }}
+        >
+          📬 Join the Smartest Sports Bettors Community
+        </Typography>
+
+        <iframe
+          src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"
+          data-test-id="beehiiv-embed"
+          height="52"
+          title="Beehiiv Embed"
+          frameBorder="0"
+          scrolling="no"
+          style={{
+            width: "100%",
+            maxWidth: "500px",
+            borderRadius: "6px",
+            backgroundColor: "transparent",
+            padding: "0 10px", // Add padding to prevent overlap
+            boxSizing: "border-box", // Ensure padding is included in the width
+          }}
+        ></iframe>
+      </Box>
+
+      {/* CONTEST SECTION */}
+      <Box
+        sx={{
+          textAlign: "center",
+          py: { xs: 4, sm: 6 },
+          background: "black",
+          width: "100vw",
+          maxWidth: "100%",
+          overflowX: "hidden",
+        }}
+      >
+        <Typography
+          variant="h3"
+          sx={{
+            fontWeight: "700",
+            fontSize: { xs: "24px", sm: "32px", md: "36px" },
+            color: "white",
+            mb: 3,
+            maxWidth: "100%",
+          }}
+        >
+          🚀 Available Contests
         </Typography>
 
         <div className="card-container">
@@ -106,11 +176,12 @@ const Home = () => {
               price={item.price}
               contestLeague={item.contestLeague}
               contestFrequency={item.contestFrequency}
+              availableFreePicks={item.availableFreePicks}
             />
           ))}
         </div>
       </Box>
-      {/* <KofiWidget /> */}
+
       <Footer />
     </>
   );
