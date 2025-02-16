@@ -9,6 +9,7 @@ const SignupForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const SignupForm = () => {
           name,
           email,
           password,
+          userName,
           passwordConfirm,
         }
       );
@@ -62,6 +64,13 @@ const SignupForm = () => {
           required
         />
         <input
+          type="text"
+          placeholder="Username"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          required
+        />
+        <input
           type="password"
           placeholder="Password"
           value={password}
@@ -75,7 +84,14 @@ const SignupForm = () => {
           onChange={(e) => setPasswordConfirm(e.target.value)}
           required
         />
-        <button type="submit">Sign Up</button>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: "#4F46E5",
+          }}
+        >
+          Sign Up
+        </button>
         {error && <div className="error">{error}</div>}
       </form>
     </div>

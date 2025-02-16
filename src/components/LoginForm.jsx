@@ -47,7 +47,14 @@ const LoginForm = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: "#4F46E5",
+          }}
+        >
+          Login
+        </button>
         {error && <div className="error">{error}</div>}
       </form>
     </div>

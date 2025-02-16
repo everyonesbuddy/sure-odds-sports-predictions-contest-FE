@@ -48,7 +48,7 @@ const PostYourPicks = ({
 }) => {
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
-  const [twitterUsername, setTwitterUsername] = useState("");
+  const [participantsUsername, setParticipantsUsername] = useState("");
   const [email, setEmail] = useState("");
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState("");
@@ -131,7 +131,7 @@ const PostYourPicks = ({
 
   useEffect(() => {
     if (user && user.email) {
-      setTwitterUsername(user.email);
+      setParticipantsUsername(user.userName);
       setEmail(user.email);
     }
   }, [user]);
@@ -224,7 +224,7 @@ const PostYourPicks = ({
     const newPick = {
       league,
       pickType,
-      twitterUsername,
+      participantsUsername,
       email,
       selectedGame,
       teamPicked,
@@ -247,13 +247,17 @@ const PostYourPicks = ({
       return;
     }
 
-    // Check if the twitterUsername has less than 5 bets
+    // Check if the participantsUsername has less than 5 bets
     const userBets = aggregateBets.filter(
-      (bet) => bet.username === twitterUsername
+      (bet) => bet.username === participantsUsername
     );
     console.log("userBets", userBets);
-    console.log("twitterUsername", twitterUsername);
-    if (userBets[0].numberOfBets >= availableFreePicks && state.timer === 0) {
+    console.log("participantsUsername", participantsUsername);
+    if (
+      userBets?.league > 0 &&
+      userBets[0]?.numberOfBets >= availableFreePicks &&
+      state.timer === 0
+    ) {
       toast.error(
         "You have reached the maximum number of free bets for this contest!"
       );
@@ -546,23 +550,23 @@ const PostYourPicks = ({
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: !twitterUsername ? "error.main" : "#fff",
+                    borderColor: !participantsUsername ? "error.main" : "#fff",
                   },
                   "&:hover fieldset": {
-                    borderColor: !twitterUsername ? "error.main" : "#fff",
+                    borderColor: !participantsUsername ? "error.main" : "#fff",
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: !twitterUsername ? "error.main" : "#fff",
+                    borderColor: !participantsUsername ? "error.main" : "#fff",
                   },
                 },
               }}
             ></FormControl>
             <TextField
               label={`username / email `}
-              value={twitterUsername}
-              // onChange={handleTwitterUsernameChange}
+              value={participantsUsername}
+              // onChange={handleparticipantsUsernameChange}
               fullWidth
-              color={!twitterUsername ? "error" : "primary"}
+              color={!participantsUsername ? "error" : "primary"}
               margin="normal"
               placeholder={`Twitter username e.g sure_odds2023`}
               variant="outlined"
@@ -581,18 +585,18 @@ const PostYourPicks = ({
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: !twitterUsername ? "error.main" : "#fff",
+                    borderColor: !participantsUsername ? "error.main" : "#fff",
                   },
                   "&:hover fieldset": {
-                    borderColor: !twitterUsername ? "error.main" : "#fff",
+                    borderColor: !participantsUsername ? "error.main" : "#fff",
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: !twitterUsername ? "error.main" : "#fff",
+                    borderColor: !participantsUsername ? "error.main" : "#fff",
                   },
                 },
               }}
             />
-            {!twitterUsername && (
+            {!participantsUsername && (
               <FormHelperText error>This field is required</FormHelperText>
             )}
 

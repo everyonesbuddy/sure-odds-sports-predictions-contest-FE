@@ -6,23 +6,23 @@ import "../css/Home.css";
 
 const Home = () => {
   const contest = [
-    {
-      contestName: "Multi Sport Weekly Pick'em",
-      primaryImageUrl:
-        "https://i.ibb.co/cKyCDdvq/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-2.jpg",
-      price: "$50 in Crypto of your choice",
-      spreadsheetUrl:
-        "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
-      sponsored: false,
-      contestFrequency: "Weekly",
-      contestLeague: [
-        "americanfootball_nfl",
-        "basketball_nba",
-        "soccer_epl",
-        "soccer_germany_bundesliga",
-      ],
-      availableFreePicks: 5,
-    },
+    // {
+    //   contestName: "Multi Sport Weekly Pick'em",
+    //   primaryImageUrl:
+    //     "https://i.ibb.co/cKyCDdvq/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-2.jpg",
+    //   price: "$50 in Crypto of your choice",
+    //   spreadsheetUrl:
+    //     "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
+    //   sponsored: false,
+    //   contestFrequency: "Weekly",
+    //   contestLeague: [
+    //     "americanfootball_nfl",
+    //     "basketball_nba",
+    //     "soccer_epl",
+    //     "soccer_germany_bundesliga",
+    //   ],
+    //   availableFreePicks: 5,
+    // },
     {
       contestName: "Multi Sport Monthly Pick'em",
       primaryImageUrl:
@@ -38,7 +38,7 @@ const Home = () => {
         "soccer_epl",
         "soccer_germany_bundesliga",
       ],
-      availableFreePicks: 10,
+      availableFreePicks: 5,
     },
   ];
 

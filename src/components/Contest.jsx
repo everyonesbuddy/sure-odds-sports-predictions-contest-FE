@@ -20,30 +20,28 @@ const Contest = () => {
 
   const contest = useMemo(
     () => [
-      {
-        contestName: "Multi Sport Weekly Pick'em",
-        primaryImageUrl:
-          "https://i.ibb.co/cKyCDdvq/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-2.jpg",
-        price: "$50 in Crypto of your choice",
-        spreadsheetUrl:
-          "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
-        sponsored: false,
-        contestFrequency: "Weekly",
-        contestLeague: [
-          "americanfootball_nfl",
-          "basketball_nba",
-          "soccer_epl",
-          "soccer_germany_bundesliga",
-        ],
-        availableFreePicks: 5,
-      },
+      // {
+      //   contestName: "Multi Sport Weekly Pick'em",
+      //   primaryImageUrl:
+      //     "https://i.ibb.co/cKyCDdvq/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-2.jpg",
+      //   price: "$50 in Crypto of your choice",
+      //   spreadsheetUrl:
+      //     "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
+      //   sponsored: false,
+      //   contestFrequency: "Weekly",
+      //   contestLeague: [
+      //     "americanfootball_nfl",
+      //     "basketball_nba",
+      //     "soccer_epl",
+      //     "soccer_germany_bundesliga",
+      //   ],
+      //   availableFreePicks: 5,
+      // },
       {
         contestName: "Multi Sport Monthly Pick'em",
         primaryImageUrl:
           "https://i.ibb.co/YBqhzMsf/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-1.jpg",
         price: "$100 in Crypto of your choice",
-        // spreadsheetUrl:
-        //   "https://api.sheetbest.com/sheets/09d34a2c-8cc1-4cf6-951c-dbc2ce537971",
         spreadsheetUrl:
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         sponsored: false,
@@ -54,7 +52,7 @@ const Contest = () => {
           "soccer_epl",
           "soccer_germany_bundesliga",
         ],
-        availableFreePicks: 10,
+        availableFreePicks: 5,
       },
     ],
     []
@@ -187,7 +185,7 @@ const Contest = () => {
 
     bets.forEach((bet) => {
       const odds = parseInt(bet.odds, 10);
-      const username = bet.twitterUsername || "Anonymous";
+      const username = bet.participantsUsername || "Anonymous";
       if (!handicappers[username]) {
         handicappers[username] = {
           totalOdds: 0,

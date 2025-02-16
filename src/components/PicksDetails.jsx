@@ -29,9 +29,9 @@ const PicksDetails = ({
         const response = await axios.get(spreadsheetUrl);
         const data = response.data;
 
-        // Aggregate data by twitterUsername
+        // Aggregate data by participantsUsername
         const aggregatedData = data.reduce((acc, bet) => {
-          const username = bet.twitterUsername;
+          const username = bet.participantsUsername;
           if (!acc[username]) {
             acc[username] = {
               totalBets: 0,
