@@ -45,13 +45,16 @@ const PostYourPicks = ({
   aggregateBets,
   lastPeriodAggregateBets,
   availableFreePicks,
+  lastPeriodFilteredBets,
+  lastContestEndDate,
+  lastContestStartDate,
 }) => {
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
   const [participantsUsername, setParticipantsUsername] = useState("");
   const [email, setEmail] = useState("");
   const [games, setGames] = useState([]);
-  const [selectedGame, setSelectedGame] = useState("");
+  const [selectedGameId, setSelectedGameId] = useState("");
   const [gameDetails, setGameDetails] = useState(null);
   const [teamPicked, setTeamPicked] = useState("");
   const [odds, setOdds] = useState("");
@@ -151,11 +154,11 @@ const PostYourPicks = ({
   }, [league]);
 
   useEffect(() => {
-    if (selectedGame && pickType === "money line") {
+    if (selectedGameId && pickType === "money line") {
       const fetchGameDetails = async () => {
         try {
           const response = await axios.get(
-            `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGame}`
+            `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGameId}`
           );
 
           setGameDetails(response.data[0]);
@@ -165,14 +168,14 @@ const PostYourPicks = ({
       };
       fetchGameDetails();
     }
-  }, [selectedGame, pickType, league]);
+  }, [selectedGameId, pickType, league]);
 
   useEffect(() => {
-    if (selectedGame && pickType === "props" && market) {
+    if (selectedGameId && pickType === "props" && market) {
       const fetchMarketDetails = async () => {
         try {
           const response = await axios.get(
-            `https://api.the-odds-api.com/v4/sports/${league}/events/${selectedGame}/odds?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=${market}&oddsFormat=american&bookmakers=fanduel`
+            `https://api.the-odds-api.com/v4/sports/${league}/events/${selectedGameId}/odds?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=${market}&oddsFormat=american&bookmakers=fanduel`
           );
 
           const outcomes =
@@ -188,7 +191,7 @@ const PostYourPicks = ({
       };
       fetchMarketDetails();
     }
-  }, [selectedGame, pickType, league, market]);
+  }, [selectedGameId, pickType, league, market]);
 
   useEffect(() => {
     if (contestLeague && contestLeague.length > 0) {
@@ -200,7 +203,7 @@ const PostYourPicks = ({
     setLeague("");
     setPickType("");
     setGames([]);
-    setSelectedGame("");
+    setSelectedGameId("");
     setGameCommenceTime("");
     setGameDetails(null);
     setTeamPicked("");
@@ -214,7 +217,7 @@ const PostYourPicks = ({
   };
 
   const addPick = () => {
-    if (!league || !pickType || !selectedGame || !email) {
+    if (!league || !pickType || !selectedGameId || !email) {
       toast.error(
         "Please complete all required fields before adding a pick to your lineup!"
       );
@@ -226,7 +229,7 @@ const PostYourPicks = ({
       pickType,
       participantsUsername,
       email,
-      selectedGame,
+      selectedGameId,
       teamPicked,
       odds,
       market,
@@ -716,13 +719,13 @@ const PostYourPicks = ({
                     },
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
-                        borderColor: !selectedGame ? "error.main" : "#fff",
+                        borderColor: !selectedGameId ? "error.main" : "#fff",
                       },
                       "&:hover fieldset": {
-                        borderColor: !selectedGame ? "error.main" : "#fff",
+                        borderColor: !selectedGameId ? "error.main" : "#fff",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: !selectedGame ? "error.main" : "#fff",
+                        borderColor: !selectedGameId ? "error.main" : "#fff",
                       },
                     },
                   }}
@@ -731,16 +734,16 @@ const PostYourPicks = ({
                   <Select
                     labelId="game-label"
                     id="game-select"
-                    value={selectedGame}
+                    value={selectedGameId}
                     label="Game *"
                     onChange={(e) => {
-                      setSelectedGame(e.target.value);
+                      setSelectedGameId(e.target.value);
 
-                      const selectedGame = games.find(
+                      const selectedGameId = games.find(
                         (game) => game.id === e.target.value
                       );
-                      if (selectedGame) {
-                        setGameCommenceTime(selectedGame.commence_time);
+                      if (selectedGameId) {
+                        setGameCommenceTime(selectedGameId.commence_time);
                       }
                     }}
                   >
@@ -758,7 +761,7 @@ const PostYourPicks = ({
                       <MenuItem disabled>No games available</MenuItem>
                     )}
                   </Select>
-                  {!selectedGame && (
+                  {!selectedGameId && (
                     <FormHelperText error>
                       This field is required
                     </FormHelperText>

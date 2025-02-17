@@ -15,6 +15,7 @@ const Contest = () => {
   const [contestDetails, setContestDetails] = useState(null);
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
+  const [lastPeriodFilteredBets, setLastPeriodFilteredBets] = useState([]);
   const [aggregateBets, setAggregateBets] = useState([]);
   const [lastPeriodAggregateBets, setLastPeriodAggregateBets] = useState([]);
 
@@ -176,6 +177,7 @@ const Contest = () => {
         const postedTime = moment(bet.postedTime);
         return postedTime.isBetween(lastPeriodStart, lastPeriodEnd, null, "[]");
       });
+      setLastPeriodFilteredBets(lastPeriodFiltered);
       setLastPeriodAggregateBets(aggregateBetsCalculation(lastPeriodFiltered));
     }
   }, [betsData, contestDetails]);
@@ -455,6 +457,9 @@ const Contest = () => {
             aggregateBets={aggregateBets}
             lastPeriodAggregateBets={lastPeriodAggregateBets}
             availableFreePicks={contestDetails.availableFreePicks}
+            lastPeriodFilteredBets={lastPeriodFilteredBets}
+            lastContestEndDate={contestDetails.lastPeriodEndDate}
+            lastContestStartDate={contestDetails.lastPeriodStartDate}
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
