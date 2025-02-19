@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/CardContest.css";
 
@@ -38,43 +38,51 @@ const ContestCard = ({
   availableFreePicks,
 }) => {
   const navigate = useNavigate();
+  const [countdown, setCountdown] = useState("");
+  const [isMarchFirstOrPast, setIsMarchFirstOrPast] = useState(false);
+  const [leagueColors, setLeagueColors] = useState({});
 
   const handleClick = () => {
     navigate(`/contest/${contestName}`);
   };
 
-  // const calculateDuration = (start, end) => {
-  //   const currentDate = new Date();
-  //   const startDate = new Date(start);
-  //   const endDate = new Date(end);
+  // Generate colors for leagues once
+  useEffect(() => {
+    const colors = {};
+    contestLeague.forEach((league) => {
+      colors[league] = getRandomColor();
+    });
+    setLeagueColors(colors);
+  }, [contestLeague]);
 
-  //   if (currentDate < startDate) {
-  //     const durationInMilliseconds = startDate - currentDate;
-  //     const durationInDays = Math.ceil(
-  //       durationInMilliseconds / (1000 * 60 * 60 * 24)
-  //     );
-  //     return {
-  //       duration: durationInDays,
-  //       message: `Contest starts in ${durationInDays} days`,
-  //       isBeforeStart: true,
-  //     };
-  //   } else {
-  //     const durationInMilliseconds = endDate - currentDate;
-  //     const durationInDays = Math.ceil(
-  //       durationInMilliseconds / (1000 * 60 * 60 * 24)
-  //     );
-  //     return {
-  //       duration: durationInDays,
-  //       message: `Contest ends in ${durationInDays} days`,
-  //       isBeforeStart: false,
-  //     };
-  //   }
-  // };
+  // Countdown for marketing reasons
+  useEffect(() => {
+    const calculateCountdown = () => {
+      const now = new Date();
+      const targetDate = new Date(now.getFullYear(), 2, 1); // March 1st of the current year
+      if (now > targetDate) {
+        targetDate.setFullYear(targetDate.getFullYear() + 1); // If past March 1st, set for next year
+      }
+      const diff = targetDate - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
 
-  // const { message, isBeforeStart } = calculateDuration(
-  //   contestStartDate,
-  //   contestEndDate
-  // );
+      // Check if today is on or past March 1st
+      if (now >= targetDate) {
+        setIsMarchFirstOrPast(true);
+      } else {
+        setIsMarchFirstOrPast(false);
+      }
+    };
+
+    const interval = setInterval(calculateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="card" onClick={handleClick}>
@@ -82,22 +90,21 @@ const ContestCard = ({
       <div className="card-content">
         <h2 className="card-title">{contestName} Contest</h2>
         <p className="card-price">Prize: {price}</p>
-        {/* <p
-          className={`card-contest-format ${
-            isBeforeStart ? "before-start" : "before-end"
-          }`}
-        >
-          {message}
-        </p> */}
         <p>
           Duration: <span className="card-frequency">{contestFrequency} </span>
         </p>
+        {!isMarchFirstOrPast && (
+          <p className="card-countdown">
+            Contest Starts In:{" "}
+            <span className="card-frequency">{countdown} </span>
+          </p>
+        )}
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span
               key={league}
               className="league-card"
-              style={{ backgroundColor: getRandomColor() }}
+              style={{ backgroundColor: leagueColors[league] }}
             >
               {getLeagueLabel(league)}
             </span>
