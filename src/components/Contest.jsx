@@ -18,8 +18,6 @@ const Contest = () => {
   const [lastPeriodFilteredBets, setLastPeriodFilteredBets] = useState([]);
   const [aggregateBets, setAggregateBets] = useState([]);
   const [lastPeriodAggregateBets, setLastPeriodAggregateBets] = useState([]);
-  const [countdown, setCountdown] = useState("");
-  const [isMarchFirstOrPast, setIsMarchFirstOrPast] = useState(false);
 
   const contest = useMemo(
     () => [
@@ -49,16 +47,7 @@ const Contest = () => {
           "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
         sponsored: false,
         contestFrequency: "Monthly",
-        contestLeague: [
-          "basketball_nba",
-          "soccer_epl",
-          "soccer_germany_bundesliga",
-          "basketball_ncaab",
-          "soccer_italy_serie_a",
-          "soccer_spain_la_liga",
-          "soccer_usa_mls",
-          "basketball_ncaab",
-        ],
+        contestLeague: ["basketball_nba"],
         availableFreePicks: 5,
       },
     ],
@@ -187,35 +176,6 @@ const Contest = () => {
       setLastPeriodAggregateBets(aggregateBetsCalculation(lastPeriodFiltered));
     }
   }, [betsData, contestDetails]);
-
-  // Countdown for marketing reasons
-  useEffect(() => {
-    const calculateCountdown = () => {
-      const now = new Date();
-      const targetDate = new Date(now.getFullYear(), 2, 1); // March 1st of the current year
-      if (now > targetDate) {
-        targetDate.setFullYear(targetDate.getFullYear() + 1); // If past March 1st, set for next year
-      }
-      const diff = targetDate - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
-
-      // Check if today is on or past March 1st
-      if (now >= targetDate) {
-        setIsMarchFirstOrPast(true);
-      } else {
-        setIsMarchFirstOrPast(false);
-      }
-    };
-
-    const interval = setInterval(calculateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   const aggregateBetsCalculation = (bets) => {
     const handicappers = {};
@@ -439,98 +399,82 @@ const Contest = () => {
             </Box> */}
           </Box>
         </Box>
-
-        {!isMarchFirstOrPast ? (
-          <p
-            className="card-countdown"
-            style={{ fontSize: "24px", fontWeight: "bold" }}
+        <>
+          <Box
+            sx={{
+              zIndex: 1100,
+              position: "sticky",
+              top: 0,
+              backgroundColor: "black",
+            }}
           >
-            Contest Starts In:{" "}
-            <span
-              className="card-frequency"
-              style={{ fontSize: "24px", fontWeight: "bold" }}
-            >
-              {countdown} (March 1st 2025)
-            </span>
-          </p>
-        ) : (
-          <>
-            <Box
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+              centered
               sx={{
-                zIndex: 1100,
-                position: "sticky",
-                top: 0,
-                backgroundColor: "black",
+                "& .MuiTabs-indicator": {
+                  backgroundColor: "#4F46E5",
+                },
               }}
             >
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label="basic tabs example"
-                centered
+              <Tab
+                label="Post Your Picks🥇"
+                {...a11yProps(0)}
                 sx={{
-                  "& .MuiTabs-indicator": {
-                    backgroundColor: "#4F46E5",
-                  },
+                  color: "#4F46E5",
+                  fontSize: isMobile ? "8px" : "10px",
                 }}
-              >
-                <Tab
-                  label="Post Your Picks🥇"
-                  {...a11yProps(0)}
-                  sx={{
-                    color: "#4F46E5",
-                    fontSize: isMobile ? "8px" : "10px",
-                  }}
-                />
-                <Tab
-                  label="Leaderboard 🏆"
-                  {...a11yProps(1)}
-                  sx={{
-                    color: "#4F46E5",
-                    fontSize: isMobile ? "8px" : "10px",
-                  }}
-                />
-              </Tabs>
-            </Box>
-            <CustomTabPanel value={value} index={0}>
-              <PostYourPicks
-                contestName={contestDetails.contestName}
-                primaryImageUrl={contestDetails.primaryImageUrl}
-                price={contestDetails.price}
-                spreadsheetUrl={contestDetails.spreadsheetUrl}
-                sponsored={contestDetails.sponsored}
-                contestEndDate={contestDetails.periodEndDate}
-                contestStartDate={contestDetails.periodStartDate}
-                contestFrequency={contestDetails.contestFrequency}
-                contestLeague={contestDetails.contestLeague}
-                filteredBets={filteredBets}
-                aggregateBets={aggregateBets}
-                lastPeriodAggregateBets={lastPeriodAggregateBets}
-                availableFreePicks={contestDetails.availableFreePicks}
-                lastPeriodFilteredBets={lastPeriodFilteredBets}
-                lastContestEndDate={contestDetails.lastPeriodEndDate}
-                lastContestStartDate={contestDetails.lastPeriodStartDate}
               />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-              <Leaderboard
-                contestName={contestDetails.contestName}
-                primaryImageUrl={contestDetails.primaryImageUrl}
-                price={contestDetails.price}
-                spreadsheetUrl={contestDetails.spreadsheetUrl}
-                sponsored={contestDetails.sponsored}
-                contestEndDate={contestDetails.periodEndDate}
-                contestStartDate={contestDetails.periodStartDate}
-                contestFrequency={contestDetails.contestFrequency}
-                contestLeague={contestDetails.contestLeague}
-                filteredBets={filteredBets}
-                aggregateBets={aggregateBets}
-                lastPeriodAggregateBets={lastPeriodAggregateBets}
-                availableFreePicks={contestDetails.availableFreePicks}
+              <Tab
+                label="Leaderboard 🏆"
+                {...a11yProps(1)}
+                sx={{
+                  color: "#4F46E5",
+                  fontSize: isMobile ? "8px" : "10px",
+                }}
               />
-            </CustomTabPanel>
-          </>
-        )}
+            </Tabs>
+          </Box>
+          <CustomTabPanel value={value} index={0}>
+            <PostYourPicks
+              contestName={contestDetails.contestName}
+              primaryImageUrl={contestDetails.primaryImageUrl}
+              price={contestDetails.price}
+              spreadsheetUrl={contestDetails.spreadsheetUrl}
+              sponsored={contestDetails.sponsored}
+              contestEndDate={contestDetails.periodEndDate}
+              contestStartDate={contestDetails.periodStartDate}
+              contestFrequency={contestDetails.contestFrequency}
+              contestLeague={contestDetails.contestLeague}
+              filteredBets={filteredBets}
+              aggregateBets={aggregateBets}
+              lastPeriodAggregateBets={lastPeriodAggregateBets}
+              availableFreePicks={contestDetails.availableFreePicks}
+              lastPeriodFilteredBets={lastPeriodFilteredBets}
+              lastContestEndDate={contestDetails.lastPeriodEndDate}
+              lastContestStartDate={contestDetails.lastPeriodStartDate}
+            />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <Leaderboard
+              contestName={contestDetails.contestName}
+              primaryImageUrl={contestDetails.primaryImageUrl}
+              price={contestDetails.price}
+              spreadsheetUrl={contestDetails.spreadsheetUrl}
+              sponsored={contestDetails.sponsored}
+              contestEndDate={contestDetails.periodEndDate}
+              contestStartDate={contestDetails.periodStartDate}
+              contestFrequency={contestDetails.contestFrequency}
+              contestLeague={contestDetails.contestLeague}
+              filteredBets={filteredBets}
+              aggregateBets={aggregateBets}
+              lastPeriodAggregateBets={lastPeriodAggregateBets}
+              availableFreePicks={contestDetails.availableFreePicks}
+            />
+          </CustomTabPanel>
+        </>
       </Box>
     </>
   );

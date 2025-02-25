@@ -38,8 +38,6 @@ const ContestCard = ({
   availableFreePicks,
 }) => {
   const navigate = useNavigate();
-  const [countdown, setCountdown] = useState("");
-  const [isMarchFirstOrPast, setIsMarchFirstOrPast] = useState(false);
   const [leagueColors, setLeagueColors] = useState({});
 
   const handleClick = () => {
@@ -55,35 +53,6 @@ const ContestCard = ({
     setLeagueColors(colors);
   }, [contestLeague]);
 
-  // Countdown for marketing reasons
-  useEffect(() => {
-    const calculateCountdown = () => {
-      const now = new Date();
-      const targetDate = new Date(now.getFullYear(), 2, 1); // March 1st of the current year
-      if (now > targetDate) {
-        targetDate.setFullYear(targetDate.getFullYear() + 1); // If past March 1st, set for next year
-      }
-      const diff = targetDate - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
-
-      // Check if today is on or past March 1st
-      if (now >= targetDate) {
-        setIsMarchFirstOrPast(true);
-      } else {
-        setIsMarchFirstOrPast(false);
-      }
-    };
-
-    const interval = setInterval(calculateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="card" onClick={handleClick}>
       <img src={primaryImageUrl} alt={contestName} className="card-image" />
@@ -93,12 +62,6 @@ const ContestCard = ({
         <p>
           Duration: <span className="card-frequency">{contestFrequency} </span>
         </p>
-        {!isMarchFirstOrPast && (
-          <p className="card-countdown">
-            Contest Starts In:{" "}
-            <span className="card-frequency">{countdown} </span>
-          </p>
-        )}
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span

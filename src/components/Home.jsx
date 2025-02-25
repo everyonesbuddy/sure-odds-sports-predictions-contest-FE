@@ -32,16 +32,7 @@ const Home = () => {
         "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
       sponsored: false,
       contestFrequency: "Monthly",
-      contestLeague: [
-        "basketball_nba",
-        "soccer_epl",
-        "soccer_germany_bundesliga",
-        "basketball_ncaab",
-        "soccer_italy_serie_a",
-        "soccer_spain_la_liga",
-        "soccer_usa_mls",
-        "basketball_ncaab",
-      ],
+      contestLeague: ["basketball_nba"],
       availableFreePicks: 5,
     },
   ];
