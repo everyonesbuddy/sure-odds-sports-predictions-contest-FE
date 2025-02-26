@@ -34,7 +34,6 @@ const ContestCard = ({
   contestName,
   price,
   contestLeague,
-  contestFrequency,
   availableFreePicks,
 }) => {
   const navigate = useNavigate();
@@ -59,9 +58,6 @@ const ContestCard = ({
       <div className="card-content">
         <h2 className="card-title">{contestName} Contest</h2>
         <p className="card-price">Prize: {price}</p>
-        <p>
-          Duration: <span className="card-frequency">{contestFrequency} </span>
-        </p>
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span

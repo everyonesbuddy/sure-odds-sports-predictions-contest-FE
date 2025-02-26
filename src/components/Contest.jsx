@@ -1,11 +1,12 @@
 import { Box, useMediaQuery, useTheme, Typography } from "@mui/material";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import PostYourPicks from "./PostYourPicks";
+import { contest } from "../utils/contestData";
 import axios from "axios";
 import moment from "moment";
 import "../css/Contest.css";
@@ -15,135 +16,18 @@ const Contest = () => {
   const [contestDetails, setContestDetails] = useState(null);
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
-  const [lastPeriodFilteredBets, setLastPeriodFilteredBets] = useState([]);
   const [aggregateBets, setAggregateBets] = useState([]);
-  const [lastPeriodAggregateBets, setLastPeriodAggregateBets] = useState([]);
-
-  const contest = useMemo(
-    () => [
-      // {
-      //   contestName: "Multi Sport Weekly Pick'em",
-      //   primaryImageUrl:
-      //     "https://i.ibb.co/cKyCDdvq/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-2.jpg",
-      //   price: "$50 in Crypto of your choice",
-      //   spreadsheetUrl:
-      //     "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
-      //   sponsored: false,
-      //   contestFrequency: "Weekly",
-      //   contestLeague: [
-      //     "americanfootball_nfl",
-      //     "basketball_nba",
-      //     "soccer_epl",
-      //     "soccer_germany_bundesliga",
-      //   ],
-      //   availableFreePicks: 5,
-      // },
-      {
-        contestName: "Multi Sport Monthly Pick'em",
-        primaryImageUrl:
-          "https://i.ibb.co/YBqhzMsf/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-1.jpg",
-        price: "$100 in Crypto of your choice",
-        spreadsheetUrl:
-          "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
-        sponsored: false,
-        contestFrequency: "Monthly",
-        contestLeague: ["basketball_nba"],
-        availableFreePicks: 5,
-      },
-    ],
-    []
-  );
-
-  const getWeekNumber = (date) => {
-    const target = new Date(date.valueOf());
-    const dayNumber = (date.getUTCDay() + 6) % 7;
-    target.setUTCDate(target.getUTCDate() - dayNumber + 3);
-    const firstThursday = target.valueOf();
-    target.setUTCMonth(0, 1);
-    if (target.getUTCDay() !== 4) {
-      target.setUTCMonth(0, 1 + ((4 - target.getUTCDay() + 7) % 7));
-    }
-    return 1 + Math.ceil((firstThursday - target) / 604800000);
-  };
 
   useEffect(() => {
     const contestDetail = contest.find(
       (item) => item.contestName === contestName
     );
     if (contestDetail) {
-      const currentDate = new Date();
-      let periodStartDate,
-        periodEndDate,
-        lastPeriodStartDate,
-        lastPeriodEndDate;
-
-      if (contestDetail.contestFrequency === "Weekly") {
-        const dayOfWeek = currentDate.getDay();
-        const startOfWeek = new Date(currentDate);
-        startOfWeek.setDate(currentDate.getDate() - dayOfWeek);
-        const endOfWeek = new Date(startOfWeek);
-        endOfWeek.setDate(startOfWeek.getDate() + 6);
-
-        const startOfLastWeek = new Date(startOfWeek);
-        startOfLastWeek.setDate(startOfWeek.getDate() - 7);
-        const endOfLastWeek = new Date(startOfLastWeek);
-        endOfLastWeek.setDate(startOfLastWeek.getDate() + 6);
-
-        periodStartDate = startOfWeek.toLocaleDateString("en-US");
-        periodEndDate = endOfWeek.toLocaleDateString("en-US");
-        lastPeriodStartDate = startOfLastWeek.toLocaleDateString("en-US");
-        lastPeriodEndDate = endOfLastWeek.toLocaleDateString("en-US");
-      } else if (contestDetail.contestFrequency === "Monthly") {
-        const startOfMonth = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          1
-        );
-        const endOfMonth = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth() + 1,
-          0
-        );
-
-        const startOfLastMonth = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth() - 1,
-          1
-        );
-        const endOfLastMonth = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          0
-        );
-
-        periodStartDate = startOfMonth.toLocaleDateString("en-US");
-        periodEndDate = endOfMonth.toLocaleDateString("en-US");
-        lastPeriodStartDate = startOfLastMonth.toLocaleDateString("en-US");
-        lastPeriodEndDate = endOfLastMonth.toLocaleDateString("en-US");
-      }
-
-      const currentDayOfWeek = currentDate.toLocaleString("default", {
-        weekday: "long",
-      });
-      const currentDateInMonth = currentDate.getDate();
-      const currentMonth = currentDate.toLocaleString("default", {
-        month: "long",
-      });
-      const weekNumber = getWeekNumber(currentDate);
-
       setContestDetails({
         ...contestDetail,
-        periodStartDate,
-        periodEndDate,
-        lastPeriodStartDate,
-        lastPeriodEndDate,
-        currentDayOfWeek,
-        currentDateInMonth,
-        currentMonth,
-        weekNumber,
       });
     }
-  }, [contestName, contest]);
+  }, [contestName]);
 
   useEffect(() => {
     if (contestDetails) {
@@ -158,22 +42,15 @@ const Contest = () => {
 
   useEffect(() => {
     if (contestDetails) {
-      const contestStart = moment(contestDetails.periodStartDate);
+      const contestStart = moment(contestDetails.contestStartDate);
+      const contestEnd = moment(contestDetails.contestEndDate);
       const filtered = betsData.filter((bet) => {
         const postedTime = moment(bet.postedTime);
-        return postedTime.isSameOrAfter(contestStart);
+        // return postedTime.isSameOrAfter(contestStart);
+        return postedTime.isBetween(contestStart, contestEnd, null, "[]");
       });
       setFilteredBets(filtered);
       setAggregateBets(aggregateBetsCalculation(filtered));
-
-      const lastPeriodStart = moment(contestDetails.lastPeriodStartDate);
-      const lastPeriodEnd = moment(contestDetails.lastPeriodEndDate);
-      const lastPeriodFiltered = betsData.filter((bet) => {
-        const postedTime = moment(bet.postedTime);
-        return postedTime.isBetween(lastPeriodStart, lastPeriodEnd, null, "[]");
-      });
-      setLastPeriodFilteredBets(lastPeriodFiltered);
-      setLastPeriodAggregateBets(aggregateBetsCalculation(lastPeriodFiltered));
     }
   }, [betsData, contestDetails]);
 
@@ -444,17 +321,12 @@ const Contest = () => {
               price={contestDetails.price}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
               sponsored={contestDetails.sponsored}
-              contestEndDate={contestDetails.periodEndDate}
-              contestStartDate={contestDetails.periodStartDate}
-              contestFrequency={contestDetails.contestFrequency}
+              contestEndDate={contestDetails.contestEndDate}
+              contestStartDate={contestDetails.contestStartDate}
               contestLeague={contestDetails.contestLeague}
               filteredBets={filteredBets}
               aggregateBets={aggregateBets}
-              lastPeriodAggregateBets={lastPeriodAggregateBets}
               availableFreePicks={contestDetails.availableFreePicks}
-              lastPeriodFilteredBets={lastPeriodFilteredBets}
-              lastContestEndDate={contestDetails.lastPeriodEndDate}
-              lastContestStartDate={contestDetails.lastPeriodStartDate}
             />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
@@ -464,13 +336,11 @@ const Contest = () => {
               price={contestDetails.price}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
               sponsored={contestDetails.sponsored}
-              contestEndDate={contestDetails.periodEndDate}
-              contestStartDate={contestDetails.periodStartDate}
-              contestFrequency={contestDetails.contestFrequency}
+              contestEndDate={contestDetails.contestEndDate}
+              contestStartDate={contestDetails.contestStartDate}
               contestLeague={contestDetails.contestLeague}
               filteredBets={filteredBets}
               aggregateBets={aggregateBets}
-              lastPeriodAggregateBets={lastPeriodAggregateBets}
               availableFreePicks={contestDetails.availableFreePicks}
             />
           </CustomTabPanel>

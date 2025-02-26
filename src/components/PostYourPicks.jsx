@@ -366,18 +366,16 @@ const PostYourPicks = ({
                 📢 {message}
               </ListItem>
               <ListItem sx={{ fontSize: isMobile ? "12px" : "15px", pb: 1 }}>
-                💰 <strong>Prize:</strong> {price}
+                💰 <strong>Prize:&nbsp;</strong> {price}
               </ListItem>
               {!isMobile && (
                 <ListItem sx={{ fontSize: "15px", color: "#17b978", pb: 1 }}>
-                  🏆 Last{" "}
-                  {contestFrequency === "Monthly" ? "Month's" : "Week's"}{" "}
-                  Winner:{" "}
-                  <strong>{lastPeriodAggregateBets[0]?.username}</strong>
+                  🏆 Contest Leader:&nbsp;
+                  <strong>{aggregateBets?.[0]?.username}</strong>
                 </ListItem>
               )}
               <ListItem sx={{ fontSize: isMobile ? "12px" : "15px", pb: 1 }}>
-                🎟️ <strong>Free Picks:</strong> {availableFreePicks}
+                🎟️ <strong>Free Picks:&nbsp;</strong> {availableFreePicks}
               </ListItem>
               {!state.timer > 0 && (
                 <ListItem
