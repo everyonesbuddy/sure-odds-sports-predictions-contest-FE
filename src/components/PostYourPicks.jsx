@@ -113,13 +113,13 @@ const PostYourPicks = ({
         );
 
         setCode(""); // Clear the input field
-        alert("Code applied successfully!");
+        toast.success("Code applied successfully!");
       } else {
-        alert("Invalid or already used code.");
+        toast.error("Invalid or already used code.");
       }
     } catch (error) {
       console.error("Error validating code:", error);
-      alert("Failed to validate code. Please try again.");
+      toast.error("Failed to validate code. Please try again.");
     } finally {
       setIsCodeSubmitting(false);
     }
