@@ -3,7 +3,9 @@ export const contest = [
     contestName: "NBA Season Long Pick'em",
     primaryImageUrl:
       "https://i.ibb.co/YBqhzMsf/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-1.jpg",
-    price: "$1000 for first place",
+    firstPlacePrize: "$1000 USD",
+    secondPlacePrize: "$500 USD",
+    thirdPlacePrize: "$250 USD",
     spreadsheetUrl:
       "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
     sponsored: false,

@@ -34,7 +34,9 @@ import {
 const PostYourPicks = ({
   contestName,
   primaryImageUrl,
-  price,
+  firstPlacePrize,
+  secondPlacePrize,
+  thirdPlacePrize,
   spreadsheetUrl,
   sponsored,
   contestLeague,
@@ -365,15 +367,29 @@ const PostYourPicks = ({
               >
                 📢 {message}
               </ListItem>
-              <ListItem sx={{ fontSize: isMobile ? "12px" : "15px", pb: 1 }}>
-                💰 <strong>Prize:&nbsp;</strong> {price}
-              </ListItem>
+
               {!isMobile && (
-                <ListItem sx={{ fontSize: "15px", color: "#17b978", pb: 1 }}>
-                  🏆 Contest Leader:&nbsp;
-                  <strong>{aggregateBets?.[0]?.username}</strong>
+                <ListItem
+                  sx={{
+                    fontSize: isMobile ? "12px" : "15px",
+                    pb: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Typography className="card-price" sx={{ mb: 1 }}>
+                    🥇 1st Place Prize: {firstPlacePrize}
+                  </Typography>
+                  <Typography className="card-price" sx={{ mb: 1 }}>
+                    🥈 2nd Place Prize: {secondPlacePrize}
+                  </Typography>
+                  <Typography className="card-price">
+                    🥉 3rd Place Prize:{thirdPlacePrize}
+                  </Typography>
                 </ListItem>
               )}
+
               <ListItem sx={{ fontSize: isMobile ? "12px" : "15px", pb: 1 }}>
                 🎟️ <strong>Free Picks:&nbsp;</strong> {availableFreePicks}
               </ListItem>
@@ -398,7 +414,7 @@ const PostYourPicks = ({
                     rel="noopener noreferrer"
                     sx={{
                       ml: 1,
-                      fontSize: isMobile ? "10px" : "14px",
+                      fontSize: isMobile ? "10px" : "12px",
                       py: 0.5,
                       px: 1.5,
                       backgroundColor: "#4F46E5",
@@ -407,7 +423,7 @@ const PostYourPicks = ({
                       },
                     }}
                   >
-                    Get Unlimited Entries
+                    Buy Unlimited Entries for 10 Minutes!
                   </Button>
                 </ListItem>
               )}

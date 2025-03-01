@@ -22,7 +22,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 const Leaderboard = ({
   contestName,
   primaryImageUrl,
-  price,
+  firstPlacePrize,
   spreadsheetUrl,
   sponsored,
   contestEndDate,
@@ -50,7 +50,6 @@ const Leaderboard = ({
       return {
         duration: durationInDays,
         message: `Contest starts in ${durationInDays} days`,
-        isBeforeStart: true,
       };
     } else {
       const durationInMilliseconds = endDate - currentDate;
@@ -60,46 +59,22 @@ const Leaderboard = ({
       return {
         duration: durationInDays,
         message: `Contest ends in ${durationInDays} days`,
-        isBeforeStart: false,
       };
     }
   };
 
-  const { message, isBeforeStart } = calculateDuration(
-    contestStartDate,
-    contestEndDate
-  );
+  const { message } = calculateDuration(contestStartDate, contestEndDate);
 
   return (
     <>
       <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography variant="subtitle1">
-          <p
-            className={`card-contest-format ${
-              isBeforeStart ? "before-start" : "before-end"
-            }`}
-            style={{ fontSize: "20px", fontWeight: "bold" }}
-          >
-            {message}
-          </p>
-        </Typography>
-      </Box>
-
-      <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography
           variant="subtitle1"
-          sx={{
-            color: "gray",
-            mb: 3,
-            borderRadius: 1,
-          }}
+          sx={{ fontSize: "20px", fontWeight: "bold" }}
         >
-          <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
-            Win {price}
-          </span>{" "}
+          <p className={`card-contest-format`}>{message}</p>
         </Typography>
       </Box>
-
       <Box>
         {aggregateBets.length === 0 ? (
           <Card

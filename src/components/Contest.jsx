@@ -191,7 +191,10 @@ const Contest = () => {
               }}
             >
               Participate, make your best picks, and win{" "}
-              <span style={{ fontWeight: "600" }}>{contestDetails.price}</span>.
+              <span style={{ fontWeight: "600" }}>
+                {contestDetails.firstPlacePrize} 🥇
+              </span>
+              .
             </Typography>
 
             <Box
@@ -318,7 +321,9 @@ const Contest = () => {
             <PostYourPicks
               contestName={contestDetails.contestName}
               primaryImageUrl={contestDetails.primaryImageUrl}
-              price={contestDetails.price}
+              firstPlacePrize={contestDetails.firstPlacePrize}
+              secondPlacePrize={contestDetails.secondPlacePrize}
+              thirdPlacePrize={contestDetails.thirdPlacePrize}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
               sponsored={contestDetails.sponsored}
               contestEndDate={contestDetails.contestEndDate}
@@ -333,7 +338,7 @@ const Contest = () => {
             <Leaderboard
               contestName={contestDetails.contestName}
               primaryImageUrl={contestDetails.primaryImageUrl}
-              price={contestDetails.price}
+              firstPlacePrize={contestDetails.firstPlacePrize}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
               sponsored={contestDetails.sponsored}
               contestEndDate={contestDetails.contestEndDate}

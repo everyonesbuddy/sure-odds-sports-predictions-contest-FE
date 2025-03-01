@@ -32,7 +32,9 @@ const getRandomColor = () => {
 const ContestCard = ({
   primaryImageUrl,
   contestName,
-  price,
+  firstPlacePrize,
+  secondPlacePrize,
+  thirdPlacePrize,
   contestLeague,
   availableFreePicks,
 }) => {
@@ -57,7 +59,9 @@ const ContestCard = ({
       <img src={primaryImageUrl} alt={contestName} className="card-image" />
       <div className="card-content">
         <h2 className="card-title">{contestName} Contest</h2>
-        <p className="card-price">Prize: {price}</p>
+        <p className="card-price">🥇 1st Place Prize: {firstPlacePrize}</p>
+        <p className="card-price">🥈 2nd Place Prize: {secondPlacePrize}</p>
+        <p className="card-price">🥉 3rd Place Prize: {thirdPlacePrize}</p>
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span
