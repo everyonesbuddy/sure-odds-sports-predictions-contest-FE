@@ -385,7 +385,7 @@ const PostYourPicks = ({
                     🥈 2nd Place Prize: {secondPlacePrize}
                   </Typography>
                   <Typography className="card-price">
-                    🥉 3rd Place Prize:{thirdPlacePrize}
+                    🥉 3rd Place Prize: {thirdPlacePrize}
                   </Typography>
                 </ListItem>
               )}
@@ -409,7 +409,7 @@ const PostYourPicks = ({
 
                   <Button
                     variant="contained"
-                    href="https://buy.stripe.com/3cs4hj00X0TheaY146"
+                    href="https://buy.stripe.com/28odRT1518lJgj63cg"
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{

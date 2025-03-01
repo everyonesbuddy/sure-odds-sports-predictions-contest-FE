@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/CardContest.css";
-
-const leagueOptions = [
-  { value: "basketball_nba", label: "NBA 🏀" },
-  { value: "americanfootball_nfl", label: "NFL 🏈" },
-  { value: "americanfootball_ncaaf", label: "NCAA Football 🏈" },
-  { value: "basketball_ncaab", label: "NCAA Basketball 🏀" },
-  { value: "icehockey_nhl", label: "NHL 🏒" },
-  { value: "soccer_epl", label: "EPL ⚽" },
-  { value: "soccer_germany_bundesliga", label: "Bundesliga ⚽" },
-  { value: "soccer_italy_serie_a", label: "Serie A ⚽" },
-  { value: "soccer_spain_la_liga", label: "La Liga ⚽" },
-  { value: "soccer_usa_mls", label: "MLS ⚽" },
-];
+import { leagueOptions } from "../utils/leagueData";
 
 const getLeagueLabel = (value) => {
   const league = leagueOptions.find((league) => league.value === value);

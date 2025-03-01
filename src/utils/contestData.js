@@ -1,17 +1,17 @@
 export const contest = [
   {
-    contestName: "NBA Season Long Pick'em",
+    contestName: "March Madness Pick'em",
     primaryImageUrl:
-      "https://i.ibb.co/YBqhzMsf/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation-1.jpg",
-    firstPlacePrize: "$1000 USD",
-    secondPlacePrize: "$500 USD",
-    thirdPlacePrize: "$250 USD",
+      "https://i.ibb.co/n8r2RKnt/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation.png",
+    firstPlacePrize: "$300 USD",
+    secondPlacePrize: "$100 USD",
+    thirdPlacePrize: "$50 USD",
     spreadsheetUrl:
       "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
     sponsored: false,
-    contestStartDate: "10/22/2024",
-    contestEndDate: "05/31/2025",
-    contestLeague: ["basketball_nba"],
+    contestStartDate: "3/1/2025",
+    contestEndDate: "3/31/2025",
+    contestLeague: ["basketball_ncaab", "basketball_wncaab"],
     availableFreePicks: 5,
   },
 ];
