@@ -546,38 +546,6 @@ const PostYourPicks = ({
           }}
         >
           <CardContent sx={{ color: "fff" }}>
-            <FormControl
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              sx={{
-                mb: 2,
-                "& .MuiInputBase-root": {
-                  borderRadius: "8px",
-                  height: "40px",
-                  color: "#fff",
-                  "& input": {
-                    height: "40px",
-                    padding: "10px",
-                    color: "#fff",
-                  },
-                },
-                "& .MuiInputLabel-root": {
-                  color: "#fff",
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: !participantsUsername ? "error.main" : "#fff",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: !participantsUsername ? "error.main" : "#fff",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: !participantsUsername ? "error.main" : "#fff",
-                  },
-                },
-              }}
-            ></FormControl>
             <TextField
               label={`username / email `}
               value={participantsUsername}
@@ -626,6 +594,7 @@ const PostYourPicks = ({
                   borderRadius: "8px",
                   height: "40px",
                   color: "#fff",
+                  width: isMobile ? "240px" : "100%", // Ensure text does not overflow
                 },
                 "& .MuiInputLabel-root": {
                   color: "#fff",
@@ -675,6 +644,7 @@ const PostYourPicks = ({
                       borderRadius: "8px",
                       height: "40px",
                       color: "#fff",
+                      width: isMobile ? "240px" : "100%", // Ensure text does not overflow
                     },
                     "& .MuiInputLabel-root": {
                       color: "#fff",
@@ -727,6 +697,7 @@ const PostYourPicks = ({
                       borderRadius: "8px",
                       height: "40px",
                       color: "#fff",
+                      width: isMobile ? "240px" : "100%", // Ensure text does not overflow
                     },
                     "& .MuiInputLabel-root": {
                       color: "#fff",
@@ -793,6 +764,7 @@ const PostYourPicks = ({
                           borderRadius: "8px",
                           height: "40px",
                           color: "#fff",
+                          width: isMobile ? "240px" : "100%", // Ensure text does not overflow
                         },
                         "& .MuiInputLabel-root": {
                           color: "#fff",
@@ -887,6 +859,7 @@ const PostYourPicks = ({
                             borderRadius: "8px",
                             height: "40px",
                             color: "#fff",
+                            width: isMobile ? "240px" : "100%", // Ensure text does not overflow
                           },
                           "& .MuiInputLabel-root": {
                             color: "#fff",
@@ -944,6 +917,7 @@ const PostYourPicks = ({
                             borderRadius: "8px",
                             height: "40px",
                             color: "#fff",
+                            width: isMobile ? "240px" : "100%", // Ensure text does not overflow
                           },
                           "& .MuiInputLabel-root": {
                             color: "#fff",
