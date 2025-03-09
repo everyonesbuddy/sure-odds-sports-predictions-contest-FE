@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import PostYourPicks from "./PostYourPicks";
-import { contest } from "../utils/contestData";
+import { useContestData } from "../hooks/useContestData";
 import axios from "axios";
 import moment from "moment";
 import "../css/Contest.css";
@@ -17,9 +17,10 @@ const Contest = () => {
   const [betsData, setBetsData] = useState([]);
   const [filteredBets, setFilteredBets] = useState([]);
   const [aggregateBets, setAggregateBets] = useState([]);
+  const contestData = useContestData();
 
   useEffect(() => {
-    const contestDetail = contest.find(
+    const contestDetail = contestData.find(
       (item) => item.contestName === contestName
     );
     if (contestDetail) {
@@ -27,15 +28,20 @@ const Contest = () => {
         ...contestDetail,
       });
     }
-  }, [contestName]);
+  }, [contestName, contestData]);
 
   useEffect(() => {
     if (contestDetails) {
       const fetchData = async () => {
-        const response = await axios.get(contestDetails.spreadsheetUrl);
-        setBetsData(response.data);
-        setFilteredBets(response.data); // Initial filter setup
+        try {
+          const response = await axios.get(contestDetails.spreadsheetUrl);
+          setBetsData(response.data);
+          setFilteredBets(response.data); // Initial filter setup
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
       };
+
       fetchData();
     }
   }, [contestDetails]);
@@ -46,7 +52,6 @@ const Contest = () => {
       const contestEnd = moment(contestDetails.contestEndDate);
       const filtered = betsData.filter((bet) => {
         const postedTime = moment(bet.postedTime);
-        // return postedTime.isSameOrAfter(contestStart);
         return postedTime.isBetween(contestStart, contestEnd, null, "[]");
       });
       setFilteredBets(filtered);
@@ -231,52 +236,6 @@ const Contest = () => {
                 }}
               />
             </Box>
-
-            {/* <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                gap: 2,
-                mt: 3,
-              }}
-            >
-              <Button
-                variant="contained"
-                sx={{
-                  background: "#4F46E5",
-                  color: "white",
-                  fontWeight: "600",
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: "30px",
-                  textTransform: "none",
-                  fontSize: "16px",
-                  "&:hover": {
-                    background: "#3730A3",
-                  },
-                }}
-              >
-                Enter Contest
-              </Button>
-              <Button
-                variant="outlined"
-                sx={{
-                  borderColor: "#4F46E5",
-                  color: "#4F46E5",
-                  fontWeight: "600",
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: "30px",
-                  textTransform: "none",
-                  fontSize: "16px",
-                  "&:hover": {
-                    background: "rgba(79, 70, 229, 0.1)",
-                  },
-                }}
-              >
-                Learn More
-              </Button>
-            </Box> */}
           </Box>
         </Box>
         <>

@@ -2,10 +2,12 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Footer from "./Footer";
 import ContestCard from "./ContestCard";
-import { contest } from "../utils/contestData";
+import { useContestData } from "../hooks/useContestData";
 import "../css/Home.css";
 
 const Home = () => {
+  const contestData = useContestData();
+
   return (
     <>
       {/* Prevent unwanted horizontal scrolling */}
@@ -132,7 +134,7 @@ const Home = () => {
         </Typography>
 
         <div className="card-container">
-          {contest.map((item, index) => (
+          {contestData.map((item, index) => (
             <ContestCard
               key={index}
               primaryImageUrl={item.primaryImageUrl}
@@ -140,6 +142,8 @@ const Home = () => {
               firstPlacePrize={item.firstPlacePrize}
               secondPlacePrize={item.secondPlacePrize}
               thirdPlacePrize={item.thirdPlacePrize}
+              startDate={item.contestStartDate}
+              endDate={item.contestEndDate}
               contestLeague={item.contestLeague}
               availableFreePicks={item.availableFreePicks}
             />

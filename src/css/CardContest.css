@@ -69,3 +69,9 @@
   color: white;
   font-weight: bold;
 }
+
+.card-dates {
+  font-size: 14px;
+  color: white;
+  margin: 5px 0;
+}

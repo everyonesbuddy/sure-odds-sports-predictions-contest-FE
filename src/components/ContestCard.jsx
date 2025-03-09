@@ -25,6 +25,8 @@ const ContestCard = ({
   thirdPlacePrize,
   contestLeague,
   availableFreePicks,
+  startDate,
+  endDate,
 }) => {
   const navigate = useNavigate();
   const [leagueColors, setLeagueColors] = useState({});
@@ -50,6 +52,12 @@ const ContestCard = ({
         <p className="card-price">🥇 1st Place Prize: {firstPlacePrize}</p>
         <p className="card-price">🥈 2nd Place Prize: {secondPlacePrize}</p>
         <p className="card-price">🥉 3rd Place Prize: {thirdPlacePrize}</p>
+        <p className="card-dates">
+          📅 Start Date: {new Date(startDate).toLocaleDateString()}
+        </p>
+        <p className="card-dates">
+          📅 End Date: {new Date(endDate).toLocaleDateString()}
+        </p>
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span

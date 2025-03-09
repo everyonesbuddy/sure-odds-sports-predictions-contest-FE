@@ -42,14 +42,9 @@ const PostYourPicks = ({
   contestLeague,
   contestEndDate,
   contestStartDate,
-  contestFrequency,
   filteredBets,
   aggregateBets,
-  lastPeriodAggregateBets,
   availableFreePicks,
-  lastPeriodFilteredBets,
-  lastContestEndDate,
-  lastContestStartDate,
 }) => {
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
@@ -365,7 +360,7 @@ const PostYourPicks = ({
                   pb: 1,
                 }}
               >
-                📢 {message}
+                📢 {message} ({contestStartDate} - {contestEndDate})
               </ListItem>
 
               {!isMobile && (

@@ -15,40 +15,43 @@ import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import { TimerProvider } from "./context/TimerContext";
+import { WeekProvider } from "./context/WeekContest";
 
 const App = () => {
   return (
-    <TimerProvider>
-      <Router>
-        <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/leaderboard"
-            element={<PrivateRoute element={Leaderboard} />}
-          />
-          <Route
-            path="/postYourPicks"
-            element={<PrivateRoute element={PostYourPicks} />}
-          />
-          <Route path="/about" element={<TournamentDetails />} />
-          <Route path="/picksDetails" element={<PicksDetails />} />
-          <Route path="/blogs" element={<Blog />} />
-          <Route path="/blogs/:slug/:id" element={<BlogPost />} />
-          <Route
-            path="/personalizedAnalytics"
-            element={<PrivateRoute element={PersonalizedAnalytics} />}
-          />
-          <Route
-            path="/contest/:contestName"
-            element={<PrivateRoute element={Contest} />}
-          />
-        </Routes>
-        <ToastContainer />
-      </Router>
-    </TimerProvider>
+    <WeekProvider>
+      <TimerProvider>
+        <Router>
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="/leaderboard"
+              element={<PrivateRoute element={Leaderboard} />}
+            />
+            <Route
+              path="/postYourPicks"
+              element={<PrivateRoute element={PostYourPicks} />}
+            />
+            <Route path="/about" element={<TournamentDetails />} />
+            <Route path="/picksDetails" element={<PicksDetails />} />
+            <Route path="/blogs" element={<Blog />} />
+            <Route path="/blogs/:slug/:id" element={<BlogPost />} />
+            <Route
+              path="/personalizedAnalytics"
+              element={<PrivateRoute element={PersonalizedAnalytics} />}
+            />
+            <Route
+              path="/contest/:contestName"
+              element={<PrivateRoute element={Contest} />}
+            />
+          </Routes>
+          <ToastContainer />
+        </Router>
+      </TimerProvider>
+    </WeekProvider>
   );
 };
 

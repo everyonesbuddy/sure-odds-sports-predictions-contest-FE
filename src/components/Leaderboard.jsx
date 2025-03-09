@@ -27,10 +27,8 @@ const Leaderboard = ({
   sponsored,
   contestEndDate,
   contestStartDate,
-  contestFrequency,
   filteredBets,
   aggregateBets,
-  lastPeriodAggregateBets,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -72,7 +70,9 @@ const Leaderboard = ({
           variant="subtitle1"
           sx={{ fontSize: "20px", fontWeight: "bold" }}
         >
-          <p className={`card-contest-format`}>{message}</p>
+          <p className={`card-contest-format`}>
+            {message} ({contestStartDate} - {contestEndDate})
+          </p>
         </Typography>
       </Box>
       <Box>
