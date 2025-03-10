@@ -122,6 +122,21 @@ const PostYourPicks = ({
     }
   };
 
+  const calculateAvailableFreePicksLeft = () => {
+    const userBets = aggregateBets.find(
+      (bet) => bet.username === participantsUsername
+    );
+    const betsPlaced = userBets ? userBets.numberOfBets : 0;
+
+    // If timer is active, unlimited bets are allowed
+    if (state.timer > 0) {
+      return Infinity; // Indicates unlimited bets allowed
+    }
+
+    // Available free picks minus bets already submitted (ignores local state picks)
+    return Math.max(availableFreePicks - betsPlaced, 0);
+  };
+
   const calculateStrokeDashoffset = () => {
     if (state.timer === null || totalTime === null) return 0;
     const percentage = state.timer / totalTime;
@@ -214,10 +229,17 @@ const PostYourPicks = ({
   };
 
   const addPick = () => {
-    if (!league || !pickType || !selectedGameId || !email) {
+    const freePicksLeft = calculateAvailableFreePicksLeft();
+
+    if (freePicksLeft === 0) {
       toast.error(
-        "Please complete all required fields before adding a pick to your lineup!"
+        "You have used all available free picks! Buy unlimited picks to continue."
       );
+      return;
+    }
+
+    if (!league || !pickType || !selectedGameId || !email) {
+      toast.error("Please complete all required fields before adding a pick!");
       return;
     }
 
@@ -236,7 +258,8 @@ const PostYourPicks = ({
       postedTime: new Date().toISOString(),
       gameCommenceTime: gameCommenceTime,
     };
-    setPicks([...picks, newPick]);
+
+    setPicks([...picks, newPick]); // Allow adding picks
     toast.success("Pick added to lineup!");
     clearFields();
   };
@@ -247,28 +270,45 @@ const PostYourPicks = ({
       return;
     }
 
-    // Check if the participantsUsername has less than 5 bets
-    const userBets = aggregateBets.filter(
+    // Get the number of previously submitted picks
+    const userBets = aggregateBets.find(
       (bet) => bet.username === participantsUsername
     );
-    console.log("userBets", userBets);
-    console.log("participantsUsername", participantsUsername);
-    if (
-      userBets?.league > 0 &&
-      userBets[0]?.numberOfBets >= availableFreePicks &&
-      state.timer === 0
-    ) {
+    const betsPlaced = userBets ? userBets.numberOfBets : 0;
+
+    // Allow unlimited picks if timer is active
+    if (state.timer > 0) {
+      setIsSubmitting(true);
+      try {
+        const response = await axios.post(spreadsheetUrl, picks);
+        console.log("Submitted picks:", response);
+        toast.success("All picks submitted successfully!");
+        setPicks([]);
+        window.location.reload();
+      } catch (error) {
+        console.error("Error submitting picks:", error);
+        toast.error("Failed to submit picks!");
+      } finally {
+        setIsSubmitting(false);
+      }
+      return;
+    }
+
+    // Calculate remaining free picks
+    const freePicksLeft = availableFreePicks - betsPlaced;
+
+    // Check if new picks exceed free picks limit
+    if (picks.length > freePicksLeft) {
       toast.error(
-        "You have reached the maximum number of free bets for this contest!"
+        `You can only submit ${freePicksLeft} more free pick(s). You currently have ${betsPlaced} submitted picks and ${picks.length} pending picks.`
       );
       return;
     }
 
     setIsSubmitting(true);
-
     try {
       const response = await axios.post(spreadsheetUrl, picks);
-      console.log(response);
+      console.log("Submitted picks:", response);
       toast.success("All picks submitted successfully!");
       setPicks([]);
       window.location.reload();
@@ -386,7 +426,8 @@ const PostYourPicks = ({
               )}
 
               <ListItem sx={{ fontSize: isMobile ? "12px" : "15px", pb: 1 }}>
-                🎟️ <strong>Free Picks:&nbsp;</strong> {availableFreePicks}
+                🎟️ <strong>Free Picks Left:&nbsp;</strong>{" "}
+                {calculateAvailableFreePicksLeft()} / {availableFreePicks}
               </ListItem>
               {!state.timer > 0 && (
                 <ListItem
@@ -1148,6 +1189,47 @@ const PostYourPicks = ({
             </Button>
           </CardContent>
         </Card>
+      </Box>
+
+      {/* Floating Offer at the Bottom  */}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 10,
+          left: "50%",
+          transform: "translateX(-50%)",
+          backgroundColor: "#4F46E5",
+          color: "#fff",
+          p: 2,
+          borderRadius: "10px",
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
+        }}
+      >
+        <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+          🔥 Get Unlimited Entries for 10 Minutes!
+        </Typography>
+        <Button
+          variant="contained"
+          href="https://buy.stripe.com/28odRT1518lJgj63cg"
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            fontSize: "14px",
+            py: 1,
+            px: 3,
+            backgroundColor: "#ffcc00",
+            color: "#000",
+            fontWeight: "bold",
+            "&:hover": {
+              backgroundColor: "#ffdb4d",
+            },
+          }}
+        >
+          Buy Now
+        </Button>
       </Box>
     </>
   );
