@@ -15,10 +15,12 @@ import {
   ListItem,
   useMediaQuery,
   useTheme,
+  IconButton,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useTimer } from "../context/TimerContext";
@@ -359,34 +361,53 @@ const PostYourPicks = ({
           padding: 3,
         }}
       >
-        <Box sx={{ textAlign: "center", color: "#fff", py: 4 }}>
-          {/* Contest Details */}
+        <Box
+          sx={{
+            textAlign: "center",
+            color: "#fff",
+            py: isMobile ? 3 : 4,
+            maxWidth: isMobile ? "90%" : "600px",
+            margin: "auto",
+          }}
+        >
           <Card
             sx={{
               borderRadius: "16px",
               backgroundColor: "#2b2b2b",
               color: "#fff",
-              p: 3,
+              p: isMobile ? 2 : 4,
+              boxShadow: "0px 4px 10px rgba(0,0,0,0.4)",
             }}
           >
             <Typography
+              variant={isMobile ? "h6" : "h5"}
+              sx={{
+                fontWeight: "bold",
+                color: "#f5f5f5",
+                textAlign: "center",
+                pb: isMobile ? 1 : 2,
+              }}
+            >
+              🚀 Join & Win Big!
+            </Typography>
+
+            <Typography
               variant="body1"
               sx={{
-                fontSize: "18px",
+                fontSize: isMobile ? "14px" : "16px",
                 color: "#ccc",
-                pb: 3,
+                pb: isMobile ? 2 : 3,
                 textAlign: "center",
               }}
             >
-              Share your top sports picks, climb the leaderboard, and win big!
-              📈
+              Share your top sports picks, climb the leaderboard, and win
+              amazing prizes! 📈
             </Typography>
 
-            {/* Contest Details Box */}
-
+            {/* Contest Details List */}
             <List
               sx={{
-                fontSize: "18px",
+                fontSize: isMobile ? "14px" : "18px",
                 fontWeight: "500",
                 color: "#ccc",
                 p: 0,
@@ -394,54 +415,62 @@ const PostYourPicks = ({
             >
               <ListItem
                 sx={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
+                  fontSize: isMobile ? "12px" : "20px",
                   color: "#f5f5f5",
-                  pb: 1,
+                  pb: isMobile ? 0.5 : 1,
                 }}
               >
-                📢 {message} ({contestStartDate} - {contestEndDate})
+                {!isMobile
+                  ? `${message} (${contestStartDate} - ${contestEndDate})`
+                  : message}
               </ListItem>
 
               {!isMobile && (
                 <ListItem
                   sx={{
-                    fontSize: isMobile ? "12px" : "15px",
+                    fontSize: "15px",
                     pb: 1,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-start",
                   }}
                 >
-                  <Typography className="card-price" sx={{ mb: 1 }}>
-                    🥇 1st Place Prize: {firstPlacePrize}
+                  <Typography sx={{ mb: 1, fontSize: "16px" }}>
+                    🥇 1st Prize: {firstPlacePrize}
                   </Typography>
-                  <Typography className="card-price" sx={{ mb: 1 }}>
-                    🥈 2nd Place Prize: {secondPlacePrize}
+                  <Typography sx={{ mb: 1, fontSize: "16px" }}>
+                    🥈 2nd Prize: {secondPlacePrize}
                   </Typography>
-                  <Typography className="card-price">
-                    🥉 3rd Place Prize: {thirdPlacePrize}
+                  <Typography sx={{ fontSize: "16px" }}>
+                    🥉 3rd Prize: {thirdPlacePrize}
                   </Typography>
                 </ListItem>
               )}
 
               <ListItem sx={{ fontSize: isMobile ? "12px" : "15px", pb: 1 }}>
-                🎟️ <strong>Free Picks Left:&nbsp;</strong>{" "}
-                {calculateAvailableFreePicksLeft()} / {availableFreePicks}
+                {!isMobile
+                  ? `Free Picks Left: ${calculateAvailableFreePicksLeft()} / ${availableFreePicks}`
+                  : `Free Picks Left: ${calculateAvailableFreePicksLeft()}`}
               </ListItem>
+
               {!state.timer > 0 && (
                 <ListItem
                   sx={{
-                    fontSize: isMobile ? "12px" : "15px",
+                    fontSize: "15px",
                     display: "flex",
+                    flexDirection: isMobile ? "column" : "row",
                     alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {!isMobile && (
-                    <span>
-                      🔥 <strong>Want unlimited entries?</strong>
-                    </span>
-                  )}
+                  <Typography
+                    sx={{
+                      fontSize: isMobile ? "12px" : "14px",
+                      mb: isMobile ? 1 : 0,
+                    }}
+                  >
+                    Want unlimited entries for 10 mins?
+                  </Typography>
 
                   <Button
                     variant="contained"
@@ -449,27 +478,35 @@ const PostYourPicks = ({
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      ml: 1,
-                      fontSize: isMobile ? "10px" : "12px",
-                      py: 0.5,
-                      px: 1.5,
-                      backgroundColor: "#4F46E5",
+                      fontSize: isMobile ? "8px" : "14px",
+                      py: isMobile ? 0.6 : 0.8,
+                      px: isMobile ? 1.8 : 2.5,
+                      backgroundColor: "#ffcc00",
+                      color: "#000",
+                      fontWeight: "bold",
+                      borderRadius: "8px",
+                      boxShadow: "0px 2px 8px rgba(0,0,0,0.2)",
                       "&:hover": {
-                        backgroundColor: "#4F46E5", // Same color as the background to remove hover effect
+                        backgroundColor: "#ffdb4d",
+                        transform: "scale(1.05)",
                       },
                     }}
                   >
-                    Buy Unlimited Entries for 10 Minutes!
+                    Get Access Code for $5
                   </Button>
                 </ListItem>
               )}
             </List>
 
             {/* Countdown Timer */}
-            <Box sx={{ textAlign: "center", mt: 4 }}>
+            <Box sx={{ textAlign: "center", mt: isMobile ? 3 : 4 }}>
               {state.timer > 0 ? (
                 <>
-                  <svg width="120" height="120" viewBox="0 0 100 100">
+                  <svg
+                    width={isMobile ? "100" : "120"}
+                    height={isMobile ? "100" : "120"}
+                    viewBox="0 0 100 100"
+                  >
                     <circle
                       cx="50"
                       cy="50"
@@ -493,7 +530,7 @@ const PostYourPicks = ({
                       x="50"
                       y="55"
                       textAnchor="middle"
-                      fontSize="18"
+                      fontSize={isMobile ? "14" : "18"}
                       fill="#d72323"
                       fontWeight="bold"
                     >
@@ -503,15 +540,16 @@ const PostYourPicks = ({
                   </svg>
                   <Typography
                     variant="subtitle1"
-                    sx={{ color: "#17b978", mt: 2 }}
+                    sx={{ color: "#17b978", mt: isMobile ? 1.5 : 2 }}
                   >
-                    You can place unlimited bets for the next 10 minutes.
+                    ⏳ Unlimited bets for {Math.floor(state.timer / 60)}{" "}
+                    minutes!
                   </Typography>
                 </>
               ) : (
                 <>
-                  {/* Code Input Field Inside the Details Box */}
-                  <Box sx={{ mt: 2 }}>
+                  {/* Code Input Field */}
+                  <Box sx={{ mt: isMobile ? 1.5 : 2 }}>
                     <TextField
                       label="Enter Code"
                       value={code}
@@ -528,10 +566,12 @@ const PostYourPicks = ({
                             padding: "10px",
                             color: "#fff",
                             textAlign: "center",
+                            fontSize: isMobile ? "13px" : "15px",
                           },
                         },
                         "& .MuiInputLabel-root": {
                           color: "#fff",
+                          fontSize: isMobile ? "13px" : "15px",
                         },
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": { borderColor: "#fff" },
@@ -547,13 +587,18 @@ const PostYourPicks = ({
                       fullWidth
                       sx={{
                         backgroundColor: "#4F46E5",
+                        fontWeight: "bold",
+                        borderRadius: "8px",
+                        py: 1.2,
+                        fontSize: isMobile ? "14px" : "16px",
                         "&:hover": {
-                          backgroundColor: "#4F46E5", // Same color as the background to remove hover effect
+                          backgroundColor: "#3E3BA7",
+                          transform: "scale(1.05)",
                         },
                       }}
                     >
                       {isCodeSubmitting ? (
-                        <CircularProgress size={24} />
+                        <CircularProgress size={24} color="inherit" />
                       ) : (
                         "Submit Code"
                       )}
@@ -1091,55 +1136,91 @@ const PostYourPicks = ({
               variant="contained"
               onClick={addPick}
               sx={{
-                marginRight: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%", // Make it full width for better UX
+                py: 1.5,
+                fontSize: "1rem",
+                fontWeight: "bold",
                 backgroundColor: "#4F46E5",
+                color: "#fff",
+                borderRadius: "10px",
+                transition: "0.3s",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+
                 "&:hover": {
-                  backgroundColor: "#4F46E5", // Same color as the background to remove hover effect
+                  backgroundColor: "#3E3BA7", // Lighter shade on hover
+                  transform: "scale(1.03)", // Subtle scaling effect
+                  boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.5)",
+                },
+
+                "&:active": {
+                  transform: "scale(0.98)", // Slight press effect
                 },
               }}
             >
-              Add Pick To Lineup
+              ➕ Add Pick To Lineup
             </Button>
           </CardContent>
-        </Card>
 
-        <Card
-          sx={{
-            borderRadius: "16px",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
-            maxWidth: "600px",
-            margin: "auto",
-            marginTop: 2,
-            marginBottom: 5,
-            backgroundColor: "#fff",
-          }}
-        >
+          {/* submit all picks section */}
           <CardContent>
-            <Typography variant="h6" align="center" gutterBottom>
-              Your Picks
+            <Typography
+              variant="h6"
+              align="center"
+              sx={{
+                fontWeight: "bold",
+                textTransform: "uppercase",
+                letterSpacing: "1px",
+                mb: 2,
+              }}
+            >
+              Your Picks 🎯
             </Typography>
+
             {picks.length === 0 ? (
-              <Typography variant="body1" align="center">
-                <span style={{ fontSize: "1.25rem", fontWeight: "bold" }}>
-                  No Picks Selected
-                </span>
-                <br />
-                <span style={{ fontSize: "1rem" }}>
-                  Add Picks with the form above.
-                </span>
+              <Typography
+                variant="body1"
+                align="center"
+                sx={{
+                  color: "#bbb",
+                  fontSize: "1rem",
+                  textAlign: "center",
+                }}
+              >
+                <strong>No picks selected.</strong> <br />
+                Add picks using the form above.
               </Typography>
             ) : (
-              <>
-                <ul>
-                  {picks.map((pick, index) => {
-                    const leagueLabel = leagueOptions.find(
-                      (option) => option.value === pick.league
-                    )?.label;
+              <List>
+                {picks.map((pick, index) => {
+                  const leagueLabel = leagueOptions.find(
+                    (option) => option.value === pick.league
+                  )?.label;
 
-                    return (
-                      <li
-                        key={index}
-                        style={{ padding: "10px 0", fontSize: "0.875rem" }}
+                  return (
+                    <ListItem
+                      key={index}
+                      sx={{
+                        backgroundColor: "rgba(255, 255, 255, 0.08)",
+                        borderRadius: "8px",
+                        px: 2,
+                        py: 1.5,
+                        mb: 1.5,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontSize: isMobile ? "0.85rem" : "1rem",
+                          fontWeight: 500,
+                          flex: 1,
+                          color: "#ddd",
+                        }}
                       >
                         {leagueLabel} - {pick.pickType} -{" "}
                         {pick.pickType === "money line"
@@ -1149,26 +1230,28 @@ const PostYourPicks = ({
                             } ${pick.market
                               .replace(/_/g, " ")
                               .replace("player ", "")}) (${pick.odds})`}
-                        <Button
-                          variant="contained"
-                          color="error"
-                          size="small"
-                          onClick={() => {
-                            const newPicks = picks.filter(
-                              (_, i) => i !== index
-                            );
-                            setPicks(newPicks);
-                          }}
-                          sx={{ marginLeft: 2 }}
-                        >
-                          Delete
-                        </Button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </>
+                      </Typography>
+
+                      <IconButton
+                        size="small"
+                        sx={{
+                          color: "#ff4d4d",
+                          transition: "0.2s",
+                          "&:hover": { color: "#ff6666" },
+                        }}
+                        onClick={() => {
+                          const newPicks = picks.filter((_, i) => i !== index);
+                          setPicks(newPicks);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </ListItem>
+                  );
+                })}
+              </List>
             )}
+
             <Button
               variant="contained"
               onClick={handleSubmitAll}
@@ -1176,60 +1259,23 @@ const PostYourPicks = ({
               sx={{
                 marginTop: 2,
                 backgroundColor: "#4F46E5",
-                "&:hover": {
-                  backgroundColor: "#4F46E5", // Same color as the background to remove hover effect
-                },
+                color: "#fff",
+                fontWeight: "bold",
+                width: "100%",
+                py: 1.5,
+                fontSize: "1rem",
+                borderRadius: "10px",
+                "&:hover": { backgroundColor: "#3E3BA7" },
               }}
             >
               {isSubmitting ? (
-                <CircularProgress size={24} />
+                <CircularProgress size={24} color="inherit" />
               ) : (
                 "Submit All Picks"
               )}
             </Button>
           </CardContent>
         </Card>
-      </Box>
-
-      {/* Floating Offer at the Bottom  */}
-      <Box
-        sx={{
-          position: "fixed",
-          bottom: 10,
-          left: "50%",
-          transform: "translateX(-50%)",
-          backgroundColor: "#4F46E5",
-          color: "#fff",
-          p: 2,
-          borderRadius: "10px",
-          display: "flex",
-          alignItems: "center",
-          gap: 2,
-          boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
-        }}
-      >
-        <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
-          🔥 Get Unlimited Entries for 10 Minutes!
-        </Typography>
-        <Button
-          variant="contained"
-          href="https://buy.stripe.com/28odRT1518lJgj63cg"
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            fontSize: "14px",
-            py: 1,
-            px: 3,
-            backgroundColor: "#ffcc00",
-            color: "#000",
-            fontWeight: "bold",
-            "&:hover": {
-              backgroundColor: "#ffdb4d",
-            },
-          }}
-        >
-          Buy Now
-        </Button>
       </Box>
     </>
   );

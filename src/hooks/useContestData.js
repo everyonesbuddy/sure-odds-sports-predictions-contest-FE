@@ -18,7 +18,7 @@ export const useContestData = () => {
         secondPlacePrize: "$25 USD",
         thirdPlacePrize: "$15 USD",
         spreadsheetUrl:
-          "https://sheet.best/api/sheets/b9c7054b-1a70-4afb-9a14-c49967e8faf8",
+          "https://sure-odds-backend-dd7bc18d1f18.herokuapp.com/api/v1/pickem1/",
         sponsored: false,
         contestStartDate: weekStartEnd.startOfWeek.toLocaleDateString(),
         contestEndDate: weekStartEnd.endOfWeek.toLocaleDateString(),

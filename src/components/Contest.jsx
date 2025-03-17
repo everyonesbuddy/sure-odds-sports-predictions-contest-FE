@@ -35,8 +35,10 @@ const Contest = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(contestDetails.spreadsheetUrl);
-          setBetsData(response.data);
-          setFilteredBets(response.data); // Initial filter setup
+          console.log("respone.data", response.data);
+          console.log("response", response);
+          setBetsData(response.data.data);
+          setFilteredBets(response.data.data); // Initial filter setup
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -156,88 +158,80 @@ const Contest = () => {
         <Box
           sx={{
             width: "100%",
-            textAlign: "center",
+            textAlign: "left",
             color: "white",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             background: "black",
+            padding: "10px 10px",
           }}
         >
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: { xs: "column", md: "row" }, // Stack on mobile, row on larger screens
               alignItems: "center",
-              gap: 3,
-              textAlign: "center",
-              maxWidth: "800px",
+              gap: 10,
+              maxWidth: "900px",
+              width: "100%",
             }}
           >
-            <Typography
-              variant="h2"
-              sx={{
-                fontWeight: "700",
-                fontSize: { xs: "32px", sm: "48px" },
-                lineHeight: 1.2,
-              }}
-            >
-              🌟 Join the {contestDetails.contestName}
-            </Typography>
+            {/* Text Section */}
+            <Box sx={{ flex: 1, textAlign: !isMobile ? "left" : "center" }}>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontWeight: "300",
+                  fontSize: { xs: "24px", sm: "35px" },
+                  lineHeight: 1.2,
+                }}
+              >
+                🌟 Join the {contestDetails.contestName} and win cash prizes
+              </Typography>
+            </Box>
 
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "400",
-                fontSize: { xs: "16px", sm: "20px" },
-                opacity: 0.8,
-                maxWidth: "600px",
-              }}
-            >
-              Participate, make your best picks, and win{" "}
-              <span style={{ fontWeight: "600" }}>
-                {contestDetails.firstPlacePrize} 🥇
-              </span>
-              .
-            </Typography>
-
-            <Box
-              sx={{
-                position: "relative",
-                width: isMobile ? "260px" : "350px", // Conditional width
-                height: isMobile ? "260px" : "350px", // Conditional height
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            {/* Image Section */}
+            {!isMobile && (
               <Box
                 sx={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%", // Adjust to match the outer Box height
-                  background:
-                    "radial-gradient(circle, rgba(79,70,229,0.2) 0%, rgba(0,0,0,0) 70%)",
-                  borderRadius: "50%",
-                  filter: "blur(30px)",
-                  overflow: "hidden",
-                  margin: "0 auto",
-                }}
-              />
-              <img
-                src={contestDetails.primaryImageUrl}
-                alt={contestDetails.contestName}
-                style={{
+                  flex: 1,
+                  position: "relative",
+                  maxWidth: "350px",
                   width: "100%",
                   height: "auto",
-                  borderRadius: "20px",
-                  boxShadow: "0 10px 40px rgba(255, 255, 255, 0.1)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              />
-            </Box>
+              >
+                <Box
+                  sx={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    background:
+                      "radial-gradient(circle, rgba(79,70,229,0.2) 0%, rgba(0,0,0,0) 70%)",
+                    borderRadius: "50%",
+                    filter: "blur(30px)",
+                  }}
+                />
+                <img
+                  src={contestDetails.primaryImageUrl}
+                  alt={contestDetails.contestName}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "20px",
+                    boxShadow: "0 10px 40px rgba(255, 255, 255, 0.1)",
+                  }}
+                />
+              </Box>
+            )}
           </Box>
         </Box>
+
         <>
           <Box
             sx={{
