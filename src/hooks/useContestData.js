@@ -1,4 +1,4 @@
-import { useWeek } from "../context/WeekContest";
+import { useWeek } from "../context/WeekContext";
 import { useMemo } from "react";
 
 export const useContestData = () => {
@@ -19,9 +19,13 @@ export const useContestData = () => {
         thirdPlacePrize: "$15 USD",
         spreadsheetUrl:
           "https://sure-odds-backend-dd7bc18d1f18.herokuapp.com/api/v1/pickem1/",
-        sponsored: false,
-        contestStartDate: weekStartEnd.startOfWeek.toLocaleDateString(),
-        contestEndDate: weekStartEnd.endOfWeek.toLocaleDateString(),
+        isContestActive: true,
+        contestStartDate: weekStartEnd.startOfWeek.toLocaleString("en-US", {
+          timeZone: "America/New_York",
+        }),
+        contestEndDate: weekStartEnd.endOfWeek.toLocaleString("en-US", {
+          timeZone: "America/New_York",
+        }),
         contestLeague: [
           "basketball_nba",
           "basketball_ncaab",

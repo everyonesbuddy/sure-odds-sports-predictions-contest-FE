@@ -23,7 +23,6 @@ const Home = () => {
           alignItems: "center",
           justifyContent: "center",
           py: { xs: 5, sm: 6 },
-          // px: 3,
           background: "black",
         }}
       >
@@ -40,7 +39,7 @@ const Home = () => {
           }}
         >
           <Typography
-            variant="h2"
+            variant="h1"
             sx={{
               fontWeight: "700",
               fontSize: { xs: "28px", sm: "42px", md: "48px" },
@@ -75,7 +74,6 @@ const Home = () => {
           textAlign: "center",
           color: "white",
           py: { xs: 3, sm: 5 },
-          // px: { xs: 2, sm: 3 },
           background:
             "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 100%)",
         }}
@@ -134,20 +132,40 @@ const Home = () => {
         </Typography>
 
         <div className="card-container">
-          {contestData.map((item, index) => (
-            <ContestCard
-              key={index}
-              primaryImageUrl={item.primaryImageUrl}
-              contestName={item.contestName}
-              firstPlacePrize={item.firstPlacePrize}
-              secondPlacePrize={item.secondPlacePrize}
-              thirdPlacePrize={item.thirdPlacePrize}
-              startDate={item.contestStartDate}
-              endDate={item.contestEndDate}
-              contestLeague={item.contestLeague}
-              availableFreePicks={item.availableFreePicks}
-            />
-          ))}
+          {contestData.some((item) => item.isContestActive) ? (
+            contestData.map(
+              (item, index) =>
+                item.isContestActive && (
+                  <ContestCard
+                    key={index}
+                    primaryImageUrl={item.primaryImageUrl}
+                    contestName={item.contestName}
+                    firstPlacePrize={item.firstPlacePrize}
+                    secondPlacePrize={item.secondPlacePrize}
+                    thirdPlacePrize={item.thirdPlacePrize}
+                    startDate={item.contestStartDate}
+                    endDate={item.contestEndDate}
+                    contestLeague={item.contestLeague}
+                    availableFreePicks={item.availableFreePicks}
+                  />
+                )
+            )
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{
+                color: "white",
+                fontWeight: "400",
+                fontSize: { xs: "16px", sm: "20px" },
+                opacity: 0.8,
+                textAlign: "center",
+                mt: 3,
+              }}
+            >
+              🚫 No active contests available at the moment. Please check back
+              later!
+            </Typography>
+          )}
         </div>
       </Box>
 

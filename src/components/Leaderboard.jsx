@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -11,7 +11,6 @@ import {
   IconButton,
   Typography,
   Box,
-  Avatar,
   CardContent,
   Card,
   useMediaQuery,
@@ -24,16 +23,24 @@ const Leaderboard = ({
   primaryImageUrl,
   firstPlacePrize,
   spreadsheetUrl,
-  sponsored,
+  isContestActive,
   contestEndDate,
   contestStartDate,
   filteredBets,
   aggregateBets,
 }) => {
+  const [countdownMessage, setCountdownMessage] = useState("");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  console.log("aggregateBets", aggregateBets);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const { message } = calculateDuration(contestStartDate, contestEndDate);
+      setCountdownMessage(message);
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [contestStartDate, contestEndDate]);
 
   const calculateDuration = (start, end) => {
     const currentDate = new Date();
@@ -42,26 +49,45 @@ const Leaderboard = ({
 
     if (currentDate < startDate) {
       const durationInMilliseconds = startDate - currentDate;
-      const durationInDays = Math.ceil(
+      const durationInDays = Math.floor(
         durationInMilliseconds / (1000 * 60 * 60 * 24)
       );
+      const hours = Math.floor(
+        (durationInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (durationInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((durationInMilliseconds % (1000 * 60)) / 1000);
+
       return {
-        duration: durationInDays,
-        message: `Contest starts in ${durationInDays} days`,
+        duration: durationInMilliseconds,
+        message: `Contest starts in ${durationInDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`,
+      };
+    } else if (currentDate < endDate) {
+      const durationInMilliseconds = endDate - currentDate;
+      const durationInDays = Math.floor(
+        durationInMilliseconds / (1000 * 60 * 60 * 24)
+      );
+      const hours = Math.floor(
+        (durationInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (durationInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((durationInMilliseconds % (1000 * 60)) / 1000);
+
+      return {
+        duration: durationInMilliseconds,
+        message: `Contest ends in ${durationInDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`,
       };
     } else {
-      const durationInMilliseconds = endDate - currentDate;
-      const durationInDays = Math.ceil(
-        durationInMilliseconds / (1000 * 60 * 60 * 24)
-      );
       return {
-        duration: durationInDays,
-        message: `Contest ends in ${durationInDays} days`,
+        duration: 0,
+        message: `The contest has ended.`,
       };
     }
   };
-
-  const { message } = calculateDuration(contestStartDate, contestEndDate);
 
   return (
     <>
@@ -70,9 +96,7 @@ const Leaderboard = ({
           variant="subtitle1"
           sx={{ fontSize: "20px", fontWeight: "bold" }}
         >
-          <p className={`card-contest-format`}>
-            {message} ({contestStartDate} - {contestEndDate})
-          </p>
+          <p className={`card-contest-format`}>{countdownMessage}</p>
         </Typography>
       </Box>
       <Box>
@@ -107,7 +131,7 @@ const Leaderboard = ({
                       color: "#fff",
                     }}
                   >
-                    Participant (Email)
+                    Participant (username)
                   </TableCell>
                   {!isMobile && (
                     <TableCell sx={{ color: "#fff" }}>
@@ -160,29 +184,7 @@ const Leaderboard = ({
                     sx={{ backgroundColor: "#2b2b2b" }}
                   >
                     <TableCell sx={{ color: "#fff" }}>
-                      {index + 1}.{" "}
-                      <Avatar
-                        src={`https://avatar.iran.liara.run/username?username=${handicapper.username}`}
-                        alt={"Avatar"}
-                        sx={{
-                          width: isMobile ? 15 : 24,
-                          height: isMobile ? 15 : 24,
-                          display: "inline-flex",
-                          verticalAlign: "middle",
-                          marginRight: 1,
-                        }}
-                      />
-                      <a
-                        href={`https://x.com/${handicapper.username}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          fontSize: isMobile ? "10px" : "inherit",
-                          color: "#4F46E5",
-                        }}
-                      >
-                        {handicapper.username}
-                      </a>
+                      {index + 1}. {handicapper.username}
                     </TableCell>
                     {!isMobile && (
                       <TableCell sx={{ color: "#fff" }}>

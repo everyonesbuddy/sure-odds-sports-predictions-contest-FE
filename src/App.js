@@ -1,8 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Blog from "./components/Blog";
-import BlogPost from "./components/BlogPost";
 import PersonalizedAnalytics from "./components/PersonalizedAnalytics";
 import Contest from "./components/Contest";
 import Login from "./components/Login";
@@ -15,7 +13,7 @@ import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import { TimerProvider } from "./context/TimerContext";
-import { WeekProvider } from "./context/WeekContest";
+import { WeekProvider } from "./context/WeekContext";
 
 const App = () => {
   return (
@@ -37,8 +35,6 @@ const App = () => {
             />
             <Route path="/about" element={<TournamentDetails />} />
             <Route path="/picksDetails" element={<PicksDetails />} />
-            <Route path="/blogs" element={<Blog />} />
-            <Route path="/blogs/:slug/:id" element={<BlogPost />} />
             <Route
               path="/personalizedAnalytics"
               element={<PrivateRoute element={PersonalizedAnalytics} />}

@@ -35,8 +35,6 @@ const Contest = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(contestDetails.spreadsheetUrl);
-          console.log("respone.data", response.data);
-          console.log("response", response);
           setBetsData(response.data.data);
           setFilteredBets(response.data.data); // Initial filter setup
         } catch (error) {
@@ -181,14 +179,14 @@ const Contest = () => {
             {/* Text Section */}
             <Box sx={{ flex: 1, textAlign: !isMobile ? "left" : "center" }}>
               <Typography
-                variant="h2"
+                variant="h1"
                 sx={{
-                  fontWeight: "300",
+                  fontWeight: "bold",
                   fontSize: { xs: "24px", sm: "35px" },
                   lineHeight: 1.2,
                 }}
               >
-                🌟 Join the {contestDetails.contestName} and win cash prizes
+                Join the {contestDetails.contestName} and win cash prizes
               </Typography>
             </Box>
 
@@ -278,7 +276,7 @@ const Contest = () => {
               secondPlacePrize={contestDetails.secondPlacePrize}
               thirdPlacePrize={contestDetails.thirdPlacePrize}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
-              sponsored={contestDetails.sponsored}
+              isContestActive={contestDetails.isContestActive}
               contestEndDate={contestDetails.contestEndDate}
               contestStartDate={contestDetails.contestStartDate}
               contestLeague={contestDetails.contestLeague}
@@ -293,7 +291,7 @@ const Contest = () => {
               primaryImageUrl={contestDetails.primaryImageUrl}
               firstPlacePrize={contestDetails.firstPlacePrize}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
-              sponsored={contestDetails.sponsored}
+              isContestActive={contestDetails.isContestActive}
               contestEndDate={contestDetails.contestEndDate}
               contestStartDate={contestDetails.contestStartDate}
               contestLeague={contestDetails.contestLeague}

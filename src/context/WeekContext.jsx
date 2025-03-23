@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
+import moment from "moment-timezone";
 
 const WeekContext = createContext();
 
@@ -10,11 +11,18 @@ const getWeekNumber = (date) => {
 
 const getWeekStartEnd = (date) => {
   const dayOfWeek = date.getDay(); // Get the current day of the week (0-6)
-  const startOfWeek = new Date(date);
-  startOfWeek.setDate(date.getDate() - dayOfWeek); // Set to the start of the week (Sunday)
-  const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(startOfWeek.getDate() + 6); // Set to the end of the week (Saturday)
-  return { startOfWeek, endOfWeek };
+  const startOfWeek = moment
+    .tz(date, "America/New_York")
+    .startOf("day")
+    .subtract(dayOfWeek, "days");
+  const endOfWeek = moment
+    .tz(startOfWeek, "America/New_York")
+    .add(6, "days")
+    .endOf("day");
+  return {
+    startOfWeek: startOfWeek.toDate(),
+    endOfWeek: endOfWeek.toDate(),
+  };
 };
 
 export const WeekProvider = ({ children }) => {

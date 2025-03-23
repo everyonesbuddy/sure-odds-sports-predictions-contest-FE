@@ -4,7 +4,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  FormHelperText,
   TextField,
   Card,
   CardContent,
@@ -40,7 +39,7 @@ const PostYourPicks = ({
   secondPlacePrize,
   thirdPlacePrize,
   spreadsheetUrl,
-  sponsored,
+  isContestActive,
   contestLeague,
   contestEndDate,
   contestStartDate,
@@ -70,12 +69,15 @@ const PostYourPicks = ({
   const [code, setCode] = useState("");
   const { state, dispatch } = useTimer();
   const [isCodeSubmitting, setIsCodeSubmitting] = useState(false);
+  const [countdownMessage, setCountdownMessage] = useState("");
   const totalTime = 600; // 10 minutes in seconds
 
   const { user } = useAuth();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const timer = state.timers?.[contestName] || 0;
 
   const handleCodeSubmit = async () => {
     setIsCodeSubmitting(true);
@@ -93,7 +95,10 @@ const PostYourPicks = ({
 
       if (codeEntry) {
         // Set the timer for 10 minutes (600 seconds)
-        dispatch({ type: "SET_TIMER", payload: 600 });
+        dispatch({
+          type: "SET_TIMER",
+          payload: { contestName, timer: 600 },
+        });
 
         // Update the code's status to "used"
         await fetch(
@@ -131,7 +136,7 @@ const PostYourPicks = ({
     const betsPlaced = userBets ? userBets.numberOfBets : 0;
 
     // If timer is active, unlimited bets are allowed
-    if (state.timer > 0) {
+    if (timer > 0) {
       return Infinity; // Indicates unlimited bets allowed
     }
 
@@ -140,8 +145,8 @@ const PostYourPicks = ({
   };
 
   const calculateStrokeDashoffset = () => {
-    if (state.timer === null || totalTime === null) return 0;
-    const percentage = state.timer / totalTime;
+    if (timer === null || totalTime === null) return 0;
+    const percentage = timer / totalTime;
     const circumference = 2 * Math.PI * 45; // Radius is 45
     return circumference * (1 - percentage);
   };
@@ -213,6 +218,15 @@ const PostYourPicks = ({
     }
   }, [contestLeague]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const { message } = calculateDuration(contestStartDate, contestEndDate);
+      setCountdownMessage(message);
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [contestStartDate, contestEndDate]);
+
   const clearFields = () => {
     setLeague("");
     setPickType("");
@@ -279,11 +293,10 @@ const PostYourPicks = ({
     const betsPlaced = userBets ? userBets.numberOfBets : 0;
 
     // Allow unlimited picks if timer is active
-    if (state.timer > 0) {
+    if (timer > 0) {
       setIsSubmitting(true);
       try {
-        const response = await axios.post(spreadsheetUrl, picks);
-        console.log("Submitted picks:", response);
+        await axios.post(spreadsheetUrl, picks);
         toast.success("All picks submitted successfully!");
         setPicks([]);
         window.location.reload();
@@ -309,8 +322,7 @@ const PostYourPicks = ({
 
     setIsSubmitting(true);
     try {
-      const response = await axios.post(spreadsheetUrl, picks);
-      console.log("Submitted picks:", response);
+      await axios.post(spreadsheetUrl, picks);
       toast.success("All picks submitted successfully!");
       setPicks([]);
       window.location.reload();
@@ -329,26 +341,45 @@ const PostYourPicks = ({
 
     if (currentDate < startDate) {
       const durationInMilliseconds = startDate - currentDate;
-      const durationInDays = Math.ceil(
+      const durationInDays = Math.floor(
         durationInMilliseconds / (1000 * 60 * 60 * 24)
       );
+      const hours = Math.floor(
+        (durationInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (durationInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((durationInMilliseconds % (1000 * 60)) / 1000);
+
       return {
-        duration: durationInDays,
-        message: `Contest starts in ${durationInDays} days`,
+        duration: durationInMilliseconds,
+        message: `Contest starts in ${durationInDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`,
+      };
+    } else if (currentDate < endDate) {
+      const durationInMilliseconds = endDate - currentDate;
+      const durationInDays = Math.floor(
+        durationInMilliseconds / (1000 * 60 * 60 * 24)
+      );
+      const hours = Math.floor(
+        (durationInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (durationInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((durationInMilliseconds % (1000 * 60)) / 1000);
+
+      return {
+        duration: durationInMilliseconds,
+        message: `Contest ends in ${durationInDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`,
       };
     } else {
-      const durationInMilliseconds = endDate - currentDate;
-      const durationInDays = Math.ceil(
-        durationInMilliseconds / (1000 * 60 * 60 * 24)
-      );
       return {
-        duration: durationInDays,
-        message: `Contest ends in ${durationInDays} days`,
+        duration: 0,
+        message: `The contest has ended.`,
       };
     }
   };
-
-  const { message } = calculateDuration(contestStartDate, contestEndDate);
 
   return (
     <>
@@ -380,9 +411,10 @@ const PostYourPicks = ({
             }}
           >
             <Typography
-              variant={isMobile ? "h6" : "h5"}
+              variant="h2"
               sx={{
                 fontWeight: "bold",
+                fontSize: isMobile ? "24px" : "32px",
                 color: "#f5f5f5",
                 textAlign: "center",
                 pb: isMobile ? 1 : 2,
@@ -420,9 +452,7 @@ const PostYourPicks = ({
                   pb: isMobile ? 0.5 : 1,
                 }}
               >
-                {!isMobile
-                  ? `${message} (${contestStartDate} - ${contestEndDate})`
-                  : message}
+                {countdownMessage}
               </ListItem>
 
               {!isMobile && (
@@ -453,7 +483,7 @@ const PostYourPicks = ({
                   : `Free Picks Left: ${calculateAvailableFreePicksLeft()}`}
               </ListItem>
 
-              {!state.timer > 0 && (
+              {timer <= 0 && (
                 <ListItem
                   sx={{
                     fontSize: "15px",
@@ -467,9 +497,10 @@ const PostYourPicks = ({
                     sx={{
                       fontSize: isMobile ? "12px" : "14px",
                       mb: isMobile ? 1 : 0,
+                      pr: isMobile ? 0 : 1,
                     }}
                   >
-                    Want unlimited entries for 10 mins?
+                    More Picks, Bigger Wins!
                   </Typography>
 
                   <Button
@@ -478,7 +509,7 @@ const PostYourPicks = ({
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      fontSize: isMobile ? "8px" : "14px",
+                      fontSize: isMobile ? "8px" : "12px",
                       py: isMobile ? 0.6 : 0.8,
                       px: isMobile ? 1.8 : 2.5,
                       backgroundColor: "#ffcc00",
@@ -492,7 +523,7 @@ const PostYourPicks = ({
                       },
                     }}
                   >
-                    Get Access Code for $5
+                    Get Unlimited Picks for 10 Min – Only $5!
                   </Button>
                 </ListItem>
               )}
@@ -500,7 +531,7 @@ const PostYourPicks = ({
 
             {/* Countdown Timer */}
             <Box sx={{ textAlign: "center", mt: isMobile ? 3 : 4 }}>
-              {state.timer > 0 ? (
+              {timer > 0 ? (
                 <>
                   <svg
                     width={isMobile ? "100" : "120"}
@@ -534,16 +565,15 @@ const PostYourPicks = ({
                       fill="#d72323"
                       fontWeight="bold"
                     >
-                      {Math.floor(state.timer / 60)}:
-                      {String(state.timer % 60).padStart(2, "0")}
+                      {Math.floor(timer / 60)}:
+                      {String(timer % 60).padStart(2, "0")}
                     </text>
                   </svg>
                   <Typography
                     variant="subtitle1"
                     sx={{ color: "#17b978", mt: isMobile ? 1.5 : 2 }}
                   >
-                    ⏳ Unlimited bets for {Math.floor(state.timer / 60)}{" "}
-                    minutes!
+                    ⏳ Unlimited bets for {Math.floor(timer / 60)} minutes!
                   </Typography>
                 </>
               ) : (
@@ -628,9 +658,8 @@ const PostYourPicks = ({
         >
           <CardContent sx={{ color: "fff" }}>
             <TextField
-              label={`username / email `}
+              label={`username*`}
               value={participantsUsername}
-              // onChange={handleparticipantsUsernameChange}
               fullWidth
               color={!participantsUsername ? "error" : "primary"}
               margin="normal"
@@ -651,20 +680,17 @@ const PostYourPicks = ({
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: !participantsUsername ? "error.main" : "#fff",
+                    borderColor: "#fff",
                   },
                   "&:hover fieldset": {
-                    borderColor: !participantsUsername ? "error.main" : "#fff",
+                    borderColor: "#fff",
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: !participantsUsername ? "error.main" : "#fff",
+                    borderColor: "#fff",
                   },
                 },
               }}
             />
-            {!participantsUsername && (
-              <FormHelperText error>This field is required</FormHelperText>
-            )}
 
             <FormControl
               fullWidth
@@ -682,23 +708,23 @@ const PostYourPicks = ({
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: !league ? "error.main" : "#fff",
+                    borderColor: "#fff",
                   },
                   "&:hover fieldset": {
-                    borderColor: !league ? "error.main" : "#fff",
+                    borderColor: "#fff",
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: !league ? "error.main" : "#fff",
+                    borderColor: "#fff",
                   },
                 },
               }}
             >
-              <InputLabel id="league-label">League</InputLabel>
+              <InputLabel id="league-label">League*</InputLabel>
               <Select
                 labelId="league-label"
                 id="league-select"
                 value={league}
-                label="League *"
+                label="League"
                 onChange={(e) => setLeague(e.target.value)}
               >
                 {leagueOptions
@@ -709,9 +735,6 @@ const PostYourPicks = ({
                     </MenuItem>
                   ))}
               </Select>
-              {!league && (
-                <FormHelperText error>This field is required</FormHelperText>
-              )}
             </FormControl>
 
             {league && (
@@ -732,26 +755,27 @@ const PostYourPicks = ({
                     },
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
-                        borderColor: !pickType ? "error.main" : "#fff",
+                        borderColor: "#fff",
                       },
                       "&:hover fieldset": {
-                        borderColor: !pickType ? "error.main" : "#fff",
+                        borderColor: "#fff",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: !pickType ? "error.main" : "#fff",
+                        borderColor: "#fff",
                       },
                     },
                   }}
                 >
-                  <InputLabel id="pick-type-label">Pick Type</InputLabel>
+                  <InputLabel id="pick-type-label">Pick Type*</InputLabel>
                   <Select
                     labelId="pick-type-label"
                     id="pick-type-select"
                     value={pickType}
-                    label="Pick Type *"
+                    label="Pick Type"
                     onChange={(e) => setPickType(e.target.value)}
                   >
-                    {league !== "soccer_epl" &&
+                    {/* prop market addition */}
+                    {/* {league !== "soccer_epl" &&
                       league !== "soccer_germany_bundesliga" &&
                       league !== "soccer_italy_serie_a" &&
                       league !== "soccer_spain_la_liga" &&
@@ -759,14 +783,9 @@ const PostYourPicks = ({
                       league !== "americanfootball_ncaaf" &&
                       league !== "basketball_ncaab" && (
                         <MenuItem value="props">Props 🎲</MenuItem>
-                      )}
+                      )} */}
                     <MenuItem value="money line">Money Line 💰</MenuItem>
                   </Select>
-                  {!pickType && (
-                    <FormHelperText error>
-                      This field is required
-                    </FormHelperText>
-                  )}
                 </FormControl>
 
                 <FormControl
@@ -785,23 +804,23 @@ const PostYourPicks = ({
                     },
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
-                        borderColor: !selectedGameId ? "error.main" : "#fff",
+                        borderColor: "#fff",
                       },
                       "&:hover fieldset": {
-                        borderColor: !selectedGameId ? "error.main" : "#fff",
+                        borderColor: "#fff",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: !selectedGameId ? "error.main" : "#fff",
+                        borderColor: "#fff",
                       },
                     },
                   }}
                 >
-                  <InputLabel id="game-label">Game</InputLabel>
+                  <InputLabel id="game-label">Game*</InputLabel>
                   <Select
                     labelId="game-label"
                     id="game-select"
                     value={selectedGameId}
-                    label="Game *"
+                    label="Game"
                     onChange={(e) => {
                       setSelectedGameId(e.target.value);
 
@@ -827,11 +846,6 @@ const PostYourPicks = ({
                       <MenuItem disabled>No games available</MenuItem>
                     )}
                   </Select>
-                  {!selectedGameId && (
-                    <FormHelperText error>
-                      This field is required
-                    </FormHelperText>
-                  )}
                 </FormControl>
 
                 {pickType === "money line" && gameDetails && (
@@ -852,19 +866,19 @@ const PostYourPicks = ({
                         },
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": {
-                            borderColor: !teamPicked ? "error.main" : "#fff",
+                            borderColor: "#fff",
                           },
                           "&:hover fieldset": {
-                            borderColor: !teamPicked ? "error.main" : "#fff",
+                            borderColor: "#fff",
                           },
                           "&.Mui-focused fieldset": {
-                            borderColor: !teamPicked ? "error.main" : "#fff",
+                            borderColor: "#fff",
                           },
                         },
                       }}
                     >
                       <InputLabel id="team-picked-label">
-                        Team Picked
+                        Team Picked*
                       </InputLabel>
                       <Select
                         labelId="team-picked-label"
@@ -899,11 +913,6 @@ const PostYourPicks = ({
                           </MenuItem>
                         )}
                       </Select>
-                      {!teamPicked && (
-                        <FormHelperText error>
-                          This field is required
-                        </FormHelperText>
-                      )}
                     </FormControl>
                     <TextField
                       label="Odds"
@@ -947,23 +956,23 @@ const PostYourPicks = ({
                           },
                           "& .MuiOutlinedInput-root": {
                             "& fieldset": {
-                              borderColor: !market ? "error.main" : "#fff",
+                              borderColor: "#fff",
                             },
                             "&:hover fieldset": {
-                              borderColor: !market ? "error.main" : "#fff",
+                              borderColor: "#fff",
                             },
                             "&.Mui-focused fieldset": {
-                              borderColor: !market ? "error.main" : "#fff",
+                              borderColor: "#fff",
                             },
                           },
                         }}
                       >
-                        <InputLabel id="market-label">Market</InputLabel>
+                        <InputLabel id="market-label">Market*</InputLabel>
                         <Select
                           labelId="market-label"
                           id="market-select"
                           value={market}
-                          label="Market *"
+                          label="Market"
                           onChange={(e) => setMarket(e.target.value)}
                         >
                           {(league === "basketball_nba" ||
@@ -980,11 +989,6 @@ const PostYourPicks = ({
                             </MenuItem>
                           ))}
                         </Select>
-                        {!market && (
-                          <FormHelperText error>
-                            This field is required
-                          </FormHelperText>
-                        )}
                       </FormControl>
                     )}
 
@@ -1005,25 +1009,19 @@ const PostYourPicks = ({
                           },
                           "& .MuiOutlinedInput-root": {
                             "& fieldset": {
-                              borderColor: !playerPickedDetailForView
-                                ? "error.main"
-                                : "",
+                              borderColor: "",
                             },
                             "&:hover fieldset": {
-                              borderColor: !playerPickedDetailForView
-                                ? "error.main"
-                                : "",
+                              borderColor: "",
                             },
                             "&.Mui-focused fieldset": {
-                              borderColor: !playerPickedDetailForView
-                                ? "error.main"
-                                : "primary.main",
+                              borderColor: "primary.main",
                             },
                           },
                         }}
                       >
                         <InputLabel id="player-picked-label">
-                          Player Picked
+                          Player Picked*
                         </InputLabel>
                         <Select
                           labelId="player-picked-label"
@@ -1061,11 +1059,6 @@ const PostYourPicks = ({
                             </MenuItem>
                           ))}
                         </Select>
-                        {!playerPickedDetailForView && (
-                          <FormHelperText error>
-                            This field is required
-                          </FormHelperText>
-                        )}
                       </FormControl>
                     ) : (
                       market !== "" && (

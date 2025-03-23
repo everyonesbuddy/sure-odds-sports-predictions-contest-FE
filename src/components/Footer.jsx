@@ -22,9 +22,6 @@ const Footer = () => {
         <Link href="/about" sx={{ mx: 1 }}>
           About
         </Link>
-        <Link href="/blogs" sx={{ mx: 1 }}>
-          Blog
-        </Link>
         <Link href="https://x.com/sure_odds2023" target="_blank" sx={{ mx: 1 }}>
           Twitter
         </Link>

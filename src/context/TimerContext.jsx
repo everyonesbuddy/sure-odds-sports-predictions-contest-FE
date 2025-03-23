@@ -1,37 +1,70 @@
 import React, { createContext, useReducer, useContext, useEffect } from "react";
 
+// Create context
 const TimerContext = createContext();
 
+// Initialize from localStorage safely
+const storedTimers = JSON.parse(localStorage.getItem("timers")) || {};
+const cleanTimers = Object.fromEntries(
+  Object.entries(storedTimers).filter(
+    ([_, val]) => typeof val === "number" && val >= 0
+  )
+);
+
 const initialState = {
-  timer: parseInt(localStorage.getItem("timer"), 10) || 0,
+  timers: cleanTimers,
 };
 
+// Reducer function
 const timerReducer = (state, action) => {
+  const updatedTimers = { ...state.timers };
+
   switch (action.type) {
     case "SET_TIMER":
-      localStorage.setItem("timer", action.payload);
-      return { ...state, timer: action.payload };
+      updatedTimers[action.payload.contestName] = action.payload.timer;
+      localStorage.setItem("timers", JSON.stringify(updatedTimers));
+      return { timers: updatedTimers };
+
     case "DECREMENT_TIMER":
-      const newTimerValue = state.timer - 1;
-      localStorage.setItem("timer", newTimerValue);
-      return { ...state, timer: newTimerValue };
+      const currentTime = updatedTimers[action.payload.contestName];
+      if (currentTime > 0) {
+        updatedTimers[action.payload.contestName] = currentTime - 1;
+        localStorage.setItem("timers", JSON.stringify(updatedTimers));
+      }
+      return { timers: updatedTimers };
+
+    case "RESET_TIMER":
+      delete updatedTimers[action.payload.contestName];
+      localStorage.setItem("timers", JSON.stringify(updatedTimers));
+      return { timers: updatedTimers };
+
     default:
       return state;
   }
 };
 
+// Provider component
 export const TimerProvider = ({ children }) => {
   const [state, dispatch] = useReducer(timerReducer, initialState);
 
   useEffect(() => {
-    let timerInterval;
-    if (state.timer > 0) {
-      timerInterval = setInterval(() => {
-        dispatch({ type: "DECREMENT_TIMER" });
-      }, 1000);
-    }
-    return () => clearInterval(timerInterval);
-  }, [state.timer]);
+    const intervalMap = {};
+
+    Object.entries(state.timers).forEach(([contest, time]) => {
+      if (time > 0) {
+        intervalMap[contest] = setInterval(() => {
+          dispatch({
+            type: "DECREMENT_TIMER",
+            payload: { contestName: contest },
+          });
+        }, 1000);
+      }
+    });
+
+    return () => {
+      Object.values(intervalMap).forEach(clearInterval);
+    };
+  }, [state.timers]);
 
   return (
     <TimerContext.Provider value={{ state, dispatch }}>
@@ -40,4 +73,5 @@ export const TimerProvider = ({ children }) => {
   );
 };
 
+// Custom hook to use timer
 export const useTimer = () => useContext(TimerContext);
