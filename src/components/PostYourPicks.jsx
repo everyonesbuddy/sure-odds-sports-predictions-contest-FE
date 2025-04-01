@@ -23,14 +23,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useTimer } from "../context/TimerContext";
-import {
-  leagueApiMap,
-  leagueOptions,
-  nbaAndWnbaMarkets,
-  mlbMarkets,
-  nflMarkets,
-  nhlMarkets,
-} from "../utils/leagueData";
+import { leagueApiMap, leagueOptions } from "../utils/leagueData";
 
 const PostYourPicks = ({
   contestName,
@@ -56,13 +49,7 @@ const PostYourPicks = ({
   const [gameDetails, setGameDetails] = useState(null);
   const [teamPicked, setTeamPicked] = useState("");
   const [odds, setOdds] = useState("");
-  const [market, setMarket] = useState("");
-  const [players, setPlayers] = useState([]);
-  const [playerPicked, setPlayerPicked] = useState("");
-  const [playerPickedDetailForView, setPlayerPickedDetailForView] =
-    useState("");
-  const [propLine, setPropLine] = useState("");
-  const [propOverOrUnder, setPropOverOrUnder] = useState("");
+  const [spreadLine, setSpreadLine] = useState("");
   const [gameCommenceTime, setGameCommenceTime] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [picks, setPicks] = useState([]);
@@ -173,13 +160,22 @@ const PostYourPicks = ({
   }, [league]);
 
   useEffect(() => {
-    if (selectedGameId && pickType === "money line") {
+    if (
+      selectedGameId &&
+      (pickType === "money line" || pickType === "spread")
+    ) {
       const fetchGameDetails = async () => {
         try {
-          const response = await axios.get(
-            `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGameId}`
-          );
-
+          let response;
+          if (pickType === "money line") {
+            response = await axios.get(
+              `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGameId}`
+            );
+          } else if (pickType === "spread") {
+            response = await axios.get(
+              `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=spreads&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGameId}`
+            );
+          }
           setGameDetails(response.data[0]);
         } catch (error) {
           console.error("Error fetching game details:", error);
@@ -188,29 +184,6 @@ const PostYourPicks = ({
       fetchGameDetails();
     }
   }, [selectedGameId, pickType, league]);
-
-  useEffect(() => {
-    if (selectedGameId && pickType === "props" && market) {
-      const fetchMarketDetails = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.the-odds-api.com/v4/sports/${league}/events/${selectedGameId}/odds?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=${market}&oddsFormat=american&bookmakers=fanduel`
-          );
-
-          const outcomes =
-            response.data?.bookmakers?.[0]?.markets?.[0]?.outcomes;
-
-          if (outcomes) {
-            setPlayers(outcomes);
-          }
-          setGameDetails(response.data);
-        } catch (error) {
-          console.error("Error fetching market details:", error);
-        }
-      };
-      fetchMarketDetails();
-    }
-  }, [selectedGameId, pickType, league, market]);
 
   useEffect(() => {
     if (contestLeague && contestLeague.length > 0) {
@@ -236,12 +209,7 @@ const PostYourPicks = ({
     setGameDetails(null);
     setTeamPicked("");
     setOdds("");
-    setPropLine("");
-    setPropOverOrUnder("");
-    setMarket("");
-    setPlayers([]);
-    setPlayerPicked("");
-    setPlayerPickedDetailForView("");
+    setSpreadLine("");
   };
 
   const addPick = () => {
@@ -267,15 +235,43 @@ const PostYourPicks = ({
       selectedGameId,
       teamPicked,
       odds,
-      market,
-      playerPicked,
-      propLine,
-      propOverOrUnder,
+      spreadLine,
       postedTime: new Date().toISOString(),
       gameCommenceTime: gameCommenceTime,
     };
 
-    setPicks([...picks, newPick]); // Allow adding picks
+    // Helper function to compare picks
+    const isDuplicate = (pickA, pickB) => {
+      return (
+        pickA.league === pickB.league &&
+        pickA.pickType === pickB.pickType &&
+        pickA.selectedGameId === pickB.selectedGameId &&
+        pickA.participantsUsername === pickB.participantsUsername &&
+        (pickA.pickType === "money line"
+          ? pickA.teamPicked === pickB.teamPicked
+          : pickA.playerPicked === pickB.playerPicked &&
+            pickA.spreadLine === pickB.spreadLine &&
+            pickA.propOverOrUnder === pickB.propOverOrUnder &&
+            pickA.market === pickB.market)
+      );
+    };
+
+    // Check against existing submitted bets
+    const alreadyExists = filteredBets.some((existingPick) =>
+      isDuplicate(existingPick, newPick)
+    );
+
+    // Check against current local picks
+    const alreadyInSession = picks.some((pendingPick) =>
+      isDuplicate(pendingPick, newPick)
+    );
+
+    if (alreadyExists || alreadyInSession) {
+      toast.error("You've already submitted or added this exact pick!");
+      return;
+    }
+
+    setPicks([...picks, newPick]);
     toast.success("Pick added to lineup!");
     clearFields();
   };
@@ -774,17 +770,8 @@ const PostYourPicks = ({
                     label="Pick Type"
                     onChange={(e) => setPickType(e.target.value)}
                   >
-                    {/* prop market addition */}
-                    {/* {league !== "soccer_epl" &&
-                      league !== "soccer_germany_bundesliga" &&
-                      league !== "soccer_italy_serie_a" &&
-                      league !== "soccer_spain_la_liga" &&
-                      league !== "soccer_usa_mls" &&
-                      league !== "americanfootball_ncaaf" &&
-                      league !== "basketball_ncaab" && (
-                        <MenuItem value="props">Props 🎲</MenuItem>
-                      )} */}
                     <MenuItem value="money line">Money Line 💰</MenuItem>
+                    <MenuItem value="spread">Spread 📏</MenuItem>
                   </Select>
                 </FormControl>
 
@@ -848,98 +835,9 @@ const PostYourPicks = ({
                   </Select>
                 </FormControl>
 
-                {pickType === "money line" && gameDetails && (
-                  <>
-                    <FormControl
-                      fullWidth
-                      margin="normal"
-                      sx={{
-                        mb: 2,
-                        "& .MuiInputBase-root": {
-                          borderRadius: "8px",
-                          height: "40px",
-                          color: "#fff",
-                          width: isMobile ? "240px" : "100%", // Ensure text does not overflow
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#fff",
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "#fff",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "#fff",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "#fff",
-                          },
-                        },
-                      }}
-                    >
-                      <InputLabel id="team-picked-label">
-                        Team Picked*
-                      </InputLabel>
-                      <Select
-                        labelId="team-picked-label"
-                        id="team-picked-select"
-                        value={teamPicked}
-                        label="Team Picked *"
-                        onChange={(e) => {
-                          const team = e.target.value;
-                          const outcome =
-                            gameDetails?.bookmakers[0]?.markets[0]?.outcomes.find(
-                              (outcome) => outcome?.name === team
-                            );
-                          setTeamPicked(team);
-                          setOdds(outcome?.price);
-                        }}
-                      >
-                        {gameDetails?.bookmakers &&
-                        gameDetails.bookmakers.length > 0 ? (
-                          gameDetails.bookmakers[0]?.markets[0]?.outcomes.map(
-                            (outcome) => (
-                              <MenuItem
-                                key={outcome?.name}
-                                value={outcome?.name}
-                              >
-                                {outcome?.name} ({outcome?.price})
-                              </MenuItem>
-                            )
-                          )
-                        ) : (
-                          <MenuItem disabled>
-                            No betting options available
-                          </MenuItem>
-                        )}
-                      </Select>
-                    </FormControl>
-                    <TextField
-                      label="Odds"
-                      value={odds}
-                      fullWidth
-                      margin="normal"
-                      sx={{
-                        "& .MuiInputBase-root": {
-                          borderRadius: "8px",
-                          height: "40px",
-                          "& input": {
-                            height: "40px",
-                            padding: "10px",
-                            color: "#fff",
-                          },
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#fff",
-                        },
-                      }}
-                    />
-                  </>
-                )}
-
-                {pickType === "props" && (
-                  <>
-                    {games.length > 0 && (
+                {(pickType === "money line" || pickType === "spread") &&
+                  gameDetails && (
+                    <>
                       <FormControl
                         fullWidth
                         margin="normal"
@@ -967,162 +865,99 @@ const PostYourPicks = ({
                           },
                         }}
                       >
-                        <InputLabel id="market-label">Market*</InputLabel>
-                        <Select
-                          labelId="market-label"
-                          id="market-select"
-                          value={market}
-                          label="Market"
-                          onChange={(e) => setMarket(e.target.value)}
-                        >
-                          {(league === "basketball_nba" ||
-                          league === "basketball_wnba"
-                            ? nbaAndWnbaMarkets
-                            : league === "baseball_mlb"
-                            ? mlbMarkets
-                            : league === "icehockey_nhl"
-                            ? nhlMarkets
-                            : nflMarkets
-                          ).map((market) => (
-                            <MenuItem key={market.key} value={market.key}>
-                              {market.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    )}
-
-                    {players.length > 0 ? (
-                      <FormControl
-                        fullWidth
-                        margin="normal"
-                        sx={{
-                          mb: 2,
-                          "& .MuiInputBase-root": {
-                            borderRadius: "8px",
-                            height: "40px",
-                            color: "#fff",
-                            width: isMobile ? "240px" : "100%", // Ensure text does not overflow
-                          },
-                          "& .MuiInputLabel-root": {
-                            color: "#fff",
-                          },
-                          "& .MuiOutlinedInput-root": {
-                            "& fieldset": {
-                              borderColor: "",
-                            },
-                            "&:hover fieldset": {
-                              borderColor: "",
-                            },
-                            "&.Mui-focused fieldset": {
-                              borderColor: "primary.main",
-                            },
-                          },
-                        }}
-                      >
-                        <InputLabel id="player-picked-label">
-                          Player Picked*
+                        <InputLabel id="team-picked-label">
+                          Team Picked*
                         </InputLabel>
                         <Select
-                          labelId="player-picked-label"
-                          id="player-picked-select"
-                          value={playerPickedDetailForView}
-                          label="Player Picked"
+                          labelId="team-picked-label"
+                          id="team-picked-select"
+                          value={teamPicked}
+                          label="Team Picked *"
                           onChange={(e) => {
-                            const [player, name, point] =
-                              e.target.value.split("|"); // Split the value to get both parts
-                            const playerDetailsForView = e.target.value;
-                            const outcome = players.find(
-                              (outcome) =>
-                                outcome.description === player &&
-                                outcome.name === name &&
-                                outcome.point === Number(point)
-                            );
-                            setPlayerPicked(player);
-                            setPlayerPickedDetailForView(playerDetailsForView);
-                            setOdds(outcome.price);
-                            setPropLine(outcome.point);
-                            setPropOverOrUnder(outcome.name);
+                            const team = e.target.value;
+                            const outcome =
+                              gameDetails?.bookmakers[0]?.markets[0]?.outcomes.find(
+                                (outcome) => outcome?.name === team
+                              );
+                            setTeamPicked(team);
+                            setOdds(outcome?.price);
+                            if (pickType === "spread") {
+                              setSpreadLine(outcome?.point); // Assuming `point` holds the spread value
+                            }
                           }}
                         >
-                          {players.map((outcome) => (
-                            <MenuItem
-                              key={
-                                outcome.description +
-                                outcome.name +
-                                outcome.point
-                              } // Adjusted key to be unique for Over/Under
-                              value={`${outcome.description}|${outcome.name}|${outcome.point}`} // Combine description and name
-                            >
-                              {outcome.description} ({outcome.name}{" "}
-                              {outcome.point} ({outcome.price}))
+                          {gameDetails?.bookmakers &&
+                          gameDetails.bookmakers.length > 0 ? (
+                            gameDetails.bookmakers[0]?.markets[0]?.outcomes.map(
+                              (outcome) =>
+                                pickType === "money line" ? (
+                                  <MenuItem
+                                    key={outcome?.name}
+                                    value={outcome?.name}
+                                  >
+                                    {outcome?.name} ({outcome?.price})
+                                  </MenuItem>
+                                ) : pickType === "spread" ? (
+                                  <MenuItem
+                                    key={outcome?.name}
+                                    value={outcome?.name}
+                                  >
+                                    {outcome?.name} ({outcome?.price}, Spread:{" "}
+                                    {outcome?.point})
+                                  </MenuItem>
+                                ) : null
+                            )
+                          ) : (
+                            <MenuItem disabled>
+                              No betting options available
                             </MenuItem>
-                          ))}
+                          )}
                         </Select>
                       </FormControl>
-                    ) : (
-                      market !== "" && (
+                      <TextField
+                        label="Odds"
+                        value={odds}
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          "& .MuiInputBase-root": {
+                            borderRadius: "8px",
+                            height: "40px",
+                            "& input": {
+                              height: "40px",
+                              padding: "10px",
+                              color: "#fff",
+                            },
+                          },
+                          "& .MuiInputLabel-root": {
+                            color: "#fff",
+                          },
+                        }}
+                      />
+                      {pickType === "spread" && (
                         <TextField
+                          label="Spread Point"
+                          value={spreadLine || ""}
                           fullWidth
                           margin="normal"
-                          value="This prop is not available right now"
-                          disabled
                           sx={{
-                            mb: 2,
                             "& .MuiInputBase-root": {
                               borderRadius: "8px",
                               height: "40px",
+                              "& input": {
+                                height: "40px",
+                                padding: "10px",
+                                color: "#fff",
+                              },
+                            },
+                            "& .MuiInputLabel-root": {
                               color: "#fff",
                             },
                           }}
                         />
-                      )
-                    )}
-                    <TextField
-                      label="Player Odds"
-                      value={odds}
-                      fullWidth
-                      margin="normal"
-                      sx={{
-                        "& .MuiInputBase-root": {
-                          borderRadius: "8px",
-                          height: "40px",
-                          color: "#fff",
-                          "& input": {
-                            height: "40px",
-                            padding: "10px",
-                            color: "#fff",
-                          },
-                        },
-
-                        "& .MuiInputLabel-root": {
-                          color: "#fff",
-                        },
-                      }}
-                    />
-                    <TextField
-                      label="Prop Line"
-                      value={propLine}
-                      fullWidth
-                      margin="normal"
-                      sx={{
-                        "& .MuiInputBase-root": {
-                          borderRadius: "8px",
-                          height: "40px",
-                          color: "#fff",
-                          "& input": {
-                            height: "40px",
-                            padding: "10px",
-                            color: "#fff",
-                          },
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#fff",
-                        },
-                      }}
-                    />
-                  </>
-                )}
+                      )}
+                    </>
+                  )}
               </>
             )}
             <Button
@@ -1218,11 +1053,7 @@ const PostYourPicks = ({
                         {leagueLabel} - {pick.pickType} -{" "}
                         {pick.pickType === "money line"
                           ? `${pick.teamPicked} (${pick.odds})`
-                          : `${pick.playerPicked} (${pick.propOverOrUnder} ${
-                              pick.propLine
-                            } ${pick.market
-                              .replace(/_/g, " ")
-                              .replace("player ", "")}) (${pick.odds})`}
+                          : `${pick.teamPicked}  (${pick.spreadLine}) (${pick.odds})`}
                       </Typography>
 
                       <IconButton
