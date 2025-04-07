@@ -16,7 +16,7 @@ export const useContestData = () => {
           "https://i.ibb.co/Q7mBKjWF/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation.jpg",
         contestTotalPrize: 75,
         spreadsheetUrl:
-          "https://sure-odds-backend-dd7bc18d1f18.herokuapp.com/api/v1/pickem1/",
+          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
         contestStartDate: weekStartEnd.startOfWeek.toLocaleString("en-US", {
           timeZone: "America/New_York",
