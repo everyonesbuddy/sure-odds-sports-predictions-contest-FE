@@ -271,12 +271,8 @@ const Contest = () => {
           <CustomTabPanel value={value} index={0}>
             <PostYourPicks
               contestName={contestDetails.contestName}
-              primaryImageUrl={contestDetails.primaryImageUrl}
-              firstPlacePrize={contestDetails.firstPlacePrize}
-              secondPlacePrize={contestDetails.secondPlacePrize}
-              thirdPlacePrize={contestDetails.thirdPlacePrize}
+              contestTotalPrize={contestDetails.contestTotalPrize}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
-              isContestActive={contestDetails.isContestActive}
               contestEndDate={contestDetails.contestEndDate}
               contestStartDate={contestDetails.contestStartDate}
               contestLeague={contestDetails.contestLeague}
@@ -287,17 +283,9 @@ const Contest = () => {
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
             <Leaderboard
-              contestName={contestDetails.contestName}
-              primaryImageUrl={contestDetails.primaryImageUrl}
-              firstPlacePrize={contestDetails.firstPlacePrize}
-              spreadsheetUrl={contestDetails.spreadsheetUrl}
-              isContestActive={contestDetails.isContestActive}
               contestEndDate={contestDetails.contestEndDate}
               contestStartDate={contestDetails.contestStartDate}
-              contestLeague={contestDetails.contestLeague}
-              filteredBets={filteredBets}
               aggregateBets={aggregateBets}
-              availableFreePicks={contestDetails.availableFreePicks}
             />
           </CustomTabPanel>
         </>

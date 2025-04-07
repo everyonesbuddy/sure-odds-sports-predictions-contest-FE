@@ -20,11 +20,8 @@ const getRandomColor = () => {
 const ContestCard = ({
   primaryImageUrl,
   contestName,
-  firstPlacePrize,
-  secondPlacePrize,
-  thirdPlacePrize,
   contestLeague,
-  availableFreePicks,
+  contestTotalPrize,
   startDate,
   endDate,
 }) => {
@@ -49,14 +46,12 @@ const ContestCard = ({
       <img src={primaryImageUrl} alt={contestName} className="card-image" />
       <div className="card-content">
         <h2 className="card-title">{contestName} Contest</h2>
-        <p className="card-price">🥇 1st Place Prize: {firstPlacePrize}</p>
-        <p className="card-price">🥈 2nd Place Prize: {secondPlacePrize}</p>
-        <p className="card-price">🥉 3rd Place Prize: {thirdPlacePrize}</p>
-        <p className="card-dates">
-          📅 Start Date: {new Date(startDate).toLocaleDateString()}
+        <p className="card-price">
+          🥇Total Pize Money: ${contestTotalPrize} USD
         </p>
         <p className="card-dates">
-          📅 End Date: {new Date(endDate).toLocaleDateString()}
+          📅: {new Date(startDate).toLocaleDateString()} -{" "}
+          {new Date(endDate).toLocaleDateString()}
         </p>
         <div className="card-leagues">
           {contestLeague.map((league) => (

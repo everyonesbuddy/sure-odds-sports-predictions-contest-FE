@@ -18,17 +18,7 @@ import {
 } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
-const Leaderboard = ({
-  contestName,
-  primaryImageUrl,
-  firstPlacePrize,
-  spreadsheetUrl,
-  isContestActive,
-  contestEndDate,
-  contestStartDate,
-  filteredBets,
-  aggregateBets,
-}) => {
+const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
   const [countdownMessage, setCountdownMessage] = useState("");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));

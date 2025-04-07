@@ -11,12 +11,10 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `NBA Weekly Pick'em`,
+        contestName: `Weekly Pick'em`,
         primaryImageUrl:
-          "https://i.ibb.co/Y4kkDNcf/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation.png",
-        firstPlacePrize: "$60 USD",
-        secondPlacePrize: "$25 USD",
-        thirdPlacePrize: "$15 USD",
+          "https://i.ibb.co/Q7mBKjWF/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation.jpg",
+        contestTotalPrize: 75,
         spreadsheetUrl:
           "https://sure-odds-backend-dd7bc18d1f18.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,

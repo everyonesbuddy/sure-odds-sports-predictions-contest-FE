@@ -140,13 +140,10 @@ const Home = () => {
                     key={index}
                     primaryImageUrl={item.primaryImageUrl}
                     contestName={item.contestName}
-                    firstPlacePrize={item.firstPlacePrize}
-                    secondPlacePrize={item.secondPlacePrize}
-                    thirdPlacePrize={item.thirdPlacePrize}
+                    contestTotalPrize={item.contestTotalPrize}
                     startDate={item.contestStartDate}
                     endDate={item.contestEndDate}
                     contestLeague={item.contestLeague}
-                    availableFreePicks={item.availableFreePicks}
                   />
                 )
             )

@@ -27,12 +27,8 @@ import { leagueApiMap, leagueOptions } from "../utils/leagueData";
 
 const PostYourPicks = ({
   contestName,
-  primaryImageUrl,
-  firstPlacePrize,
-  secondPlacePrize,
-  thirdPlacePrize,
   spreadsheetUrl,
-  isContestActive,
+  contestTotalPrize,
   contestLeague,
   contestEndDate,
   contestStartDate,
@@ -385,7 +381,7 @@ const PostYourPicks = ({
           flexWrap: "wrap",
           justifyContent: "center",
           gap: 3,
-          padding: 3,
+          padding: isMobile ? 1 : 2,
         }}
       >
         <Box
@@ -393,7 +389,7 @@ const PostYourPicks = ({
             textAlign: "center",
             color: "#fff",
             py: isMobile ? 3 : 4,
-            maxWidth: isMobile ? "90%" : "600px",
+            width: isMobile ? "100%" : "600px",
             margin: "auto",
           }}
         >
@@ -462,13 +458,13 @@ const PostYourPicks = ({
                   }}
                 >
                   <Typography sx={{ mb: 1, fontSize: "16px" }}>
-                    🥇 1st Prize: {firstPlacePrize}
+                    🥇 1st Prize: ${contestTotalPrize * 0.6} USD
                   </Typography>
                   <Typography sx={{ mb: 1, fontSize: "16px" }}>
-                    🥈 2nd Prize: {secondPlacePrize}
+                    🥈 2nd Prize: ${contestTotalPrize * 0.3} USD
                   </Typography>
                   <Typography sx={{ fontSize: "16px" }}>
-                    🥉 3rd Prize: {thirdPlacePrize}
+                    🥉 3rd Prize: ${contestTotalPrize * 0.1} USD
                   </Typography>
                 </ListItem>
               )}
@@ -640,7 +636,7 @@ const PostYourPicks = ({
           sx={{
             borderRadius: "16px",
             boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
-            maxWidth: "600px",
+            width: "600px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
