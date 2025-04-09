@@ -67,13 +67,13 @@ const PostYourPicks = ({
     try {
       // Fetch the current list of codes
       const response = await fetch(
-        "https://api.sheetbest.com/sheets/ef14d1b6-72df-47a9-8be8-9046b19cfa87"
+        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/"
       );
       const data = await response.json();
 
       // Check if the entered code is valid and not already used
-      const codeEntry = data.find(
-        (entry) => entry.Code === code && entry.isUsed === "FALSE"
+      const codeEntry = data.data.find(
+        (entry) => entry.code === code && entry.isUsed === false
       );
 
       if (codeEntry) {
@@ -85,7 +85,7 @@ const PostYourPicks = ({
 
         // Update the code's status to "used"
         await fetch(
-          `https://api.sheetbest.com/sheets/ef14d1b6-72df-47a9-8be8-9046b19cfa87/Code/${code}`,
+          `https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/${codeEntry?._id}`,
           {
             method: "PATCH",
             mode: "cors",
@@ -93,8 +93,8 @@ const PostYourPicks = ({
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              Code: code,
-              isUsed: "TRUE",
+              code: codeEntry?.code,
+              isUsed: true,
             }),
           }
         );
