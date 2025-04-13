@@ -415,19 +415,6 @@ const PostYourPicks = ({
               🚀 Join & Win Big!
             </Typography>
 
-            <Typography
-              variant="body1"
-              sx={{
-                fontSize: isMobile ? "14px" : "16px",
-                color: "#ccc",
-                pb: isMobile ? 2 : 3,
-                textAlign: "center",
-              }}
-            >
-              Share your top sports picks, climb the leaderboard, and win
-              amazing prizes! 📈
-            </Typography>
-
             {/* Contest Details List */}
             <List
               sx={{
@@ -447,61 +434,45 @@ const PostYourPicks = ({
                 {countdownMessage}
               </ListItem>
 
-              {!isMobile && (
-                <ListItem
-                  sx={{
-                    fontSize: "15px",
-                    pb: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <Typography sx={{ mb: 1, fontSize: "16px" }}>
-                    🥇 1st Prize: ${contestTotalPrize * 0.6} USD
-                  </Typography>
-                  <Typography sx={{ mb: 1, fontSize: "16px" }}>
-                    🥈 2nd Prize: ${contestTotalPrize * 0.3} USD
-                  </Typography>
-                  <Typography sx={{ fontSize: "16px" }}>
-                    🥉 3rd Prize: ${contestTotalPrize * 0.1} USD
-                  </Typography>
-                </ListItem>
-              )}
+              <ListItem
+                sx={{
+                  fontSize: "15px",
+                  pb: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <Typography sx={{ mb: 1, fontSize: "14px" }}>
+                  10+ win streak: ${contestTotalPrize * 0.6} USD
+                </Typography>
+                <Typography sx={{ mb: 1, fontSize: "14px" }}>
+                  9 win streak: ${contestTotalPrize * 0.3} USD
+                </Typography>
+                <Typography sx={{ mb: 1, fontSize: "14px" }}>
+                  8 win streak: ${contestTotalPrize * 0.1} USD
+                </Typography>
+                <Typography sx={{ fontSize: "10px" }}>
+                  If mutiple users have the same streak, the prize will be split
+                  equally.
+                </Typography>
+              </ListItem>
 
-              <ListItem sx={{ fontSize: isMobile ? "12px" : "15px", pb: 1 }}>
+              <ListItem sx={{ fontSize: isMobile ? "12px" : "14px", pb: 1 }}>
                 {!isMobile
                   ? `Free Picks Left: ${calculateAvailableFreePicksLeft()} / ${availableFreePicks}`
                   : `Free Picks Left: ${calculateAvailableFreePicksLeft()}`}
               </ListItem>
 
               {timer <= 0 && (
-                <ListItem
-                  sx={{
-                    fontSize: "15px",
-                    display: "flex",
-                    flexDirection: isMobile ? "column" : "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: isMobile ? "12px" : "14px",
-                      mb: isMobile ? 1 : 0,
-                      pr: isMobile ? 0 : 1,
-                    }}
-                  >
-                    More Picks, Bigger Wins!
-                  </Typography>
-
+                <ListItem>
                   <Button
                     variant="contained"
                     href="https://buy.stripe.com/28odRT1518lJgj63cg"
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      fontSize: isMobile ? "8px" : "12px",
+                      fontSize: isMobile ? "10px" : "12px",
                       py: isMobile ? 0.6 : 0.8,
                       px: isMobile ? 1.8 : 2.5,
                       backgroundColor: "#ffcc00",
@@ -515,7 +486,7 @@ const PostYourPicks = ({
                       },
                     }}
                   >
-                    Get Unlimited Picks for 10 Min – Only $5!
+                    $5 for 10 Mins of Unlimited Picks – Get Access Code
                   </Button>
                 </ListItem>
               )}

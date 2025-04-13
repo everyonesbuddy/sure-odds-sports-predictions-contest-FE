@@ -155,8 +155,8 @@ const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
                       color: "#fff",
                     }}
                   >
-                    Potential Wins
-                    <Tooltip title="Potential earnings based on a $100 bet for each winning bet, adjusted for the odds">
+                    Win Streak
+                    <Tooltip title="Currrent Win Streak">
                       <IconButton size="small">
                         <HelpOutlineIcon
                           fontSize="small"
@@ -194,7 +194,7 @@ const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
                         color: "#fff",
                       }}
                     >
-                      ${handicapper.potentialWins.toFixed(2)}
+                      {handicapper.currentWinStreak}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -65,6 +65,7 @@ const Contest = () => {
     bets.forEach((bet) => {
       const odds = parseInt(bet.odds, 10);
       const username = bet.participantsUsername || "Anonymous";
+
       if (!handicappers[username]) {
         handicappers[username] = {
           totalOdds: 0,
@@ -72,17 +73,23 @@ const Contest = () => {
           numberOfBets: 0,
           numberOfBetsWon: 0,
           potentialWins: 0,
-          socialType: bet.socialType,
           researchTools: [],
+          currentWinStreak: 0, // Track the current win streak
         };
       }
+
       handicappers[username].numberOfBets += 1;
 
       if (bet.betResult !== null) {
         handicappers[username].totalOdds += odds;
+
         if (bet.betResult === "won") {
           handicappers[username].totalWonOdds += odds;
           handicappers[username].numberOfBetsWon += 1;
+
+          // Increment win streak
+          handicappers[username].currentWinStreak += 1;
+
           // Adjust calculation based on the sign of the odds
           if (odds > 0) {
             handicappers[username].potentialWins += 100 * (odds / 100); // For positive odds
@@ -90,7 +97,11 @@ const Contest = () => {
             handicappers[username].potentialWins +=
               100 * (100 / Math.abs(odds)); // For negative odds
           }
+        } else if (bet.betResult === "lost") {
+          // Reset win streak on loss
+          handicappers[username].currentWinStreak = 0;
         }
+
         if (
           bet.researchToolOrModelUsed &&
           !handicappers[username].researchTools.includes(
@@ -114,8 +125,8 @@ const Contest = () => {
             numberOfBets,
             numberOfBetsWon,
             potentialWins,
-            socialType,
             researchTools,
+            currentWinStreak,
           },
         ]) => ({
           username,
@@ -125,11 +136,11 @@ const Contest = () => {
           numberOfBetsWon,
           winRatio: (numberOfBetsWon / numberOfBets) * 100, // Calculate win ratio as a percentage
           potentialWins,
-          socialType,
           researchTools,
+          currentWinStreak, // Include current win streak in the return object
         })
       )
-      .sort((a, b) => b.potentialWins - a.potentialWins); // Sort by potentialWins
+      .sort((a, b) => b.currentWinStreak - a.currentWinStreak); // Sort by currentWinStreak
   };
 
   const a11yProps = (index) => ({

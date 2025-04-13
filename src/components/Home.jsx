@@ -47,7 +47,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆 Free to Play Pick'em Contests
+            🏆 Free to Play Streak Contests
           </Typography>
 
           <Typography
@@ -59,7 +59,7 @@ const Home = () => {
               maxWidth: "600px",
             }}
           >
-            Think you can predict the game? Compete for free and win crypto
+            Think you can predict the game? Compete for free and win cash
             prizes. It’s fun, challenging, and global! 🌎🔥
           </Typography>
         </Box>

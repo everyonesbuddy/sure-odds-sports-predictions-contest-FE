@@ -11,10 +11,10 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Weekly Pick'em`,
+        contestName: `Weekly Streak`,
         primaryImageUrl:
           "https://i.ibb.co/Q7mBKjWF/Orange-and-Yellow-Illustrative-Sport-Trivia-Quiz-Presentation.jpg",
-        contestTotalPrize: 75,
+        contestTotalPrize: 500,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
