@@ -236,6 +236,17 @@ const PostYourPicks = ({
       gameCommenceTime: gameCommenceTime,
     };
 
+    setPicks([...picks, newPick]);
+    toast.success("Pick added to lineup!");
+    clearFields();
+  };
+
+  const handleSubmitAll = async () => {
+    if (picks.length === 0) {
+      toast.error("No picks to submit!");
+      return;
+    }
+
     // Helper function to compare picks
     const isDuplicate = (pickA, pickB) => {
       return (
@@ -252,29 +263,17 @@ const PostYourPicks = ({
       );
     };
 
-    // Check against existing submitted bets
-    const alreadyExists = filteredBets.some((existingPick) =>
-      isDuplicate(existingPick, newPick)
-    );
+    // Check for duplicates in picks array
+    const hasDuplicates = picks.some((pick, index) => {
+      return (
+        picks.findIndex((otherPick) => isDuplicate(pick, otherPick)) !== index
+      );
+    });
 
-    // Check against current local picks
-    const alreadyInSession = picks.some((pendingPick) =>
-      isDuplicate(pendingPick, newPick)
-    );
-
-    if (alreadyExists || alreadyInSession) {
-      toast.error("You've already submitted or added this exact pick!");
-      return;
-    }
-
-    setPicks([...picks, newPick]);
-    toast.success("Pick added to lineup!");
-    clearFields();
-  };
-
-  const handleSubmitAll = async () => {
-    if (picks.length === 0) {
-      toast.error("No picks to submit!");
+    if (hasDuplicates) {
+      toast.error(
+        "You have duplicate picks. Please remove or edit them before submitting."
+      );
       return;
     }
 

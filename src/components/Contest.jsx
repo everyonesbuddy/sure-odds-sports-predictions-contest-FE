@@ -89,28 +89,9 @@ const Contest = () => {
 
           // Increment win streak
           handicappers[username].currentWinStreak += 1;
-
-          // Adjust calculation based on the sign of the odds
-          if (odds > 0) {
-            handicappers[username].potentialWins += 100 * (odds / 100); // For positive odds
-          } else {
-            handicappers[username].potentialWins +=
-              100 * (100 / Math.abs(odds)); // For negative odds
-          }
         } else if (bet.betResult === "lost") {
           // Reset win streak on loss
           handicappers[username].currentWinStreak = 0;
-        }
-
-        if (
-          bet.researchToolOrModelUsed &&
-          !handicappers[username].researchTools.includes(
-            bet.researchToolOrModelUsed
-          )
-        ) {
-          handicappers[username].researchTools.push(
-            bet.researchToolOrModelUsed
-          );
         }
       }
     });
@@ -124,8 +105,6 @@ const Contest = () => {
             totalWonOdds,
             numberOfBets,
             numberOfBetsWon,
-            potentialWins,
-            researchTools,
             currentWinStreak,
           },
         ]) => ({
@@ -135,8 +114,6 @@ const Contest = () => {
           numberOfBets,
           numberOfBetsWon,
           winRatio: (numberOfBetsWon / numberOfBets) * 100, // Calculate win ratio as a percentage
-          potentialWins,
-          researchTools,
           currentWinStreak, // Include current win streak in the return object
         })
       )
