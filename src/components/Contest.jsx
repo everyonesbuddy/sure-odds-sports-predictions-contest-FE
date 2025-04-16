@@ -7,6 +7,7 @@ import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import PostYourPicks from "./PostYourPicks";
 import { useContestData } from "../hooks/useContestData";
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import moment from "moment";
 import "../css/Contest.css";
@@ -14,10 +15,14 @@ import "../css/Contest.css";
 const Contest = () => {
   const { contestName } = useParams();
   const [contestDetails, setContestDetails] = useState(null);
-  const [betsData, setBetsData] = useState([]);
-  const [filteredBets, setFilteredBets] = useState([]);
+  const [allUsersBetsForContest, setAllUsersBetsForContest] = useState([]);
+  const [currentUserBetsForContest, setCurrentUserBetsForContest] = useState(
+    []
+  );
   const [aggregateBets, setAggregateBets] = useState([]);
   const contestData = useContestData();
+
+  const { user } = useAuth();
 
   useEffect(() => {
     const contestDetail = contestData.find(
@@ -32,32 +37,51 @@ const Contest = () => {
 
   useEffect(() => {
     if (contestDetails) {
-      const fetchData = async () => {
+      const fetchAllUsersBetsForContest = async () => {
         try {
-          const response = await axios.get(contestDetails.spreadsheetUrl);
-          setBetsData(response.data.data);
-          setFilteredBets(response.data.data); // Initial filter setup
+          const response = await axios.get(contestDetails?.spreadsheetUrl);
+          setAllUsersBetsForContest(response.data.data);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       };
 
-      fetchData();
+      // Fetch all users' bets for the contest
+      fetchAllUsersBetsForContest();
     }
   }, [contestDetails]);
 
   useEffect(() => {
     if (contestDetails) {
+      const fetchCurrentUserBetsForContest = async () => {
+        try {
+          const response = await axios.post(
+            `${contestDetails.spreadsheetUrl}user`,
+            {
+              username: user?.userName, // Pass userName in the request body
+            }
+          );
+          setCurrentUserBetsForContest(response.data.docs);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchCurrentUserBetsForContest();
+    }
+  }, [contestDetails, user]);
+
+  useEffect(() => {
+    if (contestDetails) {
       const contestStart = moment(contestDetails.contestStartDate);
       const contestEnd = moment(contestDetails.contestEndDate);
-      const filtered = betsData.filter((bet) => {
+      const filtered = allUsersBetsForContest.filter((bet) => {
         const postedTime = moment(bet.postedTime);
         return postedTime.isBetween(contestStart, contestEnd, null, "[]");
       });
-      setFilteredBets(filtered);
       setAggregateBets(aggregateBetsCalculation(filtered));
     }
-  }, [betsData, contestDetails]);
+  }, [allUsersBetsForContest, contestDetails]);
 
   const aggregateBetsCalculation = (bets) => {
     const handicappers = {};
@@ -263,8 +287,8 @@ const Contest = () => {
               spreadsheetUrl={contestDetails.spreadsheetUrl}
               contestEndDate={contestDetails.contestEndDate}
               contestStartDate={contestDetails.contestStartDate}
+              currentUserBetsForContest={currentUserBetsForContest}
               contestLeague={contestDetails.contestLeague}
-              filteredBets={filteredBets}
               aggregateBets={aggregateBets}
               availableFreePicks={contestDetails.availableFreePicks}
             />

@@ -32,7 +32,7 @@ const PostYourPicks = ({
   contestLeague,
   contestEndDate,
   contestStartDate,
-  filteredBets,
+  currentUserBetsForContest,
   aggregateBets,
   availableFreePicks,
 }) => {
@@ -65,44 +65,32 @@ const PostYourPicks = ({
   const handleCodeSubmit = async () => {
     setIsCodeSubmitting(true);
     try {
-      // Fetch the current list of codes
+      // Make a POST request to validate and submit the code
       const response = await fetch(
-        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/"
+        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/submitCode",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ code }), // Send the code in the request body
+        }
       );
+
       const data = await response.json();
 
-      // Check if the entered code is valid and not already used
-      const codeEntry = data.data.find(
-        (entry) => entry.code === code && entry.isUsed === false
-      );
-
-      if (codeEntry) {
+      if (response.ok && data.status === "success") {
         // Set the timer for 10 minutes (600 seconds)
         dispatch({
           type: "SET_TIMER",
           payload: { contestName, timer: 600 },
         });
 
-        // Update the code's status to "used"
-        await fetch(
-          `https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/${codeEntry?._id}`,
-          {
-            method: "PATCH",
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              code: codeEntry?.code,
-              isUsed: true,
-            }),
-          }
-        );
-
         setCode(""); // Clear the input field
         toast.success("Code applied successfully!");
       } else {
-        toast.error("Invalid or already used code.");
+        toast.error(data.message || "Invalid or already used code.");
       }
     } catch (error) {
       console.error("Error validating code:", error);
@@ -273,6 +261,20 @@ const PostYourPicks = ({
     if (hasDuplicates) {
       toast.error(
         "You have duplicate picks. Please remove or edit them before submitting."
+      );
+      return;
+    }
+
+    // Check for duplicates in backend (currentUserBetsForContest)
+    const hasBackendDuplicates = picks.some((pick) => {
+      return currentUserBetsForContest.some((existingPick) =>
+        isDuplicate(pick, existingPick)
+      );
+    });
+
+    if (hasBackendDuplicates) {
+      toast.error(
+        "Some of your picks have already been submitted. Please remove or edit them before submitting."
       );
       return;
     }
