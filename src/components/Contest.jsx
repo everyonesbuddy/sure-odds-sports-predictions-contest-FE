@@ -39,7 +39,9 @@ const Contest = () => {
     if (contestDetails) {
       const fetchAllUsersBetsForContest = async () => {
         try {
-          const response = await axios.get(contestDetails?.spreadsheetUrl);
+          const response = await axios.get(
+            `${contestDetails?.spreadsheetUrl}filtered`
+          );
           setAllUsersBetsForContest(response.data.data);
         } catch (error) {
           console.error("Error fetching data:", error);
