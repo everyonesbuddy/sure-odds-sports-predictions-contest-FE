@@ -25,11 +25,33 @@ const getWeekStartEnd = (date) => {
   };
 };
 
+const getLastWeekStartEnd = (date) => {
+  const startOfThisWeek = moment
+    .tz(date, "America/New_York")
+    .startOf("day")
+    .subtract(date.getDay(), "days");
+  const startOfLastWeek = moment
+    .tz(startOfThisWeek, "America/New_York")
+    .subtract(7, "days");
+  const endOfLastWeek = moment
+    .tz(startOfLastWeek, "America/New_York")
+    .add(6, "days")
+    .endOf("day");
+  return {
+    startOfLastWeek: startOfLastWeek.toDate(),
+    endOfLastWeek: endOfLastWeek.toDate(),
+  };
+};
+
 export const WeekProvider = ({ children }) => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const [weekStartEnd, setWeekStartEnd] = useState({
     startOfWeek: null,
     endOfWeek: null,
+  });
+  const [lastWeekStartEnd, setLastWeekStartEnd] = useState({
+    startOfLastWeek: null,
+    endOfLastWeek: null,
   });
 
   useEffect(() => {
@@ -37,10 +59,13 @@ export const WeekProvider = ({ children }) => {
     const weekNumber = getWeekNumber(today);
     setCurrentWeek(weekNumber);
     setWeekStartEnd(getWeekStartEnd(today));
+    setLastWeekStartEnd(getLastWeekStartEnd(today));
   }, []);
 
   return (
-    <WeekContext.Provider value={{ currentWeek, weekStartEnd }}>
+    <WeekContext.Provider
+      value={{ currentWeek, weekStartEnd, lastWeekStartEnd }}
+    >
       {children}
     </WeekContext.Provider>
   );

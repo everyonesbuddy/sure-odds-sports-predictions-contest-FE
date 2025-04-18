@@ -55,7 +55,7 @@ const PostYourPicks = ({
   const [countdownMessage, setCountdownMessage] = useState("");
   const totalTime = 600; // 10 minutes in seconds
 
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -73,6 +73,7 @@ const PostYourPicks = ({
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Add the Authorization header
           },
           body: JSON.stringify({ code }), // Send the code in the request body
         }
@@ -289,7 +290,11 @@ const PostYourPicks = ({
     if (timer > 0) {
       setIsSubmitting(true);
       try {
-        await axios.post(spreadsheetUrl, picks);
+        await axios.post(spreadsheetUrl, picks, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add the Authorization header
+          },
+        });
         toast.success("All picks submitted successfully!");
         setPicks([]);
         window.location.reload();
@@ -315,7 +320,11 @@ const PostYourPicks = ({
 
     setIsSubmitting(true);
     try {
-      await axios.post(spreadsheetUrl, picks);
+      await axios.post(spreadsheetUrl, picks, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the Authorization header
+        },
+      });
       toast.success("All picks submitted successfully!");
       setPicks([]);
       window.location.reload();

@@ -22,7 +22,7 @@ const Contest = () => {
   const [aggregateBets, setAggregateBets] = useState([]);
   const contestData = useContestData();
 
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
   useEffect(() => {
     const contestDetail = contestData.find(
@@ -40,7 +40,12 @@ const Contest = () => {
       const fetchAllUsersBetsForContest = async () => {
         try {
           const response = await axios.get(
-            `${contestDetails?.spreadsheetUrl}filtered`
+            `${contestDetails?.spreadsheetUrl}filtered`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Include token in headers
+              },
+            }
           );
           setAllUsersBetsForContest(response.data.data);
         } catch (error) {
@@ -51,7 +56,7 @@ const Contest = () => {
       // Fetch all users' bets for the contest
       fetchAllUsersBetsForContest();
     }
-  }, [contestDetails]);
+  }, [contestDetails, token]);
 
   useEffect(() => {
     if (contestDetails) {
@@ -61,6 +66,11 @@ const Contest = () => {
             `${contestDetails.spreadsheetUrl}user`,
             {
               username: user?.userName, // Pass userName in the request body
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Include token in headers
+              },
             }
           );
           setCurrentUserBetsForContest(response.data.docs);
@@ -71,7 +81,7 @@ const Contest = () => {
 
       fetchCurrentUserBetsForContest();
     }
-  }, [contestDetails, user]);
+  }, [contestDetails, user, token]);
 
   useEffect(() => {
     if (contestDetails) {
