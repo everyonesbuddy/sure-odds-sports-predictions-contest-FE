@@ -5,8 +5,8 @@ import weeklyStreakImage from "../assets/weekly-streak.jpg";
 import monthlyStreakImage from "../assets/monthly-streak.jpg";
 
 export const useContestData = () => {
-  const { weekStartEnd } = useWeek();
-  const { monthStartEnd } = useMonth();
+  const { weekStartEnd, lastWeekStartEnd } = useWeek();
+  const { monthStartEnd, lastMonthStartEnd } = useMonth();
 
   const contestData = useMemo(() => {
     if (!weekStartEnd.startOfWeek || !weekStartEnd.endOfWeek) {
@@ -21,12 +21,25 @@ export const useContestData = () => {
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
-        contestStartDate: weekStartEnd.startOfWeek.toLocaleString("en-US", {
+        currentContestStartDate: weekStartEnd.startOfWeek.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        currentContestEndDate: weekStartEnd.endOfWeek.toLocaleString("en-US", {
           timeZone: "America/New_York",
         }),
-        contestEndDate: weekStartEnd.endOfWeek.toLocaleString("en-US", {
-          timeZone: "America/New_York",
-        }),
+        lastConstestStartDate: lastWeekStartEnd.startOfLastWeek.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        lastcurrentContestEndDate:
+          lastWeekStartEnd.endOfLastWeek.toLocaleString("en-US", {
+            timeZone: "America/New_York",
+          }),
         contestLeague: [
           "basketball_nba",
           "basketball_ncaab",
@@ -46,12 +59,26 @@ export const useContestData = () => {
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
         isContestActive: true,
-        contestStartDate: monthStartEnd.startOfMonth.toLocaleString("en-US", {
-          timeZone: "America/New_York",
-        }),
-        contestEndDate: monthStartEnd.endOfMonth.toLocaleString("en-US", {
-          timeZone: "America/New_York",
-        }),
+        currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        currentContestEndDate: monthStartEnd.endOfMonth.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        lastConstestStartDate:
+          lastMonthStartEnd.startOfLastMonth.toLocaleString("en-US", {
+            timeZone: "America/New_York",
+          }),
+        lastcurrentContestEndDate:
+          lastMonthStartEnd.endOfLastMonth.toLocaleString("en-US", {
+            timeZone: "America/New_York",
+          }),
         contestLeague: [
           "basketball_nba",
           "basketball_ncaab",
@@ -65,7 +92,7 @@ export const useContestData = () => {
         availableFreePicks: 5,
       },
     ];
-  }, [weekStartEnd, monthStartEnd]);
+  }, [weekStartEnd, monthStartEnd, lastWeekStartEnd, lastMonthStartEnd]);
 
   return contestData;
 };

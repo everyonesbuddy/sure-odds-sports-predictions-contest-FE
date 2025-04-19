@@ -5,6 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
+import LastLeaderboard from "./LastLeaderboard";
 import PostYourPicks from "./PostYourPicks";
 import { useContestData } from "../hooks/useContestData";
 import { useAuth } from "../context/AuthContext";
@@ -20,6 +21,7 @@ const Contest = () => {
     []
   );
   const [aggregateBets, setAggregateBets] = useState([]);
+  const [lastContestAggregateBets, setLastContestAggregateBets] = useState([]);
   const contestData = useContestData();
 
   const { user, token } = useAuth();
@@ -85,13 +87,28 @@ const Contest = () => {
 
   useEffect(() => {
     if (contestDetails) {
-      const contestStart = moment(contestDetails.contestStartDate);
-      const contestEnd = moment(contestDetails.contestEndDate);
+      const contestStart = moment(contestDetails.currentContestStartDate);
+      const contestEnd = moment(contestDetails.currentContestEndDate);
+
+      const lasContestStart = moment(contestDetails.lastConstestStartDate);
+      const lasContestEnd = moment(contestDetails.lastcurrentContestEndDate);
+
+      // current contest filtered
       const filtered = allUsersBetsForContest.filter((bet) => {
         const postedTime = moment(bet.postedTime);
         return postedTime.isBetween(contestStart, contestEnd, null, "[]");
       });
+
+      // last contest filtered
+      const filteredLastContest = allUsersBetsForContest.filter((bet) => {
+        const postedTime = moment(bet.postedTime);
+        return postedTime.isBetween(lasContestStart, lasContestEnd, null, "[]");
+      });
+
       setAggregateBets(aggregateBetsCalculation(filtered));
+      setLastContestAggregateBets(
+        aggregateBetsCalculation(filteredLastContest)
+      );
     }
   }, [allUsersBetsForContest, contestDetails]);
 
@@ -275,7 +292,7 @@ const Contest = () => {
               }}
             >
               <Tab
-                label="Post Your Picks🥇"
+                label="Your Picks 🥇"
                 {...a11yProps(0)}
                 sx={{
                   color: "#4F46E5",
@@ -283,7 +300,15 @@ const Contest = () => {
                 }}
               />
               <Tab
-                label="Leaderboard 🏆"
+                label="Live Board 🏆"
+                {...a11yProps(1)}
+                sx={{
+                  color: "#4F46E5",
+                  fontSize: isMobile ? "8px" : "10px",
+                }}
+              />
+              <Tab
+                label="Prev Board 🏁"
                 {...a11yProps(1)}
                 sx={{
                   color: "#4F46E5",
@@ -297,8 +322,8 @@ const Contest = () => {
               contestName={contestDetails.contestName}
               contestTotalPrize={contestDetails.contestTotalPrize}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
-              contestEndDate={contestDetails.contestEndDate}
-              contestStartDate={contestDetails.contestStartDate}
+              contestEndDate={contestDetails.currentContestEndDate}
+              contestStartDate={contestDetails.currentContestStartDate}
               currentUserBetsForContest={currentUserBetsForContest}
               contestLeague={contestDetails.contestLeague}
               aggregateBets={aggregateBets}
@@ -307,9 +332,17 @@ const Contest = () => {
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
             <Leaderboard
-              contestEndDate={contestDetails.contestEndDate}
-              contestStartDate={contestDetails.contestStartDate}
+              contestEndDate={contestDetails.currentContestEndDate}
+              contestStartDate={contestDetails.currentContestStartDate}
               aggregateBets={aggregateBets}
+            />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <LastLeaderboard
+              lastContestEndDate={contestDetails.lastcurrentContestEndDate}
+              lastContestStartDate={contestDetails.lastConstestStartDate}
+              lastContestAggregateBets={lastContestAggregateBets}
+              constestName={contestDetails.contestName}
             />
           </CustomTabPanel>
         </>
