@@ -52,45 +52,45 @@ export const useContestData = () => {
         ],
         availableFreePicks: 2,
       },
-      // {
-      //   contestName: `Monthly Streak`,
-      //   primaryImageUrl: monthlyStreakImage,
-      //   contestTotalPrize: 2000,
-      //   spreadsheetUrl:
-      //     "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
-      //   isContestActive: true,
-      //   currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
-      //     "en-US",
-      //     {
-      //       timeZone: "America/New_York",
-      //     }
-      //   ),
-      //   currentContestEndDate: monthStartEnd.endOfMonth.toLocaleString(
-      //     "en-US",
-      //     {
-      //       timeZone: "America/New_York",
-      //     }
-      //   ),
-      //   lastConstestStartDate:
-      //     lastMonthStartEnd.startOfLastMonth.toLocaleString("en-US", {
-      //       timeZone: "America/New_York",
-      //     }),
-      //   lastcurrentContestEndDate:
-      //     lastMonthStartEnd.endOfLastMonth.toLocaleString("en-US", {
-      //       timeZone: "America/New_York",
-      //     }),
-      //   contestLeague: [
-      //     "basketball_nba",
-      //     "basketball_ncaab",
-      //     "soccer_epl",
-      //     "soccer_germany_bundesliga",
-      //     "soccer_italy_serie_a",
-      //     "soccer_spain_la_liga",
-      //     "soccer_usa_mls",
-      //     "icehockey_nhl",
-      //   ],
-      //   availableFreePicks: 5,
-      // },
+      {
+        contestName: `Monthly Streak`,
+        primaryImageUrl: monthlyStreakImage,
+        contestTotalPrize: 2000,
+        spreadsheetUrl:
+          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
+        isContestActive: false,
+        currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        currentContestEndDate: monthStartEnd.endOfMonth.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        lastConstestStartDate:
+          lastMonthStartEnd.startOfLastMonth.toLocaleString("en-US", {
+            timeZone: "America/New_York",
+          }),
+        lastcurrentContestEndDate:
+          lastMonthStartEnd.endOfLastMonth.toLocaleString("en-US", {
+            timeZone: "America/New_York",
+          }),
+        contestLeague: [
+          "basketball_nba",
+          "basketball_ncaab",
+          "soccer_epl",
+          "soccer_germany_bundesliga",
+          "soccer_italy_serie_a",
+          "soccer_spain_la_liga",
+          "soccer_usa_mls",
+          "icehockey_nhl",
+        ],
+        availableFreePicks: 5,
+      },
     ];
   }, [weekStartEnd, monthStartEnd, lastWeekStartEnd, lastMonthStartEnd]);
 
