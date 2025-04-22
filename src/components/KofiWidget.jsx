@@ -16,7 +16,7 @@ const KofiWidget = () => {
             kofiWidgetOverlay.draw("sureodds", {
               type: "floating-chat",
               "floating-chat.donateButton.text": "Tip Us",
-              "floating-chat.donateButton.background-color": "#794bc4",
+              "floating-chat.donateButton.background-color": "#4f46e5",
               "floating-chat.donateButton.text-color": "#fff",
             });
           } else {
