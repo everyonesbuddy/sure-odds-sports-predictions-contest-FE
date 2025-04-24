@@ -667,7 +667,7 @@ const PostYourPicks = ({
               fullWidth
               color={!participantsUsername ? "error" : "primary"}
               margin="normal"
-              placeholder={`Twitter username e.g sure_odds2023`}
+              placeholder={`Username e.g sure_odds2023`}
               variant="outlined"
               sx={{
                 "& .MuiInputBase-root": {
