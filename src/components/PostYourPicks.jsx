@@ -49,12 +49,11 @@ const PostYourPicks = ({
   const [gameCommenceTime, setGameCommenceTime] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [picks, setPicks] = useState([]);
-  // const [code, setCode] = useState("");
-  // const { state, dispatch } = useTimer();
-  const { state } = useTimer();
-  // const [isCodeSubmitting, setIsCodeSubmitting] = useState(false);
+  const [code, setCode] = useState("");
+  const { state, dispatch } = useTimer();
+  const [isCodeSubmitting, setIsCodeSubmitting] = useState(false);
   const [countdownMessage, setCountdownMessage] = useState("");
-  // const totalTime = 600; // 10 minutes in seconds
+  const totalTime = 600; // 10 minutes in seconds
 
   const { user, token } = useAuth();
 
@@ -63,44 +62,44 @@ const PostYourPicks = ({
 
   const timer = state.timers?.[contestName] || 0;
 
-  // const handleCodeSubmit = async () => {
-  //   setIsCodeSubmitting(true);
-  //   try {
-  //     // Make a POST request to validate and submit the code
-  //     const response = await fetch(
-  //       "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/submitCode",
-  //       {
-  //         method: "POST",
-  //         mode: "cors",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`, // Add the Authorization header
-  //         },
-  //         body: JSON.stringify({ code }), // Send the code in the request body
-  //       }
-  //     );
+  const handleCodeSubmit = async () => {
+    setIsCodeSubmitting(true);
+    try {
+      // Make a POST request to validate and submit the code
+      const response = await fetch(
+        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/submitCode",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Add the Authorization header
+          },
+          body: JSON.stringify({ code }), // Send the code in the request body
+        }
+      );
 
-  //     const data = await response.json();
+      const data = await response.json();
 
-  //     if (response.ok && data.status === "success") {
-  //       // Set the timer for 10 minutes (600 seconds)
-  //       dispatch({
-  //         type: "SET_TIMER",
-  //         payload: { contestName, timer: 600 },
-  //       });
+      if (response.ok && data.status === "success") {
+        // Set the timer for 10 minutes (600 seconds)
+        dispatch({
+          type: "SET_TIMER",
+          payload: { contestName, timer: 600 },
+        });
 
-  //       setCode(""); // Clear the input field
-  //       toast.success("Code applied successfully!");
-  //     } else {
-  //       toast.error(data.message || "Invalid or already used code.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error validating code:", error);
-  //     toast.error("Failed to validate code. Please try again.");
-  //   } finally {
-  //     setIsCodeSubmitting(false);
-  //   }
-  // };
+        setCode(""); // Clear the input field
+        toast.success("Code applied successfully!");
+      } else {
+        toast.error(data.message || "Invalid or already used code.");
+      }
+    } catch (error) {
+      console.error("Error validating code:", error);
+      toast.error("Failed to validate code. Please try again.");
+    } finally {
+      setIsCodeSubmitting(false);
+    }
+  };
 
   const calculateAvailableFreePicksLeft = () => {
     const userBets = aggregateBets.find(
@@ -117,12 +116,12 @@ const PostYourPicks = ({
     return Math.max(availableFreePicks - betsPlaced, 0);
   };
 
-  // const calculateStrokeDashoffset = () => {
-  //   if (timer === null || totalTime === null) return 0;
-  //   const percentage = timer / totalTime;
-  //   const circumference = 2 * Math.PI * 45; // Radius is 45
-  //   return circumference * (1 - percentage);
-  // };
+  const calculateStrokeDashoffset = () => {
+    if (timer === null || totalTime === null) return 0;
+    const percentage = timer / totalTime;
+    const circumference = 2 * Math.PI * 45; // Radius is 45
+    return circumference * (1 - percentage);
+  };
 
   useEffect(() => {
     if (user && user.email) {
@@ -454,19 +453,39 @@ const PostYourPicks = ({
                   alignItems: "flex-start",
                 }}
               >
-                <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                  10+ win streak: ${contestTotalPrize * 0.6} USD
-                </Typography>
-                <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                  9 win streak: ${contestTotalPrize * 0.3} USD
-                </Typography>
-                <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                  8 win streak: ${contestTotalPrize * 0.1} USD
-                </Typography>
-                <Typography sx={{ fontSize: "16px" }}>
-                  If mutiple users have the same streak, the prize will be split
-                  equally.
-                </Typography>
+                {contestName === "Weekly Streak" ? (
+                  <>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      10+ win streak: ${contestTotalPrize * 0.6} USD
+                    </Typography>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      9 win streak: ${contestTotalPrize * 0.3} USD
+                    </Typography>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      8 win streak: ${contestTotalPrize * 0.1} USD
+                    </Typography>
+                    <Typography sx={{ fontSize: "16px" }}>
+                      If multiple users have the same streak, the prize will be
+                      split equally.
+                    </Typography>
+                  </>
+                ) : contestName === "Monthly Streak" ? (
+                  <>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      12+ win streak: ${contestTotalPrize * 0.6} USD
+                    </Typography>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      11 win streak: ${contestTotalPrize * 0.3} USD
+                    </Typography>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      10 win streak: ${contestTotalPrize * 0.1} USD
+                    </Typography>
+                    <Typography sx={{ fontSize: "16px" }}>
+                      If multiple users have the same streak, the prize will be
+                      split equally.
+                    </Typography>
+                  </>
+                ) : null}
               </ListItem>
 
               <ListItem
@@ -480,7 +499,7 @@ const PostYourPicks = ({
                   : `Free Picks Left: ${calculateAvailableFreePicksLeft()}`}
               </ListItem>
 
-              {/* {timer <= 0 && (
+              {timer <= 0 && (
                 <ListItem>
                   <Button
                     variant="contained"
@@ -505,37 +524,11 @@ const PostYourPicks = ({
                     $5 for 10 Mins of Unlimited Picks – Get Access Code
                   </Button>
                 </ListItem>
-              )} */}
-              <ListItem>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontSize: isMobile ? "10px" : "16px",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    mt: 2,
-                    pb: isMobile ? 1 : 2,
-                  }}
-                >
-                  This contest powered by{" "}
-                  <a
-                    href="doinksports.com/?via=Sure-Odds"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: "#4F46E5",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Doink Sports - The most complete betting research platform
-                  </a>
-                </Typography>
-              </ListItem>
+              )}
             </List>
 
             {/* Countdown Timer */}
-            {/* <Box sx={{ textAlign: "center", mt: isMobile ? 3 : 4 }}>
+            <Box sx={{ textAlign: "center", mt: isMobile ? 3 : 4 }}>
               {timer > 0 ? (
                 <>
                   <svg
@@ -640,7 +633,7 @@ const PostYourPicks = ({
                   </Box>
                 </>
               )}
-            </Box> */}
+            </Box>
           </Card>
         </Box>
 

@@ -50,7 +50,7 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        availableFreePicks: 35,
+        availableFreePicks: 12,
       },
       {
         contestName: `Monthly Streak`,
@@ -89,7 +89,7 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        availableFreePicks: 140,
+        availableFreePicks: 20,
       },
     ];
   }, [weekStartEnd, monthStartEnd, lastWeekStartEnd, lastMonthStartEnd]);
