@@ -19,8 +19,8 @@ export const useContestData = () => {
         primaryImageUrl: weeklyStreakImage,
         contestTotalPrize: 500,
         spreadsheetUrl:
-          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
-        isContestActive: true,
+          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
+        isContestActive: false,
         currentContestStartDate: weekStartEnd.startOfWeek.toLocaleString(
           "en-US",
           {
@@ -50,14 +50,14 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        availableFreePicks: 12,
+        availableFreePicks: 10,
       },
       {
         contestName: `Monthly Streak`,
         primaryImageUrl: monthlyStreakImage,
-        contestTotalPrize: 2000,
+        contestTotalPrize: 500,
         spreadsheetUrl:
-          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
+          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
         currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
           "en-US",
@@ -89,7 +89,7 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        availableFreePicks: 20,
+        availableFreePicks: 10,
       },
     ];
   }, [weekStartEnd, monthStartEnd, lastWeekStartEnd, lastMonthStartEnd]);
