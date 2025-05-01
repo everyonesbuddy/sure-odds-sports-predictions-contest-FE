@@ -453,39 +453,19 @@ const PostYourPicks = ({
                   alignItems: "flex-start",
                 }}
               >
-                {contestName === "Weekly Streak" ? (
-                  <>
-                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                      10+ win streak: ${contestTotalPrize * 0.6} USD
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                      9 win streak: ${contestTotalPrize * 0.3} USD
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                      8 win streak: ${contestTotalPrize * 0.1} USD
-                    </Typography>
-                    <Typography sx={{ fontSize: "16px" }}>
-                      If multiple users have the same streak, the prize will be
-                      split equally.
-                    </Typography>
-                  </>
-                ) : contestName === "Monthly Streak" ? (
-                  <>
-                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                      12+ win streak: ${contestTotalPrize * 0.6} USD
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                      11 win streak: ${contestTotalPrize * 0.3} USD
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                      10 win streak: ${contestTotalPrize * 0.1} USD
-                    </Typography>
-                    <Typography sx={{ fontSize: "16px" }}>
-                      If multiple users have the same streak, the prize will be
-                      split equally.
-                    </Typography>
-                  </>
-                ) : null}
+                <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                  10+ win streak: ${contestTotalPrize * 0.6} USD
+                </Typography>
+                <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                  9 win streak: ${contestTotalPrize * 0.3} USD
+                </Typography>
+                <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                  8 win streak: ${contestTotalPrize * 0.1} USD
+                </Typography>
+                <Typography sx={{ fontSize: "16px" }}>
+                  If multiple users have the same streak, the prize will be
+                  split equally.
+                </Typography>
               </ListItem>
 
               <ListItem
