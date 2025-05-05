@@ -48,7 +48,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆 Free to Play Streak Contests
+            🏆 The Premier Pick ‘Em Contest
           </Typography>
 
           <Typography

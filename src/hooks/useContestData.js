@@ -15,7 +15,7 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Weekly Streak`,
+        contestName: `Weekly Pickem`,
         primaryImageUrl: weeklyStreakImage,
         contestTotalPrize: 500,
         spreadsheetUrl:
@@ -50,10 +50,10 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        availableFreePicks: 10,
+        availableFreePicks: 0,
       },
       {
-        contestName: `Monthly Streak`,
+        contestName: `Monthly Pickem`,
         primaryImageUrl: monthlyStreakImage,
         contestTotalPrize: 500,
         spreadsheetUrl:
@@ -89,7 +89,7 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        availableFreePicks: 10,
+        availableFreePicks: 0,
       },
     ];
   }, [weekStartEnd, monthStartEnd, lastWeekStartEnd, lastMonthStartEnd]);

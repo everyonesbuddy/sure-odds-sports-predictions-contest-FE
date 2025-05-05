@@ -454,17 +454,17 @@ const PostYourPicks = ({
                 }}
               >
                 <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                  10+ win streak: ${contestTotalPrize * 0.6} USD
+                  1st Place: ${contestTotalPrize * 0.6} USD
                 </Typography>
                 <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                  9 win streak: ${contestTotalPrize * 0.3} USD
+                  2nd Place: ${contestTotalPrize * 0.3} USD
                 </Typography>
                 <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                  8 win streak: ${contestTotalPrize * 0.1} USD
+                  3rd Place: ${contestTotalPrize * 0.1} USD
                 </Typography>
-                <Typography sx={{ fontSize: "16px" }}>
-                  If multiple users have the same streak, the prize will be
-                  split equally.
+                <Typography sx={{ fontSize: "14px" }}>
+                  Top 3 Participants with most total wins, get prize. Ties split
+                  the prize.
                 </Typography>
               </ListItem>
 
@@ -475,8 +475,8 @@ const PostYourPicks = ({
                 }}
               >
                 {!isMobile
-                  ? `Free Picks Left: ${calculateAvailableFreePicksLeft()} / ${availableFreePicks}`
-                  : `Free Picks Left: ${calculateAvailableFreePicksLeft()}`}
+                  ? `Available Picks: ${calculateAvailableFreePicksLeft()}`
+                  : `Available Picks: ${calculateAvailableFreePicksLeft()}`}
               </ListItem>
 
               {timer <= 0 && (
