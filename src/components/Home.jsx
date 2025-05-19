@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Footer from "./Footer";
 import ContestCard from "./ContestCard";
-// import KofiWidget from "./KofiWidget";
+import KofiWidget from "./KofiWidget";
 import { useContestData } from "../hooks/useContestData";
 import "../css/Home.css";
 
@@ -48,7 +48,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆 The Premier Pick ‘Em Contest
+            🏆 Free to Play Streak Contest
           </Typography>
 
           <Typography
@@ -166,7 +166,7 @@ const Home = () => {
           )}
         </div>
       </Box>
-      {/* <KofiWidget /> */}
+      <KofiWidget />
       <Footer />
     </>
   );

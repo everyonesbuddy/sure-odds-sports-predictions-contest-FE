@@ -15,12 +15,12 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Weekly Pickem`,
+        contestName: `Weekly Streak`,
         primaryImageUrl: weeklyStreakImage,
         contestTotalPrize: 500,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
-        isContestActive: false,
+        isContestActive: true,
         currentContestStartDate: weekStartEnd.startOfWeek.toLocaleString(
           "en-US",
           {
@@ -50,12 +50,32 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        availableFreePicks: 0,
+        availableFreePicks: 20,
+        affiliates: [
+          {
+            name: "DraftKings",
+            affiliateLink: "https://www.draftkings.com/",
+            message:
+              "Get a $50 bonus when you make your first deposit of $5 or more.",
+          },
+          {
+            name: "FanDuel",
+            affiliateLink: "https://www.fanduel.com/",
+            message:
+              "Get a $50 bonus when you make your first deposit of $10 or more.",
+          },
+          {
+            name: "BetMGM",
+            affiliateLink: "https://www.betmgm.com/",
+            message:
+              "Get a $50 bonus when you make your first deposit of $10 or more.",
+          },
+        ],
       },
       {
-        contestName: `Monthly Pickem`,
+        contestName: `Monthly Streak`,
         primaryImageUrl: monthlyStreakImage,
-        contestTotalPrize: 500,
+        contestTotalPrize: 2000,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
@@ -89,7 +109,27 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        availableFreePicks: 0,
+        availableFreePicks: 35,
+        affiliates: [
+          {
+            name: "DraftKings",
+            affiliateLink: "https://www.draftkings.com/",
+            message:
+              "Get a $50 bonus when you make your first deposit of $5 or more.",
+          },
+          {
+            name: "FanDuel",
+            affiliateLink: "https://www.fanduel.com/",
+            message:
+              "Get a $50 bonus when you make your first deposit of $10 or more.",
+          },
+          {
+            name: "BetMGM",
+            affiliateLink: "https://www.betmgm.com/",
+            message:
+              "Get a $50 bonus when you make your first deposit of $10 or more.",
+          },
+        ],
       },
     ];
   }, [weekStartEnd, monthStartEnd, lastWeekStartEnd, lastMonthStartEnd]);

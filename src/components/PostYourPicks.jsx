@@ -453,8 +453,8 @@ const PostYourPicks = ({
                   alignItems: "flex-start",
                 }}
               >
-                <Typography sx={{ mb: 1, fontSize: "18px" }}>
-                  1st Place: ${contestTotalPrize * 0.6} USD
+                {/* <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                  : ${contestTotalPrize * 0.6} USD
                 </Typography>
                 <Typography sx={{ mb: 1, fontSize: "18px" }}>
                   2nd Place: ${contestTotalPrize * 0.3} USD
@@ -465,7 +465,40 @@ const PostYourPicks = ({
                 <Typography sx={{ fontSize: "14px" }}>
                   Top 3 Participants with most total wins, get prize. Ties split
                   the prize.
-                </Typography>
+                </Typography> */}
+                {contestName === "Weekly Streak" ? (
+                  <>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      10+ win streak: ${contestTotalPrize * 0.6} USD
+                    </Typography>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      9 win streak: ${contestTotalPrize * 0.3} USD
+                    </Typography>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      8 win streak: ${contestTotalPrize * 0.1} USD
+                    </Typography>
+                    <Typography sx={{ fontSize: "16px" }}>
+                      If multiple users have the same streak, the prize will be
+                      split equally.
+                    </Typography>
+                  </>
+                ) : contestName === "Monthly Streak" ? (
+                  <>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      12+ win streak: ${contestTotalPrize * 0.6} USD
+                    </Typography>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      11 win streak: ${contestTotalPrize * 0.3} USD
+                    </Typography>
+                    <Typography sx={{ mb: 1, fontSize: "18px" }}>
+                      10 win streak: ${contestTotalPrize * 0.1} USD
+                    </Typography>
+                    <Typography sx={{ fontSize: "16px" }}>
+                      If multiple users have the same streak, the prize will be
+                      split equally.
+                    </Typography>
+                  </>
+                ) : null}
               </ListItem>
 
               <ListItem
@@ -479,7 +512,7 @@ const PostYourPicks = ({
                   : `Available Picks: ${calculateAvailableFreePicksLeft()}`}
               </ListItem>
 
-              {timer <= 0 && (
+              {/* {timer <= 0 && (
                 <ListItem>
                   <Button
                     variant="contained"
@@ -504,11 +537,11 @@ const PostYourPicks = ({
                     $5 for 10 Mins of Unlimited Picks – Get Access Code
                   </Button>
                 </ListItem>
-              )}
+              )} */}
             </List>
 
             {/* Countdown Timer */}
-            <Box sx={{ textAlign: "center", mt: isMobile ? 3 : 4 }}>
+            {/* <Box sx={{ textAlign: "center", mt: isMobile ? 3 : 4 }}>
               {timer > 0 ? (
                 <>
                   <svg
@@ -613,7 +646,7 @@ const PostYourPicks = ({
                   </Box>
                 </>
               )}
-            </Box>
+            </Box> */}
           </Card>
         </Box>
 
@@ -869,8 +902,38 @@ const PostYourPicks = ({
                         >
                           {gameDetails?.bookmakers &&
                           gameDetails.bookmakers.length > 0 ? (
-                            gameDetails.bookmakers[0]?.markets[0]?.outcomes.map(
-                              (outcome) =>
+                            // gameDetails.bookmakers[0]?.markets[0]?.outcomes.map(
+                            //   (outcome) =>
+                            //     pickType === "money line" ? (
+                            //       <MenuItem
+                            //         key={outcome?.name}
+                            //         value={outcome?.name}
+                            //       >
+                            //         {outcome?.name} ({outcome?.price})
+                            //       </MenuItem>
+                            //     ) : pickType === "spread" ? (
+                            //       <MenuItem
+                            //         key={outcome?.name}
+                            //         value={outcome?.name}
+                            //       >
+                            //         {outcome?.name} ({outcome?.price}, Spread:{" "}
+                            //         {outcome?.point})
+                            //       </MenuItem>
+                            //     ) : null
+                            // )
+                            gameDetails.bookmakers[0]?.markets[0]?.outcomes
+                              .filter((outcome) => {
+                                const odds = outcome?.price;
+
+                                // Convert American odds to implied probability
+                                const impliedProbability =
+                                  odds < 0
+                                    ? -odds / (-odds + 100)
+                                    : 100 / (odds + 100);
+
+                                return impliedProbability <= 0.7; // Only allow if 70% or less
+                              })
+                              .map((outcome) =>
                                 pickType === "money line" ? (
                                   <MenuItem
                                     key={outcome?.name}
@@ -887,7 +950,7 @@ const PostYourPicks = ({
                                     {outcome?.point})
                                   </MenuItem>
                                 ) : null
-                            )
+                              )
                           ) : (
                             <MenuItem disabled>
                               No betting options available
