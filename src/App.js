@@ -8,7 +8,6 @@ import Signup from "./components/Signup";
 import Leaderboard from "./components/Leaderboard";
 import PostYourPicks from "./components/PostYourPicks";
 import TournamentDetails from "./components/TournamentDetails";
-import PicksDetails from "./components/PicksDetails";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
@@ -36,7 +35,6 @@ const App = () => {
                 element={<PrivateRoute element={PostYourPicks} />}
               />
               <Route path="/about" element={<TournamentDetails />} />
-              <Route path="/picksDetails" element={<PicksDetails />} />
               <Route
                 path="/personalizedAnalytics"
                 element={<PrivateRoute element={PersonalizedAnalytics} />}

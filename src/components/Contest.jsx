@@ -42,7 +42,7 @@ const Contest = () => {
       const fetchAllUsersBetsForContest = async () => {
         try {
           const response = await axios.get(
-            `${contestDetails?.spreadsheetUrl}filtered`,
+            `${contestDetails?.spreadsheetUrl}filtered`, // Route gets all users bets that participate in this contest, but with some filtered out propties
             {
               headers: {
                 Authorization: `Bearer ${token}`, // Include token in headers
@@ -62,10 +62,10 @@ const Contest = () => {
 
   useEffect(() => {
     if (contestDetails) {
-      const fetchCurrentUserBetsForContest = async () => {
+      const fetchCurrentUserBetsForContestWithFilteredProperties = async () => {
         try {
           const response = await axios.post(
-            `${contestDetails.spreadsheetUrl}user`,
+            `${contestDetails.spreadsheetUrl}user`, // Route gets all of this logged in user bets for this contest, but with some filtered out propties
             {
               username: user?.userName, // Pass userName in the request body
             },
@@ -81,7 +81,7 @@ const Contest = () => {
         }
       };
 
-      fetchCurrentUserBetsForContest();
+      fetchCurrentUserBetsForContestWithFilteredProperties();
     }
   }, [contestDetails, user, token]);
 

@@ -16,7 +16,7 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post(
-        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/auth/login",
+        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/auth/login", // Api endpoint for login
         {
           email,
           password,

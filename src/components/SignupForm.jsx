@@ -27,7 +27,7 @@ const SignupForm = () => {
 
     try {
       const response = await axios.post(
-        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/auth/signup",
+        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/auth/signup", // Api endpoint for signup
         {
           name,
           email,
