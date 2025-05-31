@@ -3,6 +3,7 @@ import { useMonth } from "../context/MonthContext";
 import { useMemo } from "react";
 import weeklyStreakImage from "../assets/weekly-streak.jpg";
 import monthlyStreakImage from "../assets/monthly-streak.jpg";
+import doinkLogo from "../assets/doink-logo.png";
 
 export const useContestData = () => {
   const { weekStartEnd, lastWeekStartEnd } = useWeek();
@@ -57,18 +58,21 @@ export const useContestData = () => {
             affiliateLink: "https://www.draftkings.com/",
             message:
               "Get a $50 bonus when you make your first deposit of $5 or more.",
+            image: doinkLogo,
           },
           {
             name: "FanDuel",
             affiliateLink: "https://www.fanduel.com/",
             message:
               "Get a $50 bonus when you make your first deposit of $10 or more.",
+            image: doinkLogo,
           },
           {
             name: "BetMGM",
             affiliateLink: "https://www.betmgm.com/",
             message:
               "Get a $50 bonus when you make your first deposit of $10 or more.",
+            image: doinkLogo,
           },
         ],
       },
@@ -116,18 +120,21 @@ export const useContestData = () => {
             affiliateLink: "https://www.draftkings.com/",
             message:
               "Get a $50 bonus when you make your first deposit of $5 or more.",
+            image: doinkLogo,
           },
           {
             name: "FanDuel",
             affiliateLink: "https://www.fanduel.com/",
             message:
               "Get a $50 bonus when you make your first deposit of $10 or more.",
+            image: doinkLogo,
           },
           {
             name: "BetMGM",
             affiliateLink: "https://www.betmgm.com/",
             message:
               "Get a $50 bonus when you make your first deposit of $10 or more.",
+            image: doinkLogo,
           },
         ],
       },

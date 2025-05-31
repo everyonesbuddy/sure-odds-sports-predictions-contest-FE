@@ -2,6 +2,7 @@ import React from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import ContestDetailAndAnalytics from "./ContestDetailAndAnalytics";
 import PicksForm from "./PicksForm";
+import AffiliateSliders from "./AffiliateSliders";
 
 const PostYourPicks = ({
   contestName,
@@ -13,6 +14,7 @@ const PostYourPicks = ({
   currentUserBetsForContest,
   aggregateBets,
   availableFreePicks,
+  affiliates,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -51,6 +53,7 @@ const PostYourPicks = ({
           availableFreePicks={availableFreePicks}
         />
       </Box>
+      <AffiliateSliders affiliates={affiliates} />
     </>
   );
 };

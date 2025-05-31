@@ -328,6 +328,7 @@ const Contest = () => {
               contestLeague={contestDetails.contestLeague}
               aggregateBets={aggregateBets}
               availableFreePicks={contestDetails.availableFreePicks}
+              affiliates={contestDetails.affiliates}
             />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
