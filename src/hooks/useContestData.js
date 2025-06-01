@@ -4,6 +4,8 @@ import { useMemo } from "react";
 import weeklyStreakImage from "../assets/weekly-streak.jpg";
 import monthlyStreakImage from "../assets/monthly-streak.jpg";
 import doinkLogo from "../assets/doink-logo.png";
+import oddsJamLogo from "../assets/oddsjam-logo.png";
+import dgFantasyLogo from "../assets/dgfantasy-logo.png";
 
 export const useContestData = () => {
   const { weekStartEnd, lastWeekStartEnd } = useWeek();
@@ -54,25 +56,23 @@ export const useContestData = () => {
         availableFreePicks: 20,
         affiliates: [
           {
-            name: "DraftKings",
-            affiliateLink: "https://www.draftkings.com/",
-            message:
-              "Get a $50 bonus when you make your first deposit of $5 or more.",
+            name: "Doink Sports",
+            affiliateLink: "https://doinksports.com/?via=Sure-Odds",
+            message: "The most complete betting research platform.",
             image: doinkLogo,
           },
           {
-            name: "FanDuel",
-            affiliateLink: "https://www.fanduel.com/",
-            message:
-              "Get a $50 bonus when you make your first deposit of $10 or more.",
-            image: doinkLogo,
+            name: "OddsJam",
+            affiliateLink: "https://oddsjam.com/?ref=ndqznjv",
+            message: "Premium sports betting news + data.",
+            image: oddsJamLogo,
           },
           {
-            name: "BetMGM",
-            affiliateLink: "https://www.betmgm.com/",
-            message:
-              "Get a $50 bonus when you make your first deposit of $10 or more.",
-            image: doinkLogo,
+            name: "DGFantasy",
+            affiliateLink:
+              "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+            message: "Profitable bets at your fingertips! ",
+            image: dgFantasyLogo,
           },
         ],
       },
@@ -116,25 +116,23 @@ export const useContestData = () => {
         availableFreePicks: 35,
         affiliates: [
           {
-            name: "DraftKings",
-            affiliateLink: "https://www.draftkings.com/",
-            message:
-              "Get a $50 bonus when you make your first deposit of $5 or more.",
+            name: "Doink Sports",
+            affiliateLink: "https://doinksports.com/?via=Sure-Odds",
+            message: "The most complete betting research platform.",
             image: doinkLogo,
           },
           {
-            name: "FanDuel",
-            affiliateLink: "https://www.fanduel.com/",
-            message:
-              "Get a $50 bonus when you make your first deposit of $10 or more.",
-            image: doinkLogo,
+            name: "OddsJam",
+            affiliateLink: "https://oddsjam.com/?ref=ndqznjv",
+            message: "Premium sports betting news + data.",
+            image: oddsJamLogo,
           },
           {
-            name: "BetMGM",
-            affiliateLink: "https://www.betmgm.com/",
-            message:
-              "Get a $50 bonus when you make your first deposit of $10 or more.",
-            image: doinkLogo,
+            name: "DGFantasy",
+            affiliateLink:
+              "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+            message: "Profitable bets at your fingertips! ",
+            image: dgFantasyLogo,
           },
         ],
       },
