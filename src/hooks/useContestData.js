@@ -1,8 +1,8 @@
 import { useWeek } from "../context/WeekContext";
 import { useMonth } from "../context/MonthContext";
 import { useMemo } from "react";
-import weeklyStreakImage from "../assets/weekly-streak.jpg";
-import monthlyStreakImage from "../assets/monthly-streak.jpg";
+import weeklyPickemImage from "../assets/weekly-pickem.jpg";
+import monthlyPickemImage from "../assets/monthly-pickem.jpg";
 import doinkLogo from "../assets/doink-logo.png";
 import oddsJamLogo from "../assets/oddsjam-logo.png";
 import dgFantasyLogo from "../assets/dgfantasy-logo.png";
@@ -18,8 +18,8 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Weekly Streak`,
-        primaryImageUrl: weeklyStreakImage,
+        contestName: `Weekly Pickem`,
+        primaryImageUrl: weeklyPickemImage,
         contestTotalPrize: 500,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
@@ -77,8 +77,8 @@ export const useContestData = () => {
         ],
       },
       {
-        contestName: `Monthly Streak`,
-        primaryImageUrl: monthlyStreakImage,
+        contestName: `Monthly Pickem`,
+        primaryImageUrl: monthlyPickemImage,
         contestTotalPrize: 2000,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",

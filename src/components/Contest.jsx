@@ -7,6 +7,7 @@ import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import LastLeaderboard from "./LastLeaderboard";
 import PostYourPicks from "./PostYourPicks";
+import Paywall from "./Paywall";
 import { useContestData } from "../hooks/useContestData";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
@@ -22,6 +23,7 @@ const Contest = () => {
   );
   const [aggregateBets, setAggregateBets] = useState([]);
   const [lastContestAggregateBets, setLastContestAggregateBets] = useState([]);
+  const [isRegisteredForContest, setIsRegisteredForContest] = useState(false);
   const contestData = useContestData();
 
   const { user, token } = useAuth();
@@ -111,6 +113,21 @@ const Contest = () => {
       );
     }
   }, [allUsersBetsForContest, contestDetails]);
+
+  useEffect(() => {
+    // Check if the user is registered for the contest and the end date has not passed
+    const checkRegistration = () => {
+      const isRegistered = user?.registeredContests?.some(
+        (contest) =>
+          contest.name === contestDetails?.contestName &&
+          new Date(contest.endDate) > new Date()
+      );
+      setIsRegisteredForContest(isRegistered);
+      console.log("Is user registered for contest:", isRegistered);
+    };
+
+    checkRegistration();
+  }, [user, contestDetails]);
 
   const aggregateBetsCalculation = (bets) => {
     const handicappers = {};
@@ -210,25 +227,54 @@ const Contest = () => {
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "column", md: "row" }, // Stack on mobile, row on larger screens
+              flexDirection: { xs: "column", md: "row" },
               alignItems: "center",
+              justifyContent: "center",
               gap: 10,
               maxWidth: "900px",
               width: "100%",
             }}
           >
             {/* Text Section */}
-            <Box sx={{ flex: 1, textAlign: !isMobile ? "left" : "center" }}>
+            <Box sx={{ flex: 1, textAlign: isMobile ? "center" : "left" }}>
               <Typography
                 variant="h1"
                 sx={{
                   fontWeight: "bold",
                   fontSize: { xs: "24px", sm: "35px" },
                   lineHeight: 1.2,
+                  mb: 2,
                 }}
               >
-                Join the {contestDetails.contestName} and win cash prizes
+                Enter the {contestDetails.contestName}
               </Typography>
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#ccc",
+                  fontSize: isMobile ? "14px" : "16px",
+                  mb: 2,
+                }}
+              >
+                Buy in. Make picks. Climb the leaderboard. Win up to{" "}
+                <strong>${contestDetails.contestTotalPrize}</strong> in real
+                cash prizes.
+              </Typography>
+
+              <Box
+                sx={{
+                  backgroundColor: "#4F46E5",
+                  px: 3,
+                  py: 1,
+                  borderRadius: "999px",
+                  fontWeight: 500,
+                  fontSize: isMobile ? "13px" : "14px",
+                  textAlign: "center",
+                }}
+              >
+                💰 Prize Pool: ${contestDetails.contestTotalPrize}
+              </Box>
             </Box>
 
             {/* Image Section */}
@@ -271,82 +317,95 @@ const Contest = () => {
           </Box>
         </Box>
 
-        <>
-          <Box
-            sx={{
-              zIndex: 1100,
-              position: "sticky",
-              top: 0,
-              backgroundColor: "black",
-            }}
-          >
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-              centered
+        {isRegisteredForContest ? (
+          <>
+            <Box
               sx={{
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "#4F46E5",
-                },
+                zIndex: 1100,
+                position: "sticky",
+                top: 0,
+                backgroundColor: "black",
               }}
             >
-              <Tab
-                label="Your Picks 🥇"
-                {...a11yProps(0)}
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+                centered
                 sx={{
-                  color: "#4F46E5",
-                  fontSize: isMobile ? "8px" : "10px",
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "#4F46E5",
+                  },
                 }}
+              >
+                <Tab
+                  label="Your Picks 🥇"
+                  {...a11yProps(0)}
+                  sx={{
+                    color: "#4F46E5",
+                    fontSize: isMobile ? "8px" : "10px",
+                  }}
+                />
+                <Tab
+                  label="Live Board 🏆"
+                  {...a11yProps(1)}
+                  sx={{
+                    color: "#4F46E5",
+                    fontSize: isMobile ? "8px" : "10px",
+                  }}
+                />
+                <Tab
+                  label="Prev Board 🏁"
+                  {...a11yProps(2)}
+                  sx={{
+                    color: "#4F46E5",
+                    fontSize: isMobile ? "8px" : "10px",
+                  }}
+                />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+              <PostYourPicks
+                contestName={contestDetails.contestName}
+                contestTotalPrize={contestDetails.contestTotalPrize}
+                spreadsheetUrl={contestDetails.spreadsheetUrl}
+                contestEndDate={contestDetails.currentContestEndDate}
+                contestStartDate={contestDetails.currentContestStartDate}
+                currentUserBetsForContest={currentUserBetsForContest}
+                contestLeague={contestDetails.contestLeague}
+                aggregateBets={aggregateBets}
+                availableFreePicks={contestDetails.availableFreePicks}
+                affiliates={contestDetails.affiliates}
               />
-              <Tab
-                label="Live Board 🏆"
-                {...a11yProps(1)}
-                sx={{
-                  color: "#4F46E5",
-                  fontSize: isMobile ? "8px" : "10px",
-                }}
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <Leaderboard
+                contestEndDate={contestDetails.currentContestEndDate}
+                contestStartDate={contestDetails.currentContestStartDate}
+                aggregateBets={aggregateBets}
               />
-              <Tab
-                label="Prev Board 🏁"
-                {...a11yProps(1)}
-                sx={{
-                  color: "#4F46E5",
-                  fontSize: isMobile ? "8px" : "10px",
-                }}
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+              <LastLeaderboard
+                lastContestEndDate={contestDetails.lastcurrentContestEndDate}
+                lastContestStartDate={contestDetails.lastConstestStartDate}
+                lastContestAggregateBets={lastContestAggregateBets}
+                constestName={contestDetails.contestName}
               />
-            </Tabs>
-          </Box>
-          <CustomTabPanel value={value} index={0}>
-            <PostYourPicks
-              contestName={contestDetails.contestName}
-              contestTotalPrize={contestDetails.contestTotalPrize}
-              spreadsheetUrl={contestDetails.spreadsheetUrl}
-              contestEndDate={contestDetails.currentContestEndDate}
-              contestStartDate={contestDetails.currentContestStartDate}
-              currentUserBetsForContest={currentUserBetsForContest}
-              contestLeague={contestDetails.contestLeague}
-              aggregateBets={aggregateBets}
-              availableFreePicks={contestDetails.availableFreePicks}
-              affiliates={contestDetails.affiliates}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            <Leaderboard
-              contestEndDate={contestDetails.currentContestEndDate}
-              contestStartDate={contestDetails.currentContestStartDate}
-              aggregateBets={aggregateBets}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            <LastLeaderboard
-              lastContestEndDate={contestDetails.lastcurrentContestEndDate}
-              lastContestStartDate={contestDetails.lastConstestStartDate}
-              lastContestAggregateBets={lastContestAggregateBets}
-              constestName={contestDetails.contestName}
-            />
-          </CustomTabPanel>
-        </>
+            </CustomTabPanel>
+          </>
+        ) : (
+          <Paywall
+            contestName={contestDetails.contestName}
+            spreadsheetUrl={contestDetails.spreadsheetUrl}
+            contestTotalPrize={contestDetails.contestTotalPrize}
+            contestLeague={contestDetails.contestLeague}
+            contestEndDate={contestDetails.currentContestEndDate}
+            contestStartDate={contestDetails.currentContestStartDate}
+            currentUserBetsForContest={currentUserBetsForContest}
+            availableFreePicks={contestDetails.availableFreePicks}
+          />
+        )}
       </Box>
     </>
   );

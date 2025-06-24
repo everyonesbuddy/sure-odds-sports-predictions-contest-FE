@@ -1,17 +1,20 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Container,
+  Card,
+  CardContent,
+} from "@mui/material";
 import Footer from "./Footer";
-import ContestCard from "./ContestCard";
-import KofiWidget from "./KofiWidget";
-import { useContestData } from "../hooks/useContestData";
 import "../css/Home.css";
 
 const Home = () => {
-  const contestData = useContestData();
-
   return (
     <>
-      {/* Prevent unwanted horizontal scrolling */}
+      {/* HERO */}
       <Box
         sx={{
           width: "100vw",
@@ -23,150 +26,292 @@ const Home = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          py: { xs: 5, sm: 6 },
+          py: { xs: 6, sm: 10 },
+          px: 2,
           background: "black",
         }}
       >
-        {/* HERO SECTION */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 3,
-            textAlign: "center",
-            maxWidth: "800px",
-            width: "100%",
-          }}
-        >
+        <Box sx={{ maxWidth: "800px", width: "100%", gap: 3 }}>
           <Typography
             variant="h1"
             sx={{
-              fontWeight: "700",
-              fontSize: { xs: "28px", sm: "42px", md: "48px" },
+              fontWeight: 700,
+              fontSize: { xs: "32px", sm: "44px", md: "52px" },
               lineHeight: 1.2,
-              maxWidth: "100%",
             }}
           >
-            🏆 Free to Play Streak Contest
+            🎯 Your Own Branded Pick'em Contest — We Build It, You Earn From It
           </Typography>
-
           <Typography
             variant="h5"
             sx={{
-              fontWeight: "400",
+              fontWeight: 400,
               fontSize: { xs: "16px", sm: "20px" },
-              opacity: 0.8,
-              maxWidth: "600px",
+              opacity: 0.85,
+              mt: 2,
+              mb: 4,
             }}
           >
-            Think you can predict the game? Compete for free and win cash
-            prizes. It’s fun, challenging, and global! 🌎🔥
+            We create and manage your fully branded sports contest site. You
+            promote it to your fans. You earn every time they enter. 💸
           </Typography>
+          <a
+            href="https://calendly.com/sure-odds-info/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Book a Demo on Calendly"
+          >
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: "#4F46E5",
+                color: "#fff",
+                fontWeight: 600,
+                borderRadius: "12px",
+                px: 5,
+                py: 1.75,
+                fontSize: "16px",
+                "&:hover": { backgroundColor: "#4338CA" },
+              }}
+            >
+              🚀 Book a Demo
+            </Button>
+          </a>
         </Box>
       </Box>
 
-      {/* NEWSLETTER SIGNUP */}
-      <Box
-        sx={{
-          width: "100vw",
-          maxWidth: "100%",
-          overflowX: "hidden",
-          textAlign: "center",
-          color: "white",
-          py: { xs: 3, sm: 5 },
-          background:
-            "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 100%)",
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{
-            fontWeight: "600",
-            fontSize: { xs: "18px", sm: "22px" },
-            mb: 2,
-          }}
-        >
-          📬 Join the Smartest Sports Bettors Community
-        </Typography>
-
-        <iframe
-          src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"
-          data-test-id="beehiiv-embed"
-          height="52"
-          title="Beehiiv Embed"
-          frameBorder="0"
-          scrolling="no"
-          style={{
-            width: "100%",
-            maxWidth: "500px",
-            borderRadius: "6px",
-            backgroundColor: "transparent",
-            padding: "0 10px", // Add padding to prevent overlap
-            boxSizing: "border-box", // Ensure padding is included in the width
-          }}
-        ></iframe>
+      {/* FEATURES */}
+      <Box sx={{ background: "#0f0f0f", py: 8, px: 3, color: "white" }}>
+        <Container maxWidth="md">
+          <Typography variant="h4" align="center" fontWeight={600} mb={5}>
+            Why Creators Love It ❤️
+          </Typography>
+          <Grid container spacing={4}>
+            {[
+              {
+                emoji: "🧑‍🎨",
+                title: "Fully Branded Site",
+                desc: "Your logo, colors, and domain — we make it yours from top to bottom.",
+              },
+              {
+                emoji: "💰",
+                title: "Earn From Every Entry",
+                desc: "Get 50% of all platform fees. No setup costs, no tech headaches.",
+              },
+              {
+                emoji: "📈",
+                title: "Boost Fan Engagement",
+                desc: "Give your fans a fun, competitive reason to keep coming back.",
+              },
+              {
+                emoji: "✅",
+                title: "Zero Work Required",
+                desc: "We handle everything — contests, payments, support, and payouts.",
+              },
+            ].map((item, i) => (
+              <Grid item xs={12} sm={6} key={i}>
+                <Box textAlign="center" px={2}>
+                  <Typography variant="h3" fontSize="36px">
+                    {item.emoji}
+                  </Typography>
+                  <Typography variant="h6" fontWeight={600} mt={1}>
+                    {item.title}
+                  </Typography>
+                  <Typography variant="body1" mt={1} sx={{ opacity: 0.8 }}>
+                    {item.desc}
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
       </Box>
 
-      {/* CONTEST SECTION */}
+      {/* HOW IT WORKS */}
+      <Box sx={{ py: 8, px: 3, background: "#1c1c1c", color: "white" }}>
+        <Container maxWidth="md">
+          <Typography variant="h4" align="center" fontWeight={600} mb={5}>
+            How It Works 🛠️
+          </Typography>
+          <Grid container spacing={4}>
+            {[
+              {
+                step: "Step 1",
+                emoji: "📞",
+                title: "Book a Demo",
+                desc: "Schedule a quick call so we can understand your brand and goals.",
+              },
+              {
+                step: "Step 2",
+                emoji: "🧱",
+                title: "We Build Your Site",
+                desc: "We fully design and launch your contest site with your branding.",
+              },
+              {
+                step: "Step 3",
+                emoji: "📣",
+                title: "Promote & Earn",
+                desc: "You share the link with your fans — and collect your earnings.",
+              },
+            ].map((item, i) => (
+              <Grid item xs={12} sm={4} key={i}>
+                <Card
+                  sx={{
+                    backgroundColor: "#2a2a2a",
+                    color: "white",
+                    borderRadius: "16px",
+                    textAlign: "center",
+                    height: "100%",
+                  }}
+                >
+                  <CardContent>
+                    <Typography variant="h3" fontSize="28px">
+                      {item.emoji}
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ mt: 1, opacity: 0.6 }}
+                    >
+                      {item.step}
+                    </Typography>
+                    <Typography variant="h6" sx={{ mt: 1 }}>
+                      {item.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ mt: 1, opacity: 0.8, fontSize: "15px" }}
+                    >
+                      {item.desc}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* EARNINGS CALCULATOR (Static) */}
+      <Box sx={{ py: 8, backgroundColor: "#111", color: "white" }}>
+        <Container maxWidth="sm">
+          <Typography variant="h4" align="center" fontWeight={600} mb={4}>
+            What Could You Earn? 💸
+          </Typography>
+          <Grid container spacing={2}>
+            {[
+              { entries: "50 entries/week", earnings: "$200/month" },
+              { entries: "200 entries/week", earnings: "$800/month" },
+              { entries: "500 entries/week", earnings: "$2,000/month" },
+            ].map((row, idx) => (
+              <Grid item xs={12} key={idx}>
+                <Box
+                  sx={{
+                    p: 3,
+                    border: "1px solid #333",
+                    borderRadius: "12px",
+                    textAlign: "center",
+                    backgroundColor: "#1a1a1a",
+                  }}
+                >
+                  <Typography variant="h6">{row.entries}</Typography>
+                  <Typography variant="body1" sx={{ mt: 1, opacity: 0.8 }}>
+                    Est. Earnings: <strong>{row.earnings}</strong>
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* TESTIMONIALS */}
+      <Box sx={{ py: 8, background: "#0f0f0f", color: "white" }}>
+        <Container maxWidth="md">
+          <Typography variant="h4" align="center" fontWeight={600} mb={5}>
+            What Creators Are Saying 💬
+          </Typography>
+          <Grid container spacing={4}>
+            {[
+              {
+                name: "@SharpPicksOnly",
+                quote:
+                  "I made $1,200 in my first month and didn’t lift a finger. Fans love it — I just post the link.",
+              },
+              {
+                name: "@BettingBryan",
+                quote:
+                  "Super easy setup. The site looks legit and it’s completely hands-off. Total win.",
+              },
+            ].map((item, i) => (
+              <Grid item xs={12} sm={6} key={i}>
+                <Box
+                  sx={{
+                    backgroundColor: "#1f1f1f",
+                    p: 3,
+                    borderRadius: "12px",
+                    height: "100%",
+                  }}
+                >
+                  <Typography variant="body1" fontStyle="italic">
+                    “{item.quote}”
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ mt: 2, opacity: 0.7, fontWeight: 600 }}
+                  >
+                    – {item.name}
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* FINAL CTA */}
       <Box
         sx={{
+          py: 8,
+          background: "#4F46E5",
+          color: "white",
           textAlign: "center",
-          py: { xs: 4, sm: 6 },
-          background: "black",
-          width: "100vw",
-          maxWidth: "100%",
-          overflowX: "hidden",
         }}
       >
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: "700",
-            fontSize: { xs: "24px", sm: "32px", md: "36px" },
-            color: "white",
-            mb: 3,
-            maxWidth: "100%",
-          }}
-        >
-          🚀 Available Contests
-        </Typography>
-
-        <div className="card-container">
-          {contestData.some((item) => item.isContestActive) ? (
-            contestData.map(
-              (item, index) =>
-                item.isContestActive && (
-                  <ContestCard
-                    key={index}
-                    primaryImageUrl={item.primaryImageUrl}
-                    contestName={item.contestName}
-                    contestTotalPrize={item.contestTotalPrize}
-                    startDate={item.currentContestStartDate}
-                    endDate={item.currentContestEndDate}
-                    contestLeague={item.contestLeague}
-                  />
-                )
-            )
-          ) : (
-            <Typography
-              variant="h6"
+        <Container maxWidth="sm">
+          <Typography variant="h4" fontWeight={700}>
+            Ready to Start Earning from Your Fans?
+          </Typography>
+          <Typography variant="h6" sx={{ mt: 2, mb: 4, opacity: 0.9 }}>
+            Let us build your branded contest site in days — not weeks.
+          </Typography>
+          <a
+            href="https://calendly.com/sure-odds-info/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Book Your Demo on Calendly"
+          >
+            <Button
+              variant="contained"
+              size="large"
               sx={{
-                color: "white",
-                fontWeight: "400",
-                fontSize: { xs: "16px", sm: "20px" },
-                opacity: 0.8,
-                textAlign: "center",
-                mt: 3,
+                backgroundColor: "white",
+                color: "#4F46E5",
+                fontWeight: 700,
+                borderRadius: "12px",
+                px: 5,
+                py: 1.75,
+                "&:hover": {
+                  backgroundColor: "#e5e5ff",
+                },
               }}
             >
-              🚫 No active contests available at the moment. Please check back
-              later!
-            </Typography>
-          )}
-        </div>
+              🚀 Book Your Demo
+            </Button>
+          </a>
+        </Container>
       </Box>
-      <KofiWidget />
+
       <Footer />
     </>
   );

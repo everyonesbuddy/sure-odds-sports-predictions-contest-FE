@@ -9,6 +9,7 @@ import Leaderboard from "./components/Leaderboard";
 import PostYourPicks from "./components/PostYourPicks";
 import TournamentDetails from "./components/TournamentDetails";
 import Nav from "./components/Nav";
+import ContestDemo from "./components/ContestDemo";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import { TimerProvider } from "./context/TimerContext";
@@ -30,6 +31,7 @@ const App = () => {
                 path="/leaderboard"
                 element={<PrivateRoute element={Leaderboard} />}
               />
+              <Route path="/contestDemo" element={<ContestDemo />} />
               <Route
                 path="/postYourPicks"
                 element={<PrivateRoute element={PostYourPicks} />}

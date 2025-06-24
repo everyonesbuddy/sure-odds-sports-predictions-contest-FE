@@ -500,19 +500,8 @@ const PicksForm = ({
                       >
                         {gameDetails?.bookmakers &&
                         gameDetails.bookmakers.length > 0 ? (
-                          gameDetails.bookmakers[0]?.markets[0]?.outcomes
-                            .filter((outcome) => {
-                              const odds = outcome?.price;
-
-                              // Convert American odds to implied probability
-                              const impliedProbability =
-                                odds < 0
-                                  ? -odds / (-odds + 100)
-                                  : 100 / (odds + 100);
-
-                              return impliedProbability <= 0.7; // Only allow if 70% or less
-                            })
-                            .map((outcome) =>
+                          gameDetails.bookmakers[0]?.markets[0]?.outcomes.map(
+                            (outcome) =>
                               pickType === "money line" ? (
                                 <MenuItem
                                   key={outcome?.name}
@@ -529,7 +518,7 @@ const PicksForm = ({
                                   {outcome?.point})
                                 </MenuItem>
                               ) : null
-                            )
+                          )
                         ) : (
                           <MenuItem disabled>
                             No betting options available

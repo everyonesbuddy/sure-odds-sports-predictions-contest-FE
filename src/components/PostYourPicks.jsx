@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import ContestDetailAndAnalytics from "./ContestDetailAndAnalytics";
+import ContestDetails from "./ContestDetails";
 import PicksForm from "./PicksForm";
-import AffiliateSliders from "./AffiliateSliders";
 
 const PostYourPicks = ({
   contestName,
@@ -30,7 +29,7 @@ const PostYourPicks = ({
           padding: isMobile ? 1 : 2,
         }}
       >
-        <ContestDetailAndAnalytics
+        <ContestDetails
           contestName={contestName}
           spreadsheetUrl={spreadsheetUrl}
           contestTotalPrize={contestTotalPrize}
@@ -53,7 +52,6 @@ const PostYourPicks = ({
           availableFreePicks={availableFreePicks}
         />
       </Box>
-      <AffiliateSliders affiliates={affiliates} />
     </>
   );
 };
