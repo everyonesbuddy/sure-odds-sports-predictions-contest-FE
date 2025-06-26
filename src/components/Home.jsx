@@ -96,8 +96,8 @@ const Home = () => {
               },
               {
                 emoji: "💰",
-                title: "Earn From Every Entry",
-                desc: "Get 50% of all platform fees. No setup costs, no tech headaches.",
+                title: "You Set the Prize Pool. You Keep the Rest.",
+                desc: "Charge what you want. Offer prizes you want. You keep the margin.",
               },
               {
                 emoji: "📈",
@@ -106,8 +106,8 @@ const Home = () => {
               },
               {
                 emoji: "✅",
-                title: "Zero Work Required",
-                desc: "We handle everything — contests, payments, support, and payouts.",
+                title: "We Handle Everything",
+                desc: "You focus on your audience — we run the tech, handle payments, run scoring, and support your players.",
               },
             ].map((item, i) => (
               <Grid item xs={12} sm={6} key={i}>
@@ -200,33 +200,66 @@ const Home = () => {
           </Typography>
           <Grid container spacing={2}>
             {[
-              { entries: "50 entries/week", earnings: "$200/month" },
-              { entries: "200 entries/week", earnings: "$800/month" },
-              { entries: "500 entries/week", earnings: "$2,000/month" },
-            ].map((row, idx) => (
-              <Grid item xs={12} key={idx}>
-                <Box
-                  sx={{
-                    p: 3,
-                    border: "1px solid #333",
-                    borderRadius: "12px",
-                    textAlign: "center",
-                    backgroundColor: "#1a1a1a",
-                  }}
-                >
-                  <Typography variant="h6">{row.entries}</Typography>
-                  <Typography variant="body1" sx={{ mt: 1, opacity: 0.8 }}>
-                    Est. Earnings: <strong>{row.earnings}</strong>
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
+              {
+                entries: 50,
+                entryFee: 50,
+                payoutPercent: 0.7,
+              },
+              {
+                entries: 200,
+                entryFee: 50,
+                payoutPercent: 0.7,
+              },
+              {
+                entries: 500,
+                entryFee: 50,
+                payoutPercent: 0.7,
+              },
+            ].map((row, idx) => {
+              const totalCollected = row.entries * row.entryFee;
+              const platformFee = totalCollected * 0.1;
+              const prizePool = totalCollected * row.payoutPercent;
+              const creatorProfit = totalCollected - platformFee - prizePool;
+
+              return (
+                <Grid item xs={12} key={idx}>
+                  <Box
+                    sx={{
+                      p: 3,
+                      border: "1px solid #333",
+                      borderRadius: "12px",
+                      textAlign: "center",
+                      backgroundColor: "#1a1a1a",
+                    }}
+                  >
+                    <Typography variant="h6">
+                      {row.entries} entries/week
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 1, opacity: 0.8 }}>
+                      Entry Fee: <strong>${row.entryFee}</strong>
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 1, opacity: 0.8 }}>
+                      Prize Pool (70%):{" "}
+                      <strong>${prizePool.toLocaleString()}</strong>
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 1, opacity: 0.8 }}>
+                      Platform Fee (10%):{" "}
+                      <strong>${platformFee.toLocaleString()}</strong>
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 2, fontWeight: 600 }}>
+                      Est. Profit:{" "}
+                      <strong>${creatorProfit.toLocaleString()}/week</strong>
+                    </Typography>
+                  </Box>
+                </Grid>
+              );
+            })}
           </Grid>
         </Container>
       </Box>
 
       {/* TESTIMONIALS */}
-      <Box sx={{ py: 8, background: "#0f0f0f", color: "white" }}>
+      {/* <Box sx={{ py: 8, background: "#0f0f0f", color: "white" }}>
         <Container maxWidth="md">
           <Typography variant="h4" align="center" fontWeight={600} mb={5}>
             What Creators Are Saying 💬
@@ -267,7 +300,7 @@ const Home = () => {
             ))}
           </Grid>
         </Container>
-      </Box>
+      </Box> */}
 
       {/* FINAL CTA */}
       <Box
