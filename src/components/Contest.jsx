@@ -187,7 +187,10 @@ const Contest = () => {
           currentWinStreak, // Include current win streak in the return object
         })
       )
-      .sort((a, b) => b.currentWinStreak - a.currentWinStreak); // Sort by number of bets won
+      .sort((a, b) => b.numberOfBetsWon - a.numberOfBetsWon); // Sort by number of bets won for pickem
+
+    //if steak contest sort like this
+    // .sort((a, b) => b.currentWinStreak - a.currentWinStreak);
   };
 
   const a11yProps = (index) => ({

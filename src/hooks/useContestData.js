@@ -46,6 +46,7 @@ export const useContestData = () => {
         contestLeague: [
           "basketball_nba",
           // "basketball_ncaab",
+          "basketball_wnba",
           "soccer_epl",
           "soccer_germany_bundesliga",
           "soccer_italy_serie_a",
@@ -53,6 +54,7 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
+        contestType: "Streak",
         availableFreePicks: 20,
         affiliates: [
           {
@@ -105,6 +107,7 @@ export const useContestData = () => {
           }),
         contestLeague: [
           "basketball_nba",
+          "basketball_wnba",
           // "basketball_ncaab",
           "soccer_epl",
           "soccer_germany_bundesliga",
@@ -113,6 +116,7 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
+        contestType: "Pickem",
         availableFreePicks: 35,
         affiliates: [
           {
