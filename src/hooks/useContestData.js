@@ -18,7 +18,7 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Weekly Pickem`,
+        contestName: `Weekly Streak`,
         primaryImageUrl: weeklyPickemImage,
         contestTotalPrize: 500,
         spreadsheetUrl:
@@ -55,7 +55,7 @@ export const useContestData = () => {
           "icehockey_nhl",
         ],
         contestType: "Streak",
-        availableFreePicks: 20,
+        availableFreePicks: 5,
         affiliates: [
           {
             name: "Doink Sports",

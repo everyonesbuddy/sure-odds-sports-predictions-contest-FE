@@ -11,7 +11,7 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/AuthContext";
 
-const ContestDetails = ({
+const ContestInfo = ({
   contestName,
   spreadsheetUrl,
   contestTotalPrize,
@@ -21,6 +21,7 @@ const ContestDetails = ({
   currentUserBetsForContest,
   aggregateBets,
   availableFreePicks,
+  contestType,
 }) => {
   const [countdownMessage, setCountdownMessage] = useState("");
   const [participantsUsername, setParticipantsUsername] = useState("");
@@ -103,14 +104,52 @@ const ContestDetails = ({
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [contestStartDate, contestEndDate]);
 
-  const generatePayoutTiers = (totalPrize) => {
-    const percentages = [
-      0.28, 0.2, 0.15, 0.1, 0.08, 0.06, 0.05, 0.04, 0.02, 0.02,
-    ];
-    return percentages.map((pct, index) => ({
-      rank: index + 1,
-      amount: (totalPrize * pct).toFixed(2),
-    }));
+  // const generatePayoutTiers = (totalPrize) => {
+  //   const percentages = [
+  //     0.28, 0.2, 0.15, 0.1, 0.08, 0.06, 0.05, 0.04, 0.02, 0.02,
+  //   ];
+  //   return percentages.map((pct, index) => ({
+  //     rank: index + 1,
+  //     amount: (totalPrize * pct).toFixed(2),
+  //   }));
+  // };
+  const generatePayoutTiers = (totalPrize, contestType, availableFreePicks) => {
+    if (contestType === "Pickem") {
+      const percentages = [
+        0.28, 0.2, 0.15, 0.1, 0.08, 0.06, 0.05, 0.04, 0.02, 0.02,
+      ];
+      return percentages.map((pct, index) => ({
+        rank: index + 1,
+        amount: (totalPrize * pct).toFixed(2),
+      }));
+    } else if (contestType === "Streak") {
+      // Detailed payout structure for streak contests
+      return [
+        {
+          condition: `Achieve a perfect streak of ${availableFreePicks} for ${availableFreePicks}`,
+          message: `You must win all ${availableFreePicks} picks to qualify for the prize.`,
+          amount: `$${totalPrize.toFixed(2)}`,
+        },
+        {
+          condition: `If no one achieves a perfect streak`,
+          message: `The prize will roll over to the next contest.`,
+          amount: `No payout for this contest.`,
+        },
+        {
+          condition: `Tiebreaker rules`,
+          message: `If multiple participants achieve the same streak, the prize will be split evenly.`,
+          amount: `Prize shared equally.`,
+        },
+        {
+          condition: `Example`,
+          message: `If 3 participants achieve a streak of ${availableFreePicks}, each will receive $${(
+            totalPrize / 3
+          ).toFixed(2)}.`,
+          amount: `Split prize.`,
+        },
+      ];
+    }
+    return [];
   };
 
   return (
@@ -188,16 +227,51 @@ const ContestDetails = ({
               fontSize: isMobile ? "12px" : "14px",
               maxWidth: "400px",
               margin: "0 auto",
+              padding: 0,
             }}
           >
-            {generatePayoutTiers(contestTotalPrize).map((p, index) => (
-              <ListItem
-                key={index}
-                sx={{ display: "flex", justifyContent: "space-between", px: 0 }}
-              >
-                <span>#{p.rank}</span> <strong>${p.amount}</strong>
-              </ListItem>
-            ))}
+            {contestType === "Pickem"
+              ? generatePayoutTiers(
+                  contestTotalPrize,
+                  contestType,
+                  availableFreePicks
+                ).map((p, index) => (
+                  <ListItem
+                    key={index}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      px: 0,
+                    }}
+                  >
+                    <span>#{p.rank}</span> <strong>${p.amount}</strong>
+                  </ListItem>
+                ))
+              : generatePayoutTiers(
+                  contestTotalPrize,
+                  contestType,
+                  availableFreePicks
+                ).map((p, index) => (
+                  <ListItem
+                    key={index}
+                    sx={{
+                      display: "list-item", // Use list-item for bullet points
+                      listStyleType: "disc", // Add bullet points
+                      paddingLeft: "20px", // Add spacing for bullet alignment
+                      marginBottom: "3px", // Add spacing between bullet points
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: isMobile ? "12px" : "14px",
+                        color: "#f5f5f5",
+                      }}
+                    >
+                      <strong>{p.condition}:</strong> {p.message} <br />
+                      <strong>Amount:</strong> {p.amount}
+                    </Typography>
+                  </ListItem>
+                ))}
           </List>
         </Card>
       </Box>
@@ -205,4 +279,4 @@ const ContestDetails = ({
   );
 };
 
-export default ContestDetails;
+export default ContestInfo;

@@ -7,7 +7,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Leaderboard from "./components/Leaderboard";
 import PostYourPicks from "./components/PostYourPicks";
-import TournamentDetails from "./components/TournamentDetails";
+import About from "./components/About";
 import Nav from "./components/Nav";
 import B2bLandingPage from "./components/B2bLandingPage";
 import PrivateRoute from "./components/PrivateRoute";
@@ -36,7 +36,7 @@ const App = () => {
                 path="/postYourPicks"
                 element={<PrivateRoute element={PostYourPicks} />}
               />
-              <Route path="/about" element={<TournamentDetails />} />
+              <Route path="/about" element={<About />} />
               <Route
                 path="/personalizedAnalytics"
                 element={<PrivateRoute element={PersonalizedAnalytics} />}

@@ -24,6 +24,7 @@ const ContestCard = ({
   contestTotalPrize,
   startDate,
   endDate,
+  contestType,
 }) => {
   const navigate = useNavigate();
   const [leagueColors, setLeagueColors] = useState({});
@@ -53,6 +54,7 @@ const ContestCard = ({
           📅: {new Date(startDate).toLocaleDateString()} -{" "}
           {new Date(endDate).toLocaleDateString()}
         </p>
+        <p className="card-dates">Contest Type: {contestType}</p>
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span

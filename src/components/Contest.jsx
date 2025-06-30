@@ -107,9 +107,9 @@ const Contest = () => {
         return postedTime.isBetween(lasContestStart, lasContestEnd, null, "[]");
       });
 
-      setAggregateBets(aggregateBetsCalculation(filtered));
+      setAggregateBets(aggregateBetsCalculation(filtered, contestDetails));
       setLastContestAggregateBets(
-        aggregateBetsCalculation(filteredLastContest)
+        aggregateBetsCalculation(filteredLastContest, contestDetails)
       );
     }
   }, [allUsersBetsForContest, contestDetails]);
@@ -129,7 +129,7 @@ const Contest = () => {
     checkRegistration();
   }, [user, contestDetails]);
 
-  const aggregateBetsCalculation = (bets) => {
+  const aggregateBetsCalculation = (bets, contestDetails) => {
     const handicappers = {};
 
     bets.forEach((bet) => {
@@ -166,31 +166,35 @@ const Contest = () => {
       }
     });
 
-    return Object.entries(handicappers)
-      .map(
-        ([
-          username,
-          {
-            totalOdds,
-            totalWonOdds,
-            numberOfBets,
-            numberOfBetsWon,
-            currentWinStreak,
-          },
-        ]) => ({
-          username,
+    const results = Object.entries(handicappers).map(
+      ([
+        username,
+        {
           totalOdds,
           totalWonOdds,
           numberOfBets,
           numberOfBetsWon,
-          winRatio: (numberOfBetsWon / numberOfBets) * 100, // Calculate win ratio as a percentage
-          currentWinStreak, // Include current win streak in the return object
-        })
-      )
-      .sort((a, b) => b.numberOfBetsWon - a.numberOfBetsWon); // Sort by number of bets won for pickem
+          currentWinStreak,
+        },
+      ]) => ({
+        username,
+        totalOdds,
+        totalWonOdds,
+        numberOfBets,
+        numberOfBetsWon,
+        winRatio: (numberOfBetsWon / numberOfBets) * 100, // Calculate win ratio as a percentage
+        currentWinStreak, // Include current win streak in the return object
+      })
+    );
 
-    //if steak contest sort like this
-    // .sort((a, b) => b.currentWinStreak - a.currentWinStreak);
+    // Sort based on contest type
+    if (contestDetails.contestType === "Pickem") {
+      return results.sort((a, b) => b.numberOfBetsWon - a.numberOfBetsWon);
+    } else if (contestDetails.contestType === "Streak") {
+      return results.sort((a, b) => b.currentWinStreak - a.currentWinStreak);
+    }
+
+    return results; // Default return if no contest type matches
   };
 
   const a11yProps = (index) => ({
@@ -379,6 +383,7 @@ const Contest = () => {
                 aggregateBets={aggregateBets}
                 availableFreePicks={contestDetails.availableFreePicks}
                 affiliates={contestDetails.affiliates}
+                contestType={contestDetails.contestType}
               />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
