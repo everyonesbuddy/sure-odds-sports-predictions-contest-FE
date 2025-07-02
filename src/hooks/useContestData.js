@@ -1,8 +1,8 @@
 import { useWeek } from "../context/WeekContext";
 import { useMonth } from "../context/MonthContext";
 import { useMemo } from "react";
-import weeklyPickemImage from "../assets/weekly-pickem.jpg";
-import monthlyPickemImage from "../assets/monthly-pickem.jpg";
+import weeklyStreakImage from "../assets/weekly-streak.jpg";
+import monthlyStreakImage from "../assets/monthly-streak.jpg";
 import doinkLogo from "../assets/doink-logo.png";
 import oddsJamLogo from "../assets/oddsjam-logo.png";
 import dgFantasyLogo from "../assets/dgfantasy-logo.png";
@@ -19,8 +19,8 @@ export const useContestData = () => {
     return [
       {
         contestName: `Weekly Streak`,
-        primaryImageUrl: weeklyPickemImage,
-        contestTotalPrize: 500,
+        primaryImageUrl: weeklyStreakImage,
+        contestTotalPrize: 100,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
         isContestActive: true,
@@ -79,9 +79,9 @@ export const useContestData = () => {
         ],
       },
       {
-        contestName: `Monthly Pickem`,
-        primaryImageUrl: monthlyPickemImage,
-        contestTotalPrize: 2000,
+        contestName: `Monthly Streak`,
+        primaryImageUrl: monthlyStreakImage,
+        contestTotalPrize: 500,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
@@ -116,8 +116,8 @@ export const useContestData = () => {
           "soccer_usa_mls",
           "icehockey_nhl",
         ],
-        contestType: "Pickem",
-        availableFreePicks: 35,
+        contestType: "Streak",
+        availableFreePicks: 15,
         affiliates: [
           {
             name: "Doink Sports",
