@@ -18,7 +18,7 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Weekly Streak`,
+        contestName: `Weekly Pickem`,
         primaryImageUrl: weeklyStreakImage,
         contestTotalPrize: 100,
         spreadsheetUrl:
