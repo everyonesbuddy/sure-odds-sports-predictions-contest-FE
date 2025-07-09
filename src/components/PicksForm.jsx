@@ -382,7 +382,8 @@ const PicksForm = ({
                   label="Pick Type"
                   onChange={(e) => setPickType(e.target.value)}
                 >
-                  <MenuItem value="money line">Money Line 💰</MenuItem>
+                  {/* use this in entry fee platform but we are on the free platform */}
+                  {/* <MenuItem value="money line">Money Line 💰</MenuItem> */}
                   <MenuItem value="spread">Spread 📏</MenuItem>
                 </Select>
               </FormControl>
@@ -498,7 +499,8 @@ const PicksForm = ({
                           }
                         }}
                       >
-                        {gameDetails?.bookmakers &&
+                        {/* use this in entry fee platform but we are on the free platform */}
+                        {/* {gameDetails?.bookmakers &&
                         gameDetails.bookmakers.length > 0 ? (
                           gameDetails.bookmakers[0]?.markets[0]?.outcomes
                             .filter((outcome) => {
@@ -530,6 +532,34 @@ const PicksForm = ({
                                 </MenuItem>
                               ) : null
                             )
+                        ) : (
+                          <MenuItem disabled>
+                            No betting options available
+                          </MenuItem>
+                        )} */}
+
+                        {/* this version does not fiter out certain odds */}
+                        {gameDetails?.bookmakers &&
+                        gameDetails.bookmakers.length > 0 ? (
+                          gameDetails.bookmakers[0]?.markets[0]?.outcomes.map(
+                            (outcome) =>
+                              pickType === "money line" ? (
+                                <MenuItem
+                                  key={outcome?.name}
+                                  value={outcome?.name}
+                                >
+                                  {outcome?.name} ({outcome?.price})
+                                </MenuItem>
+                              ) : pickType === "spread" ? (
+                                <MenuItem
+                                  key={outcome?.name}
+                                  value={outcome?.name}
+                                >
+                                  {outcome?.name} ({outcome?.price}, Spread:{" "}
+                                  {outcome?.point})
+                                </MenuItem>
+                              ) : null
+                          )
                         ) : (
                           <MenuItem disabled>
                             No betting options available

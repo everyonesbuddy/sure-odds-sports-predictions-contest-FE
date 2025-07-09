@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Footer from "./Footer";
 import ContestCard from "./ContestCard";
+import KofiWidget from "./KofiWidget";
 import { useContestData } from "../hooks/useContestData";
 import "../css/Home.css";
 
@@ -47,7 +48,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆 Africas #1 Streak and Pick'em Contest
+            🏆 Global Free to Play Streak Contest
           </Typography>
 
           <Typography
@@ -59,7 +60,7 @@ const Home = () => {
               maxWidth: "600px",
             }}
           >
-            Think you can predict the game? Compete for free and win cash
+            Think you can predict the game? Compete for free and win amazing
             prizes.🔥
           </Typography>
         </Box>
@@ -166,6 +167,7 @@ const Home = () => {
           )}
         </div>
       </Box>
+      <KofiWidget />
       <Footer />
     </>
   );
