@@ -128,7 +128,7 @@ const ContestInfo = ({
         {
           condition: `Achieve a perfect streak of ${availableFreePicks} for ${availableFreePicks}`,
           message: `You must win all ${availableFreePicks} picks to qualify for the prize.`,
-          amount: `$${totalPrize.toFixed(2)}`,
+          amount: `${totalPrize}`,
         },
         {
           condition: `If no one achieves a perfect streak`,

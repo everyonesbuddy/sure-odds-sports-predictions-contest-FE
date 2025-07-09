@@ -146,6 +146,7 @@ const Home = () => {
                     endDate={item.currentContestEndDate}
                     contestLeague={item.contestLeague}
                     contestType={item.contestType}
+                    availableMarkets={item.availableMarkets}
                   />
                 )
             )

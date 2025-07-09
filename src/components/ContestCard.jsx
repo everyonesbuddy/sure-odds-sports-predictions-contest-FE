@@ -25,6 +25,7 @@ const ContestCard = ({
   startDate,
   endDate,
   contestType,
+  availableMarkets,
 }) => {
   const navigate = useNavigate();
   const [leagueColors, setLeagueColors] = useState({});
@@ -46,15 +47,14 @@ const ContestCard = ({
     <div className="card" onClick={handleClick}>
       <img src={primaryImageUrl} alt={contestName} className="card-image" />
       <div className="card-content">
-        <h2 className="card-title">{contestName} Contest</h2>
-        <p className="card-price">
-          🥇Total Pize Money: ${contestTotalPrize} USD
-        </p>
+        <h2 className="card-title">{contestName}</h2>
+        <p className="card-price">🥇Pize: {contestTotalPrize}</p>
         <p className="card-dates">
           📅: {new Date(startDate).toLocaleDateString()} -{" "}
           {new Date(endDate).toLocaleDateString()}
         </p>
         <p className="card-dates">Contest Type: {contestType}</p>
+        <p className="card-dates">Available Market: {availableMarkets}</p>
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span

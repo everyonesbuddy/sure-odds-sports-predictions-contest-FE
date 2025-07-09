@@ -18,9 +18,9 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Weekly Streak`,
+        contestName: `Weekly ATS Streak`,
         primaryImageUrl: weeklyStreakImage,
-        contestTotalPrize: 100,
+        contestTotalPrize: "$100 Amazon Gift Card",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
         isContestActive: true,
@@ -44,17 +44,19 @@ export const useContestData = () => {
             timeZone: "America/New_York",
           }),
         contestLeague: [
-          "basketball_nba",
+          // "basketball_nba",
           // "basketball_ncaab",
           "basketball_wnba",
-          "soccer_epl",
-          "soccer_germany_bundesliga",
-          "soccer_italy_serie_a",
-          "soccer_spain_la_liga",
-          "soccer_usa_mls",
-          "icehockey_nhl",
+          "baseball_mlb",
+          // "soccer_epl",
+          // "soccer_germany_bundesliga",
+          // "soccer_italy_serie_a",
+          // "soccer_spain_la_liga",
+          // "soccer_usa_mls",
+          // "icehockey_nhl",
         ],
         contestType: "Streak",
+        availableMarkets: ["Spread"],
         availableFreePicks: 5,
         affiliates: [
           {
@@ -79,9 +81,9 @@ export const useContestData = () => {
         ],
       },
       {
-        contestName: `Monthly Streak`,
+        contestName: `Monthly ATS Streak`,
         primaryImageUrl: monthlyStreakImage,
-        contestTotalPrize: 500,
+        contestTotalPrize: "$250 Amazon Gift Card",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
@@ -106,17 +108,19 @@ export const useContestData = () => {
             timeZone: "America/New_York",
           }),
         contestLeague: [
-          "basketball_nba",
+          // "basketball_nba",
           "basketball_wnba",
+          "baseball_mlb",
           // "basketball_ncaab",
-          "soccer_epl",
-          "soccer_germany_bundesliga",
-          "soccer_italy_serie_a",
-          "soccer_spain_la_liga",
-          "soccer_usa_mls",
-          "icehockey_nhl",
+          // "soccer_epl",
+          // "soccer_germany_bundesliga",
+          // "soccer_italy_serie_a",
+          // "soccer_spain_la_liga",
+          // "soccer_usa_mls",
+          // "icehockey_nhl",
         ],
         contestType: "Streak",
+        availableMarkets: ["Spread"],
         availableFreePicks: 15,
         affiliates: [
           {

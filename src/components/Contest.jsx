@@ -267,9 +267,7 @@ const Contest = () => {
                   mb: 2,
                 }}
               >
-                Buy in. Make picks. Climb the leaderboard. Win up to{" "}
-                <strong>${contestDetails.contestTotalPrize}</strong> in real
-                cash prizes.
+                Buy in. Make picks. Climb the leaderboard. Win amazing prizes.
               </Typography>
 
               <Box
@@ -283,7 +281,7 @@ const Contest = () => {
                   textAlign: "center",
                 }}
               >
-                💰 Prize Pool: ${contestDetails.contestTotalPrize}
+                💰 Prize Pool: {contestDetails.contestTotalPrize}
               </Box>
             </Box>
 

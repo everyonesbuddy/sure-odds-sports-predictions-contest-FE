@@ -28,6 +28,7 @@ export const leagueApiMap = {
 export const leagueOptions = [
   { value: "basketball_nba", label: "NBA 🏀" },
   { value: "basketball_wnba", label: "WNBA 🏀" },
+  { value: "baseball_mlb", label: "MLB ⚾" },
   { value: "americanfootball_nfl", label: "NFL 🏈" },
   { value: "americanfootball_ncaaf", label: "NCAA Football 🏈" },
   { value: "basketball_ncaab", label: "NCAA Men Basketball 🏀" },
