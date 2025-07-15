@@ -141,7 +141,7 @@ const Home = () => {
                     key={index}
                     primaryImageUrl={item.primaryImageUrl}
                     contestName={item.contestName}
-                    contestTotalPrize={item.contestTotalPrize}
+                    contestPrimaryPrize={item.contestPrimaryPrize}
                     startDate={item.currentContestStartDate}
                     endDate={item.currentContestEndDate}
                     contestLeague={item.contestLeague}

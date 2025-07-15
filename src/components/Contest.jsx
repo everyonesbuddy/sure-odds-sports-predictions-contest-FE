@@ -281,7 +281,7 @@ const Contest = () => {
                   textAlign: "center",
                 }}
               >
-                💰 Prize Pool: {contestDetails.contestTotalPrize}
+                💰 Prize Pool: ${contestDetails.contestPrimaryPrize}
               </Box>
             </Box>
 
@@ -376,7 +376,7 @@ const Contest = () => {
           <CustomTabPanel value={value} index={0}>
             <PostYourPicks
               contestName={contestDetails.contestName}
-              contestTotalPrize={contestDetails.contestTotalPrize}
+              contestPrimaryPrize={contestDetails.contestPrimaryPrize}
               spreadsheetUrl={contestDetails.spreadsheetUrl}
               contestEndDate={contestDetails.currentContestEndDate}
               contestStartDate={contestDetails.currentContestStartDate}
@@ -409,7 +409,7 @@ const Contest = () => {
           <Paywall
             contestName={contestDetails.contestName}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
-            contestTotalPrize={contestDetails.contestTotalPrize}
+            contestPrimaryPrize={contestDetails.contestPrimaryPrize}
             contestLeague={contestDetails.contestLeague}
             contestEndDate={contestDetails.currentContestEndDate}
             contestStartDate={contestDetails.currentContestStartDate}

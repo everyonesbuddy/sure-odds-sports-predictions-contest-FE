@@ -21,7 +21,7 @@ const ContestCard = ({
   primaryImageUrl,
   contestName,
   contestLeague,
-  contestTotalPrize,
+  contestPrimaryPrize,
   startDate,
   endDate,
   contestType,
@@ -48,7 +48,7 @@ const ContestCard = ({
       <img src={primaryImageUrl} alt={contestName} className="card-image" />
       <div className="card-content">
         <h2 className="card-title">{contestName}</h2>
-        <p className="card-price">🥇Pize: {contestTotalPrize}</p>
+        <p className="card-price">🥇Pize: ${contestPrimaryPrize}</p>
         <p className="card-dates">
           📅: {new Date(startDate).toLocaleDateString()} -{" "}
           {new Date(endDate).toLocaleDateString()}

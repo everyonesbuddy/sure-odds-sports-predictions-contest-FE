@@ -20,7 +20,7 @@ export const useContestData = () => {
       {
         contestName: `Weekly ATS Streak`,
         primaryImageUrl: weeklyStreakImage,
-        contestTotalPrize: "$100 Amazon Gift Card",
+        contestPrimaryPrize: 100,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
         isContestActive: true,
@@ -83,7 +83,7 @@ export const useContestData = () => {
       {
         contestName: `Monthly ATS Streak`,
         primaryImageUrl: monthlyStreakImage,
-        contestTotalPrize: "$250 Amazon Gift Card",
+        contestPrimaryPrize: 250,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,

@@ -18,7 +18,7 @@ import { useAuth } from "../context/AuthContext";
 const Paywall = ({
   contestName,
   spreadsheetUrl,
-  contestTotalPrize,
+  contestPrimaryPrize,
   contestLeague,
   contestEndDate,
   contestStartDate,

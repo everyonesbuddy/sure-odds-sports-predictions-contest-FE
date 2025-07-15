@@ -6,7 +6,7 @@ import ContestInfo from "./ContestInfo";
 const PostYourPicks = ({
   contestName,
   spreadsheetUrl,
-  contestTotalPrize,
+  contestPrimaryPrize,
   contestLeague,
   contestEndDate,
   contestStartDate,
@@ -33,7 +33,7 @@ const PostYourPicks = ({
         <ContestInfo
           contestName={contestName}
           spreadsheetUrl={spreadsheetUrl}
-          contestTotalPrize={contestTotalPrize}
+          contestPrimaryPrize={contestPrimaryPrize}
           contestLeague={contestLeague}
           contestEndDate={contestEndDate}
           contestStartDate={contestStartDate}
@@ -45,7 +45,7 @@ const PostYourPicks = ({
         <PicksForm
           contestName={contestName}
           spreadsheetUrl={spreadsheetUrl}
-          contestTotalPrize={contestTotalPrize}
+          contestPrimaryPrize={contestPrimaryPrize}
           contestLeague={contestLeague}
           contestEndDate={contestEndDate}
           contestStartDate={contestStartDate}

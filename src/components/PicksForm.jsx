@@ -27,7 +27,7 @@ import { leagueApiMap, leagueOptions } from "../utils/leagueData";
 const PicksForm = ({
   contestName,
   spreadsheetUrl,
-  contestTotalPrize,
+  contestPrimaryPrize,
   contestLeague,
   contestEndDate,
   contestStartDate,

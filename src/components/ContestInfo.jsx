@@ -14,7 +14,7 @@ import { useAuth } from "../context/AuthContext";
 const ContestInfo = ({
   contestName,
   spreadsheetUrl,
-  contestTotalPrize,
+  contestPrimaryPrize,
   contestLeague,
   contestEndDate,
   contestStartDate,
@@ -128,7 +128,7 @@ const ContestInfo = ({
         {
           condition: `Achieve a perfect streak of ${availableFreePicks} for ${availableFreePicks}`,
           message: `You must win all ${availableFreePicks} picks to qualify for the prize.`,
-          amount: `${totalPrize}`,
+          amount: `$${totalPrize}`,
         },
         {
           condition: `If no one achieves a perfect streak`,
@@ -232,7 +232,7 @@ const ContestInfo = ({
           >
             {contestType === "Pickem"
               ? generatePayoutTiers(
-                  contestTotalPrize,
+                  contestPrimaryPrize,
                   contestType,
                   availableFreePicks
                 ).map((p, index) => (
@@ -248,7 +248,7 @@ const ContestInfo = ({
                   </ListItem>
                 ))
               : generatePayoutTiers(
-                  contestTotalPrize,
+                  contestPrimaryPrize,
                   contestType,
                   availableFreePicks
                 ).map((p, index) => (
