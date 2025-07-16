@@ -54,7 +54,12 @@ const ContestCard = ({
           {new Date(endDate).toLocaleDateString()}
         </p>
         <p className="card-dates">Contest Type: {contestType}</p>
-        <p className="card-dates">Available Market: {availableMarkets}</p>
+        <p className="card-dates">
+          Available Markets:{" "}
+          {availableMarkets && availableMarkets.length > 0
+            ? availableMarkets.join(", ")
+            : "None"}
+        </p>
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span

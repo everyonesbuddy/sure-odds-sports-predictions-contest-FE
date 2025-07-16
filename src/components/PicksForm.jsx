@@ -34,6 +34,7 @@ const PicksForm = ({
   currentUserBetsForContest,
   aggregateBets,
   availableFreePicks,
+  availableMarkets,
 }) => {
   const [league, setLeague] = useState("");
   const [pickType, setPickType] = useState("");
@@ -382,9 +383,12 @@ const PicksForm = ({
                   label="Pick Type"
                   onChange={(e) => setPickType(e.target.value)}
                 >
-                  {/* use this in entry fee platform but we are on the free platform */}
-                  {/* <MenuItem value="money line">Money Line 💰</MenuItem> */}
-                  <MenuItem value="spread">Spread 📏</MenuItem>
+                  {availableMarkets.includes("Moneyline") && (
+                    <MenuItem value="money line">Money Line 💰</MenuItem>
+                  )}
+                  {availableMarkets.includes("Spread") && (
+                    <MenuItem value="spread">Spread 📏</MenuItem>
+                  )}
                 </Select>
               </FormControl>
 

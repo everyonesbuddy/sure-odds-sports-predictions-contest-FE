@@ -43,18 +43,7 @@ export const useContestData = () => {
           lastWeekStartEnd.endOfLastWeek.toLocaleString("en-US", {
             timeZone: "America/New_York",
           }),
-        contestLeague: [
-          // "basketball_nba",
-          // "basketball_ncaab",
-          "basketball_wnba",
-          "baseball_mlb",
-          // "soccer_epl",
-          // "soccer_germany_bundesliga",
-          // "soccer_italy_serie_a",
-          // "soccer_spain_la_liga",
-          // "soccer_usa_mls",
-          // "icehockey_nhl",
-        ],
+        contestLeague: ["basketball_wnba", "baseball_mlb"],
         contestType: "Streak",
         availableMarkets: ["Spread"],
         availableFreePicks: 5,
@@ -86,7 +75,7 @@ export const useContestData = () => {
         contestPrimaryPrize: 250,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
-        isContestActive: true,
+        isContestActive: false,
         currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
           "en-US",
           {
@@ -120,7 +109,7 @@ export const useContestData = () => {
           // "icehockey_nhl",
         ],
         contestType: "Streak",
-        availableMarkets: ["Spread"],
+        availableMarkets: ["Spread", "Moneyline"],
         availableFreePicks: 15,
         affiliates: [
           {

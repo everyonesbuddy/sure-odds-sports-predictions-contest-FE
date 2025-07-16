@@ -15,6 +15,7 @@ const PostYourPicks = ({
   availableFreePicks,
   affiliates,
   contestType,
+  availableMarkets,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -52,6 +53,7 @@ const PostYourPicks = ({
           currentUserBetsForContest={currentUserBetsForContest}
           aggregateBets={aggregateBets}
           availableFreePicks={availableFreePicks}
+          availableMarkets={availableMarkets}
         />
       </Box>
     </>

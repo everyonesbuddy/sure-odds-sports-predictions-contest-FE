@@ -386,6 +386,7 @@ const Contest = () => {
               availableFreePicks={contestDetails.availableFreePicks}
               affiliates={contestDetails.affiliates}
               contestType={contestDetails.contestType}
+              availableMarkets={contestDetails.availableMarkets}
             />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
