@@ -68,7 +68,7 @@ export const useContestData = () => {
         ],
       },
       {
-        contestName: `Monthly MLB Streak`,
+        contestName: `Weekly MLB Streak`,
         primaryImageUrl: mlbStreakImage,
         contestPrimaryPrize: 100,
         spreadsheetUrl:
