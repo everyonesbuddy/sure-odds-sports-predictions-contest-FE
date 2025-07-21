@@ -1,15 +1,13 @@
 import { useWeek } from "../context/WeekContext";
-import { useMonth } from "../context/MonthContext";
 import { useMemo } from "react";
-import weeklyStreakImage from "../assets/weekly-streak.jpg";
-import monthlyStreakImage from "../assets/monthly-streak.jpg";
+import wnbaStreakImage from "../assets/wnba-streak.png";
+import mlbStreakImage from "../assets/mlb-streak.png";
 import doinkLogo from "../assets/doink-logo.png";
 import oddsJamLogo from "../assets/oddsjam-logo.png";
 import dgFantasyLogo from "../assets/dgfantasy-logo.png";
 
 export const useContestData = () => {
   const { weekStartEnd, lastWeekStartEnd } = useWeek();
-  const { monthStartEnd, lastMonthStartEnd } = useMonth();
 
   const contestData = useMemo(() => {
     if (!weekStartEnd.startOfWeek || !weekStartEnd.endOfWeek) {
@@ -18,8 +16,8 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Weekly ATS Streak`,
-        primaryImageUrl: weeklyStreakImage,
+        contestName: `Weekly WNBA Streak`,
+        primaryImageUrl: wnbaStreakImage,
         contestPrimaryPrize: 100,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
@@ -43,7 +41,7 @@ export const useContestData = () => {
           lastWeekStartEnd.endOfLastWeek.toLocaleString("en-US", {
             timeZone: "America/New_York",
           }),
-        contestLeague: ["basketball_wnba", "baseball_mlb"],
+        contestLeague: ["basketball_wnba"],
         contestType: "Streak",
         availableMarkets: ["Spread"],
         availableFreePicks: 5,
@@ -70,47 +68,35 @@ export const useContestData = () => {
         ],
       },
       {
-        contestName: `Monthly ATS Streak`,
-        primaryImageUrl: monthlyStreakImage,
-        contestPrimaryPrize: 250,
+        contestName: `Monthly MLB Streak`,
+        primaryImageUrl: mlbStreakImage,
+        contestPrimaryPrize: 100,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
-        isContestActive: false,
-        currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
+        isContestActive: true,
+        currentContestStartDate: weekStartEnd.startOfWeek.toLocaleString(
           "en-US",
           {
             timeZone: "America/New_York",
           }
         ),
-        currentContestEndDate: monthStartEnd.endOfMonth.toLocaleString(
+        currentContestEndDate: weekStartEnd.endOfWeek.toLocaleString("en-US", {
+          timeZone: "America/New_York",
+        }),
+        lastConstestStartDate: lastWeekStartEnd.startOfLastWeek.toLocaleString(
           "en-US",
           {
             timeZone: "America/New_York",
           }
         ),
-        lastConstestStartDate:
-          lastMonthStartEnd.startOfLastMonth.toLocaleString("en-US", {
-            timeZone: "America/New_York",
-          }),
         lastcurrentContestEndDate:
-          lastMonthStartEnd.endOfLastMonth.toLocaleString("en-US", {
+          lastWeekStartEnd.endOfLastWeek.toLocaleString("en-US", {
             timeZone: "America/New_York",
           }),
-        contestLeague: [
-          // "basketball_nba",
-          "basketball_wnba",
-          "baseball_mlb",
-          // "basketball_ncaab",
-          // "soccer_epl",
-          // "soccer_germany_bundesliga",
-          // "soccer_italy_serie_a",
-          // "soccer_spain_la_liga",
-          // "soccer_usa_mls",
-          // "icehockey_nhl",
-        ],
+        contestLeague: ["baseball_mlb"],
         contestType: "Streak",
-        availableMarkets: ["Spread", "Moneyline"],
-        availableFreePicks: 15,
+        availableMarkets: ["Spread"],
+        availableFreePicks: 5,
         affiliates: [
           {
             name: "Doink Sports",
@@ -134,7 +120,7 @@ export const useContestData = () => {
         ],
       },
     ];
-  }, [weekStartEnd, monthStartEnd, lastWeekStartEnd, lastMonthStartEnd]);
+  }, [weekStartEnd, lastWeekStartEnd]);
 
   return contestData;
 };
