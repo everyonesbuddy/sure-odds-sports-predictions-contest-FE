@@ -24,7 +24,8 @@ const ContestCard = ({
   contestPrimaryPrize,
   startDate,
   endDate,
-  contestType,
+  contestFormat,
+  entryFee,
   availableMarkets,
 }) => {
   const navigate = useNavigate();
@@ -48,18 +49,19 @@ const ContestCard = ({
       <img src={primaryImageUrl} alt={contestName} className="card-image" />
       <div className="card-content">
         <h2 className="card-title">{contestName}</h2>
-        <p className="card-price">🥇Pize: ${contestPrimaryPrize}</p>
+        <p className="card-price">🥇Prize: ${contestPrimaryPrize}</p>
+        <p className="card-price">Entry Fee: ${entryFee}</p>
         <p className="card-dates">
           📅: {new Date(startDate).toLocaleDateString()} -{" "}
           {new Date(endDate).toLocaleDateString()}
         </p>
-        <p className="card-dates">Contest Type: {contestType}</p>
         <p className="card-dates">
           Available Markets:{" "}
           {availableMarkets && availableMarkets.length > 0
             ? availableMarkets.join(", ")
             : "None"}
         </p>
+        <p className="card-dates">Contest Format: {contestFormat}</p>
         <div className="card-leagues">
           {contestLeague.map((league) => (
             <span

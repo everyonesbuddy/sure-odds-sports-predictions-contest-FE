@@ -33,7 +33,7 @@ const PicksForm = ({
   contestStartDate,
   currentUserBetsForContest,
   aggregateBets,
-  availableFreePicks,
+  availablePicks,
   availableMarkets,
 }) => {
   const [league, setLeague] = useState("");
@@ -55,14 +55,14 @@ const PicksForm = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const calculateAvailableFreePicksLeft = () => {
+  const calculateavailablePicksLeft = () => {
     const userBets = aggregateBets.find(
       (bet) => bet.username === participantsUsername
     );
     const betsPlaced = userBets ? userBets.numberOfBets : 0;
 
     // Available free picks minus bets already submitted (ignores local state picks)
-    return Math.max(availableFreePicks - betsPlaced, 0);
+    return Math.max(availablePicks - betsPlaced, 0);
   };
 
   useEffect(() => {
@@ -131,7 +131,7 @@ const PicksForm = ({
   };
 
   const addPick = () => {
-    const freePicksLeft = calculateAvailableFreePicksLeft();
+    const freePicksLeft = calculateavailablePicksLeft();
 
     if (freePicksLeft === 0) {
       toast.error(
@@ -220,7 +220,7 @@ const PicksForm = ({
     const betsPlaced = userBets ? userBets.numberOfBets : 0;
 
     // Calculate remaining free picks
-    const freePicksLeft = availableFreePicks - betsPlaced;
+    const freePicksLeft = availablePicks - betsPlaced;
 
     // Check if new picks exceed free picks limit
     if (picks.length > freePicksLeft) {
@@ -503,7 +503,7 @@ const PicksForm = ({
                           }
                         }}
                       >
-                        {/* use this in entry fee platform but we are on the free platform */}
+                        {/* use this if we want to filter out some odds*/}
                         {/* {gameDetails?.bookmakers &&
                         gameDetails.bookmakers.length > 0 ? (
                           gameDetails.bookmakers[0]?.markets[0]?.outcomes

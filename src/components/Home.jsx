@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Footer from "./Footer";
 import ContestCard from "./ContestCard";
-import KofiWidget from "./KofiWidget";
+// import KofiWidget from "./KofiWidget";
 import { useContestData } from "../hooks/useContestData";
 import "../css/Home.css";
 
@@ -48,7 +48,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆 Global Free to Play Streak Contest
+            🏆 Africas Leading Sports Prediction Contest
           </Typography>
 
           <Typography
@@ -60,8 +60,8 @@ const Home = () => {
               maxWidth: "600px",
             }}
           >
-            Think you can predict the game? Compete for free and win amazing
-            prizes.🔥
+            Think you know sports? Prove it. Enter free or paid contests and win
+            real cash and epic prizes. 🔥
           </Typography>
         </Box>
       </Box>
@@ -87,7 +87,7 @@ const Home = () => {
             mb: 2,
           }}
         >
-          📬 Join the Smartest Sports Bettors Community
+          📬 Join Africas Smartest Sports Prediction Community
         </Typography>
 
         <iframe
@@ -145,7 +145,8 @@ const Home = () => {
                     startDate={item.currentContestStartDate}
                     endDate={item.currentContestEndDate}
                     contestLeague={item.contestLeague}
-                    contestType={item.contestType}
+                    contestFormat={item.contestFormat}
+                    entryFee={item.entryFee}
                     availableMarkets={item.availableMarkets}
                   />
                 )
@@ -168,7 +169,6 @@ const Home = () => {
           )}
         </div>
       </Box>
-      <KofiWidget />
       <Footer />
     </>
   );

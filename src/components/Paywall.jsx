@@ -23,7 +23,8 @@ const Paywall = ({
   contestEndDate,
   contestStartDate,
   currentUserBetsForContest,
-  availableFreePicks,
+  availablePicks,
+  entryFee,
 }) => {
   const [code, setCode] = useState("");
   const [isCodeSubmitting, setIsCodeSubmitting] = useState(false);
@@ -201,7 +202,7 @@ const Paywall = ({
                   },
                 }}
               >
-                Unlock Entry for $4.99 – Get Your Access Code
+                Unlock Entry for ${entryFee} – Get Your Access Code
               </Button>
             </ListItem>
           </List>

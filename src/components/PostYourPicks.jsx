@@ -12,9 +12,9 @@ const PostYourPicks = ({
   contestStartDate,
   currentUserBetsForContest,
   aggregateBets,
-  availableFreePicks,
+  availablePicks,
   affiliates,
-  contestType,
+  contestFormat,
   availableMarkets,
 }) => {
   const theme = useTheme();
@@ -40,8 +40,8 @@ const PostYourPicks = ({
           contestStartDate={contestStartDate}
           currentUserBetsForContest={currentUserBetsForContest}
           aggregateBets={aggregateBets}
-          availableFreePicks={availableFreePicks}
-          contestType={contestType}
+          availablePicks={availablePicks}
+          contestFormat={contestFormat}
         />
         <PicksForm
           contestName={contestName}
@@ -52,7 +52,7 @@ const PostYourPicks = ({
           contestStartDate={contestStartDate}
           currentUserBetsForContest={currentUserBetsForContest}
           aggregateBets={aggregateBets}
-          availableFreePicks={availableFreePicks}
+          availablePicks={availablePicks}
           availableMarkets={availableMarkets}
         />
       </Box>

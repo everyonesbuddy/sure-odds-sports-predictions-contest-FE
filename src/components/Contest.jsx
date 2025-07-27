@@ -7,8 +7,8 @@ import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import LastLeaderboard from "./LastLeaderboard";
 import PostYourPicks from "./PostYourPicks";
-// import Paywall from "./Paywall"; use this in entry fee platform but we are on the free platform
-import AffiliateSliders from "./AffiliateSliders";
+import Paywall from "./Paywall";
+// import AffiliateSliders from "./AffiliateSliders";
 import { useContestData } from "../hooks/useContestData";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
@@ -24,7 +24,7 @@ const Contest = () => {
   );
   const [aggregateBets, setAggregateBets] = useState([]);
   const [lastContestAggregateBets, setLastContestAggregateBets] = useState([]);
-  // const [isRegisteredForContest, setIsRegisteredForContest] = useState(false); use this in entry fee platform but we are on the free platform
+  const [isRegisteredForContest, setIsRegisteredForContest] = useState(false);
   const contestData = useContestData();
 
   const { user, token } = useAuth();
@@ -115,22 +115,21 @@ const Contest = () => {
     }
   }, [allUsersBetsForContest, contestDetails]);
 
-  // use this in entry fee platform but we are on the free platform
+  useEffect(() => {
+    // Check if the user is registered for the contest and the end date has not passed
+    const checkRegistration = () => {
+      const isRegistered =
+        user?.registeredContests?.some(
+          (contest) =>
+            contest.name === contestDetails?.contestName &&
+            new Date(contest.endDate) > new Date()
+        ) || contestDetails?.entryFee === 0; // Allow free contests to be considered registered
+      setIsRegisteredForContest(isRegistered);
+      console.log("Is user registered for contest:", isRegistered);
+    };
 
-  // useEffect(() => {
-  //   // Check if the user is registered for the contest and the end date has not passed
-  //   const checkRegistration = () => {
-  //     const isRegistered = user?.registeredContests?.some(
-  //       (contest) =>
-  //         contest.name === contestDetails?.contestName &&
-  //         new Date(contest.endDate) > new Date()
-  //     );
-  //     setIsRegisteredForContest(isRegistered);
-  //     console.log("Is user registered for contest:", isRegistered);
-  //   };
-
-  //   checkRegistration();
-  // }, [user, contestDetails]);
+    checkRegistration();
+  }, [user, contestDetails]);
 
   const aggregateBetsCalculation = (bets, contestDetails) => {
     const handicappers = {};
@@ -191,9 +190,9 @@ const Contest = () => {
     );
 
     // Sort based on contest type
-    if (contestDetails.contestType === "Pickem") {
+    if (contestDetails.contestFormat === "Pickem") {
       return results.sort((a, b) => b.numberOfBetsWon - a.numberOfBetsWon);
-    } else if (contestDetails.contestType === "Streak") {
+    } else if (contestDetails.contestFormat === "Streak") {
       return results.sort((a, b) => b.currentWinStreak - a.currentWinStreak);
     }
 
@@ -325,88 +324,86 @@ const Contest = () => {
           </Box>
         </Box>
 
-        {/* use this in entry fee platform but we are on the free platform */}
-        {/* {isRegisteredForContest ? ( */}
-        <>
-          <Box
-            sx={{
-              zIndex: 1100,
-              position: "sticky",
-              top: 0,
-              backgroundColor: "black",
-            }}
-          >
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-              centered
+        {isRegisteredForContest ? (
+          <>
+            <Box
               sx={{
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "#4F46E5",
-                },
+                zIndex: 1100,
+                position: "sticky",
+                top: 0,
+                backgroundColor: "black",
               }}
             >
-              <Tab
-                label="Your Picks 🥇"
-                {...a11yProps(0)}
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+                centered
                 sx={{
-                  color: "#4F46E5",
-                  fontSize: isMobile ? "8px" : "10px",
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "#4F46E5",
+                  },
                 }}
+              >
+                <Tab
+                  label="Your Picks 🥇"
+                  {...a11yProps(0)}
+                  sx={{
+                    color: "#4F46E5",
+                    fontSize: isMobile ? "8px" : "10px",
+                  }}
+                />
+                <Tab
+                  label="Live Board 🏆"
+                  {...a11yProps(1)}
+                  sx={{
+                    color: "#4F46E5",
+                    fontSize: isMobile ? "8px" : "10px",
+                  }}
+                />
+                <Tab
+                  label="Prev Board 🏁"
+                  {...a11yProps(2)}
+                  sx={{
+                    color: "#4F46E5",
+                    fontSize: isMobile ? "8px" : "10px",
+                  }}
+                />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+              <PostYourPicks
+                contestName={contestDetails.contestName}
+                contestPrimaryPrize={contestDetails.contestPrimaryPrize}
+                spreadsheetUrl={contestDetails.spreadsheetUrl}
+                contestEndDate={contestDetails.currentContestEndDate}
+                contestStartDate={contestDetails.currentContestStartDate}
+                currentUserBetsForContest={currentUserBetsForContest}
+                contestLeague={contestDetails.contestLeague}
+                aggregateBets={aggregateBets}
+                availablePicks={contestDetails.availablePicks}
+                affiliates={contestDetails.affiliates}
+                contestFormat={contestDetails.contestFormat}
+                availableMarkets={contestDetails.availableMarkets}
               />
-              <Tab
-                label="Live Board 🏆"
-                {...a11yProps(1)}
-                sx={{
-                  color: "#4F46E5",
-                  fontSize: isMobile ? "8px" : "10px",
-                }}
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <Leaderboard
+                contestEndDate={contestDetails.currentContestEndDate}
+                contestStartDate={contestDetails.currentContestStartDate}
+                aggregateBets={aggregateBets}
               />
-              <Tab
-                label="Prev Board 🏁"
-                {...a11yProps(2)}
-                sx={{
-                  color: "#4F46E5",
-                  fontSize: isMobile ? "8px" : "10px",
-                }}
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+              <LastLeaderboard
+                lastContestEndDate={contestDetails.lastcurrentContestEndDate}
+                lastContestStartDate={contestDetails.lastConstestStartDate}
+                lastContestAggregateBets={lastContestAggregateBets}
+                constestName={contestDetails.contestName}
               />
-            </Tabs>
-          </Box>
-          <CustomTabPanel value={value} index={0}>
-            <PostYourPicks
-              contestName={contestDetails.contestName}
-              contestPrimaryPrize={contestDetails.contestPrimaryPrize}
-              spreadsheetUrl={contestDetails.spreadsheetUrl}
-              contestEndDate={contestDetails.currentContestEndDate}
-              contestStartDate={contestDetails.currentContestStartDate}
-              currentUserBetsForContest={currentUserBetsForContest}
-              contestLeague={contestDetails.contestLeague}
-              aggregateBets={aggregateBets}
-              availableFreePicks={contestDetails.availableFreePicks}
-              affiliates={contestDetails.affiliates}
-              contestType={contestDetails.contestType}
-              availableMarkets={contestDetails.availableMarkets}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            <Leaderboard
-              contestEndDate={contestDetails.currentContestEndDate}
-              contestStartDate={contestDetails.currentContestStartDate}
-              aggregateBets={aggregateBets}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            <LastLeaderboard
-              lastContestEndDate={contestDetails.lastcurrentContestEndDate}
-              lastContestStartDate={contestDetails.lastConstestStartDate}
-              lastContestAggregateBets={lastContestAggregateBets}
-              constestName={contestDetails.contestName}
-            />
-          </CustomTabPanel>
-        </>
-        {/* use this in entry fee platform but we are on the free platform */}
-        {/* ) : (
+            </CustomTabPanel>
+          </>
+        ) : (
           <Paywall
             contestName={contestDetails.contestName}
             spreadsheetUrl={contestDetails.spreadsheetUrl}
@@ -415,11 +412,12 @@ const Contest = () => {
             contestEndDate={contestDetails.currentContestEndDate}
             contestStartDate={contestDetails.currentContestStartDate}
             currentUserBetsForContest={currentUserBetsForContest}
-            availableFreePicks={contestDetails.availableFreePicks}
+            availablePicks={contestDetails.availablePicks}
+            entryFee={contestDetails.entryFee}
           />
-        )} */}
+        )}
       </Box>
-      <AffiliateSliders affiliates={contestDetails.affiliates} />
+      {/* <AffiliateSliders affiliates={contestDetails.affiliates} /> */}
     </>
   );
 };

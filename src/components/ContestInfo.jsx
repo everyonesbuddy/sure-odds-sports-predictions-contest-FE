@@ -20,8 +20,8 @@ const ContestInfo = ({
   contestStartDate,
   currentUserBetsForContest,
   aggregateBets,
-  availableFreePicks,
-  contestType,
+  availablePicks,
+  contestFormat,
 }) => {
   const [countdownMessage, setCountdownMessage] = useState("");
   const [participantsUsername, setParticipantsUsername] = useState("");
@@ -78,14 +78,14 @@ const ContestInfo = ({
     }
   };
 
-  const calculateAvailableFreePicksLeft = () => {
+  const calculateavailablePicksLeft = () => {
     const userBets = aggregateBets.find(
       (bet) => bet.username === participantsUsername
     );
     const betsPlaced = userBets ? userBets.numberOfBets : 0;
 
     // Available free picks minus bets already submitted (ignores local state picks)
-    return Math.max(availableFreePicks - betsPlaced, 0);
+    return Math.max(availablePicks - betsPlaced, 0);
   };
 
   useEffect(() => {
@@ -113,8 +113,8 @@ const ContestInfo = ({
   //     amount: (totalPrize * pct).toFixed(2),
   //   }));
   // };
-  const generatePayoutTiers = (totalPrize, contestType, availableFreePicks) => {
-    if (contestType === "Pickem") {
+  const generatePayoutTiers = (totalPrize, contestFormat, availablePicks) => {
+    if (contestFormat === "Pickem") {
       const percentages = [
         0.28, 0.2, 0.15, 0.1, 0.08, 0.06, 0.05, 0.04, 0.02, 0.02,
       ];
@@ -122,12 +122,12 @@ const ContestInfo = ({
         rank: index + 1,
         amount: (totalPrize * pct).toFixed(2),
       }));
-    } else if (contestType === "Streak") {
+    } else if (contestFormat === "Streak") {
       // Detailed payout structure for streak contests
       return [
         {
-          condition: `Achieve a perfect streak of ${availableFreePicks} for ${availableFreePicks}`,
-          message: `You must win all ${availableFreePicks} picks to qualify for the prize.`,
+          condition: `Achieve a perfect streak of ${availablePicks} for ${availablePicks}`,
+          message: `You must win all ${availablePicks} picks to qualify for the prize.`,
           amount: `$${totalPrize}`,
         },
         {
@@ -142,7 +142,7 @@ const ContestInfo = ({
         },
         {
           condition: `Example`,
-          message: `If 3 participants achieve a streak of ${availableFreePicks}, each will receive $${(
+          message: `If 3 participants achieve a streak of ${availablePicks}, each will receive $${(
             totalPrize / 3
           ).toFixed(2)}.`,
           amount: `Split prize.`,
@@ -203,7 +203,7 @@ const ContestInfo = ({
             }}
           >
             Available Picks Remaining:{" "}
-            <strong>{calculateAvailableFreePicksLeft()}</strong>
+            <strong>{calculateavailablePicksLeft()}</strong>
           </Typography>
 
           {/* Payout Breakdown */}
@@ -230,11 +230,11 @@ const ContestInfo = ({
               padding: 0,
             }}
           >
-            {contestType === "Pickem"
+            {contestFormat === "Pickem"
               ? generatePayoutTiers(
                   contestPrimaryPrize,
-                  contestType,
-                  availableFreePicks
+                  contestFormat,
+                  availablePicks
                 ).map((p, index) => (
                   <ListItem
                     key={index}
@@ -249,8 +249,8 @@ const ContestInfo = ({
                 ))
               : generatePayoutTiers(
                   contestPrimaryPrize,
-                  contestType,
-                  availableFreePicks
+                  contestFormat,
+                  availablePicks
                 ).map((p, index) => (
                   <ListItem
                     key={index}
