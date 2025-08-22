@@ -264,8 +264,8 @@ const Paywall = ({
                   )}
                 </Button>
                 <Typography variant="caption" sx={{ color: "#aaa", mt: 1 }}>
-                  One-time payment. No subscription. 100% of entry fees go
-                  toward the prize pool.
+                  One-time payment. No subscription. Use your local cards for
+                  easy payment—if unavailable, simply use a dollar card.
                 </Typography>
               </Box>
             </>

@@ -266,7 +266,8 @@ const Contest = () => {
                   mb: 2,
                 }}
               >
-                Buy in. Make picks. Climb the leaderboard. Win amazing prizes.
+                Enter Contest. Make picks. Climb the leaderboard. Win amazing
+                prizes.
               </Typography>
 
               <Box
@@ -280,7 +281,8 @@ const Contest = () => {
                   textAlign: "center",
                 }}
               >
-                💰 Prize Pool: ${contestDetails.contestPrimaryPrize}
+                Prize Pool: ${contestDetails.contestPrimaryPrize} - Entry Fee: $
+                {contestDetails.entryFee}
               </Box>
             </Box>
 

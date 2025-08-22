@@ -135,7 +135,7 @@ const PicksForm = ({
 
     if (freePicksLeft === 0) {
       toast.error(
-        "You have used all available free picks! Buy unlimited picks to continue."
+        "You have used all available picks! Buy unlimited picks to continue."
       );
       return;
     }
@@ -225,7 +225,7 @@ const PicksForm = ({
     // Check if new picks exceed free picks limit
     if (picks.length > freePicksLeft) {
       toast.error(
-        `You can only submit ${freePicksLeft} more free pick(s). You currently have ${betsPlaced} submitted picks and ${picks.length} pending picks.`
+        `You can only submit ${freePicksLeft} more pick(s). You currently have ${betsPlaced} submitted picks and ${picks.length} pending picks.`
       );
       return;
     }

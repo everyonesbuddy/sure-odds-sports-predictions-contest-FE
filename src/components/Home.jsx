@@ -60,8 +60,8 @@ const Home = () => {
               maxWidth: "600px",
             }}
           >
-            Think you know sports? Prove it. Enter free or paid contests and win
-            real cash and epic prizes. 🔥
+            Think you know sports? Prove it. Enter paid contests and win real
+            cash and epic prizes. 🔥
           </Typography>
         </Box>
       </Box>

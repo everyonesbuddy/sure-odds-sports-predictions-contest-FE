@@ -104,20 +104,11 @@ const ContestInfo = ({
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [contestStartDate, contestEndDate]);
 
-  // const generatePayoutTiers = (totalPrize) => {
-  //   const percentages = [
-  //     0.28, 0.2, 0.15, 0.1, 0.08, 0.06, 0.05, 0.04, 0.02, 0.02,
-  //   ];
-  //   return percentages.map((pct, index) => ({
-  //     rank: index + 1,
-  //     amount: (totalPrize * pct).toFixed(2),
-  //   }));
-  // };
   const generatePayoutTiers = (totalPrize, contestFormat, availablePicks) => {
     if (contestFormat === "Pickem") {
-      const percentages = [
-        0.28, 0.2, 0.15, 0.1, 0.08, 0.06, 0.05, 0.04, 0.02, 0.02,
-      ];
+      // Rounded version (totals 100%)
+      const percentages = [0.3, 0.22, 0.16, 0.11, 0.09, 0.07, 0.05];
+
       return percentages.map((pct, index) => ({
         rank: index + 1,
         amount: (totalPrize * pct).toFixed(2),
@@ -230,6 +221,43 @@ const ContestInfo = ({
               padding: 0,
             }}
           >
+            {contestFormat === "Pickem" && (
+              <>
+                <Typography
+                  sx={{
+                    fontSize: isMobile ? "12px" : "14px",
+                    color: "#bbb",
+                    marginBottom: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  Top 7 participants win a share of the ${contestPrimaryPrize}{" "}
+                  prize.
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: isMobile ? "12px" : "14px",
+                    color: "#bbb",
+                    marginBottom: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  You must submit at least {Math.floor(availablePicks * 0.75)}/
+                  {availablePicks} picks to qualify for prizes.
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: isMobile ? "12px" : "14px",
+                    color: "#bbb",
+                    marginBottom: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  Prize pool may increase based on the total number of
+                  participants.
+                </Typography>
+              </>
+            )}
             {contestFormat === "Pickem"
               ? generatePayoutTiers(
                   contestPrimaryPrize,
