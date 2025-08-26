@@ -2,8 +2,9 @@ import { useWeek } from "../context/WeekContext";
 import { useMonth } from "../context/MonthContext";
 import { useMemo } from "react";
 import soccerMonthlyPickemImage from "../assets/soccer-monthly-pickem-poster.png";
-import basketballMonthlyPickemImage from "../assets/basketball-monthly-pickem-poster.png";
 import multiSportsWeeklyStreakImage from "../assets/multi-sports-weeakly-streak-poster.png";
+import eplSeasonLongPickemImage from "../assets/epl-season-long-contest.png";
+import laligaSeasonLongPickemImage from "../assets/laliga-season-long-contest.png";
 
 export const useContestData = () => {
   const { weekStartEnd, lastWeekStartEnd } = useWeek();
@@ -21,7 +22,7 @@ export const useContestData = () => {
         contestPrimaryPrize: 50,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
-        isContestActive: false,
+        isContestActive: true,
         currentContestStartDate: weekStartEnd.startOfWeek.toLocaleString(
           "en-US",
           {
@@ -44,75 +45,43 @@ export const useContestData = () => {
         contestLeague: ["baseball_mlb", "basketball_wnba", "soccer_epl"],
         contestFormat: "Streak",
         availableMarkets: ["Spread", "Moneyline"],
-        availablePicks: 15,
+        availablePicks: 8,
         entryFee: 0,
         affiliates: [],
       },
       {
-        contestName: `$100 Monthly Basketball Pickem`,
-        primaryImageUrl: basketballMonthlyPickemImage,
-        contestPrimaryPrize: 100,
+        contestName: `$10000 EPL Season Long Pickem`,
+        primaryImageUrl: eplSeasonLongPickemImage,
+        contestPrimaryPrize: 10000,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
         isContestActive: true,
-        currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
-          "en-US",
-          {
-            timeZone: "America/New_York",
-          }
-        ),
-        currentContestEndDate: monthStartEnd.endOfMonth.toLocaleString(
-          "en-US",
-          {
-            timeZone: "America/New_York",
-          }
-        ),
-        lastConstestStartDate:
-          lastMonthStartEnd.startOfLastMonth.toLocaleString("en-US", {
-            timeZone: "America/New_York",
-          }),
-        lastcurrentContestEndDate:
-          lastMonthStartEnd.endOfLastMonth.toLocaleString("en-US", {
-            timeZone: "America/New_York",
-          }),
-        contestLeague: ["basketball_wnba"],
+        currentContestStartDate: "08/15/2025",
+        currentContestEndDate: "05/24/2026",
+        lastConstestStartDate: "08/15/2024",
+        lastcurrentContestEndDate: "05/24/2025",
+        contestLeague: ["soccer_epl"],
         contestFormat: "Pickem",
         availableMarkets: ["Spread", "Moneyline"],
-        availablePicks: 35,
+        availablePicks: 150,
         entryFee: 4.99,
         affiliates: [],
       },
       {
-        contestName: `$100 Monthly Soccer Pickem`,
-        primaryImageUrl: soccerMonthlyPickemImage,
-        contestPrimaryPrize: 100,
+        contestName: `$10000 La Liga Season Long Pickem`,
+        primaryImageUrl: laligaSeasonLongPickemImage,
+        contestPrimaryPrize: 10000,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem3/",
         isContestActive: true,
-        currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
-          "en-US",
-          {
-            timeZone: "America/New_York",
-          }
-        ),
-        currentContestEndDate: monthStartEnd.endOfMonth.toLocaleString(
-          "en-US",
-          {
-            timeZone: "America/New_York",
-          }
-        ),
-        lastConstestStartDate:
-          lastMonthStartEnd.startOfLastMonth.toLocaleString("en-US", {
-            timeZone: "America/New_York",
-          }),
-        lastcurrentContestEndDate:
-          lastMonthStartEnd.endOfLastMonth.toLocaleString("en-US", {
-            timeZone: "America/New_York",
-          }),
-        contestLeague: ["soccer_epl", "soccer_spain_la_liga", "soccer_usa_mls"],
+        currentContestStartDate: "08/15/2025",
+        currentContestEndDate: "05/24/2026",
+        lastConstestStartDate: "08/15/2024",
+        lastcurrentContestEndDate: "05/24/2025",
+        contestLeague: ["soccer_spain_la_liga"],
         contestFormat: "Pickem",
         availableMarkets: ["Spread", "Moneyline"],
-        availablePicks: 35,
+        availablePicks: 150,
         entryFee: 4.99,
         affiliates: [],
       },

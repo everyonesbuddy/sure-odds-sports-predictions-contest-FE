@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
   IconButton,
   Drawer,
@@ -14,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useAuth } from "../context/AuthContext";
+import logo from "../assets/sureodds-logo.png";
 
 const Nav = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -84,7 +84,7 @@ const Nav = () => {
   );
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#4F46E5" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#000000" }}>
       <Toolbar>
         <IconButton
           edge="start"
@@ -95,11 +95,24 @@ const Nav = () => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           <Link to="/" style={{ textDecoration: "none", color: "#ffffff" }}>
             Sure Odds
           </Link>
-        </Typography>
+        </Typography> */}
+        <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <img
+              src={logo} // Use the imported logo variable
+              alt="Sure Odds Logo"
+              style={{
+                height: "70px", // Increase the height to make it bigger
+                display: "block",
+                margin: "0", // Remove auto margin to align it to the left
+              }}
+            />
+          </Link>
+        </Box>
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Button color="inherit" style={{ fontSize: "12px" }}>
             <Link
