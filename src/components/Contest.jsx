@@ -223,14 +223,14 @@ const Contest = () => {
         <Box
           sx={{
             width: "100%",
-            textAlign: "left",
             color: "white",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             background: "black",
-            padding: "10px 10px",
+            py: { xs: 6, md: 10 }, // ✅ more breathing room
+            px: 2,
           }}
         >
           <Box
@@ -238,21 +238,22 @@ const Contest = () => {
               display: "flex",
               flexDirection: { xs: "column", md: "row" },
               alignItems: "center",
-              justifyContent: "center",
-              gap: 10,
-              maxWidth: "900px",
+              justifyContent: "space-between",
+              gap: { xs: 6, md: 10 },
+              maxWidth: "1100px", // ✅ give more width for Apple-like spacious feel
               width: "100%",
             }}
           >
             {/* Text Section */}
-            <Box sx={{ flex: 1, textAlign: isMobile ? "center" : "left" }}>
+            <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" } }}>
               <Typography
                 variant="h1"
                 sx={{
-                  fontWeight: "bold",
-                  fontSize: { xs: "24px", sm: "35px" },
+                  fontWeight: 600,
+                  fontSize: { xs: "28px", sm: "40px", md: "48px" }, // ✅ big but elegant
                   lineHeight: 1.2,
-                  mb: 2,
+                  mb: 3,
+                  letterSpacing: "-0.02em", // ✅ subtle Apple-like typography tweak
                 }}
               >
                 Enter the {contestDetails.contestName}
@@ -261,28 +262,30 @@ const Contest = () => {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#ccc",
-                  fontSize: isMobile ? "14px" : "16px",
-                  mb: 2,
+                  color: "#aaa", // ✅ softer gray, easier on eyes
+                  fontSize: { xs: "15px", md: "17px" },
+                  maxWidth: "500px",
+                  mb: 4,
                 }}
               >
                 Enter Contest. Make picks. Climb the leaderboard. Win amazing
                 prizes.
               </Typography>
-
               <Box
                 sx={{
-                  backgroundColor: "#4F46E5",
+                  background: "linear-gradient(90deg, #4F46E5, #6366F1)",
                   px: 3,
-                  py: 1,
+                  py: 1.5,
                   borderRadius: "999px",
                   fontWeight: 500,
                   fontSize: isMobile ? "13px" : "14px",
                   textAlign: "center",
+                  boxShadow: "0 4px 14px rgba(79,70,229,0.4)",
                 }}
               >
-                Prize Pool: ${contestDetails.contestPrimaryPrize} - Entry Fee: $
-                {contestDetails.entryFee}
+                {" "}
+                Prize Pool: ${contestDetails.contestPrimaryPrize} - Entry Fee: ${" "}
+                {contestDetails.entryFee}{" "}
               </Box>
             </Box>
 
@@ -292,9 +295,8 @@ const Contest = () => {
                 sx={{
                   flex: 1,
                   position: "relative",
-                  maxWidth: "350px",
+                  maxWidth: "400px",
                   width: "100%",
-                  height: "auto",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -306,9 +308,9 @@ const Contest = () => {
                     width: "100%",
                     height: "100%",
                     background:
-                      "radial-gradient(circle, rgba(79,70,229,0.2) 0%, rgba(0,0,0,0) 70%)",
+                      "radial-gradient(circle, rgba(79,70,229,0.25) 0%, rgba(0,0,0,0) 70%)",
                     borderRadius: "50%",
-                    filter: "blur(30px)",
+                    filter: "blur(40px)",
                   }}
                 />
                 <img
@@ -317,8 +319,8 @@ const Contest = () => {
                   style={{
                     width: "100%",
                     height: "auto",
-                    borderRadius: "20px",
-                    boxShadow: "0 10px 40px rgba(255, 255, 255, 0.1)",
+                    borderRadius: "24px",
+                    boxShadow: "0 12px 40px rgba(0, 0, 0, 0.4)",
                   }}
                 />
               </Box>

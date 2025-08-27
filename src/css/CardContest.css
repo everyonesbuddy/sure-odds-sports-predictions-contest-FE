@@ -1,17 +1,20 @@
-/* Card.css */
+/* CardContest.css */
+
 .card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
-  margin: 16px;
-  width: 400px;
+  margin: 20px;
+  width: 380px;
+  background-color: #111; /* darker, minimal background */
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
 }
 
 .card-image {
@@ -21,57 +24,52 @@
 }
 
 .card-content {
-  padding: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* ✅ creates breathing space */
 }
 
 .card-title {
-  font-size: 1.5em;
+  font-size: 1.25rem;
+  font-weight: 600;
   margin: 0;
-}
-
-.card-description {
-  font-size: 1.2em;
-  color: #e7e6e6;
-  margin: 8px 0;
+  color: #fff;
 }
 
 .card-price {
-  font-size: 1em;
-  color: #e7e6e6;
-  margin: 8px 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ccc;
+  margin: 0;
 }
 
-.card-contest-format {
-  font-size: 0.8em;
-  color: #e7e6e6;
-  margin: 8px 0;
+.card-dates {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin: 0;
 }
 
-.before-start {
-  color: green;
-}
-
-.before-end {
-  color: red;
-}
-
-.card-frequency {
-  font-size: 0.8em;
-  color: red;
-  margin: 8px 0;
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 .league-card {
   display: inline-block;
-  padding: 5px 10px;
-  margin: 5px;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
+  padding: 4px 10px;
+  margin: 4px 4px 0 0;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
-.card-dates {
-  font-size: 14px;
-  color: white;
-  margin: 5px 0;
+.card-footer {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }

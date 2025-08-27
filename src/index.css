@@ -1,12 +1,14 @@
 /* index.css */
 
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tilt+Neon&display=swap");
+
 html,
 body {
   margin: 0;
   padding: 0;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden; /* ✅ This prevents horizontal scroll globally */
+  overflow-x: hidden; /* ✅ Prevents horizontal scroll globally */
   box-sizing: border-box;
 }
 
@@ -17,11 +19,16 @@ body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
   color: #fff;
+}
+
+/* 🔹 Force Material UI Typography to use Montserrat */
+.MuiTypography-root {
+  font-family: "Montserrat", "Helvetica", "Arial", sans-serif !important;
 }
