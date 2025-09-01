@@ -123,8 +123,8 @@ const ContestInfo = ({
         },
         {
           condition: `If no one achieves a perfect streak`,
-          message: `The prize will roll over to the next contest.`,
-          amount: `No payout for this contest.`,
+          message: `There will be no payout for this contest.`,
+          amount: `No payout.`,
         },
         {
           condition: `Tiebreaker rules`,

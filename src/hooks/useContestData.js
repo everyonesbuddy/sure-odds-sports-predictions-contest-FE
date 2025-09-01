@@ -1,8 +1,9 @@
 import { useWeek } from "../context/WeekContext";
 import { useMonth } from "../context/MonthContext";
 import { useMemo } from "react";
-import soccerMonthlyPickemImage from "../assets/soccer-monthly-pickem-poster.png";
-import multiSportsWeeklyStreakImage from "../assets/multi-sports-weeakly-streak-poster.png";
+import weeklyMultiSportStreakImage from "../assets/weekly-multi-sport-streak-poster.png";
+import weeklyEplStreakImage from "../assets/weekly-epl-streak-poster.png";
+import weekliLaligaStreakImage from "../assets/weekly-laliga-streak-poster.png";
 import eplSeasonLongPickemImage from "../assets/epl-season-long-contest.png";
 import laligaSeasonLongPickemImage from "../assets/laliga-season-long-contest.png";
 
@@ -18,7 +19,7 @@ export const useContestData = () => {
     return [
       {
         contestName: `$50 Weekly Multi Sport Streak`,
-        primaryImageUrl: multiSportsWeeklyStreakImage,
+        primaryImageUrl: weeklyMultiSportStreakImage,
         contestPrimaryPrize: 50,
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
@@ -42,20 +43,90 @@ export const useContestData = () => {
           lastWeekStartEnd.endOfLastWeek.toLocaleString("en-US", {
             timeZone: "America/New_York",
           }),
-        contestLeague: ["baseball_mlb", "basketball_wnba", "soccer_epl"],
+        contestLeague: [
+          "baseball_mlb",
+          "basketball_wnba",
+          "soccer_epl",
+          "soccer_spain_la_liga",
+        ],
         contestFormat: "Streak",
         availableMarkets: ["Spread", "Moneyline"],
-        availablePicks: 8,
-        entryFee: 0,
+        availablePicks: 6,
+        entryFee: 4.99,
+        affiliates: [],
+      },
+      {
+        contestName: `$50 Weekly EPL Streak`,
+        primaryImageUrl: weeklyEplStreakImage,
+        contestPrimaryPrize: 50,
+        spreadsheetUrl:
+          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
+        isContestActive: true,
+        currentContestStartDate: weekStartEnd.startOfWeek.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        currentContestEndDate: weekStartEnd.endOfWeek.toLocaleString("en-US", {
+          timeZone: "America/New_York",
+        }),
+        lastConstestStartDate: lastWeekStartEnd.startOfLastWeek.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        lastcurrentContestEndDate:
+          lastWeekStartEnd.endOfLastWeek.toLocaleString("en-US", {
+            timeZone: "America/New_York",
+          }),
+        contestLeague: ["soccer_epl"],
+        contestFormat: "Streak",
+        availableMarkets: ["Spread", "Moneyline"],
+        availablePicks: 6,
+        entryFee: 4.99,
+        affiliates: [],
+      },
+      {
+        contestName: `$50 Weekly Laliga Streak`,
+        primaryImageUrl: weekliLaligaStreakImage,
+        contestPrimaryPrize: 50,
+        spreadsheetUrl:
+          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem3/",
+        isContestActive: true,
+        currentContestStartDate: weekStartEnd.startOfWeek.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        currentContestEndDate: weekStartEnd.endOfWeek.toLocaleString("en-US", {
+          timeZone: "America/New_York",
+        }),
+        lastConstestStartDate: lastWeekStartEnd.startOfLastWeek.toLocaleString(
+          "en-US",
+          {
+            timeZone: "America/New_York",
+          }
+        ),
+        lastcurrentContestEndDate:
+          lastWeekStartEnd.endOfLastWeek.toLocaleString("en-US", {
+            timeZone: "America/New_York",
+          }),
+        contestLeague: ["soccer_spain_la_liga"],
+        contestFormat: "Streak",
+        availableMarkets: ["Spread", "Moneyline"],
+        availablePicks: 6,
+        entryFee: 4.99,
         affiliates: [],
       },
       {
         contestName: `$10000 EPL Season Long Pickem`,
         primaryImageUrl: eplSeasonLongPickemImage,
         contestPrimaryPrize: 10000,
-        spreadsheetUrl:
-          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
-        isContestActive: true,
+        spreadsheetUrl: "",
+        isContestActive: false,
         currentContestStartDate: "08/15/2025",
         currentContestEndDate: "05/24/2026",
         lastConstestStartDate: "08/15/2024",
@@ -71,9 +142,8 @@ export const useContestData = () => {
         contestName: `$10000 La Liga Season Long Pickem`,
         primaryImageUrl: laligaSeasonLongPickemImage,
         contestPrimaryPrize: 10000,
-        spreadsheetUrl:
-          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem3/",
-        isContestActive: true,
+        spreadsheetUrl: "",
+        isContestActive: false,
         currentContestStartDate: "08/15/2025",
         currentContestEndDate: "05/24/2026",
         lastConstestStartDate: "08/15/2024",
@@ -87,10 +157,9 @@ export const useContestData = () => {
       },
       {
         contestName: `$1000 Montly EPL Pickem`,
-        primaryImageUrl: soccerMonthlyPickemImage,
+        primaryImageUrl: weeklyMultiSportStreakImage,
         contestPrimaryPrize: 1000,
-        spreadsheetUrl:
-          "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem4/",
+        spreadsheetUrl: "",
         isContestActive: false,
         currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
           "en-US",
@@ -115,7 +184,7 @@ export const useContestData = () => {
         contestLeague: ["soccer_epl"],
         contestFormat: "Streak",
         availableMarkets: ["Moneyline"],
-        availablePicks: 5,
+        availablePicks: 15,
         entryFee: 4.99,
         affiliates: [],
       },
