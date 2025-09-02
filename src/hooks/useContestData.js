@@ -6,6 +6,9 @@ import weeklyEplStreakImage from "../assets/weekly-epl-streak-poster.png";
 import weekliLaligaStreakImage from "../assets/weekly-laliga-streak-poster.png";
 import eplSeasonLongPickemImage from "../assets/epl-season-long-contest.png";
 import laligaSeasonLongPickemImage from "../assets/laliga-season-long-contest.png";
+import doinkLogo from "../assets/doink-logo.png";
+import oddsJamLogo from "../assets/oddsjam-logo.png";
+import dgFantasyLogo from "../assets/dgfantasy-logo.png";
 
 export const useContestData = () => {
   const { weekStartEnd, lastWeekStartEnd } = useWeek();
@@ -18,9 +21,9 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `$50 Weekly Multi Sport Streak`,
+        contestName: `Weekly Multi Sport Streak`,
         primaryImageUrl: weeklyMultiSportStreakImage,
-        contestPrimaryPrize: 50,
+        contestPrimaryPrize: "$50 Amazon Gift Card",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
@@ -52,13 +55,34 @@ export const useContestData = () => {
         contestFormat: "Streak",
         availableMarkets: ["Spread", "Moneyline"],
         availablePicks: 6,
-        entryFee: 4.99,
-        affiliates: [],
+        entryFee: 0,
+        affiliates: [
+          {
+            name: "Doink Sports",
+            affiliateLink: "https://doinksports.com/?via=Sure-Odds",
+            message: "The most complete betting research platform.",
+
+            image: doinkLogo,
+          },
+          {
+            name: "OddsJam",
+            affiliateLink: "https://oddsjam.com/?ref=ndqznjv",
+            message: "Premium sports betting news + data.",
+            image: oddsJamLogo,
+          },
+          {
+            name: "DGFantasy",
+            affiliateLink:
+              "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+            message: "Profitable bets at your fingertips! ",
+            image: dgFantasyLogo,
+          },
+        ],
       },
       {
-        contestName: `$50 Weekly EPL Streak`,
+        contestName: `Weekly EPL Streak`,
         primaryImageUrl: weeklyEplStreakImage,
-        contestPrimaryPrize: 50,
+        contestPrimaryPrize: "$50 Amazon Gift Card",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
         isContestActive: true,
@@ -85,13 +109,34 @@ export const useContestData = () => {
         contestFormat: "Streak",
         availableMarkets: ["Spread", "Moneyline"],
         availablePicks: 6,
-        entryFee: 4.99,
-        affiliates: [],
+        entryFee: 0,
+        affiliates: [
+          {
+            name: "Doink Sports",
+            affiliateLink: "https://doinksports.com/?via=Sure-Odds",
+            message: "The most complete betting research platform.",
+
+            image: doinkLogo,
+          },
+          {
+            name: "OddsJam",
+            affiliateLink: "https://oddsjam.com/?ref=ndqznjv",
+            message: "Premium sports betting news + data.",
+            image: oddsJamLogo,
+          },
+          {
+            name: "DGFantasy",
+            affiliateLink:
+              "https://dgfantasy.com/membership-signup?ref=mjkwmti",
+            message: "Profitable bets at your fingertips! ",
+            image: dgFantasyLogo,
+          },
+        ],
       },
       {
-        contestName: `$50 Weekly Laliga Streak`,
+        contestName: `Weekly Laliga Streak`,
         primaryImageUrl: weekliLaligaStreakImage,
-        contestPrimaryPrize: 50,
+        contestPrimaryPrize: "$50 Amazon Gift Card",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem3/",
         isContestActive: true,
@@ -118,7 +163,7 @@ export const useContestData = () => {
         contestFormat: "Streak",
         availableMarkets: ["Spread", "Moneyline"],
         availablePicks: 6,
-        entryFee: 4.99,
+        entryFee: 0,
         affiliates: [],
       },
       {
@@ -135,7 +180,7 @@ export const useContestData = () => {
         contestFormat: "Pickem",
         availableMarkets: ["Spread", "Moneyline"],
         availablePicks: 150,
-        entryFee: 4.99,
+        entryFee: 0,
         affiliates: [],
       },
       {
@@ -152,7 +197,7 @@ export const useContestData = () => {
         contestFormat: "Pickem",
         availableMarkets: ["Spread", "Moneyline"],
         availablePicks: 150,
-        entryFee: 4.99,
+        entryFee: 0,
         affiliates: [],
       },
       {
@@ -185,7 +230,7 @@ export const useContestData = () => {
         contestFormat: "Streak",
         availableMarkets: ["Moneyline"],
         availablePicks: 15,
-        entryFee: 4.99,
+        entryFee: 0,
         affiliates: [],
       },
     ];

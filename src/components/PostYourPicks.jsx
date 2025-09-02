@@ -2,6 +2,7 @@ import React from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import PicksForm from "./PicksForm";
 import ContestInfo from "./ContestInfo";
+import AffiliateSliders from "./AffiliateSliders";
 
 const PostYourPicks = ({
   contestName,
@@ -56,6 +57,7 @@ const PostYourPicks = ({
           availableMarkets={availableMarkets}
         />
       </Box>
+      <AffiliateSliders affiliates={affiliates} />
     </>
   );
 };
