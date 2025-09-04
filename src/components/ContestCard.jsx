@@ -49,7 +49,7 @@ const ContestCard = ({
       <img src={primaryImageUrl} alt={contestName} className="card-image" />
       <div className="card-content">
         <h2 className="card-title">{contestName}</h2>
-        <p className="card-price">🥇Prize: ${contestPrimaryPrize}</p>
+        <p className="card-price">🥇Prize: {contestPrimaryPrize}</p>
         <p className="card-price">Entry Fee: ${entryFee}</p>
         <p className="card-dates">
           📅: {new Date(startDate).toLocaleDateString()} -{" "}

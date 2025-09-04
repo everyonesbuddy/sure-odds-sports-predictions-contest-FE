@@ -22,6 +22,7 @@ const ContestInfo = ({
   aggregateBets,
   availablePicks,
   contestFormat,
+  entryFee,
 }) => {
   const [countdownMessage, setCountdownMessage] = useState("");
   const [participantsUsername, setParticipantsUsername] = useState("");
@@ -107,19 +108,37 @@ const ContestInfo = ({
   const generatePayoutTiers = (totalPrize, contestFormat, availablePicks) => {
     if (contestFormat === "Pickem") {
       // Rounded version (totals 100%)
-      const percentages = [0.3, 0.22, 0.16, 0.11, 0.09, 0.07, 0.05];
+      //inital version for paid entry contests
+      // const percentages = [0.3, 0.22, 0.16, 0.11, 0.09, 0.07, 0.05];
 
-      return percentages.map((pct, index) => ({
-        rank: index + 1,
-        amount: (totalPrize * pct).toFixed(2),
-      }));
+      // return percentages.map((pct, index) => ({
+      //   rank: index + 1,
+      //   amount: (totalPrize * pct).toFixed(2),
+      // }));
+      return [
+        {
+          condition: `Most wins out of ${availablePicks} picks`,
+          message: `The participant with the highest number of correct picks out of ${availablePicks} wins the entire prize pool.`,
+          amount: `${totalPrize}`,
+        },
+        {
+          condition: `Tiebreaker rules`,
+          message: `If multiple participants finish with the same highest number of wins, the prize pool will be split equally among them.`,
+          amount: `Prize shared equally.`,
+        },
+        {
+          condition: `Example`,
+          message: `If 2 participants tie with the most wins, the prize pool of ${totalPrize} will be split equally between them.`,
+          amount: `Split prize.`,
+        },
+      ];
     } else if (contestFormat === "Streak") {
       // Detailed payout structure for streak contests
       return [
         {
           condition: `Achieve a perfect streak of ${availablePicks} for ${availablePicks}`,
           message: `You must win all ${availablePicks} picks to qualify for the prize.`,
-          amount: `$${totalPrize}`,
+          amount: `${totalPrize}`,
         },
         {
           condition: `If no one achieves a perfect streak`,
@@ -133,9 +152,7 @@ const ContestInfo = ({
         },
         {
           condition: `Example`,
-          message: `If 3 participants achieve a streak of ${availablePicks}, each will receive $${(
-            totalPrize / 3
-          ).toFixed(2)}.`,
+          message: `If 3 participants achieve a streak of ${availablePicks}, each will be split equally between them.`,
           amount: `Split prize.`,
         },
       ];
@@ -221,7 +238,8 @@ const ContestInfo = ({
               padding: 0,
             }}
           >
-            {contestFormat === "Pickem" && (
+            {/* paid entry contests initial version */}
+            {/* {contestFormat === "Pickem" && (
               <>
                 <Typography
                   sx={{
@@ -258,6 +276,7 @@ const ContestInfo = ({
                 </Typography>
               </>
             )}
+
             {contestFormat === "Pickem"
               ? generatePayoutTiers(
                   contestPrimaryPrize,
@@ -299,7 +318,32 @@ const ContestInfo = ({
                       <strong>Amount:</strong> {p.amount}
                     </Typography>
                   </ListItem>
-                ))}
+                ))} */}
+            {generatePayoutTiers(
+              contestPrimaryPrize,
+              contestFormat,
+              availablePicks
+            ).map((p, index) => (
+              <ListItem
+                key={index}
+                sx={{
+                  display: "list-item", // Use list-item for bullet points
+                  listStyleType: "disc", // Add bullet points
+                  paddingLeft: "20px", // Add spacing for bullet alignment
+                  marginBottom: "3px", // Add spacing between bullet points
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: isMobile ? "12px" : "14px",
+                    color: "#f5f5f5",
+                  }}
+                >
+                  <strong>{p.condition}:</strong> {p.message} <br />
+                  <strong>Amount:</strong> {p.amount}
+                </Typography>
+              </ListItem>
+            ))}
           </List>
         </Card>
       </Box>
