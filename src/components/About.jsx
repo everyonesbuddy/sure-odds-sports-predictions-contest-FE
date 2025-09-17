@@ -26,14 +26,10 @@ const About = () => {
             <ListItem>
               <ListItemText
                 primary="About Us"
-                secondary="Welcome to SureOdds – The #1 Free To Play Pick’em and Streak Contest Platform!
+                secondary="Welcome to SureOdds – Africa’s #1 Pick’em and Streak Contest Platform!
                           SureOdds brings together sports fans from all across the continent to compete, test their game knowledge, and win amazing prizes.
 
-                          Whether you’re passionate about football, cricket, basketball, or more, SureOdds gives you the chance to predict game outcomes, challenge your friends, and climb the leaderboard.
-
-                          Our mission is simple: make sports more thrilling by turning your predictions into real competition. From weekend warriors to die-hard fans, there's something for everyone.
-
-                          Join today. Make your picks. Start your streak. Become a champion."
+                          Whether you’re passionate about football, cricket, basketball, or more, SureOdds gives you the chance to predict game outcomes, challenge your friends, and climb the leaderboard."
                 primaryTypographyProps={{
                   sx: {
                     color: "#fff",

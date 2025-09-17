@@ -81,7 +81,7 @@ export const useContestData = () => {
       {
         contestName: `Season Long EPL Pickem`,
         primaryImageUrl: eplSeasonLongPickemImage,
-        contestPrimaryPrize: "$1000",
+        contestPrimaryPrize: "$1000 Cash Prize",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
         isContestActive: true,
@@ -93,8 +93,8 @@ export const useContestData = () => {
         contestFormat: "Pickem",
         availableMarkets: ["Spread", "Moneyline"],
         availablePicks: 120,
-        entryFee: 0,
-        affiliates: listOfAffiliates,
+        entryFee: 4.99,
+        affiliates: [],
       },
       {
         contestName: `Monthly Multi Sport Streak`,

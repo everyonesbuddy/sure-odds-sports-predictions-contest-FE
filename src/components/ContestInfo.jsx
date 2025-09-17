@@ -105,40 +105,30 @@ const ContestInfo = ({
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [contestStartDate, contestEndDate]);
 
-  const generatePayoutTiers = (totalPrize, contestFormat, availablePicks) => {
-    if (contestFormat === "Pickem") {
-      // Rounded version (totals 100%)
-      //inital version for paid entry contests
-      // const percentages = [0.3, 0.22, 0.16, 0.11, 0.09, 0.07, 0.05];
+  const parsePrizeValue = (prizeString) => {
+    if (!prizeString) return 0;
+    const match = prizeString.replace(/[^0-9.]/g, ""); // keep only numbers
+    return parseFloat(match) || 0;
+  };
 
-      // return percentages.map((pct, index) => ({
-      //   rank: index + 1,
-      //   amount: (totalPrize * pct).toFixed(2),
-      // }));
-      return [
-        {
-          condition: `Most wins out of ${availablePicks} picks`,
-          message: `The participant with the highest number of correct picks out of ${availablePicks} wins the entire prize pool.`,
-          amount: `${totalPrize}`,
-        },
-        {
-          condition: `Tiebreaker rules`,
-          message: `If multiple participants finish with the same highest number of wins, the prize pool will be split equally among them.`,
-          amount: `Prize shared equally.`,
-        },
-        {
-          condition: `Example`,
-          message: `If 2 participants tie with the most wins, the prize pool of ${totalPrize} will be split equally between them.`,
-          amount: `Split prize.`,
-        },
-      ];
+  const generatePayoutTiers = (
+    totalPrizeLabel,
+    contestFormat,
+    availablePicks
+  ) => {
+    const totalPrize = parsePrizeValue(totalPrizeLabel); // numeric version
+    if (contestFormat === "Pickem") {
+      const percentages = [0.3, 0.22, 0.16, 0.11, 0.09, 0.07, 0.05];
+      return percentages.map((pct, index) => ({
+        rank: index + 1,
+        amount: `${(totalPrize * pct).toFixed(2)}`,
+      }));
     } else if (contestFormat === "Streak") {
-      // Detailed payout structure for streak contests
       return [
         {
           condition: `Achieve a perfect streak of ${availablePicks} for ${availablePicks}`,
           message: `You must win all ${availablePicks} picks to qualify for the prize.`,
-          amount: `${totalPrize}`,
+          amount: totalPrizeLabel, // use the full string
         },
         {
           condition: `If no one achieves a perfect streak`,
@@ -239,7 +229,7 @@ const ContestInfo = ({
             }}
           >
             {/* paid entry contests initial version */}
-            {/* {contestFormat === "Pickem" && (
+            {contestFormat === "Pickem" && (
               <>
                 <Typography
                   sx={{
@@ -249,7 +239,7 @@ const ContestInfo = ({
                     textAlign: "center",
                   }}
                 >
-                  Top 7 participants win a share of the ${contestPrimaryPrize}{" "}
+                  Top 7 participants win a share of the {contestPrimaryPrize}{" "}
                   prize.
                 </Typography>
                 <Typography
@@ -318,8 +308,8 @@ const ContestInfo = ({
                       <strong>Amount:</strong> {p.amount}
                     </Typography>
                   </ListItem>
-                ))} */}
-            {generatePayoutTiers(
+                ))}
+            {/* {generatePayoutTiers(
               contestPrimaryPrize,
               contestFormat,
               availablePicks
@@ -343,7 +333,7 @@ const ContestInfo = ({
                   <strong>Amount:</strong> {p.amount}
                 </Typography>
               </ListItem>
-            ))}
+            ))} */}
           </List>
         </Card>
       </Box>
