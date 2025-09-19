@@ -47,7 +47,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆 Africas Leading Sports Prediction Contes
+            🏆 The Leading Sports Prediction Contes
           </Typography>
 
           <Typography
@@ -86,7 +86,7 @@ const Home = () => {
             mb: 2,
           }}
         >
-          📬 Join Africas Smartest Sports Prediction Community
+          📬 Join The Smartest Sports Prediction Community
         </Typography>
 
         <iframe
