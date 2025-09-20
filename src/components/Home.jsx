@@ -47,7 +47,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆 The Leading Sports Prediction Contes
+            🏆 The Leading Sports Prediction Contest
           </Typography>
 
           <Typography
