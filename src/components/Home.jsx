@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import Footer from "./Footer";
 import ContestCard from "./ContestCard";
 import { useContestData } from "../hooks/useContestData";
+import KofiWidget from "./KofiWidget";
 import "../css/Home.css";
 
 const Home = () => {
@@ -47,7 +48,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆 The Leading Sports Prediction Contest
+            🏆Free To Play Sports Prediction Contest
           </Typography>
 
           <Typography
@@ -169,7 +170,7 @@ const Home = () => {
         </div>
       </Box>
       <Footer />
-      {/* <KofiWidget /> */}
+      <KofiWidget />
     </>
   );
 };

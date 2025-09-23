@@ -93,8 +93,8 @@ export const useContestData = () => {
         contestFormat: "Pickem",
         availableMarkets: ["Spread", "Moneyline"],
         availablePicks: 120,
-        entryFee: 4.99,
-        affiliates: [],
+        entryFee: 0,
+        affiliates: listOfAffiliates,
       },
       {
         contestName: `Monthly Multi Sport Streak`,
