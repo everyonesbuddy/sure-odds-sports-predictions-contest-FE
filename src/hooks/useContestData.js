@@ -85,7 +85,7 @@ export const useContestData = () => {
         contestPrimaryPrize: "$1000 Cash Prize",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
-        isContestActive: true,
+        isContestActive: false,
         currentContestStartDate: "08/15/2025",
         currentContestEndDate: "05/24/2026",
         lastConstestStartDate: "08/15/2024",
@@ -103,7 +103,7 @@ export const useContestData = () => {
         contestPrimaryPrize: "$300 Amazon Gift Card",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem3/",
-        isContestActive: true,
+        isContestActive: false,
         currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
           "en-US",
           {
