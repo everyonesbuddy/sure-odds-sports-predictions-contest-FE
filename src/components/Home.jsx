@@ -48,7 +48,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆Free To Play Sports Prediction Contest
+            🏆Free To Play Weekly Sports Prediction Contest
           </Typography>
 
           <Typography
@@ -60,8 +60,8 @@ const Home = () => {
               maxWidth: "600px",
             }}
           >
-            Think you know sports? Prove it. Enter contests and win real cash
-            and epic prizes. 🔥
+            Think you know sports? Prove it. Enter our weekly sports prediction
+            contest and win real cash and epic prizes. 🔥
           </Typography>
         </Box>
       </Box>
@@ -129,7 +129,7 @@ const Home = () => {
             maxWidth: "100%",
           }}
         >
-          🚀 Available Contests
+          🚀 Featured Contest
         </Typography>
 
         <div className="card-container">
