@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import PicksForm from "./PicksForm";
-import ContestInfo from "./ContestInfo";
+// import ContestInfo from "./ContestInfo";
 
 const PostYourPicks = ({
   contestName,
@@ -25,26 +25,13 @@ const PostYourPicks = ({
     <>
       <Box
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          gap: 3,
-          padding: isMobile ? 1 : 2,
+          maxWidth: 900, // limit width for readability
+          width: "100%", // full width on mobile
+          margin: "auto", // center horizontally
+          py: isMobile ? 2 : 4, // vertical padding
+          px: isMobile ? 1 : 2, // horizontal padding for mobile
         }}
       >
-        <ContestInfo
-          contestName={contestName}
-          spreadsheetUrl={spreadsheetUrl}
-          contestPrimaryPrize={contestPrimaryPrize}
-          contestLeague={contestLeague}
-          contestEndDate={contestEndDate}
-          contestStartDate={contestStartDate}
-          currentUserBetsForContest={currentUserBetsForContest}
-          aggregateBets={aggregateBets}
-          availablePicks={availablePicks}
-          contestFormat={contestFormat}
-          entryFee={entryFee}
-        />
         <PicksForm
           contestName={contestName}
           spreadsheetUrl={spreadsheetUrl}

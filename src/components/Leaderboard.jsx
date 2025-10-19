@@ -15,33 +15,46 @@ import {
   Card,
   useMediaQuery,
   useTheme,
+  Button,
+  ButtonGroup,
 } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
-const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
+const Leaderboard = ({
+  aggregateBets = [],
+  contestStartDate,
+  contestEndDate,
+  lastAggregateBets = [],
+  lastContestStartDate,
+  lastContestEndDate,
+  contestName = "",
+}) => {
   const [countdownMessage, setCountdownMessage] = useState("");
+  const [showLast, setShowLast] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const displayedBets = showLast ? lastAggregateBets : aggregateBets;
+  const startDate = showLast ? lastContestStartDate : contestStartDate;
+  const endDate = showLast ? lastContestEndDate : contestEndDate;
+
   useEffect(() => {
     const interval = setInterval(() => {
-      const { message } = calculateDuration(contestStartDate, contestEndDate);
+      const { message } = calculateDuration(startDate, endDate);
       setCountdownMessage(message);
     }, 1000);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [contestStartDate, contestEndDate]);
+    return () => clearInterval(interval);
+  }, [startDate, endDate]);
 
   const calculateDuration = (start, end) => {
     const currentDate = new Date();
-    const startDate = new Date(start);
-    const endDate = new Date(end);
+    const startD = new Date(start);
+    const endD = new Date(end);
 
-    if (currentDate < startDate) {
-      const durationInMilliseconds = startDate - currentDate;
-      const durationInDays = Math.floor(
-        durationInMilliseconds / (1000 * 60 * 60 * 24)
-      );
+    if (currentDate < startD) {
+      const durationInMilliseconds = startD - currentDate;
+      const days = Math.floor(durationInMilliseconds / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
         (durationInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
@@ -52,13 +65,11 @@ const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
 
       return {
         duration: durationInMilliseconds,
-        message: `Contest starts in ${durationInDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`,
+        message: `Contest starts in ${days}d ${hours}h ${minutes}m ${seconds}s`,
       };
-    } else if (currentDate < endDate) {
-      const durationInMilliseconds = endDate - currentDate;
-      const durationInDays = Math.floor(
-        durationInMilliseconds / (1000 * 60 * 60 * 24)
-      );
+    } else if (currentDate < endD) {
+      const durationInMilliseconds = endD - currentDate;
+      const days = Math.floor(durationInMilliseconds / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
         (durationInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
@@ -69,28 +80,61 @@ const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
 
       return {
         duration: durationInMilliseconds,
-        message: `Contest ends in ${durationInDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`,
+        message: `Contest ends in ${days}d ${hours}h ${minutes}m ${seconds}s`,
       };
     } else {
-      return {
-        duration: 0,
-        message: `The contest has ended.`,
-      };
+      return { duration: 0, message: "The contest has ended." };
     }
   };
 
   return (
     <>
+      {/* Toggle Buttons */}
+      {(lastAggregateBets.length > 0 || lastContestStartDate) && (
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+          <ButtonGroup variant="outlined">
+            <Button
+              onClick={() => setShowLast(false)}
+              sx={{
+                backgroundColor: !showLast ? "#4F46E5" : "transparent",
+                color: !showLast ? "#fff" : "#4F46E5",
+              }}
+            >
+              Current Leaderboard
+            </Button>
+            <Button
+              onClick={() => setShowLast(true)}
+              sx={{
+                backgroundColor: showLast ? "#4F46E5" : "transparent",
+                color: showLast ? "#fff" : "#4F46E5",
+              }}
+            >
+              Last Leaderboard
+            </Button>
+          </ButtonGroup>
+        </Box>
+      )}
+
+      {/* Countdown / Header */}
       <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography
           variant="subtitle1"
           sx={{ fontSize: "20px", fontWeight: "bold" }}
         >
-          <p className={`card-contest-format`}>{countdownMessage}</p>
+          {showLast ? (
+            <p className="card-contest-format">
+              Last {contestName} contest from {lastContestStartDate} to{" "}
+              {lastContestEndDate}
+            </p>
+          ) : (
+            <p className="card-contest-format">{countdownMessage}</p>
+          )}
         </Typography>
       </Box>
+
+      {/* Leaderboard Table */}
       <Box>
-        {aggregateBets.length === 0 ? (
+        {displayedBets.length === 0 ? (
           <Card
             sx={{
               borderRadius: "16px",
@@ -105,7 +149,9 @@ const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
             <CardContent>
               <Typography variant="body1" align="center">
                 <span style={{ fontSize: "1.25rem", fontWeight: "bold" }}>
-                  Contest has not started or no bets have been resolved.
+                  {showLast
+                    ? "Last contest had no participants or no bets."
+                    : "No bets have been placed yet."}
                 </span>
               </Typography>
             </CardContent>
@@ -151,12 +197,12 @@ const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
                   )}
                   <TableCell
                     sx={{
-                      fontSize: isMobile ? "12px" : "inherit",
+                      fontSize: isMobile ? "10px" : "inherit",
                       color: "#fff",
                     }}
                   >
                     Win Streak
-                    <Tooltip title="Currrent Win Streak">
+                    <Tooltip title="Current Win Streak">
                       <IconButton size="small">
                         <HelpOutlineIcon
                           fontSize="small"
@@ -168,7 +214,7 @@ const Leaderboard = ({ contestEndDate, contestStartDate, aggregateBets }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {aggregateBets.map((handicapper, index) => (
+                {displayedBets.map((handicapper, index) => (
                   <TableRow
                     key={handicapper.username}
                     sx={{ backgroundColor: "#2b2b2b" }}

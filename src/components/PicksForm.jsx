@@ -1,36 +1,25 @@
 import React, { useState, useEffect } from "react";
 import {
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  TextField,
   Card,
-  CardContent,
   Typography,
   Button,
-  List,
-  ListItem,
+  Box,
+  CircularProgress,
+  IconButton,
   useMediaQuery,
   useTheme,
-  IconButton,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-
-import { leagueApiMap, leagueOptions } from "../utils/leagueData";
+import { leagueOptions, leagueApiMap } from "../utils/leagueData";
 
 const PicksForm = ({
   contestName,
   spreadsheetUrl,
-  contestPrimaryPrize,
   contestLeague,
   contestEndDate,
-  contestStartDate,
   currentUserBetsForContest,
   aggregateBets,
   availablePicks,
@@ -43,28 +32,15 @@ const PicksForm = ({
   const [games, setGames] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState("");
   const [gameDetails, setGameDetails] = useState(null);
-  const [teamPicked, setTeamPicked] = useState("");
-  const [odds, setOdds] = useState("");
-  const [spreadLine, setSpreadLine] = useState("");
-  const [gameCommenceTime, setGameCommenceTime] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [picks, setPicks] = useState([]);
+  const [gamePreviews, setGamePreviews] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { user, token } = useAuth();
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const calculateavailablePicksLeft = () => {
-    const userBets = aggregateBets.find(
-      (bet) => bet.username === participantsUsername
-    );
-    const betsPlaced = userBets ? userBets.numberOfBets : 0;
-
-    // Available free picks minus bets already submitted (ignores local state picks)
-    return Math.max(availablePicks - betsPlaced, 0);
-  };
-
+  // Prefill user info
   useEffect(() => {
     if (user && user.email) {
       setParticipantsUsername(user.userName);
@@ -72,6 +48,22 @@ const PicksForm = ({
     }
   }, [user]);
 
+  // Set default league
+  useEffect(() => {
+    if (contestLeague && contestLeague.length > 0) {
+      setLeague(contestLeague[0]);
+    }
+  }, [contestLeague]);
+
+  // Default pick type
+  useEffect(() => {
+    if (availableMarkets && availableMarkets.length > 0) {
+      if (availableMarkets.includes("Moneyline")) setPickType("money line");
+      else if (availableMarkets.includes("Spread")) setPickType("spread");
+    }
+  }, [availableMarkets]);
+
+  // Fetch games for selected league
   useEffect(() => {
     if (league) {
       const fetchGames = async () => {
@@ -86,6 +78,7 @@ const PicksForm = ({
     }
   }, [league]);
 
+  // Fetch odds for selected game
   useEffect(() => {
     if (
       selectedGameId &&
@@ -93,16 +86,10 @@ const PicksForm = ({
     ) {
       const fetchGameDetails = async () => {
         try {
-          let response;
-          if (pickType === "money line") {
-            response = await axios.get(
-              `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=h2h&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGameId}`
-            );
-          } else if (pickType === "spread") {
-            response = await axios.get(
-              `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=spreads&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGameId}`
-            );
-          }
+          const market = pickType === "money line" ? "h2h" : "spreads";
+          const response = await axios.get(
+            `https://api.the-odds-api.com/v4/sports/${league}/odds/?apiKey=402f2e4bba957e5e98c7e1a178393c8c&regions=us&markets=${market}&oddsFormat=american&bookmakers=draftkings&eventIds=${selectedGameId}`
+          );
           setGameDetails(response.data[0]);
         } catch (error) {
           console.error("Error fetching game details:", error);
@@ -112,36 +99,18 @@ const PicksForm = ({
     }
   }, [selectedGameId, pickType, league]);
 
-  useEffect(() => {
-    if (contestLeague && contestLeague.length > 0) {
-      setLeague(contestLeague[0]);
-    }
-  }, [contestLeague]);
-
-  const clearFields = () => {
-    setLeague("");
-    setPickType("");
-    setGames([]);
-    setSelectedGameId("");
-    setGameCommenceTime("");
-    setGameDetails(null);
-    setTeamPicked("");
-    setOdds("");
-    setSpreadLine("");
+  const calculateAvailablePicksLeft = () => {
+    const userBets = aggregateBets.find(
+      (bet) => bet.username === participantsUsername
+    );
+    const betsPlaced = userBets ? userBets.numberOfBets : 0;
+    return Math.max(availablePicks - betsPlaced, 0);
   };
 
-  const addPick = () => {
-    const freePicksLeft = calculateavailablePicksLeft();
-
+  const handleAutoAddPick = (game, outcome) => {
+    const freePicksLeft = calculateAvailablePicksLeft();
     if (freePicksLeft === 0) {
-      toast.error(
-        "You have used all available picks! Buy unlimited picks to continue."
-      );
-      return;
-    }
-
-    if (!league || !pickType || !selectedGameId || !email) {
-      toast.error("Please complete all required fields before adding a pick!");
+      toast.error("You have used all available picks!");
       return;
     }
 
@@ -150,17 +119,34 @@ const PicksForm = ({
       pickType,
       participantsUsername,
       email,
-      selectedGameId,
-      teamPicked,
-      odds,
-      spreadLine,
+      selectedGameId: game.id,
+      teamPicked: outcome.name,
+      odds: outcome.price,
+      spreadLine: pickType === "spread" ? outcome.point : "",
       postedTime: new Date().toISOString(),
-      gameCommenceTime: gameCommenceTime,
     };
 
-    setPicks([...picks, newPick]);
+    setPicks((prev) => [...prev, newPick]);
+    setGamePreviews((prev) => ({
+      ...prev,
+      [game.id]: {
+        teamPicked: outcome.name,
+        odds: outcome.price,
+        spreadLine: pickType === "spread" ? outcome.point : "",
+      },
+    }));
     toast.success("Pick added to lineup!");
-    clearFields();
+  };
+
+  const removePick = (index) => {
+    const removedPick = picks[index];
+    setPicks(picks.filter((_, i) => i !== index));
+    setGamePreviews((prev) => {
+      const copy = { ...prev };
+      if (removedPick.selectedGameId in copy)
+        delete copy[removedPick.selectedGameId];
+      return copy;
+    });
   };
 
   const handleSubmitAll = async () => {
@@ -168,78 +154,14 @@ const PicksForm = ({
       toast.error("No picks to submit!");
       return;
     }
-
-    // Helper function to compare picks
-    const isDuplicate = (pickA, pickB) => {
-      return (
-        pickA.league === pickB.league &&
-        pickA.pickType === pickB.pickType &&
-        pickA.selectedGameId === pickB.selectedGameId &&
-        pickA.participantsUsername === pickB.participantsUsername &&
-        (pickA.pickType === "money line"
-          ? pickA.teamPicked === pickB.teamPicked
-          : pickA.playerPicked === pickB.playerPicked &&
-            pickA.spreadLine === pickB.spreadLine &&
-            pickA.propOverOrUnder === pickB.propOverOrUnder &&
-            pickA.market === pickB.market)
-      );
-    };
-
-    // Check for duplicates in picks array
-    const hasDuplicates = picks.some((pick, index) => {
-      return (
-        picks.findIndex((otherPick) => isDuplicate(pick, otherPick)) !== index
-      );
-    });
-
-    if (hasDuplicates) {
-      toast.error(
-        "You have duplicate picks. Please remove or edit them before submitting."
-      );
-      return;
-    }
-
-    // Check for duplicates in backend (currentUserBetsForContest)
-    const hasBackendDuplicates = picks.some((pick) => {
-      return currentUserBetsForContest.some((existingPick) =>
-        isDuplicate(pick, existingPick)
-      );
-    });
-
-    if (hasBackendDuplicates) {
-      toast.error(
-        "Some of your picks have already been submitted. Please remove or edit them before submitting."
-      );
-      return;
-    }
-
-    // Get the number of previously submitted picks
-    const userBets = aggregateBets.find(
-      (bet) => bet.username === participantsUsername
-    );
-    const betsPlaced = userBets ? userBets.numberOfBets : 0;
-
-    // Calculate remaining free picks
-    const freePicksLeft = availablePicks - betsPlaced;
-
-    // Check if new picks exceed free picks limit
-    if (picks.length > freePicksLeft) {
-      toast.error(
-        `You can only submit ${freePicksLeft} more pick(s). You currently have ${betsPlaced} submitted picks and ${picks.length} pending picks.`
-      );
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       await axios.post(spreadsheetUrl, picks, {
-        //api endpoint to post picks to contest with free picks available
-        headers: {
-          Authorization: `Bearer ${token}`, // Add the Authorization header
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("All picks submitted successfully!");
       setPicks([]);
+      setGamePreviews({});
       window.location.reload();
     } catch (error) {
       console.error("Error submitting picks:", error);
@@ -250,514 +172,284 @@ const PicksForm = ({
   };
 
   return (
-    <>
-      <Card
-        sx={{
-          borderRadius: "16px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
-          width: "600px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          margin: "auto",
-          backgroundColor: "#2b2b2b",
-          color: "#fff",
-        }}
-      >
-        <CardContent sx={{ color: "fff" }}>
-          <TextField
-            label={`username*`}
-            value={participantsUsername}
-            fullWidth
-            color={!participantsUsername ? "error" : "primary"}
-            margin="normal"
-            placeholder={`Username e.g sure_odds2023`}
-            variant="outlined"
-            sx={{
-              "& .MuiInputBase-root": {
-                borderRadius: "8px",
-                height: "40px",
-                "& input": {
-                  height: "40px",
-                  // padding: "10px",
-                  color: "#fff",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                color: "#fff",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#fff",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#fff",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#fff",
-                },
-              },
-            }}
-          />
-
-          <FormControl
-            fullWidth
-            margin="normal"
-            sx={{
-              // mb: 2,
-              "& .MuiInputBase-root": {
-                borderRadius: "8px",
-                height: "40px",
-                color: "#fff",
-                width: isMobile ? "240px" : "100%", // Ensure text does not overflow
-              },
-              "& .MuiInputLabel-root": {
-                color: "#fff",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#fff",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#fff",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#fff",
-                },
-              },
-            }}
-          >
-            <InputLabel id="league-label">League*</InputLabel>
-            <Select
-              labelId="league-label"
-              id="league-select"
-              value={league}
-              label="League"
-              onChange={(e) => setLeague(e.target.value)}
-            >
-              {leagueOptions
-                .filter((option) => contestLeague.includes(option.value))
-                .map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-
-          {league && (
-            <>
-              <FormControl
-                fullWidth
-                margin="normal"
-                sx={{
-                  // mb: 2,
-                  "& .MuiInputBase-root": {
-                    borderRadius: "8px",
-                    height: "40px",
-                    color: "#fff",
-                    width: isMobile ? "240px" : "100%", // Ensure text does not overflow
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "#fff",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "#fff",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "#fff",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#fff",
-                    },
-                  },
-                }}
-              >
-                <InputLabel id="pick-type-label">Pick Type*</InputLabel>
-                <Select
-                  labelId="pick-type-label"
-                  id="pick-type-select"
-                  value={pickType}
-                  label="Pick Type"
-                  onChange={(e) => setPickType(e.target.value)}
-                >
-                  {availableMarkets.includes("Moneyline") && (
-                    <MenuItem value="money line">Money Line 💰</MenuItem>
-                  )}
-                  {availableMarkets.includes("Spread") && (
-                    <MenuItem value="spread">Spread 📏</MenuItem>
-                  )}
-                </Select>
-              </FormControl>
-
-              <FormControl
-                fullWidth
-                margin="normal"
-                sx={{
-                  // mb: 2,
-                  "& .MuiInputBase-root": {
-                    borderRadius: "8px",
-                    height: "40px",
-                    color: "#fff",
-                    width: isMobile ? "240px" : "100%", // Ensure text does not overflow
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "#fff",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "#fff",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "#fff",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#fff",
-                    },
-                  },
-                }}
-              >
-                <InputLabel id="game-label">Game*</InputLabel>
-                <Select
-                  labelId="game-label"
-                  id="game-select"
-                  value={selectedGameId}
-                  label="Game"
-                  onChange={(e) => {
-                    setSelectedGameId(e.target.value);
-
-                    const selectedGameId = games.find(
-                      (game) => game.id === e.target.value
-                    );
-                    if (selectedGameId) {
-                      setGameCommenceTime(selectedGameId.commence_time);
-                    }
-                  }}
-                >
-                  {games.length > 0 ? (
-                    games
-                      .filter(
-                        (game) => new Date(game.commence_time) > new Date()
-                      )
-                      .map((game) => (
-                        <MenuItem key={game.id} value={game.id}>
-                          {game.home_team} vs {game.away_team}
-                        </MenuItem>
-                      ))
-                  ) : (
-                    <MenuItem disabled>No games available</MenuItem>
-                  )}
-                </Select>
-              </FormControl>
-
-              {(pickType === "money line" || pickType === "spread") &&
-                gameDetails && (
-                  <>
-                    <FormControl
-                      fullWidth
-                      margin="normal"
-                      sx={{
-                        // mb: 2,
-                        "& .MuiInputBase-root": {
-                          borderRadius: "8px",
-                          height: "40px",
-                          color: "#fff",
-                          width: isMobile ? "240px" : "100%", // Ensure text does not overflow
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#fff",
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "#fff",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "#fff",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "#fff",
-                          },
-                        },
-                      }}
-                    >
-                      <InputLabel id="team-picked-label">
-                        Team Picked*
-                      </InputLabel>
-                      <Select
-                        labelId="team-picked-label"
-                        id="team-picked-select"
-                        value={teamPicked}
-                        label="Team Picked *"
-                        onChange={(e) => {
-                          const team = e.target.value;
-                          const outcome =
-                            gameDetails?.bookmakers[0]?.markets[0]?.outcomes.find(
-                              (outcome) => outcome?.name === team
-                            );
-                          setTeamPicked(team);
-                          setOdds(outcome?.price);
-                          if (pickType === "spread") {
-                            setSpreadLine(outcome?.point); // Assuming `point` holds the spread value
-                          }
-                        }}
-                      >
-                        {/* use this if we want to filter out some odds*/}
-                        {/* {gameDetails?.bookmakers &&
-                        gameDetails.bookmakers.length > 0 ? (
-                          gameDetails.bookmakers[0]?.markets[0]?.outcomes
-                            .filter((outcome) => {
-                              const odds = outcome?.price;
-
-                              // Convert American odds to implied probability
-                              const impliedProbability =
-                                odds < 0
-                                  ? -odds / (-odds + 100)
-                                  : 100 / (odds + 100);
-
-                              return impliedProbability <= 0.7; // Only allow if 70% or less
-                            })
-                            .map((outcome) =>
-                              pickType === "money line" ? (
-                                <MenuItem
-                                  key={outcome?.name}
-                                  value={outcome?.name}
-                                >
-                                  {outcome?.name} ({outcome?.price})
-                                </MenuItem>
-                              ) : pickType === "spread" ? (
-                                <MenuItem
-                                  key={outcome?.name}
-                                  value={outcome?.name}
-                                >
-                                  {outcome?.name} ({outcome?.price}, Spread:{" "}
-                                  {outcome?.point})
-                                </MenuItem>
-                              ) : null
-                            )
-                        ) : (
-                          <MenuItem disabled>
-                            No betting options available
-                          </MenuItem>
-                        )} */}
-
-                        {/* this version does not fiter out certain odds */}
-                        {gameDetails?.bookmakers &&
-                        gameDetails.bookmakers.length > 0 ? (
-                          gameDetails.bookmakers[0]?.markets[0]?.outcomes.map(
-                            (outcome) =>
-                              pickType === "money line" ? (
-                                <MenuItem
-                                  key={outcome?.name}
-                                  value={outcome?.name}
-                                >
-                                  {outcome?.name} ({outcome?.price})
-                                </MenuItem>
-                              ) : pickType === "spread" ? (
-                                <MenuItem
-                                  key={outcome?.name}
-                                  value={outcome?.name}
-                                >
-                                  {outcome?.name} ({outcome?.price}, Spread:{" "}
-                                  {outcome?.point})
-                                </MenuItem>
-                              ) : null
-                          )
-                        ) : (
-                          <MenuItem disabled>
-                            No betting options available
-                          </MenuItem>
-                        )}
-                      </Select>
-                    </FormControl>
-                    <TextField
-                      label="Odds"
-                      value={odds}
-                      fullWidth
-                      margin="normal"
-                      sx={{
-                        "& .MuiInputBase-root": {
-                          borderRadius: "8px",
-                          height: "40px",
-                          "& input": {
-                            height: "40px",
-                            padding: "10px",
-                            color: "#fff",
-                          },
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#fff",
-                        },
-                      }}
-                    />
-                    {pickType === "spread" && (
-                      <TextField
-                        label="Spread Point"
-                        value={spreadLine || ""}
-                        fullWidth
-                        margin="normal"
-                        sx={{
-                          "& .MuiInputBase-root": {
-                            borderRadius: "8px",
-                            height: "40px",
-                            "& input": {
-                              height: "40px",
-                              padding: "10px",
-                              color: "#fff",
-                            },
-                          },
-                          "& .MuiInputLabel-root": {
-                            color: "#fff",
-                          },
-                        }}
-                      />
-                    )}
-                  </>
-                )}
-            </>
-          )}
-          <Button
-            variant="contained"
-            onClick={addPick}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%", // Make it full width for better UX
-              py: 1,
-              fontSize: "1rem",
-              fontWeight: "bold",
-              backgroundColor: "#4F46E5",
-              color: "#fff",
-              borderRadius: "10px",
-              transition: "0.3s",
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-
-              "&:hover": {
-                backgroundColor: "#3E3BA7", // Lighter shade on hover
-                transform: "scale(1.03)", // Subtle scaling effect
-                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.5)",
-              },
-
-              "&:active": {
-                transform: "scale(0.98)", // Slight press effect
-              },
-            }}
-          >
-            ➕ Add Pick To Lineup
-          </Button>
-        </CardContent>
-
-        {/* submit all picks section */}
-        <CardContent>
-          <Typography
-            variant="h6"
-            align="center"
-            sx={{
-              fontWeight: "bold",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              // mb: 2,
-            }}
-          >
-            Your Picks 🎯
-          </Typography>
-
-          {picks.length === 0 ? (
-            <Typography
-              variant="body1"
-              align="center"
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: 1100,
+        mx: "auto",
+        py: 3,
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        gap: 3,
+        alignItems: "flex-start",
+      }}
+    >
+      {/* MAIN PICKS AREA */}
+      <Box sx={{ flex: 3 }}>
+        {/* League Selection */}
+        <Box sx={{ display: "flex", gap: 2, mb: 2, flexWrap: "wrap" }}>
+          {contestLeague.map((leagueOption) => (
+            <Button
+              key={leagueOption}
+              variant={league === leagueOption ? "contained" : "outlined"}
+              onClick={() => setLeague(leagueOption)}
               sx={{
-                color: "#bbb",
-                fontSize: "1rem",
-                textAlign: "center",
+                flex: 1,
+                backgroundColor:
+                  league === leagueOption ? "#4F46E5" : "transparent",
+                borderColor: "#4F46E5",
+                color: league === leagueOption ? "#fff" : "#4F46E5",
+                "&:hover": {
+                  backgroundColor:
+                    league === leagueOption ? "#3E3BA7" : "rgba(79,70,229,0.1)",
+                },
               }}
             >
-              <strong>No picks selected.</strong> <br />
-              Add picks using the form above.
+              {leagueOptions.find((opt) => opt.value === leagueOption)?.label}
+            </Button>
+          ))}
+        </Box>
+
+        {/* Pick Type */}
+        <Box sx={{ display: "flex", gap: 2, mb: 2, flexWrap: "wrap" }}>
+          {availableMarkets.includes("Moneyline") && (
+            <Button
+              variant={pickType === "money line" ? "contained" : "outlined"}
+              onClick={() => setPickType("money line")}
+              sx={{
+                flex: 1,
+                backgroundColor:
+                  pickType === "money line" ? "#4F46E5" : "transparent",
+                borderColor: "#4F46E5",
+                color: pickType === "money line" ? "#fff" : "#4F46E5",
+                "&:hover": {
+                  backgroundColor:
+                    pickType === "money line"
+                      ? "#3E3BA7"
+                      : "rgba(79,70,229,0.1)",
+                },
+              }}
+            >
+              Money Line 💰
+            </Button>
+          )}
+          {availableMarkets.includes("Spread") && (
+            <Button
+              variant={pickType === "spread" ? "contained" : "outlined"}
+              onClick={() => setPickType("spread")}
+              sx={{
+                flex: 1,
+                backgroundColor:
+                  pickType === "spread" ? "#4F46E5" : "transparent",
+                borderColor: "#4F46E5",
+                color: pickType === "spread" ? "#fff" : "#4F46E5",
+                "&:hover": {
+                  backgroundColor:
+                    pickType === "spread" ? "#3E3BA7" : "rgba(79,70,229,0.1)",
+                },
+              }}
+            >
+              Spread 📏
+            </Button>
+          )}
+        </Box>
+
+        {/* Games Grid */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+            gap: 2,
+            mb: 3,
+          }}
+        >
+          {games.filter((game) => {
+            const now = new Date();
+            const gameTime = new Date(game.commence_time);
+            const contestEnd = new Date(contestEndDate);
+            return gameTime > now && gameTime <= contestEnd;
+          }).length === 0 && (
+            <Typography
+              variant="body1"
+              sx={{ color: "#bbb", textAlign: "center", gridColumn: "1 / -1" }}
+            >
+              No games available at this time.
             </Typography>
-          ) : (
-            <List>
-              {picks.map((pick, index) => {
-                const leagueLabel = leagueOptions.find(
-                  (option) => option.value === pick.league
-                )?.label;
-
-                return (
-                  <ListItem
-                    key={index}
-                    sx={{
-                      backgroundColor: "rgba(255, 255, 255, 0.08)",
-                      borderRadius: "8px",
-                      px: 2,
-                      py: 1,
-                      mb: 1,
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontSize: isMobile ? "0.85rem" : "1rem",
-                        fontWeight: 500,
-                        flex: 1,
-                        color: "#ddd",
-                      }}
-                    >
-                      {leagueLabel} - {pick.pickType} -{" "}
-                      {pick.pickType === "money line"
-                        ? `${pick.teamPicked} (${pick.odds})`
-                        : `${pick.teamPicked}  (${pick.spreadLine}) (${pick.odds})`}
-                    </Typography>
-
-                    <IconButton
-                      size="small"
-                      sx={{
-                        color: "#ff4d4d",
-                        transition: "0.2s",
-                        "&:hover": { color: "#ff6666" },
-                      }}
-                      onClick={() => {
-                        const newPicks = picks.filter((_, i) => i !== index);
-                        setPicks(newPicks);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItem>
-                );
-              })}
-            </List>
           )}
 
-          <Button
-            variant="contained"
-            onClick={handleSubmitAll}
-            disabled={picks.length === 0 || isSubmitting}
-            sx={{
-              marginTop: 1,
-              backgroundColor: "#4F46E5",
-              color: "#fff",
-              fontWeight: "bold",
-              width: "100%",
-              py: 1,
-              fontSize: "1rem",
-              borderRadius: "10px",
-              "&:hover": { backgroundColor: "#3E3BA7" },
-            }}
-          >
-            {isSubmitting ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Submit All Picks"
-            )}
-          </Button>
-        </CardContent>
-      </Card>
-    </>
+          {games
+            .filter((game) => {
+              const now = new Date();
+              const gameTime = new Date(game.commence_time);
+              const contestEnd = new Date(contestEndDate);
+              return gameTime > now && gameTime <= contestEnd;
+            })
+            .map((game) => {
+              const isSelected = selectedGameId === game.id;
+              const outcomes =
+                gameDetails?.bookmakers?.[0]?.markets?.[0]?.outcomes || [];
+              const hasOutcomes = isSelected && outcomes.length > 0;
+              const preview = gamePreviews[game.id];
+
+              return (
+                <Card
+                  key={game.id}
+                  sx={{
+                    p: 2,
+                    borderRadius: "12px",
+                    cursor: "pointer",
+                    backgroundColor: isSelected ? "#4F46E5" : "#2b2b2b",
+                    color: "#fff",
+                    transition: "0.3s",
+                    "&:hover": { transform: "scale(1.03)" },
+                  }}
+                  onClick={() => setSelectedGameId(game.id)}
+                >
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    {game.home_team} vs {game.away_team}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "#ccc" }}>
+                    {new Date(game.commence_time).toLocaleString()}
+                  </Typography>
+
+                  {/* Outcomes or "No market available" */}
+                  {isSelected && (
+                    <>
+                      {hasOutcomes ? (
+                        outcomes.map((outcome) => (
+                          <Button
+                            key={outcome.name}
+                            sx={{
+                              mt: 1,
+                              mr: 1,
+                              backgroundColor:
+                                preview?.teamPicked === outcome.name
+                                  ? "#4F46E5"
+                                  : "#444",
+                              color: "#fff",
+                              "&:hover": { backgroundColor: "#3E3BA7" },
+                            }}
+                            onClick={() => handleAutoAddPick(game, outcome)}
+                          >
+                            {outcome.name} ({outcome.price}
+                            {pickType === "spread" && outcome.point
+                              ? `, Spread: ${outcome.point}`
+                              : ""}
+                            )
+                          </Button>
+                        ))
+                      ) : (
+                        <Typography
+                          variant="body2"
+                          sx={{ mt: 2, color: "#bbb", fontStyle: "italic" }}
+                        >
+                          {pickType === "money line"
+                            ? "No moneyline available for this game."
+                            : "No spread available for this game."}
+                        </Typography>
+                      )}
+                    </>
+                  )}
+
+                  {/* Preview display */}
+                  {preview && (
+                    <Typography
+                      variant="body2"
+                      sx={{ mt: 1, color: "#ddd", fontStyle: "italic" }}
+                    >
+                      Selected: {preview.teamPicked} ({preview.odds}
+                      {preview.spreadLine
+                        ? `, Spread: ${preview.spreadLine}`
+                        : ""}
+                      )
+                    </Typography>
+                  )}
+                </Card>
+              );
+            })}
+        </Box>
+      </Box>
+
+      {/* PICKS LINEUP SECTION */}
+      <Box
+        sx={{
+          flex: 1,
+          position: isMobile ? "fixed" : "sticky",
+          bottom: isMobile ? 0 : "auto",
+          right: isMobile ? 0 : "auto",
+          width: isMobile ? "100%" : "auto",
+          backgroundColor: isMobile ? "#1e1e1e" : "transparent",
+          p: isMobile ? 2 : 0,
+          borderTop: isMobile ? "1px solid #333" : "none",
+          zIndex: 100,
+        }}
+      >
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+          Your Picks 🎯
+        </Typography>
+
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          {picks.length === 0 ? (
+            <Typography variant="body2" sx={{ color: "#bbb" }}>
+              No picks selected yet.
+            </Typography>
+          ) : (
+            picks.map((pick, index) => (
+              <Card
+                key={index}
+                sx={{
+                  p: 1,
+                  backgroundColor: "#333",
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  color: "#fff",
+                }}
+              >
+                <Typography variant="body2">
+                  {
+                    leagueOptions.find((opt) => opt.value === pick.league)
+                      ?.label
+                  }{" "}
+                  — {pick.pickType} — {pick.teamPicked} ({pick.odds}
+                  {pick.spreadLine ? `, ${pick.spreadLine}` : ""})
+                </Typography>
+                <IconButton
+                  size="small"
+                  sx={{ color: "#ff4d4d" }}
+                  onClick={() => removePick(index)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Card>
+            ))
+          )}
+        </Box>
+
+        <Button
+          variant="contained"
+          fullWidth
+          disabled={picks.length === 0 || isSubmitting}
+          onClick={handleSubmitAll}
+          sx={{
+            mt: 2,
+            py: 1.2,
+            fontWeight: "bold",
+            fontSize: "1rem",
+            borderRadius: "10px",
+            backgroundColor: "#4F46E5",
+            "&:hover": { backgroundColor: "#3E3BA7" },
+          }}
+        >
+          {isSubmitting ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            "Submit All Picks"
+          )}
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

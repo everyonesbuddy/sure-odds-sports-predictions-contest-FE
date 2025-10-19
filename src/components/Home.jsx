@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import Footer from "./Footer";
 import ContestCard from "./ContestCard";
 import { useContestData } from "../hooks/useContestData";
-import KofiWidget from "./KofiWidget";
+// import KofiWidget from "./KofiWidget";
 import "../css/Home.css";
 
 const Home = () => {
@@ -48,7 +48,7 @@ const Home = () => {
               maxWidth: "100%",
             }}
           >
-            🏆Free To Play Weekly Sports Prediction Contest
+            Nigeria’s Premier Sports Pick’em Platform
           </Typography>
 
           <Typography
@@ -60,8 +60,8 @@ const Home = () => {
               maxWidth: "600px",
             }}
           >
-            Think you know sports? Prove it. Enter our weekly sports prediction
-            contest and win real cash and epic prizes. 🔥
+            Think you know sports? Prove it. Enter our sports prediction contest
+            and win real cash and epic prizes. 🔥
           </Typography>
         </Box>
       </Box>
@@ -87,7 +87,7 @@ const Home = () => {
             mb: 2,
           }}
         >
-          📬 Join The Smartest Sports Prediction Community
+          📬 Join Nigeria’s Smartest Sports Prediction Community
         </Typography>
 
         <iframe
@@ -170,7 +170,7 @@ const Home = () => {
         </div>
       </Box>
       <Footer />
-      <KofiWidget />
+      {/* <KofiWidget /> */}
     </>
   );
 };
