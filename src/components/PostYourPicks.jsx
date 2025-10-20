@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import PicksForm from "./PicksForm";
-// import ContestInfo from "./ContestInfo";
+// import PayoutInfo from "./PayoutInfo";
 
 const PostYourPicks = ({
   contestName,

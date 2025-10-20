@@ -41,9 +41,9 @@ export const useContestData = () => {
 
     return [
       {
-        contestName: `Sure Odds Weekly Pick’em`,
+        contestName: `₦50K Free Streak Challenge`,
         primaryImageUrl: weeklyMultiSportStreakImage,
-        contestPrimaryPrize: "₦80000 Cash Prize",
+        contestPrimaryPrize: "₦50000 Cash Prize",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
@@ -75,10 +75,10 @@ export const useContestData = () => {
           "soccer_spain_la_liga",
           "americanfootball_nfl",
         ],
-        contestFormat: "Pickem",
+        contestFormat: "Streak",
         availableMarkets: ["Spread", "Moneyline"],
-        availablePicks: 6,
-        entryFee: 8000,
+        availablePicks: 8,
+        entryFee: 0,
         affiliates: [],
       },
       // {
@@ -100,9 +100,9 @@ export const useContestData = () => {
       //   affiliates: [],
       // },
       {
-        contestName: `Sure Odds Monthly Pick’em`,
+        contestName: `₦300K High Stakes Pick’em Challenge`,
         primaryImageUrl: monthlyMultiSportStreakImage,
-        contestPrimaryPrize: "₦160000 Cash Prize",
+        contestPrimaryPrize: "₦300000 Cash Prize",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
         isContestActive: true,
@@ -137,7 +137,7 @@ export const useContestData = () => {
         ],
         contestFormat: "Pickem",
         availableMarkets: ["Moneyline"],
-        availablePicks: 12,
+        availablePicks: 30,
         entryFee: 8000,
         affiliates: [],
       },

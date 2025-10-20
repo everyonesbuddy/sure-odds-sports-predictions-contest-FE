@@ -12,11 +12,13 @@ const Home = () => {
   return (
     <>
       {/* Prevent unwanted horizontal scrolling */}
+      {/* HERO SECTION + NEWSLETTER */}
       <Box
         sx={{
           width: "100vw",
           maxWidth: "100%",
           overflowX: "hidden",
+          overflowY: "hidden", // Prevent vertical scroll
           textAlign: "center",
           color: "white",
           display: "flex",
@@ -25,36 +27,53 @@ const Home = () => {
           justifyContent: "center",
           py: { xs: 5, sm: 6 },
           background: "black",
+          position: "relative",
         }}
       >
-        {/* HERO SECTION */}
+        {/* Subtle Glow Background */}
         <Box
           sx={{
+            position: "absolute",
+            top: "-25%", // reduced from -50%
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: { xs: "300px", md: "600px" },
+            height: { xs: "300px", md: "600px" },
+            background:
+              "radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(0,0,0,0) 70%)",
+            zIndex: 0,
+          }}
+        />
+
+        {/* HERO CONTENT */}
+        <Box
+          sx={{
+            position: "relative",
+            zIndex: 2,
+            maxWidth: "800px",
+            width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: 3,
             textAlign: "center",
-            maxWidth: "800px",
-            width: "100%",
           }}
         >
           <Typography
             variant="h1"
             sx={{
-              fontWeight: "700",
+              fontWeight: 700,
               fontSize: { xs: "28px", sm: "42px", md: "48px" },
               lineHeight: 1.2,
-              maxWidth: "100%",
             }}
           >
-            Nigeria’s Premier Sports Pick’em Platform
+            Nigeria’s Premier Sports Prediction Platform
           </Typography>
 
           <Typography
             variant="h5"
             sx={{
-              fontWeight: "400",
+              fontWeight: 400,
               fontSize: { xs: "16px", sm: "20px" },
               opacity: 0.8,
               maxWidth: "600px",
@@ -64,48 +83,49 @@ const Home = () => {
             and win real cash and epic prizes. 🔥
           </Typography>
         </Box>
-      </Box>
 
-      {/* NEWSLETTER SIGNUP */}
-      <Box
-        sx={{
-          width: "100vw",
-          maxWidth: "100%",
-          overflowX: "hidden",
-          textAlign: "center",
-          color: "white",
-          py: { xs: 3, sm: 5 },
-          background:
-            "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 100%)",
-        }}
-      >
-        <Typography
-          variant="h5"
+        {/* NEWSLETTER SIGNUP */}
+        <Box
           sx={{
-            fontWeight: "600",
-            fontSize: { xs: "18px", sm: "22px" },
-            mb: 2,
+            width: "100%",
+            maxWidth: "100%",
+            overflowX: "hidden",
+            textAlign: "center",
+            color: "white",
+            py: { xs: 3, sm: 5 },
+            mt: { xs: 4, sm: 6 },
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 100%)",
           }}
         >
-          📬 Join Nigeria’s Smartest Sports Prediction Community
-        </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 600,
+              fontSize: { xs: "18px", sm: "22px" },
+              mb: 2,
+            }}
+          >
+            📬 Join Nigeria’s Smartest Sports Prediction Community
+          </Typography>
 
-        <iframe
-          src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"
-          data-test-id="beehiiv-embed"
-          height="52"
-          title="Beehiiv Embed"
-          frameBorder="0"
-          scrolling="no"
-          style={{
-            width: "100%",
-            maxWidth: "500px",
-            borderRadius: "6px",
-            backgroundColor: "transparent",
-            padding: "0 10px", // Add padding to prevent overlap
-            boxSizing: "border-box", // Ensure padding is included in the width
-          }}
-        ></iframe>
+          <iframe
+            src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"
+            data-test-id="beehiiv-embed"
+            height="52"
+            title="Beehiiv Embed"
+            frameBorder="0"
+            scrolling="no"
+            style={{
+              width: "100%",
+              maxWidth: "500px",
+              borderRadius: "6px",
+              backgroundColor: "transparent",
+              padding: "0 10px",
+              boxSizing: "border-box",
+            }}
+          ></iframe>
+        </Box>
       </Box>
 
       {/* CONTEST SECTION */}

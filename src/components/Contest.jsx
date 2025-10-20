@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import CustomTabPanel from "./CustomTabPanel";
 import Leaderboard from "./Leaderboard";
 import PostYourPicks from "./PostYourPicks";
-import ContestInfo from "./ContestInfo";
+import PayoutInfo from "./PayoutInfo";
 import Paywall from "./Paywall";
 import AffiliateSliders from "./AffiliateSliders";
 import { useContestData } from "../hooks/useContestData";
@@ -131,6 +131,88 @@ const Contest = () => {
     checkRegistration();
   }, [user, contestDetails]);
 
+  const CountdownAndPicks = ({
+    contestEndDate,
+    aggregateBets,
+    participantsUsername,
+    availablePicks,
+  }) => {
+    const [timeLeft, setTimeLeft] = useState("");
+    const [picksLeft, setPicksLeft] = useState(availablePicks);
+
+    useEffect(() => {
+      const updateCountdown = () => {
+        const now = new Date();
+        const end = new Date(contestEndDate);
+        const diff = end - now;
+
+        if (diff <= 0) {
+          setTimeLeft("Contest has ended");
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+      };
+
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 1000);
+      return () => clearInterval(interval);
+    }, [contestEndDate]);
+
+    useEffect(() => {
+      const userBets = aggregateBets.find(
+        (b) => b.username === participantsUsername
+      );
+      const betsPlaced = userBets ? userBets.numberOfBets : 0;
+      setPicksLeft(Math.max(availablePicks - betsPlaced, 0));
+    }, [aggregateBets, participantsUsername, availablePicks]);
+
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          mt: 2,
+          textAlign: "center",
+        }}
+      >
+        <Typography
+          sx={{
+            color: "#A5B4FC",
+            fontSize: { xs: "14px", md: "16px" },
+            fontWeight: 500,
+            background: "rgba(79,70,229,0.1)",
+            px: 2,
+            py: 1,
+            borderRadius: "12px",
+          }}
+        >
+          ⏳ Ends in: {timeLeft}
+        </Typography>
+        <Typography
+          sx={{
+            color: "#A5B4FC",
+            fontSize: { xs: "14px", md: "16px" },
+            fontWeight: 500,
+            background: "rgba(79,70,229,0.1)",
+            px: 2,
+            py: 1,
+            borderRadius: "12px",
+          }}
+        >
+          🎯 Picks Left: {picksLeft}/{availablePicks}
+        </Typography>
+      </Box>
+    );
+  };
+
   const aggregateBetsCalculation = (bets, contestDetails) => {
     const handicappers = {};
 
@@ -223,108 +305,188 @@ const Contest = () => {
         <Box
           sx={{
             width: "100%",
+            backgroundColor: "black",
             color: "white",
+            py: { xs: 6, md: 10 },
+            px: { xs: 3, md: 8 },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            background: "black",
-            py: { xs: 6, md: 10 }, // ✅ more breathing room
-            px: 2,
+            textAlign: "center",
+            borderBottom: "1px solid rgba(79,70,229,0.3)",
+            position: "relative",
+            overflow: "hidden",
           }}
         >
+          {/* Subtle Glow Background */}
           <Box
             sx={{
-              display: "flex",
-              flexDirection: { xs: "column", md: "row" },
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: { xs: 6, md: 10 },
-              maxWidth: "1100px", // ✅ give more width for Apple-like spacious feel
+              position: "absolute",
+              top: "-50%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "800px",
+              height: "800px",
+              background:
+                "radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(0,0,0,0) 70%)",
+              zIndex: 0,
+            }}
+          />
+
+          {/* Hero Content */}
+          <Box
+            sx={{
+              position: "relative",
+              zIndex: 2,
+              maxWidth: "900px",
               width: "100%",
             }}
           >
-            {/* Text Section */}
-            <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" } }}>
+            {/* Contest Format */}
+            <Typography
+              variant="body2"
+              sx={{
+                display: "inline-block",
+                background: "rgba(79,70,229,0.1)",
+                border: "1px solid rgba(79,70,229,0.3)",
+                borderRadius: "999px",
+                px: 2,
+                py: 0.5,
+                fontSize: "12px",
+                mb: 2,
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                color: "#A5B4FC",
+              }}
+            >
+              {contestDetails.contestFormat} Contest
+            </Typography>
+
+            {/* Contest Name */}
+            <Typography
+              variant="h2"
+              sx={{
+                fontWeight: 700,
+                fontSize: { xs: "32px", md: "46px" },
+                mb: 1.5,
+                lineHeight: 1.2,
+                color: "white",
+              }}
+            >
+              {contestDetails.contestName}
+            </Typography>
+
+            {/* Status & Date Range */}
+            <Box sx={{ mb: 3 }}>
               <Typography
-                variant="h1"
+                variant="body2"
                 sx={{
-                  fontWeight: 600,
-                  fontSize: { xs: "28px", sm: "40px", md: "48px" }, // ✅ big but elegant
-                  lineHeight: 1.2,
-                  mb: 3,
-                  letterSpacing: "-0.02em", // ✅ subtle Apple-like typography tweak
+                  display: "inline-block",
+                  background: moment().isBefore(
+                    contestDetails.currentContestStartDate
+                  )
+                    ? "rgba(234,179,8,0.1)"
+                    : moment().isAfter(contestDetails.currentContestEndDate)
+                    ? "rgba(239,68,68,0.1)"
+                    : "rgba(16,185,129,0.1)",
+                  color: moment().isBefore(
+                    contestDetails.currentContestStartDate
+                  )
+                    ? "#EAB308"
+                    : moment().isAfter(contestDetails.currentContestEndDate)
+                    ? "#EF4444"
+                    : "#10B981",
+                  borderRadius: "999px",
+                  px: 2,
+                  py: 0.5,
+                  fontSize: "12px",
+                  mr: 2,
                 }}
               >
-                Enter the {contestDetails.contestName}
+                {moment().isBefore(contestDetails.currentContestStartDate)
+                  ? "Starts Soon"
+                  : moment().isAfter(contestDetails.currentContestEndDate)
+                  ? "Contest Ended"
+                  : "LIVE NOW"}
               </Typography>
 
               <Typography
-                variant="body1"
+                variant="body2"
                 sx={{
-                  color: "#aaa", // ✅ softer gray, easier on eyes
-                  fontSize: { xs: "15px", md: "17px" },
-                  maxWidth: "500px",
-                  mb: 4,
+                  color: "#9CA3AF",
+                  display: "inline-block",
                 }}
               >
-                Enter Contest. Make picks. Climb the leaderboard. Win cash
-                prizes.
+                {moment(contestDetails.currentContestStartDate).format("MMM D")}{" "}
+                –{" "}
+                {moment(contestDetails.currentContestEndDate).format(
+                  "MMM D, YYYY"
+                )}
               </Typography>
-              <Box
-                sx={{
-                  background: "linear-gradient(90deg, #4F46E5, #6366F1)",
-                  px: 3,
-                  py: 1.5,
-                  borderRadius: "999px",
-                  fontWeight: 500,
-                  fontSize: isMobile ? "13px" : "14px",
-                  textAlign: "center",
-                  boxShadow: "0 4px 14px rgba(79,70,229,0.4)",
-                }}
-              >
-                {" "}
-                Prize Pool: {contestDetails.contestPrimaryPrize} - Entry Fee: ${" "}
-                {contestDetails.entryFee}{" "}
-              </Box>
             </Box>
 
-            {/* Image Section */}
-            {!isMobile && (
-              <Box
-                sx={{
-                  flex: 1,
-                  position: "relative",
-                  maxWidth: "400px",
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Box
+            {/* Countdown & Picks Remaining */}
+            <CountdownAndPicks
+              contestEndDate={contestDetails.currentContestEndDate}
+              aggregateBets={aggregateBets}
+              participantsUsername={user?.userName}
+              availablePicks={contestDetails.availablePicks}
+            />
+
+            {/* Prize and Entry */}
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 500,
+                fontSize: "18px",
+                mt: 3,
+                mb: 4,
+                color: "#C7D2FE",
+              }}
+            >
+              💰 Prize Pool: {contestDetails.contestPrimaryPrize} | 💸 Entry
+              Fee: ${contestDetails.entryFee}
+            </Typography>
+
+            {/* CTA */}
+            <Box>
+              {isRegisteredForContest ? (
+                <Typography
                   sx={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "100%",
-                    background:
-                      "radial-gradient(circle, rgba(79,70,229,0.25) 0%, rgba(0,0,0,0) 70%)",
-                    borderRadius: "50%",
-                    filter: "blur(40px)",
+                    backgroundColor: "#22C55E",
+                    color: "white",
+                    px: 3,
+                    py: 1.2,
+                    borderRadius: "999px",
+                    fontWeight: 500,
+                    display: "inline-block",
                   }}
-                />
-                <img
-                  src={contestDetails.primaryImageUrl}
-                  alt={contestDetails.contestName}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    borderRadius: "24px",
-                    boxShadow: "0 12px 40px rgba(0, 0, 0, 0.4)",
+                >
+                  You’re Registered ✅
+                </Typography>
+              ) : (
+                <Typography
+                  component="a"
+                  href="#paywall"
+                  sx={{
+                    background: "linear-gradient(90deg, #4F46E5, #6366F1)",
+                    color: "white",
+                    px: 3,
+                    py: 1.2,
+                    borderRadius: "999px",
+                    fontWeight: 500,
+                    display: "inline-block",
+                    boxShadow: "0 4px 14px rgba(79,70,229,0.5)",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    "&:hover": { opacity: 0.9 },
                   }}
-                />
-              </Box>
-            )}
+                >
+                  Join Contest Below
+                </Typography>
+              )}
+            </Box>
           </Box>
         </Box>
 
@@ -366,7 +528,7 @@ const Contest = () => {
                   }}
                 />
                 <Tab
-                  label="Details 🏁"
+                  label="Payout info 💵"
                   {...a11yProps(2)}
                   sx={{
                     color: "#4F46E5",
@@ -404,7 +566,7 @@ const Contest = () => {
               />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              <ContestInfo
+              <PayoutInfo
                 contestName={contestDetails.contestName}
                 spreadsheetUrl={contestDetails.spreadsheetUrl}
                 contestPrimaryPrize={contestDetails.contestPrimaryPrize}
