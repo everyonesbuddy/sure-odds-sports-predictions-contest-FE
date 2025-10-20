@@ -1,4 +1,3 @@
-import { useWeek } from "../context/WeekContext";
 import { useMonth } from "../context/MonthContext";
 import { useMemo } from "react";
 import weeklyMultiSportStreakImage from "../assets/weekly-multi-sport-streak-poster.png";
@@ -9,11 +8,10 @@ import monthlyMultiSportStreakImage from "../assets/monthly-multi-sport-streak-p
 // import dgFantasyLogo from "../assets/dgfantasy-logo.png";
 
 export const useContestData = () => {
-  const { weekStartEnd, lastWeekStartEnd } = useWeek();
   const { monthStartEnd, lastMonthStartEnd } = useMonth();
 
   const contestData = useMemo(() => {
-    if (!weekStartEnd.startOfWeek || !weekStartEnd.endOfWeek) {
+    if (!monthStartEnd.startOfMonth || !monthStartEnd.endOfMonth) {
       return [];
     }
 
@@ -47,22 +45,23 @@ export const useContestData = () => {
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
         isContestActive: true,
-        currentContestStartDate: weekStartEnd.startOfWeek.toLocaleString(
+        currentContestStartDate: monthStartEnd.startOfMonth.toLocaleString(
           "en-US",
           {
             timeZone: "America/New_York",
           }
         ),
-        currentContestEndDate: weekStartEnd.endOfWeek.toLocaleString("en-US", {
-          timeZone: "America/New_York",
-        }),
-        lastConstestStartDate: lastWeekStartEnd.startOfLastWeek.toLocaleString(
+        currentContestEndDate: monthStartEnd.endOfMonth.toLocaleString(
           "en-US",
           {
             timeZone: "America/New_York",
           }
         ),
-        lastContestEndDate: lastWeekStartEnd.endOfLastWeek.toLocaleString(
+        lastConstestStartDate:
+          lastMonthStartEnd.startOfLastMonth.toLocaleString("en-US", {
+            timeZone: "America/New_York",
+          }),
+        lastContestEndDate: lastMonthStartEnd.endOfLastMonth.toLocaleString(
           "en-US",
           {
             timeZone: "America/New_York",
@@ -142,7 +141,7 @@ export const useContestData = () => {
         affiliates: [],
       },
     ];
-  }, [weekStartEnd, lastWeekStartEnd, monthStartEnd, lastMonthStartEnd]);
+  }, [monthStartEnd, lastMonthStartEnd]);
 
   return contestData;
 };
