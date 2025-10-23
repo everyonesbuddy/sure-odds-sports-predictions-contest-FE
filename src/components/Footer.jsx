@@ -25,9 +25,12 @@ const Footer = () => {
         <Link href="https://x.com/sure_odds2023" target="_blank" sx={{ mx: 1 }}>
           Twitter
         </Link>
+        <Link href="/terms-and-conditions" sx={{ mx: 1 }}>
+          Terms & Conditions
+        </Link>
       </Typography>
       <Typography variant="body2" color="white">
-        &copy; {new Date().getFullYear()} SureOdds. All rights reserved.
+        &copy; {new Date().getFullYear()} Sure-Odds. All rights reserved.
       </Typography>
     </Box>
   );

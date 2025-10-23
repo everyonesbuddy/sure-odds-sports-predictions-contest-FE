@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
@@ -94,6 +94,30 @@ const SignupForm = () => {
         </button>
         {error && <div className="error">{error}</div>}
       </form>
+
+      <p
+        style={{
+          marginTop: "1.5rem",
+          fontSize: "0.9rem",
+          color: "#000",
+          textAlign: "center",
+          lineHeight: 1.5,
+        }}
+      >
+        By creating an account, you agree to our{" "}
+        <Link
+          to="/terms-and-conditions"
+          style={{
+            color: "#4F46E5",
+            textDecoration: "none",
+            fontWeight: 600,
+          }}
+        >
+          Terms & Conditions
+        </Link>{" "}
+        and confirm that you are at least 18 years old and that all information
+        provided is true.
+      </p>
     </div>
   );
 };

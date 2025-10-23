@@ -6,10 +6,13 @@ import {
   Box,
   CircularProgress,
   IconButton,
+  Collapse,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
@@ -35,6 +38,7 @@ const PicksForm = ({
   const [picks, setPicks] = useState([]);
   const [gamePreviews, setGamePreviews] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const { user, token } = useAuth();
   const theme = useTheme();
@@ -143,8 +147,9 @@ const PicksForm = ({
     setPicks(picks.filter((_, i) => i !== index));
     setGamePreviews((prev) => {
       const copy = { ...prev };
-      if (removedPick.selectedGameId in copy)
+      if (removedPick?.selectedGameId && copy[removedPick.selectedGameId]) {
         delete copy[removedPick.selectedGameId];
+      }
       return copy;
     });
   };
@@ -182,6 +187,7 @@ const PicksForm = ({
         flexDirection: isMobile ? "column" : "row",
         gap: 3,
         alignItems: "flex-start",
+        boxSizing: "border-box",
       }}
     >
       {/* MAIN PICKS AREA */}
@@ -300,8 +306,8 @@ const PicksForm = ({
                     cursor: "pointer",
                     backgroundColor: isSelected ? "#4F46E5" : "#2b2b2b",
                     color: "#fff",
-                    transition: "0.3s",
-                    "&:hover": { transform: "scale(1.03)" },
+                    transition: "0.15s",
+                    "&:hover": { transform: "scale(1.02)" },
                   }}
                   onClick={() => setSelectedGameId(game.id)}
                 >
@@ -373,81 +379,191 @@ const PicksForm = ({
       {/* PICKS LINEUP SECTION */}
       <Box
         sx={{
-          flex: 1,
+          flex: isMobile ? "none" : 1,
           position: isMobile ? "fixed" : "sticky",
           bottom: isMobile ? 0 : "auto",
+          left: isMobile ? 0 : "auto",
           right: isMobile ? 0 : "auto",
           width: isMobile ? "100%" : "auto",
           backgroundColor: isMobile ? "#1e1e1e" : "transparent",
-          p: isMobile ? 2 : 0,
+          p: isMobile ? 0 : 0,
           borderTop: isMobile ? "1px solid #333" : "none",
-          zIndex: 100,
+          borderRadius: isMobile ? "12px 12px 0 0" : 0,
+          zIndex: 1400,
+          boxSizing: "border-box",
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
-          Your Picks 🎯
-        </Typography>
-
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          {picks.length === 0 ? (
-            <Typography variant="body2" sx={{ color: "#bbb" }}>
-              No picks selected yet.
-            </Typography>
-          ) : (
-            picks.map((pick, index) => (
-              <Card
-                key={index}
-                sx={{
-                  p: 1,
-                  backgroundColor: "#333",
-                  borderRadius: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  color: "#fff",
-                }}
+        {isMobile ? (
+          <>
+            {/* COLLAPSIBLE HEADER */}
+            <Box
+              onClick={() => setIsExpanded((s) => !s)}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                py: 1.25,
+                px: 2,
+                backgroundColor: "#2b2b2b",
+                cursor: "pointer",
+                boxSizing: "border-box",
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                sx={{ fontWeight: "bold", color: "#fff" }}
               >
-                <Typography variant="body2">
-                  {
-                    leagueOptions.find((opt) => opt.value === pick.league)
-                      ?.label
-                  }{" "}
-                  — {pick.pickType} — {pick.teamPicked} ({pick.odds}
-                  {pick.spreadLine ? `, ${pick.spreadLine}` : ""})
-                </Typography>
-                <IconButton
-                  size="small"
-                  sx={{ color: "#ff4d4d" }}
-                  onClick={() => removePick(index)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Card>
-            ))
-          )}
-        </Box>
+                Your Picks 🎯 ({picks.length})
+              </Typography>
+              {isExpanded ? (
+                <ExpandLessIcon sx={{ color: "#fff" }} />
+              ) : (
+                <ExpandMoreIcon sx={{ color: "#fff" }} />
+              )}
+            </Box>
 
-        <Button
-          variant="contained"
-          fullWidth
-          disabled={picks.length === 0 || isSubmitting}
-          onClick={handleSubmitAll}
-          sx={{
-            mt: 2,
-            py: 1.2,
-            fontWeight: "bold",
-            fontSize: "1rem",
-            borderRadius: "10px",
-            backgroundColor: "#4F46E5",
-            "&:hover": { backgroundColor: "#3E3BA7" },
-          }}
-        >
-          {isSubmitting ? (
-            <CircularProgress size={24} color="inherit" />
-          ) : (
-            "Submit All Picks"
-          )}
-        </Button>
+            {/* COLLAPSIBLE CONTENT */}
+            <Collapse in={isExpanded} timeout={200}>
+              <Box sx={{ p: 2, boxSizing: "border-box" }}>
+                {picks.length === 0 ? (
+                  <Typography variant="body2" sx={{ color: "#bbb" }}>
+                    No picks selected yet.
+                  </Typography>
+                ) : (
+                  picks.map((pick, index) => (
+                    <Card
+                      key={index}
+                      sx={{
+                        p: 1,
+                        backgroundColor: "#333",
+                        borderRadius: "10px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        color: "#fff",
+                        mb: 1,
+                        width: "100%",
+                        boxSizing: "border-box",
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
+                        sx={{ wordBreak: "break-word", color: "#fff" }}
+                      >
+                        {
+                          leagueOptions.find((opt) => opt.value === pick.league)
+                            ?.label
+                        }{" "}
+                        — {pick.pickType} — {pick.teamPicked} ({pick.odds}
+                        {pick.spreadLine ? `, ${pick.spreadLine}` : ""})
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        sx={{ color: "#ff4d4d", ml: 1 }}
+                        onClick={() => removePick(index)}
+                        aria-label={`Remove pick ${index + 1}`}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Card>
+                  ))
+                )}
+
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled={picks.length === 0 || isSubmitting}
+                  onClick={handleSubmitAll}
+                  sx={{
+                    mt: 2,
+                    py: 1.2,
+                    fontWeight: "bold",
+                    fontSize: "1rem",
+                    borderRadius: "10px",
+                    backgroundColor: "#4F46E5",
+                    "&:hover": { backgroundColor: "#3E3BA7" },
+                  }}
+                >
+                  {isSubmitting ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Submit All Picks"
+                  )}
+                </Button>
+              </Box>
+            </Collapse>
+          </>
+        ) : (
+          // Desktop version (sticky/right column)
+          <Box sx={{ p: 0 }}>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, fontWeight: "bold", color: "#fff" }}
+            >
+              Your Picks 🎯
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+              {picks.length === 0 ? (
+                <Typography variant="body2" sx={{ color: "#bbb" }}>
+                  No picks selected yet.
+                </Typography>
+              ) : (
+                picks.map((pick, index) => (
+                  <Card
+                    key={index}
+                    sx={{
+                      p: 1,
+                      backgroundColor: "#333",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      color: "#fff",
+                    }}
+                  >
+                    <Typography variant="body2">
+                      {
+                        leagueOptions.find((opt) => opt.value === pick.league)
+                          ?.label
+                      }{" "}
+                      — {pick.pickType} — {pick.teamPicked} ({pick.odds}
+                      {pick.spreadLine ? `, ${pick.spreadLine}` : ""})
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      sx={{ color: "#ff4d4d" }}
+                      onClick={() => removePick(index)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Card>
+                ))
+              )}
+            </Box>
+
+            <Button
+              variant="contained"
+              fullWidth
+              disabled={picks.length === 0 || isSubmitting}
+              onClick={handleSubmitAll}
+              sx={{
+                mt: 2,
+                py: 1.2,
+                fontWeight: "bold",
+                fontSize: "1rem",
+                borderRadius: "10px",
+                backgroundColor: "#4F46E5",
+                "&:hover": { backgroundColor: "#3E3BA7" },
+              }}
+            >
+              {isSubmitting ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Submit All Picks"
+              )}
+            </Button>
+          </Box>
+        )}
       </Box>
     </Box>
   );

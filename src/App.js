@@ -8,6 +8,7 @@ import Signup from "./components/Signup";
 import Leaderboard from "./components/Leaderboard";
 import PostYourPicks from "./components/PostYourPicks";
 import About from "./components/About";
+import TermsAndConditions from "./components/TermsAndConditions";
 import Nav from "./components/Nav";
 import B2bLandingPage from "./components/B2bLandingPage";
 import PrivateRoute from "./components/PrivateRoute";
@@ -27,6 +28,10 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route
+                path="/terms-and-conditions"
+                element={<TermsAndConditions />}
+              />
               <Route
                 path="/leaderboard"
                 element={<PrivateRoute element={Leaderboard} />}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import "../css/LoginForm.css";
@@ -57,6 +57,27 @@ const LoginForm = () => {
         </button>
         {error && <div className="error">{error}</div>}
       </form>
+      <p
+        style={{
+          marginTop: "1.5rem",
+          fontSize: "0.9rem",
+          color: "#000",
+          textAlign: "center",
+          lineHeight: 1.5,
+        }}
+      >
+        Don't have an account yet?{" "}
+        <Link
+          to="/signup"
+          style={{
+            color: "#4F46E5",
+            textDecoration: "none",
+            fontWeight: 600,
+          }}
+        >
+          Register
+        </Link>{" "}
+      </p>
     </div>
   );
 };
