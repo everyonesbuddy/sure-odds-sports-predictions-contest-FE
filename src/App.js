@@ -11,6 +11,8 @@ import About from "./components/About";
 import TermsAndConditions from "./components/TermsAndConditions";
 import Nav from "./components/Nav";
 import B2bLandingPage from "./components/B2bLandingPage";
+import PaymentSuccess from "./components/PaymentSuccess";
+import PaymentCancelled from "./components/PaymentCancelled";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import { TimerProvider } from "./context/TimerContext";
@@ -32,6 +34,8 @@ const App = () => {
                 path="/terms-and-conditions"
                 element={<TermsAndConditions />}
               />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/payment-cancelled" element={<PaymentCancelled />} />
               <Route
                 path="/leaderboard"
                 element={<PrivateRoute element={Leaderboard} />}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  TextField,
   Card,
   Typography,
   Button,
@@ -8,7 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+// import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/AuthContext";
@@ -24,51 +23,90 @@ const Paywall = ({
   availablePicks,
   entryFee,
 }) => {
-  const [code, setCode] = useState("");
-  const [isCodeSubmitting, setIsCodeSubmitting] = useState(false);
+  // const [code, setCode] = useState("");
+  // const [isCodeSubmitting, setIsCodeSubmitting] = useState(false);
   const [countdownMessage, setCountdownMessage] = useState("");
-  const { token, updateRegisteredContests } = useAuth();
+  const { token, user } = useAuth();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleCodeSubmit = async () => {
-    setIsCodeSubmitting(true);
+  // const handleCodeSubmit = async () => {
+  //   setIsCodeSubmitting(true);
+  //   try {
+  //     const response = await fetch(
+  //       "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/submitCode",
+  //       {
+  //         method: "POST",
+  //         mode: "cors",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         body: JSON.stringify({ code }),
+  //       }
+  //     );
+
+  //     const data = await response.json();
+
+  //     if (response.ok && data.status === "success") {
+  //       // Refresh user data in AuthProvider
+  //       await updateRegisteredContests({
+  //         name: contestName,
+  //         accessCodeUsed: code,
+  //         startDate: contestStartDate,
+  //         endDate: contestEndDate,
+  //       });
+
+  //       setCode("");
+  //       toast.success("Code applied successfully!");
+  //     } else {
+  //       toast.error(data.message || "Invalid or already used code.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error validating code:", error);
+  //     toast.error("Failed to validate code. Please try again.");
+  //   } finally {
+  //     setIsCodeSubmitting(false);
+  //   }
+  // };
+
+  const handleStripeCheckout = async () => {
+    if (!token || !user?._id) {
+      toast.error("You must be logged in to enter the contest.");
+      return;
+    }
+
     try {
       const response = await fetch(
-        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/codes/submitCode",
+        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/payments/create-checkout-session",
         {
           method: "POST",
-          mode: "cors",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ code }),
+          body: JSON.stringify({
+            userId: user._id, // ✅ Use logged-in user ID
+            contestName,
+            price: entryFee,
+            startDate: new Date(contestStartDate).toISOString(),
+            endDate: new Date(contestEndDate).toISOString(),
+          }),
         }
       );
 
       const data = await response.json();
 
       if (response.ok && data.status === "success") {
-        // Refresh user data in AuthProvider
-        await updateRegisteredContests({
-          name: contestName,
-          accessCodeUsed: code,
-          startDate: contestStartDate,
-          endDate: contestEndDate,
-        });
-
-        setCode("");
-        toast.success("Code applied successfully!");
+        // Redirect to Stripe-hosted payment page
+        window.location.href = data.url;
       } else {
-        toast.error(data.message || "Invalid or already used code.");
+        toast.error(data.message || "Failed to initiate payment.");
       }
     } catch (error) {
-      console.error("Error validating code:", error);
-      toast.error("Failed to validate code. Please try again.");
-    } finally {
-      setIsCodeSubmitting(false);
+      console.error("Stripe checkout error:", error);
+      toast.error("Failed to initiate payment. Try again.");
     }
   };
 
@@ -195,9 +233,7 @@ const Paywall = ({
 
             <Button
               variant="contained"
-              href="https://buy.stripe.com/9B63cwg3P142c5T8aM6Ri08"
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={handleStripeCheckout}
               sx={{
                 fontSize: isMobile ? "12px" : "14px",
                 py: isMobile ? 0.8 : 1.2,
@@ -230,7 +266,7 @@ const Paywall = ({
           </Box>
 
           {/* 🟣 Step 2: Apply Access Code */}
-          <Box
+          {/* <Box
             sx={{
               background: "rgba(255,255,255,0.05)",
               borderRadius: "12px",
@@ -303,7 +339,7 @@ const Paywall = ({
                 "Apply Code & Enter Contest"
               )}
             </Button>
-          </Box>
+          </Box> */}
         </Card>
       </Box>
     </>
