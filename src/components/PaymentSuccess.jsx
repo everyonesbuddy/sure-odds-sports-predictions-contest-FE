@@ -1,23 +1,28 @@
 import React, { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { CircularProgress, Box, Typography } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const contestName = searchParams.get("contest");
+  const { refreshUser } = useAuth();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const handleSuccess = async () => {
+      if (refreshUser) await refreshUser(); // ✅ Refresh user data
       if (contestName) {
         navigate(`/contest/${encodeURIComponent(contestName)}`);
       } else {
         navigate("/");
       }
-    }, 3000);
+    };
+
+    const timer = setTimeout(handleSuccess, 3000);
 
     return () => clearTimeout(timer);
-  }, [contestName, navigate]);
+  }, [contestName, navigate, refreshUser]);
 
   return (
     <Box

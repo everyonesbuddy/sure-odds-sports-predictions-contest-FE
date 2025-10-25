@@ -62,6 +62,27 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // function to refresh user data from the server
+  const refreshUser = async () => {
+    if (!token) return;
+
+    try {
+      const response = await axios.get(
+        "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/users/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (response.status === 200) {
+        setUser(response.data.data.user);
+        localStorage.setItem("user", JSON.stringify(response.data.data.user));
+      }
+    } catch (err) {
+      console.error("Failed to refresh user data:", err);
+    }
+  };
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
@@ -79,6 +100,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         updateRegisteredContests,
+        refreshUser,
       }}
     >
       {children}
