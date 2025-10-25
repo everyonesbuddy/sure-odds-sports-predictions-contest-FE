@@ -125,7 +125,6 @@ const Contest = () => {
             new Date(contest.endDate) > new Date()
         ) || contestDetails?.entryFee === 0; // Allow free contests to be considered registered
       setIsRegisteredForContest(isRegistered);
-      console.log("Is user registered for contest:", isRegistered);
     };
 
     checkRegistration();
