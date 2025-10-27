@@ -1,7 +1,7 @@
 import { useMonth } from "../context/MonthContext";
 import { useMemo } from "react";
-import weeklyMultiSportStreakImage from "../assets/weekly-multi-sport-streak-poster.png";
-import monthlyMultiSportStreakImage from "../assets/monthly-multi-sport-streak-poster.png";
+import FreeStreakChallengeImage from "../assets/50k-free-streak-challenge.png";
+import HighStakesPickemImage from "../assets/300k-high-stakes-pickem.png";
 // import eplSeasonLongPickemImage from "../assets/epl-season-long-contest.png";
 // import doinkLogo from "../assets/doink-logo.png";
 // import oddsJamLogo from "../assets/oddsjam-logo.png";
@@ -40,7 +40,7 @@ export const useContestData = () => {
     return [
       {
         contestName: `₦50K Free Streak Challenge`,
-        primaryImageUrl: weeklyMultiSportStreakImage,
+        primaryImageUrl: FreeStreakChallengeImage,
         contestPrimaryPrize: "₦50000 Cash Prize",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem1/",
@@ -82,7 +82,7 @@ export const useContestData = () => {
       },
       {
         contestName: `₦300K High Stakes Pick’em Challenge`,
-        primaryImageUrl: monthlyMultiSportStreakImage,
+        primaryImageUrl: HighStakesPickemImage,
         contestPrimaryPrize: "₦300000 Cash Prize",
         spreadsheetUrl:
           "https://sure-odds-be-482948f2bda5.herokuapp.com/api/v1/pickem2/",
