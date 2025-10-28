@@ -68,7 +68,7 @@ export const useContestData = () => {
           }
         ),
         contestLeague: [
-          // "basketball_nba",
+          "basketball_nba",
           // "basketball_wnba",
           "soccer_epl",
           "soccer_spain_la_liga",
@@ -110,7 +110,7 @@ export const useContestData = () => {
           }
         ),
         contestLeague: [
-          // "basketball_nba",
+          "basketball_nba",
           // "basketball_wnba",
           "soccer_epl",
           "soccer_spain_la_liga",
