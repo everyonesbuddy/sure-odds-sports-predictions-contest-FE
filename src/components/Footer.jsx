@@ -19,15 +19,15 @@ const Footer = () => {
         <Link href="/" sx={{ mx: 1 }}>
           Home
         </Link>
-        <Link href="/about" sx={{ mx: 1 }}>
+        {/* <Link href="/about" sx={{ mx: 1 }}>
           About
-        </Link>
+        </Link> */}
         <Link href="https://x.com/sure_odds2023" target="_blank" sx={{ mx: 1 }}>
           Twitter
         </Link>
-        <Link href="/terms-and-conditions" sx={{ mx: 1 }}>
+        {/* <Link href="/terms-and-conditions" sx={{ mx: 1 }}>
           Terms & Conditions
-        </Link>
+        </Link> */}
       </Typography>
       <Typography variant="body2" color="white">
         &copy; {new Date().getFullYear()} Sure-Odds. All rights reserved.
