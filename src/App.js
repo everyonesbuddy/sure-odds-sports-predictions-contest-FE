@@ -5,7 +5,6 @@ import PersonalizedAnalytics from "./components/PersonalizedAnalytics";
 import Contest from "./components/Contest";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import Demo from "./components/Demo";
 import Leaderboard from "./components/Leaderboard";
 import PostYourPicks from "./components/PostYourPicks";
 import About from "./components/About";
@@ -29,7 +28,6 @@ const App = () => {
             <Nav />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/demo" element={<Demo />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route

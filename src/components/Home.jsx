@@ -1,50 +1,33 @@
 import React from "react";
-import { Box, Typography, Grid, Button } from "@mui/material";
-// import Footer from "./Footer";
+import { Box, Typography } from "@mui/material";
+import Footer from "./Footer";
+import ContestCard from "./ContestCard";
+import { useContestData } from "../hooks/useContestData";
+import "../css/Home.css";
 
-const benefits = [
-  {
-    title: "Engage Sports Fans",
-    description:
-      "Create fun, skill-based prediction contests to captivate your audience and keep them coming back. " +
-      "With interactive features, fans feel involved and return often, increasing retention and overall engagement. " +
-      "Our platform allows you to track participation and provide instant feedback, keeping your audience excited.",
-  },
-  {
-    title: "Generate Leads",
-    description:
-      "Collect actionable audience data while offering exciting prizes and gamified experiences. " +
-      "Gain insights into user preferences, demographics, and behaviors. " +
-      "Easily integrate the collected leads into your CRM or email marketing system to grow your business efficiently.",
-  },
-  {
-    title: "Boost Your Brand",
-    description:
-      "Increase brand awareness and loyalty with hands-on, fully managed contests tailored for sports brands. " +
-      "Promote your brand in a fun, interactive way that resonates with your audience. " +
-      "Strengthen your brand identity by creating memorable experiences fans will share across social media.",
-  },
-];
+const Demo = () => {
+  const contestData = useContestData();
 
-const Home = () => {
   return (
     <>
-      {/* HERO SECTION */}
+      {/* HERO SECTION + NEWSLETTER */}
       <Box
         sx={{
-          width: "100%",
+          width: "100vw",
+          maxWidth: "100%",
+          overflowX: "hidden",
           textAlign: "center",
           color: "white",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          py: { xs: 6, sm: 12 },
-          px: { xs: 2, sm: 4 },
+          py: { xs: 5, sm: 6 },
           background: "black",
           position: "relative",
         }}
       >
+        {/* Subtle Glow Background */}
         <Box
           sx={{
             position: "absolute",
@@ -59,28 +42,31 @@ const Home = () => {
           }}
         />
 
+        {/* HERO CONTENT */}
         <Box
           sx={{
             position: "relative",
             zIndex: 2,
-            maxWidth: "900px",
+            maxWidth: "800px",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: 3,
+            textAlign: "center",
           }}
         >
           <Typography
-            variant="h2"
+            variant="h1"
             sx={{
               fontWeight: 700,
-              fontSize: { xs: "28px", sm: "40px", md: "48px" },
+              fontSize: { xs: "28px", sm: "42px", md: "48px" },
               lineHeight: 1.2,
             }}
           >
-            Engage Sports Fans, Generate Leads, Boost Your Brand
+            Nigeria’s Premier Sports Prediction Platform
           </Typography>
+
           <Typography
             variant="h5"
             sx={{
@@ -88,155 +74,121 @@ const Home = () => {
               fontSize: { xs: "16px", sm: "20px" },
               opacity: 0.8,
               maxWidth: "600px",
-              textAlign: "center",
             }}
           >
-            Sure-Odds helps sports brands, influencers, and content creators run
-            skill-based prediction contests that grow audiences, collect leads,
-            and increase engagement.
+            Think you know sports? Prove it. Enter our sports prediction contest
+            and win real cash and epic prizes. 🔥
           </Typography>
-          <Button
-            variant="contained"
+        </Box>
+
+        {/* NEWSLETTER SIGNUP */}
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "100%",
+            overflowX: "hidden",
+            textAlign: "center",
+            color: "white",
+            py: { xs: 3, sm: 5 },
+            mt: { xs: 4, sm: 6 },
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 100%)",
+          }}
+        >
+          <Typography
+            variant="h5"
             sx={{
-              mt: 4,
-              backgroundColor: "#4F46E5",
-              color: "white",
-              fontWeight: "bold",
-              px: 4,
-              py: 1.5,
-              fontSize: { xs: "14px", sm: "16px" },
-              borderRadius: "8px",
-              "&:hover": { backgroundColor: "#6366F1" },
+              fontWeight: 600,
+              fontSize: { xs: "18px", sm: "22px" },
+              mb: 2,
             }}
           >
-            Request a Demo
-          </Button>
+            📬 Join Nigeria’s Smartest Sports Prediction Community
+          </Typography>
+
+          <iframe
+            src="https://embeds.beehiiv.com/7fcc300a-4395-4b66-a558-f5e61ef24bdf?slim=true"
+            data-test-id="beehiiv-embed"
+            height="52"
+            title="Beehiiv Embed"
+            frameBorder="0"
+            scrolling="no"
+            style={{
+              width: "100%",
+              maxWidth: "500px",
+              borderRadius: "6px",
+              backgroundColor: "transparent",
+              padding: "0 10px",
+              boxSizing: "border-box",
+            }}
+          ></iframe>
         </Box>
       </Box>
 
-      {/* BENEFITS SECTION */}
+      {/* CONTEST SECTION */}
       <Box
         sx={{
-          background: "#0f0f0f",
-          py: { xs: 6, sm: 10 },
-          px: { xs: 2, sm: 4 },
           textAlign: "center",
+          py: { xs: 4, sm: 6 },
+          background: "black",
+          width: "100vw",
+          maxWidth: "100%",
+          overflowX: "hidden",
         }}
       >
         <Typography
           variant="h3"
           sx={{
-            fontWeight: 700,
-            fontSize: { xs: "24px", sm: "32px" },
-            color: "white",
-            mb: 5,
-          }}
-        >
-          Why Sports Brands Choose Sure-Odds
-        </Typography>
-
-        <Grid
-          container
-          spacing={{ xs: 4, sm: 6 }}
-          justifyContent="center"
-          alignItems="stretch"
-        >
-          {benefits.map((item, idx) => (
-            <Grid
-              item
-              key={idx}
-              xs={12}
-              sm={4}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  background: "#1f1f1f",
-                  borderRadius: 3,
-                  p: { xs: 4, sm: 6 },
-                  width: "100%",
-                  maxWidth: 400, // bigger cards
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  gap: 3,
-                  transition: "transform 0.3s, box-shadow 0.3s",
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: "0px 8px 20px rgba(0,0,0,0.3)",
-                  },
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 700,
-                    color: "#4F46E5",
-                    textAlign: "center",
-                    fontSize: { xs: "18px", sm: "20px" },
-                  }}
-                >
-                  {item.title}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "#ccc",
-                    textAlign: "center",
-                    lineHeight: 1.7,
-                    fontSize: { xs: "14px", sm: "16px" },
-                  }}
-                >
-                  {item.description}
-                </Typography>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-
-      {/* CTA SECTION */}
-      <Box
-        sx={{
-          background: "black",
-          py: { xs: 6, sm: 10 },
-          textAlign: "center",
-        }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 700,
+            fontWeight: "700",
+            fontSize: { xs: "24px", sm: "32px", md: "36px" },
             color: "white",
             mb: 3,
-            fontSize: { xs: "20px", sm: "28px" },
+            maxWidth: "100%",
           }}
         >
-          Ready to Grow Your Sports Brand?
+          🚀 Featured Contest
         </Typography>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#4F46E5",
-            color: "white",
-            fontWeight: "bold",
-            px: 4,
-            py: 1.5,
-            fontSize: { xs: "14px", sm: "16px" },
-            borderRadius: "8px",
-            "&:hover": { backgroundColor: "#6366F1" },
-          }}
-        >
-          Request a Demo
-        </Button>
-      </Box>
 
-      {/* <Footer /> */}
+        <div className="card-container">
+          {contestData.some((item) => item.isContestActive) ? (
+            contestData.map(
+              (item, index) =>
+                item.isContestActive && (
+                  <ContestCard
+                    key={index}
+                    primaryImageUrl={item.primaryImageUrl}
+                    contestName={item.contestName}
+                    contestPrimaryPrize={item.contestPrimaryPrize}
+                    startDate={item.currentContestStartDate}
+                    endDate={item.currentContestEndDate}
+                    contestLeague={item.contestLeague}
+                    contestFormat={item.contestFormat}
+                    entryFee={item.entryFee}
+                    availableMarkets={item.availableMarkets}
+                  />
+                )
+            )
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{
+                color: "white",
+                fontWeight: "400",
+                fontSize: { xs: "16px", sm: "20px" },
+                opacity: 0.8,
+                textAlign: "center",
+                mt: 3,
+              }}
+            >
+              🚫 No active contests available at the moment. Please check back
+              later!
+            </Typography>
+          )}
+        </div>
+      </Box>
+      <Footer />
     </>
   );
 };
 
-export default Home;
+export default Demo;
